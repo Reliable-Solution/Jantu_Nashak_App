@@ -1,0 +1,29 @@
+  {
+  "project_info": {
+    "project_number": "1099306183609",
+    "project_id": "keep-app-2890d",
+    "storage_bucket": "keep-app-2890d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099306183609:android:61d4c52a9474f26984a468",
+        "android_client_info": {
+          "package_name": "com.example.keep_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzIHnIhTWwCNi9gkarA92NIKRyZD_dvY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
