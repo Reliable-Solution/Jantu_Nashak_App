@@ -878,16 +878,6 @@ class HomeProductHeader extends StatelessWidget {
                           title: '1000+ Products',
                         ),
                       ),
-                      AlignWidget(
-                        alignment: Alignment.center,
-                        // child: ButtonWidgets(
-                        //   color: COLOR.pink,
-                        //   title: "Done",
-                        //   style: Themes.light.textTheme.displayLarge!.copyWith(color: Colors.white),
-                        //   padding: EdgeInsets.symmetric(horizontal: 40),
-                        //   voidCallback: () => Get.back(),
-                        // ),
-                      ),
                     ],
                   ),
                 ),

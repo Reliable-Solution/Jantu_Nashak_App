@@ -55,7 +55,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller.fetchSubCategoryData(widget.category);
+    _controller.getDashboardData(widget.category);
   }
 
   @override
@@ -73,11 +73,11 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
             pinned: true,
             backgroundColor: COLOR.background,
             title: Obx(() => TextWiget(
-                  title: _controller.customerModel != null
-                      ? _controller.customerModel!.value.customerName
-                      : "",
-                  style: Themes.light.textTheme.displayLarge,
-                )),
+              title: _controller.customerModel != null
+                  ? _controller.customerModel!.value.customerName
+                  : "",
+              style: Themes.light.textTheme.displayLarge,
+            )),
             leading: InkWell(
               onTap: () {
                 Get.back();
@@ -115,7 +115,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                     onTap: () => openBottomSheetDelivery(context),
                     child: Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                       child: Row(
                         children: <Widget>[
                           Container(
@@ -128,7 +128,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                           ),
                           TextWiget(
                             title:
-                                'Add delivery location to get extra discount',
+                            'Add delivery location to get extra discount',
                             style: Themes.dark.textTheme.displayLarge,
                           ),
                           Icon(Icons.navigate_next),
@@ -152,7 +152,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
             if (controller.isCategory.value) {
               if (controller.subCategoryList.isEmpty) {
-              return  SliverToBoxAdapter(
+                return  SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
@@ -259,8 +259,8 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
             //   );
             // }
             return SliverGrid.builder(
-                // shrinkWrap: true,
-                // physics: NeverScrollableScrollPhysics(),
+              // shrinkWrap: true,
+              // physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 1.6 / 2,
@@ -317,19 +317,19 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                     ),
                   );
                 }
-                //   else
-                //   {
-                //     return Center(
-                //       child: Text("Invalid Index"),
-                //     );
-                //   }
-                //  }
-                // else{
-                //   return Center(child: CircularProgressIndicator());
-                // }
-                // :Center(child: CircularProgressIndicator());
-                // },
-                );
+              //   else
+              //   {
+              //     return Center(
+              //       child: Text("Invalid Index"),
+              //     );
+              //   }
+              //  }
+              // else{
+              //   return Center(child: CircularProgressIndicator());
+              // }
+              // :Center(child: CircularProgressIndicator());
+              // },
+            );
           }),
           // :Center(child: CircularProgressIndicator()),
           // ),
@@ -426,11 +426,11 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                   .copyWith(color: COLOR.pink),
                               border: 1,
                               onPressed: (_controller.deliveryPincode.text
-                                      .trim()
-                                      .isNotEmpty)
+                                  .trim()
+                                  .isNotEmpty)
                                   ? () {
-                                      Get.back();
-                                    }
+                                Get.back();
+                              }
                                   : null,
                             ),
                           ),
