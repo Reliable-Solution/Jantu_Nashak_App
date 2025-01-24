@@ -9,6 +9,7 @@ Future<void> main() async {
   Firebase.initializeApp();
   await GetStorage.init();
   runApp(GetMaterialApp(
+    debugShowCheckedModeBanner: false,
     home: SplashScreen(),
   ));
 }

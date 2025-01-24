@@ -1,25 +1,17 @@
 // flutter
 import 'package:flutter/material.dart';
+
 // package
 import 'package:get/get.dart';
-// constants
-// import 'package:getxnative/constants/colorConst.dart';
-// // controllers
-// import 'package:getxnative/controllers/dashboardController.dart';
-// // views
-// import 'package:getxnative/views/account/accountScreen.dart';
-// import 'package:getxnative/views/categories/categorieScreen.dart';
-// import 'package:getxnative/views/community/communityScreen.dart';
-// import 'package:getxnative/views/home/homeScreen.dart';
-// import 'package:getxnative/views/orders/orderScreen.dart';
 import 'package:keep_app/constant/colorConst.dart';
-// import 'package:keep_app/controller/dashboardController.dart';
 import 'package:keep_app/view/home/home_screen.dart';
 
 import '../../controller/dashboardController.dart';
+import '../account/account_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final int? pageIndex;
+
   DashboardScreen({@required this.pageIndex, Key? key}) : super(key: key);
   final DashboardController _controller = Get.put(DashboardController());
 
@@ -35,10 +27,12 @@ class DashboardScreen extends StatelessWidget {
             unselectedItemColor: COLOR.grey,
             selectedItemColor: COLOR.pink,
             currentIndex: _controller.tabIndex,
-              onTap: _controller.changeTabIndex,
+            onTap: _controller.changeTabIndex,
             items: [
               _bottomNavigationBarItem(
-                icon: _controller.tabIndex == 0 ? Icons.home : Icons.home_outlined,
+                icon: _controller.tabIndex == 0
+                    ? Icons.home
+                    : Icons.home_outlined,
                 label: 'Home',
               ),
               // _bottomNavigationBarItem(
@@ -54,7 +48,9 @@ class DashboardScreen extends StatelessWidget {
               //   label: 'Community',
               // ),
               _bottomNavigationBarItem(
-                icon: _controller.tabIndex == 4 ? Icons.person : Icons.person_outline,
+                icon: _controller.tabIndex == 4
+                    ? Icons.person
+                    : Icons.person_outline,
                 label: 'Account',
               )
             ],
@@ -64,11 +60,13 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> screens() => [HomeScreen(),
-     // CategorieScreen(),
-    //OrderScreen(), CommunityScreen(),
-    //  AccountScreen()
-  ];
+  List<Widget> screens() => [
+        HomeScreen(),
+        // CategorieScreen(),
+        //OrderScreen(), CommunityScreen(),
+        AccountScreen()
+      ];
+
   _bottomNavigationBarItem({IconData? icon, String? label}) {
     return BottomNavigationBarItem(
       icon: Icon(icon),

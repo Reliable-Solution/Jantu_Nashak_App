@@ -11,6 +11,7 @@ class SharedHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String customerJson = jsonEncode(customerModel.toJson());
     print(customerJson);
+    print("============ customer details ${customerJson}");
     await prefs.setString(customerModelKey, customerJson);
   }
 

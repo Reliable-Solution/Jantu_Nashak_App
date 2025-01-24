@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // package
 import 'package:get/get.dart';
 import 'package:keep_app/constant/app_constant.dart';
+import 'package:keep_app/utils/string_res.dart';
 import 'package:keep_app/view/SharedProducts/sharedProductScreen.dart';
 import 'package:keep_app/view/home/SliverAppBarDelegate.dart';
 import 'package:keep_app/view/home/priceStroescreen.dart';
@@ -120,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                             Expanded(
                               child: TextWiget(
                                 // title: 'Search Keyword or Product ID',
-                                title: 'Search Product',
+                                title: StringRes.search,
                               ),
                             ),
                             // VerticalDivider(thickness: 1, color: COLOR.grey),
@@ -162,7 +163,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           TextWiget(
                               title:
-                              'Add delivery location to get extra discount',
+                              StringRes.addDelivery,
                               style: Themes.dark.textTheme.displayLarge),
                           Icon(Icons.navigate_next),
                         ],
@@ -249,288 +250,6 @@ class HomeScreen extends StatelessWidget {
                   }),
                 ),
 
-                // Padding(
-                //   padding: const EdgeInsets.all(0),
-                //   child: Obx(
-                //     () => Container(
-                //       padding: EdgeInsets.symmetric(vertical: 5),
-                //       width: MediaQuery.of(context).size.width,
-                //       color: COLOR.background,
-                //       child: Column(
-                //         children: [
-                //           Padding(
-                //             padding: const EdgeInsets.symmetric(vertical: 10),
-                //             child: Container(
-                //               height: MediaQuery.of(context).size.height * 0.23,
-                //               width: MediaQuery.of(context).size.width,
-                //               child: CarouselSlider.builder(
-                //                 itemCount: _controller.sliderImage.length,
-                //                 itemBuilder: (context, index, realIndex) {
-                //                   return Container(
-                //                     decoration: BoxDecoration(
-                //                       color: COLOR.pinkLight,
-                //                       image: DecorationImage(
-                //                         image: NetworkImage(_controller.sliderImage[index]),
-                //                         fit: BoxFit.cover,
-                //                       ),
-                //                       borderRadius: BorderRadius.circular(10),
-                //                     ),
-                //                   );
-                //                 },
-                //                 options: CarouselOptions(
-                //                   enlargeCenterPage: true,
-                //                   autoPlay: true,
-                //                   onPageChanged: (index, reason) {
-                //                     _controller.activeIndex.value = index;
-                //                   },
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(top: 5),
-                //             child: buildIndicator(),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(top: 10),
-                //             child: Container(
-                //               height: Get.height >= 800 ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.09,
-                //               width: MediaQuery.of(context).size.width,
-                //               decoration: BoxDecoration(
-                //                 color: Colors.blue[100],
-                //                 borderRadius: BorderRadius.circular(7),
-                //               ),
-                //               child: Padding(
-                //                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                //                 child: Row(
-                //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //                   children: <Widget>[
-                //                     Row(
-                //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //                       children: [
-                //                         FittedBox(
-                //                           child: Row(
-                //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //                             children: <Widget>[
-                //                               CircleAvatar(
-                //                                 backgroundColor: COLOR.background,
-                //                                 maxRadius: 18,
-                //                                 backgroundImage: AssetImage(Images.cash),
-                //                               ),
-                //                               Padding(
-                //                                 padding: EdgeInsets.only(left: 6),
-                //                                 child: Column(
-                //                                   children: [
-                //                                     TextWiget(
-                //                                       title: 'Cash on',
-                //                                       style: Themes.light.textTheme.displayMedium!.copyWith(fontWeight: FontWeight.w700),
-                //                                     ),
-                //                                     TextWiget(
-                //                                       title: 'Delivery',
-                //                                       style: Themes.light.textTheme.displayMedium!.copyWith(fontWeight: FontWeight.w700),
-                //                                     ),
-                //                                   ],
-                //                                 ),
-                //                               )
-                //                             ],
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     ),
-                //                     Padding(
-                //                       padding: EdgeInsets.symmetric(vertical: 10),
-                //                       child: VerticalDivider(
-                //                         thickness: 2,
-                //                         color: COLOR.background,
-                //                       ),
-                //                     ),
-                //                     FittedBox(
-                //                       child: Row(
-                //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //                         children: <Widget>[
-                //                           CircleAvatar(
-                //                             backgroundColor: COLOR.background,
-                //                             maxRadius: 18,
-                //                             backgroundImage: AssetImage(Images.delivery),
-                //                           ),
-                //                           Container(
-                //                             child: Padding(
-                //                               padding: EdgeInsets.only(left: 6),
-                //                               child: Column(
-                //                                 children: [
-                //                                   TextWiget(
-                //                                     title: 'Free Delivery',
-                //                                     style: Themes.light.textTheme.displayMedium!.copyWith(fontWeight: FontWeight.w700),
-                //                                   ),
-                //                                   TextWiget(
-                //                                     title: 'Free Returns',
-                //                                     style: Themes.light.textTheme.displayMedium!.copyWith(fontWeight: FontWeight.w700),
-                //                                   ),
-                //                                 ],
-                //                               ),
-                //                             ),
-                //                           )
-                //                         ],
-                //                       ),
-                //                     ),
-                //                     Padding(
-                //                       padding: EdgeInsets.symmetric(vertical: 10),
-                //                       child: VerticalDivider(
-                //                         thickness: 2,
-                //                         color: COLOR.background,
-                //                       ),
-                //                     ),
-                //                     FittedBox(
-                //                       child: Row(
-                //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //                         children: <Widget>[
-                //                           CircleAvatar(
-                //                             backgroundColor: COLOR.background,
-                //                             maxRadius: 18,
-                //                             backgroundImage: AssetImage(Images.delivery),
-                //                           ),
-                //                           Padding(
-                //                             padding: EdgeInsets.only(left: 6),
-                //                             child: Column(
-                //                               children: [
-                //                                 TextWiget(
-                //                                   title: 'Lowest',
-                //                                   style: Themes.light.textTheme.displayMedium!.copyWith(
-                //                                     fontWeight: FontWeight.w700,
-                //                                   ),
-                //                                 ),
-                //                                 TextWiget(
-                //                                   title: 'Price',
-                //                                   style: Themes.light.textTheme.displayMedium!.copyWith(
-                //                                     fontWeight: FontWeight.w700,
-                //                                   ),
-                //                                 ),
-                //                               ],
-                //                             ),
-                //                           )
-                //                         ],
-                //                       ),
-                //                     )
-                //                   ],
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //           // Container(
-                //           //   height: MediaQuery.of(context).size.height * 0.06,
-                //           //   width: MediaQuery.of(context).size.width,
-                //           //   child: Padding(
-                //           //     padding: const EdgeInsets.symmetric(horizontal: 15),
-                //           //     child: Row(
-                //           //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           //       children: <Widget>[
-                //           //         TextWiget(
-                //           //           title: 'Best Sellers',
-                //           //           style: Themes.light.textTheme.headlineSmall,
-                //           //         ),
-                //           //         InkWell(
-                //           //           onTap: () {
-                //           //             // Get.to(() => BestSellersScreen());
-                //           //           },
-                //           //           child: TextWiget(
-                //           //             title: 'VIEW ALL',
-                //           //             style: Themes.light.textTheme.displaySmall!.copyWith(
-                //           //               color: COLOR.pink,
-                //           //               fontWeight: FontWeight.w600,
-                //           //             ),
-                //           //           ),
-                //           //         )
-                //           //       ],
-                //           //     ),
-                //           //   ),
-                //           // ),
-                //           // Container(
-                //           //   width: MediaQuery.of(context).size.width,
-                //           //   height: MediaQuery.of(context).size.height * 0.22,
-                //           //   color: COLOR.background,
-                //           //   child: ListView.builder(
-                //           //     padding: EdgeInsets.symmetric(horizontal: 15),
-                //           //     scrollDirection: Axis.horizontal,
-                //           //     itemCount: _controller.bestSellerlist.length,
-                //           //     itemBuilder: (context, index) {
-                //           //       return Column(
-                //           //         children: [
-                //           //           Padding(
-                //           //             padding: const EdgeInsets.only(right: 10),
-                //           //             child: InkWell(
-                //           //               onTap: () {
-                //           //                 // Get.to(() => PriceStroeScreen());
-                //           //               },
-                //           //               child: Container(
-                //           //                 height: Get.width > 360 ? MediaQuery.of(context).size.height * 0.14 : MediaQuery.of(context).size.height * 0.15,
-                //           //                 width: 100,
-                //           //                 decoration: BoxDecoration(
-                //           //                   color: COLOR.amber,
-                //           //                   image: DecorationImage(
-                //           //                     colorFilter: new ColorFilter.mode(COLOR.black.withOpacity(0.8), BlendMode.dstATop),
-                //           //                     image: NetworkImage(
-                //           //                       _controller.bestSellerlist[index].image!,
-                //           //                     ),
-                //           //                     fit: BoxFit.cover,
-                //           //                   ),
-                //           //                   borderRadius: BorderRadius.circular(10),
-                //           //                 ),
-                //           //               ),
-                //           //             ),
-                //           //           ),
-                //           //           Padding(
-                //           //             padding: const EdgeInsets.only(top: 10),
-                //           //             child: TextWiget(
-                //           //                 title: _controller.bestSellerlist[index].name,
-                //           //                 style: Themes.light.textTheme.bodyLarge!.copyWith(
-                //           //                   color: COLOR.grey,
-                //           //                   fontWeight: FontWeight.w600,
-                //           //                 )),
-                //           //           ),
-                //           //           Padding(
-                //           //             padding: const EdgeInsets.only(bottom: 0),
-                //           //             child: TextWiget(
-                //           //               title: 'From ₹${_controller.bestSellerlist[index].price!.toStringAsFixed(0)}',
-                //           //               style: Themes.light.textTheme.displaySmall!.copyWith(
-                //           //                 fontWeight: FontWeight.w600,
-                //           //                 color: COLOR.black,
-                //           //               ),
-                //           //             ),
-                //           //           )
-                //           //         ],
-                //           //       );
-                //           //     },
-                //           //   ),
-                //           // ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 10),
-                //   child: Container(
-                //     width: MediaQuery.of(context).size.width,
-                //     color: COLOR.background,
-                //     child: HomePriceList(),
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 10),
-                //   child: Container(
-                //     width: MediaQuery.of(context).size.width,
-                //     color: COLOR.background,
-                //     child: TopDemandList(),
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 10, bottom: 8),
-                //   child: Container(
-                //     width: MediaQuery.of(context).size.width,
-                //     color: COLOR.background,
-                //     child: HomeTrendingList(),
-                //   ),
-                // ),
                 Container(
                   color: COLOR.background,
                   width: MediaQuery.of(context).size.width,
@@ -543,8 +262,7 @@ class HomeScreen extends StatelessWidget {
                         child: AlignWidget(
                           alignment: Alignment.centerLeft,
                           child: TextWiget(
-                            // title: 'Products For You',
-                            title: 'Trending Products',
+                            title: StringRes.trending,
                             style: Themes.light.textTheme.headlineSmall,
                           ),
                         ),
@@ -568,21 +286,21 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          // SliverGrid(
-          //   delegate: SliverChildBuilderDelegate(
-          //         (context, index) {
-          //       final products = _controller.productsList[index];
-          //       return HomeProductList(products: products);
-          //     },
-          //     childCount: _controller.productsList.length,
-          //   ),
-          //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //     crossAxisCount: 2,
-          //     childAspectRatio: Get.width >= 480 ? 1.15 / 2 : 1 / 2.1,
-          //     crossAxisSpacing: 2,
-          //     mainAxisSpacing: 2,
-          //   ),
-          // ),
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                final products = _controller.productList[index];
+                 // return HomeProductList(products: products);
+              },
+              childCount: _controller.productList.length,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: Get.width >= 480 ? 1.15 / 2 : 1 / 2.1,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
+            ),
+          ),
         ],
       ),
     );
@@ -618,7 +336,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWiget(
-                          title: 'ADD DELIVERY LOCATION',
+                          title: StringRes.deliveryLocation,
                           style: Themes.light.textTheme.displaySmall!
                               .copyWith(color: COLOR.background),
                         ),
@@ -655,9 +373,9 @@ class HomeScreen extends StatelessWidget {
                         focusNode: _controller.fdeliveryPincode,
                         style: Themes.light.textTheme.displayLarge,
                         keyboardType: TextInputType.number,
-                        labelText: 'Type Delivery Pincode',
+                        labelText: StringRes.deliveryPincode,
                         suffixIcon: TextButtonWidget(
-                          text: 'SUBMIT',
+                          text: StringRes.submit,
                           border: 1,
                           style: Themes.light.textTheme.displaySmall!
                               .copyWith(color: COLOR.pink),
