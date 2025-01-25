@@ -61,6 +61,7 @@ class _AlladdressScreenState extends State<AlladdressScreen> {
                                   blurRadius: 15.0,
                                   offset: Offset(0, 6),
                                 ),
+
                               ],
                             ),
                             child: Column(
@@ -174,6 +175,10 @@ class _AlladdressScreenState extends State<AlladdressScreen> {
                                     ),
                                     OutlinedButton.icon(
                                       onPressed: () {
+                                        controller.deleteAddressData(custmoerId: controller.allAddressList[index].customerId,addressId: controller.allAddressList[index].addressId);
+
+                                        controller.allAddressList.removeAt(index);
+
                                         // Add delete functionality
                                       },
                                       icon: Icon(
@@ -201,11 +206,12 @@ class _AlladdressScreenState extends State<AlladdressScreen> {
                   );
                 }
                 else {
-                  return Center(child: Text("No data found"),);
+                  return Center(child: CircularProgressIndicator(),);
                 }
               }
               else {
-                return Center(child: CircularProgressIndicator(),);
+                return Center(child: Text("No data found"),);
+
               }
             })
     );

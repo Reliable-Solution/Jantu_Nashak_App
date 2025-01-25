@@ -5,4 +5,5 @@ const String getSubcategorybyCategoryId = "getSubcategorybyCategoryId";
 const String addAddress = "addAddress";
 const String getDashboardDataTestByUser = "getDashboardDataTestByUser";
 const String getAddress = "getAddress";
+const String deleteAddress = "deleteAddress";
 
