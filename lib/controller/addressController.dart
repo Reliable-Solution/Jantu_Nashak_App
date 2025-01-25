@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../constant/api_endpoints.dart';
@@ -9,16 +10,35 @@ import '../utils/sharedPrefs.dart';
 class AddressController extends GetxController
 {
   RxList<AddressModel> allAddressList = <AddressModel>[].obs;
-  Rx<CustomerModel>? customerModel = CustomerModel().obs;
+  // Rx<CustomerModel>? customerModel = CustomerModel().obs;
   SharedHelper helper = SharedHelper();
+  TextEditingController txtFullname = TextEditingController();
+  TextEditingController txtMobileno = TextEditingController();
+  TextEditingController txtPincode = TextEditingController();
+  TextEditingController txtAddress = TextEditingController();
+  TextEditingController txtLandmark = TextEditingController();
+  TextEditingController txtType = TextEditingController();
+  CustomerModel? customer = CustomerModel();
+  RxBool isAddress = false.obs;
 
 
+
+  @override
+  Future<void> onInit() async {
+    // TODO: implement onInit
+    customer = await helper.getCustomer();
+
+    getPrefs();
+    getAllAddress();
+    super.onInit();
+  }
 
   getPrefs() async {
-    CustomerModel? customer = await helper.getCustomer();
-    if (customer != null) {
-      customerModel!.value = customer;
-    }
+   customer = await helper.getCustomer();
+    print("====== cid 1 ${customer!.customerId}");
+    // if (customer != null) {
+    //   customerModel!.value = customer;
+    // }
     update();
   }
   addAddressData({AddressModel? addressModel}) async {
@@ -54,18 +74,19 @@ class AddressController extends GetxController
   }
   getAllAddress() async {
     try {
+      print("======  cid${customer!.customerId}");
       final Map<String, dynamic> body = {
-        "CustomerId": customerModel!.value.customerId,
+        "CustomerId": customer!.customerId,
       };
 
       var response = await ApiService.post(endpoint: getAddress, body: body);
-
-
+print("======== responces ${response.data}");
       if (response.data['IsSuccess'] == true) {
         allAddressList.value = (response.data['Data'] as List)
             .map((addressJson) => AddressModel.fromJson(addressJson))
             .toList();
         print("address data ${allAddressList.length}");
+        isAddress.value =true;
         // isCategory = true.obs;
         update();
       } else {

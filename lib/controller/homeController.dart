@@ -44,13 +44,6 @@ class HomeController extends GetxController
 
   PageController filterPage = PageController();
   RxBool isCategory = false.obs;
-  TextEditingController txtFullname = TextEditingController();
-  TextEditingController txtMobileno = TextEditingController();
-  TextEditingController txtPincode = TextEditingController();
-  TextEditingController txtAddress = TextEditingController();
-  TextEditingController txtLandmark = TextEditingController();
-  TextEditingController txtType = TextEditingController();
-
   changeCategory() {
     try {
       categoryCheckBox.value = !categoryCheckBox.value;
@@ -80,6 +73,7 @@ class HomeController extends GetxController
     if (customer != null) {
       customerModel!.value = customer;
       print("Phone  Number ${customerModel!.value.customerPhoneNo}");
+      print("Phone  Number ${customerModel!.value.customerId}");
     }
     update();
   }

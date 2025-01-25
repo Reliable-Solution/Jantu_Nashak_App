@@ -1,11 +1,13 @@
 // flutter
 import 'package:flutter/material.dart';
+
 // package
 import 'package:get/get.dart';
 import 'package:keep_app/constant/app_constant.dart';
 import 'package:keep_app/utils/string_res.dart';
 import 'package:keep_app/view/SharedProducts/sharedProductScreen.dart';
 import 'package:keep_app/view/home/SliverAppBarDelegate.dart';
+import 'package:keep_app/view/home/allAddress_screen.dart';
 import 'package:keep_app/view/home/priceStroescreen.dart';
 import 'package:keep_app/view/home/widget/homeProductHeader.dart';
 import 'package:keep_app/view/home/widget/homeProductList.dart';
@@ -38,11 +40,11 @@ class HomeScreen extends StatelessWidget {
             floating: true,
             backgroundColor: COLOR.background,
             title: Obx(() => TextWiget(
-              title: _controller.customerModel != null
-                  ? _controller.customerModel!.value.customerName
-                  : "",
-              style: Themes.light.textTheme.displayLarge,
-            )),
+                  title: _controller.customerModel != null
+                      ? _controller.customerModel!.value.customerName
+                      : "",
+                  style: Themes.light.textTheme.displayLarge,
+                )),
             leading: Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: Container(
@@ -57,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                     color: COLOR.greyLight,
                   ),
                 )),
-            // actions: [
+              // actions: [
             //   IconButtonWidget(
             //     voidCallback: () {
             //       Get.to(() => ShareProductScreen());
@@ -147,10 +149,13 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   color: COLOR.purpleLight,
                   child: InkWell(
-                    onTap: () => openBottomSheetDelivery(context),
+                    onTap:      () {
+
+                      Get.to(AlladdressScreen());
+                    },
                     child: Padding(
                       padding:
-                      EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                       child: Row(
                         children: <Widget>[
                           Container(
@@ -162,8 +167,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           TextWiget(
-                              title:
-                              StringRes.addDelivery,
+                              title: StringRes.addDelivery,
                               style: Themes.dark.textTheme.displayLarge),
                           Icon(Icons.navigate_next),
                         ],
@@ -208,14 +212,17 @@ class HomeScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   // controller.fetchSubCategoryData(controller.categoryList[index].categoryId);
-                                   Get.to(() => SubCategoryScreen(category: "${controller.categoryList[index].categoryId}",));
+                                  Get.to(() => SubCategoryScreen(
+                                        category:
+                                            "${controller.categoryList[index].categoryId}",
+                                      ));
                                 },
                                 child: Container(
                                   height: Get.width > 360
                                       ? MediaQuery.of(context).size.height *
-                                      0.14
+                                          0.14
                                       : MediaQuery.of(context).size.height *
-                                      0.15,
+                                          0.15,
                                   decoration: BoxDecoration(
                                     color: COLOR.amber,
                                     image: DecorationImage(
@@ -258,7 +265,7 @@ class HomeScreen extends StatelessWidget {
                       DividerWidget(thickness: 1),
                       Padding(
                         padding:
-                        EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                         child: AlignWidget(
                           alignment: Alignment.centerLeft,
                           child: TextWiget(
@@ -288,9 +295,9 @@ class HomeScreen extends StatelessWidget {
           ),
           SliverGrid(
             delegate: SliverChildBuilderDelegate(
-                  (context, index) {
+              (context, index) {
                 final products = _controller.productList[index];
-                 // return HomeProductList(products: products);
+                // return HomeProductList(products: products);
               },
               childCount: _controller.productList.length,
             ),
@@ -380,11 +387,11 @@ class HomeScreen extends StatelessWidget {
                           style: Themes.light.textTheme.displaySmall!
                               .copyWith(color: COLOR.pink),
                           onPressed: (_controller.deliveryPincode.text
-                              .trim()
-                              .isNotEmpty)
+                                  .trim()
+                                  .isNotEmpty)
                               ? () {
-                            Get.back();
-                          }
+                                  Get.back();
+                                }
                               : null,
                         ),
                       ),
