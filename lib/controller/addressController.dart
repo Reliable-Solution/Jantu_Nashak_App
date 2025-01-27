@@ -7,10 +7,9 @@ import '../models/customerModel.dart';
 import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
 
-class AddressController extends GetxController
-{
+class AddressController extends GetxController {
   RxList<AddressModel> allAddressList = <AddressModel>[].obs;
-  // Rx<CustomerModel>? customerModel = CustomerModel().obs;
+  Rx<CustomerModel>? customerModel = CustomerModel().obs;
   SharedHelper helper = SharedHelper();
   TextEditingController txtFullname = TextEditingController();
   TextEditingController txtMobileno = TextEditingController();
@@ -18,29 +17,25 @@ class AddressController extends GetxController
   TextEditingController txtAddress = TextEditingController();
   TextEditingController txtLandmark = TextEditingController();
   TextEditingController txtType = TextEditingController();
-  CustomerModel? customer = CustomerModel();
   RxBool isAddress = false.obs;
-
-
 
   @override
   Future<void> onInit() async {
-    // TODO: implement onInit
-    customer = await helper.getCustomer();
-
     getPrefs();
-    getAllAddress();
     super.onInit();
   }
 
   getPrefs() async {
-   customer = await helper.getCustomer();
-    print("====== cid 1 ${customer!.customerId}");
-    // if (customer != null) {
-    //   customerModel!.value = customer;
-    // }
+    CustomerModel? customer = await helper.getCustomer();
+
+    if (customer != null) {
+      customerModel!.value = customer;
+    }
+
     update();
+    getAllAddress();
   }
+
   addAddressData({AddressModel? addressModel}) async {
     try {
       final Map<String, dynamic> body = {
@@ -55,15 +50,14 @@ class AddressController extends GetxController
 
       var response = await ApiService.post(endpoint: addAddress, body: body);
 
-      print("sub category data ${response.data}");
+      print(" Add Address data ${response.data}");
 
       if (response.data['IsSuccess'] == true) {
-        allAddressList.value = (response.data['Data'] as List)
-            .map((addressJson) => AddressModel.fromJson(addressJson))
-            .toList();
+        allAddressList.add(addressModel);
         print("sub category data ${allAddressList.length}");
         // isCategory = true.obs;
         update();
+        Get.back();
       } else {
         throw Exception("Error: ${response.data['Message']}");
       }
@@ -72,55 +66,49 @@ class AddressController extends GetxController
       throw Exception("Failed to fetch category data");
     }
   }
+
   getAllAddress() async {
     try {
-      print("======  cid${customer!.customerId}");
       final Map<String, dynamic> body = {
-        "CustomerId": customer!.customerId,
+        "CustomerId": customerModel!.value.customerId,
       };
 
       var response = await ApiService.post(endpoint: getAddress, body: body);
-print("======== responces ${response.data}");
+
       if (response.data['IsSuccess'] == true) {
         allAddressList.value = (response.data['Data'] as List)
             .map((addressJson) => AddressModel.fromJson(addressJson))
             .toList();
         print("address data ${allAddressList.length}");
-        isAddress.value =true;
+        isAddress.value = true;
         // isCategory = true.obs;
         update();
       } else {
         throw Exception("Error: ${response.data['Message']}");
       }
     } catch (e) {
-      print("Error in fetchaddressData: $e");
+      print("Error in Fetch Address Data: $e");
       throw Exception("Failed to fetch address data");
     }
   }
-  deleteAddressData({String? custmoerId,String? addressId}) async {
+
+  deleteAddressData({String? customerId, String? addressId}) async {
     try {
-      allAddressList.clear();
-      print("======  cid${customer!.customerId}");
       final Map<String, dynamic> body = {
-        "CustomerId": custmoerId,
+        "CustomerId": customerId,
         "AddressId": addressId,
       };
 
       var response = await ApiService.post(endpoint: deleteAddress, body: body);
-      print("======== responces ${response.data}");
       if (response.data['IsSuccess'] == true) {
-        allAddressList.value = (response.data['Data'] as List)
-            .map((addressJson) => AddressModel.fromJson(addressJson))
-            .toList();
-        print("address data ${allAddressList.length}");
-        isAddress.value =true;
-        // isCategory = true.obs;
+        int index =  allAddressList.indexWhere((item) => item.addressId == addressId);
+        allAddressList.removeAt(index);
         update();
       } else {
         throw Exception("Error: ${response.data['Message']}");
       }
     } catch (e) {
-      print("Error in fetchdeleteAddressData: $e");
+      print("Error in deleteAddressData: $e");
       throw Exception("Failed to fetch delete Address Data");
     }
   }

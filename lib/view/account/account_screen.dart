@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:keep_app/view/account/widget/accountList.dart';
-import 'package:keep_app/view/home/pickupAddressScreen.dart';
+import 'package:keep_app/view/address/pickupAddressScreen.dart';
 
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
@@ -19,7 +19,6 @@ import '../../widget/iconButtonWidget.dart';
 import '../../widget/textWidget.dart';
 import '/utils/global.dart' as global;
 
-
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
@@ -32,108 +31,98 @@ class _AccountScreenState extends State<AccountScreen> {
   TextEditingController txtNumber = TextEditingController();
   TextEditingController txtMsg = TextEditingController();
   AccountController controller = AccountController();
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String? fcmToken;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyCustomAppBar(
-      height: 90,
-      appbarPadding: 0,
-      title: TextWiget(
-        title: StringRes.account,
-        style: Themes.light.textTheme.displayLarge,
+      appBar: MyCustomAppBar(
+        height: 90,
+        appbarPadding: 0,
+        title: TextWiget(
+          title: StringRes.account,
+          style: Themes.light.textTheme.displayLarge,
+        ),
+        elevation: 1,
       ),
-      elevation: 1,
-      // action: [
-      //   IconButtonWidget(
-      //     voidCallback: () {
-      //       Get.to(() => ShareProductScreen());
-      //     },
-      //     color: COLOR.black,
-      //     icons: Icons.favorite_border,
-      //   ),
-      //   IconButtonWidget(
-      //     voidCallback: () {
-      //       Get.to(() => AddToCardScreen());
-      //     },
-      //     color: COLOR.black,
-      //     icons: Icons.shopping_cart_outlined,
-      //   ),
-      // ],
-    ), body:SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          ElevatedButton(onPressed: () {
-
-            Get.to(PickupAddressScreen());
-          }, child: Text(StringRes.address)),
-
-          Padding(
-            padding: EdgeInsets.only(top: 4),
-            child: Container(
-              color: COLOR.background,
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(right: 18),
-                    child: CircleAvatar(
-                      maxRadius: 31,
-                      backgroundImage: AssetImage(Images.profileicon),
-                      backgroundColor: COLOR.greyLight,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      ButtonWidgets(
-                        title: StringRes.signUp,
-                        voidCallback: () {
-                          openBottomSheetSignup(context);
-                        },
-                        color: COLOR.pink,
-                        style: Themes.light.textTheme.displayLarge!.copyWith(color: Colors.white),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: TextWiget(title: StringRes.viewProfile, style: Themes.light.textTheme.displaySmall),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: AlignWidget(
-                      alignment: Alignment.centerRight,
-                      child: IconButtonWidget(
-                        voidCallback: () {
-                          // Get.to(() => ProfileScreen());
-                        },
-                        icons: Icons.navigate_next_outlined,
-                        size: 35,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ElevatedButton(
+                onPressed: () {
+                  Get.to(PickupAddressScreen());
+                },
+                child: Text(StringRes.address)),
+            Padding(
+              padding: EdgeInsets.only(top: 4),
+              child: Container(
+                color: COLOR.background,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 18),
+                      child: CircleAvatar(
+                        maxRadius: 31,
+                        backgroundImage: AssetImage(Images.profileicon),
+                        backgroundColor: COLOR.greyLight,
                       ),
                     ),
-                  )
-                ],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ButtonWidgets(
+                          title: StringRes.signUp,
+                          voidCallback: () {
+                            openBottomSheetSignup(context);
+                          },
+                          color: COLOR.pink,
+                          style: Themes.light.textTheme.displayLarge!
+                              .copyWith(color: Colors.white),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: TextWiget(
+                              title: StringRes.viewProfile,
+                              style: Themes.light.textTheme.displaySmall),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: AlignWidget(
+                        alignment: Alignment.centerRight,
+                        child: IconButtonWidget(
+                          voidCallback: () {
+                            // Get.to(() => ProfileScreen());
+                          },
+                          icons: Icons.navigate_next_outlined,
+                          size: 35,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: AccountList(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.14,
-              color: COLOR.background,
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: AccountList(),
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.14,
+                color: COLOR.background,
+              ),
+            )
+          ],
+        ),
       ),
-    ),);
+    );
   }
+
   void openBottomSheetSignup(BuildContext context) {
     Get.bottomSheet(
       Container(
@@ -171,7 +160,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     initialSelection: 'IN',
                     showCountryOnly: false,
                     barrierColor: COLOR.black,
-                    textStyle: Themes.light.textTheme.displaySmall!.copyWith(color: COLOR.black),
+                    textStyle: Themes.light.textTheme.displaySmall!
+                        .copyWith(color: COLOR.black),
                     backgroundColor: COLOR.background,
                     boxDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -183,7 +173,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   SizedBox(width: 8.0),
                   Expanded(
                     child: TextField(
-                      style: Themes.light.textTheme.displaySmall!.copyWith(color: COLOR.black),
+                      style: Themes.light.textTheme.displaySmall!
+                          .copyWith(color: COLOR.black),
                       decoration: InputDecoration(
                         labelText: StringRes.phone,
                         isDense: true,
@@ -210,7 +201,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     onTap();
                   },
                   color: COLOR.pink,
-                  style: Themes.light.textTheme.displaySmall!.copyWith(color: COLOR.background),
+                  style: Themes.light.textTheme.displaySmall!
+                      .copyWith(color: COLOR.background),
                   title: StringRes.otp,
                 ),
               ),
@@ -228,7 +220,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     children: [
                       TextWiget(
                         title: StringRes.termsConditions,
-                        style: Themes.dark.textTheme.displayLarge!.copyWith(color: COLOR.pink),
+                        style: Themes.dark.textTheme.displayLarge!
+                            .copyWith(color: COLOR.pink),
                       ),
                       TextWiget(
                         title: StringRes.and,
@@ -236,7 +229,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       TextWiget(
                         title: StringRes.privacyPolicy,
-                        style: Themes.dark.textTheme.displayLarge!.copyWith(color: COLOR.pink),
+                        style: Themes.dark.textTheme.displayLarge!
+                            .copyWith(color: COLOR.pink),
                       ),
                     ],
                   ),
@@ -276,7 +270,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 TextWiget(
                   title: StringRes.changeNumber,
-                  style: Themes.light.textTheme.displaySmall!.copyWith(color: COLOR.black),
+                  style: Themes.light.textTheme.displaySmall!
+                      .copyWith(color: COLOR.black),
                 ),
                 Expanded(
                   child: AlignWidget(
@@ -334,7 +329,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       authenticate.onFormSubmited(controller.message.value!);
                     },
                     color: COLOR.pink,
-                    style: Themes.light.textTheme.displaySmall!.copyWith(color: COLOR.background),
+                    style: Themes.light.textTheme.displaySmall!
+                        .copyWith(color: COLOR.background),
                     title: StringRes.verify,
                   ),
                 ),
@@ -354,8 +350,8 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
     );
   }
-  void onTap()
-  {
+
+  void onTap() {
     print("==================== token1 ${fcmToken}");
   }
 }

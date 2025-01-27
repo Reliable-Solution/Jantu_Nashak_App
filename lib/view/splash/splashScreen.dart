@@ -13,7 +13,7 @@ import 'package:keep_app/widget/baseRoute.dart';
 class SplashScreen extends BaseRoute {
   SplashScreen() : super(r: 'SplashScreen2');
 
-  final SplashController customerController = Get.put(SplashController());
+  final SplashController splashController = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,7 @@ class SplashScreen extends BaseRoute {
     width: MediaQuery.sizeOf(context).width * 0.5,
     fit: BoxFit.fill,
     )
-      // TextWiget(
-      //     // title: global.appname,
-      //     style: Themes.dark.textTheme.bodyMedium!.copyWith(
-      //       color: COLOR.pink,
-      //     )),
+
     )));
   }
 }

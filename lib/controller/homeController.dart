@@ -20,12 +20,10 @@ import '../utils/sharedPrefs.dart';
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  // getxcontroller instance
   NetworkController networkController = Get.put(NetworkController());
   SharedHelper helper = SharedHelper();
-
+  var isDashBoardLoading = false.obs;
   var search = TextEditingController();
-  var cHomesearch = TextEditingController();
   var deliveryPincode = TextEditingController();
 
   var fdeliveryPincode = FocusNode();
@@ -33,7 +31,6 @@ class HomeController extends GetxController
   TabController? myTabController;
   Rx<CustomerModel>? customerModel = CustomerModel().obs;
   var activeIndex = 0.obs;
-  var categoryCheckBox = false.obs;
   var selectedFilterIndex = 0.obs;
   var sortValue = 1.obs;
   List<Category> categoryList = [];
@@ -44,20 +41,22 @@ class HomeController extends GetxController
 
   PageController filterPage = PageController();
   RxBool isCategory = false.obs;
-  changeCategory() {
-    try {
-      categoryCheckBox.value = !categoryCheckBox.value;
-      update();
-    } on Exception catch (e) {
-      print('Exception -  PaymentController' + e.toString());
-    }
-  }
+  TextEditingController txtFullname = TextEditingController();
+  TextEditingController txtMobileno = TextEditingController();
+  TextEditingController txtPincode = TextEditingController();
+  TextEditingController txtAddress = TextEditingController();
+  TextEditingController txtLandmark = TextEditingController();
+  TextEditingController txtType = TextEditingController();
+  CustomerModel? m1 = CustomerModel();
+
 
   @override
   void onInit() async {
     myTabController = TabController(vsync: this, length: filters.length);
+    m1 = await helper.getCustomer();
+    getDashboardData(m1!.customerId);
     getPrefs();
-    getDashboardData(customerModel!.value.customerId);
+    // fetchCategoryData();
     super.onInit();
   }
 
@@ -72,8 +71,7 @@ class HomeController extends GetxController
     CustomerModel? customer = await helper.getCustomer();
     if (customer != null) {
       customerModel!.value = customer;
-      print("Phone  Number ${customerModel!.value.customerPhoneNo}");
-      print("Phone  Number ${customerModel!.value.customerId}");
+      print("Phone  Number ${customerModel!.value.customerName}");
     }
     update();
   }
@@ -95,54 +93,68 @@ class HomeController extends GetxController
     'Ornmentation'
   ];
 
-  final sliderImage = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnpypoGHJOi_GjgqS0jKzaXweNDZE1IaZGXQ&usqp=CAU',
-    'https://i.ytimg.com/vi/9Relbr59GX0/maxresdefault.jpg',
-    'https://play-lh.googleusercontent.com/N9TPdDLUluBvsOG3wAGsourZ5VspzXqKPqy-L5YvARYXq0jC2qZNUixeXTViDzk-eg4',
-    'https://i.ytimg.com/vi/sk56DPAk-1c/maxresdefault.jpg',
-  ];
+
+
 
   //pricelist
   final price = [99, 199, 299, 399, 499];
 
 
-
   /// Get dashboard all data
-  getDashboardData(String? CustomerId) async {
+  Future<void> getDashboardData(String? customerId) async {
+    // Ensure lists are empty before populating them
     categoryList.clear();
+    offerList.clear();
+    brandList.clear();
+    productList.clear();
+
+    isDashBoardLoading.value = true;
+
     try {
       final Map<String, dynamic> body = {
-        'CustomerId': CustomerId,
+        'CustomerId': customerId,
       };
 
+      // Make the API call
       var response = await ApiService.post(
-          endpoint: getDashboardDataTestByUser, body: body);
+        endpoint: getDashboardDataTestByUser,
+        body: body,
+      );
 
       if (response.data['IsSuccess'] == true) {
-        print("=========== ${response.data}");
-        offerList = (response.data['Data'][0]['Offer'] as List)
-            .map((offerJson) => OfferModel.fromJson(offerJson))
-            .toList();
-        print("============ ${offerList[0].offerCDT}");
-        categoryList = (response.data['Data'][1]['Category'] as List)
-            .map((categoryJson) => Category.fromJson(categoryJson))
-            .toList();
-        print("============ ${categoryList[0].categoryName}");
+        print("API Response: ${response.data}");
 
-        brandList = (response.data['Data'][2]['Brand'] as List)
-            .map((brandJson) => BrandModel.fromJson(brandJson))
-            .toList();
-        productList = (response.data['Data'][3]['product'] as List)
-            .map((productJson) => ProductModel.fromJson(productJson))
-            .toList();
 
+        var data = response.data['Data']; // Assuming Data[0] exists
+
+        if (data[0]['Offer'] != null) {
+          offerList = (data[0]['Offer'] as List)
+              .map((offerJson) => OfferModel.fromJson(offerJson))
+              .toList();
+        }
+        if (data[1]['Category'] != null) {
+          categoryList = (data[1]['Category'] as List)
+              .map((categoryJson) => Category.fromJson(categoryJson))
+              .toList();
+        }
+        if (data[2]['Brand'] != null) {
+          brandList = (data[2]['Brand'] as List)
+              .map((brandJson) => BrandModel.fromJson(brandJson))
+              .toList();
+        }
+        if (data[3]['product'] != null) {
+          productList = (data[3]['product'] as List)
+              .map((productJson) => ProductModel.fromJson(productJson))
+              .toList();
+        }
+        isDashBoardLoading.value = false;
         update();
       } else {
-        throw Exception("Error: ${response.data['Message']}");
+        throw Exception("Error from API: ${response.data['Message']}");
       }
     } catch (e) {
-      print("Error in getDashboard Data: $e");
-      throw Exception("Failed to getDashboard Data");
+      print("Error in getDashboardData: $e");
+      throw Exception("Failed to get dashboard data: $e");
     }
   }
 }

@@ -3,7 +3,7 @@ class StringRes
   /// home screen
   static String account = "Account";
   static String search = "Search Product";
-  static String addDelivery = "Add delivery location to get extra discount";
+  static String addDeliveryLocationToGetExtraDiscount = "Add delivery location to get extra discount";
   static String trending = "Trending Products";
   static String deliveryLocation = "ADD DELIVERY LOCATION";
   static String deliveryPincode = "Type Delivery Pincode";
@@ -24,4 +24,13 @@ class StringRes
   static String enterOtp = "Enter OTP sent to";
   static String resendOtp = "Resend OTP in 55s";
   static String verify = "Verify";
+  /// address Screen
+ static String continueString = "Continue";
+ static String addAddress = "Add Address";
+ static String productsWill = "Products will be delivered to this Address";
+ static String fullName = "Full name";
+ static String mobileNumber = "Mobile Number";
+ static String pinCode = "Pin Code";
+ static String landmark = "Landmark";
+ static String addressType = "Address Type";
 }

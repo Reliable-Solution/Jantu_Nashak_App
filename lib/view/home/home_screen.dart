@@ -1,32 +1,25 @@
 // flutter
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
-// package
 import 'package:get/get.dart';
 import 'package:keep_app/constant/app_constant.dart';
-import 'package:keep_app/utils/string_res.dart';
-import 'package:keep_app/view/SharedProducts/sharedProductScreen.dart';
 import 'package:keep_app/view/home/SliverAppBarDelegate.dart';
-import 'package:keep_app/view/home/allAddress_screen.dart';
-import 'package:keep_app/view/home/priceStroescreen.dart';
-import 'package:keep_app/view/home/widget/homeProductHeader.dart';
-import 'package:keep_app/view/home/widget/homeProductList.dart';
 import 'package:keep_app/widget/alignWidget.dart';
 import 'package:keep_app/widget/dividerWidgets.dart';
 import 'package:keep_app/widget/inputWidget.dart';
 import 'package:keep_app/widget/textButtonWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../constant/colorConst.dart';
 import '../../constant/imagesConst.dart';
 import '../../controller/homeController.dart';
 import '../../theme/nativeTheme.dart';
 import '../../widget/iconButtonWidget.dart';
 import '../../widget/textWidget.dart';
+import '../address/allAddress_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final HomeController _controller = Get.put(HomeController());
+  final HomeController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -59,29 +52,6 @@ class HomeScreen extends StatelessWidget {
                     color: COLOR.greyLight,
                   ),
                 )),
-              // actions: [
-            //   IconButtonWidget(
-            //     voidCallback: () {
-            //       Get.to(() => ShareProductScreen());
-            //     },
-            //     icons: Icons.favorite_border,
-            //     color: COLOR.black,
-            //   ),
-            //   IconButtonWidget(
-            //     voidCallback: () {
-            //       Get.to(() => NotificationHomeScreen());
-            //     },
-            //     icons: Icons.notifications_none,
-            //     color: COLOR.black,
-            //   ),
-            //   IconButtonWidget(
-            //     voidCallback: () {
-            //       Get.to(() => AddToCardScreen());
-            //     },
-            //     icons: Icons.shopping_cart_outlined,
-            //     color: COLOR.black,
-            //   ),
-            // ],
             elevation: 0,
           ),
           SliverPersistentHeader(
@@ -123,17 +93,9 @@ class HomeScreen extends StatelessWidget {
                             Expanded(
                               child: TextWiget(
                                 // title: 'Search Keyword or Product ID',
-                                title: StringRes.search,
+                                title: 'Search Product',
                               ),
                             ),
-                            // VerticalDivider(thickness: 1, color: COLOR.grey),
-                            // InkWell(
-                            //   onTap: () {},
-                            //   child: Icon(
-                            //     Icons.camera_alt_outlined,
-                            //     color: COLOR.grey,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -149,9 +111,8 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   color: COLOR.purpleLight,
                   child: InkWell(
-                    onTap:      () {
-
-                      Get.to(AlladdressScreen());
+                    onTap: () {
+                      Get.to(() => AllAddressScreen());
                     },
                     child: Padding(
                       padding:
@@ -167,7 +128,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           TextWiget(
-                              title: StringRes.addDelivery,
+                              title:
+                                  'Add delivery location to get extra discount',
                               style: Themes.dark.textTheme.displayLarge),
                           Icon(Icons.navigate_next),
                         ],
@@ -175,137 +137,184 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Container(
-                //   color: COLOR.background,
-                //   alignment: Alignment.center,
-                //   child: Padding(
-                //     padding: EdgeInsets.symmetric(vertical: 8),
-                //     child: HomecategoriesList(),
-                //   ),
-                // ),
-                //
-
                 Container(
-                  color: Colors.white,
+                  color: COLOR.background,
                   margin: EdgeInsets.all(2),
                   padding: EdgeInsets.all(6),
                   // padding: EdgeInsets.symmetric(vertical: 10),
                   width: MediaQuery.of(context).size.width,
                   child: GetBuilder<HomeController>(builder: (controller) {
-                    return GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 1.6 / 2,
-                        // crossAxisSpacing: 7,
-                        // mainAxisSpacing: 7,
-                      ),
-                      // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      itemCount: controller.categoryList.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          color: COLOR.background,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                    return controller.isDashBoardLoading.value
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: Center(child: CircularProgressIndicator()))
+                        : Column(
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  // controller.fetchSubCategoryData(controller.categoryList[index].categoryId);
-                                  Get.to(() => SubCategoryScreen(
-                                        category:
-                                            "${controller.categoryList[index].categoryId}",
-                                      ));
-                                },
-                                child: Container(
-                                  height: Get.width > 360
-                                      ? MediaQuery.of(context).size.height *
-                                          0.14
-                                      : MediaQuery.of(context).size.height *
-                                          0.15,
-                                  decoration: BoxDecoration(
-                                    color: COLOR.amber,
-                                    image: DecorationImage(
-                                      // colorFilter: new ColorFilter.mode(
-                                      //     COLOR.black.withOpacity(0.8),
-                                      //     BlendMode.dstATop),
-                                      image: NetworkImage(
-                                        '$IMAGE_URL${controller.categoryList[index].categoryImage}',
+                              ///  DashBoard offers
+                              controller.offerList.isEmpty
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.all(0),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        color: COLOR.background,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.23,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: CarouselSlider.builder(
+                                                  itemCount: controller
+                                                      .offerList.length,
+                                                  itemBuilder: (context, index,
+                                                      realIndex) {
+                                                    return Container(
+                                                      decoration: BoxDecoration(
+                                                        color: COLOR.pinkLight,
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              '$IMAGE_URL${controller.offerList[index].offerImage}'),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                    );
+                                                  },
+                                                  options: CarouselOptions(
+                                                    enlargeCenterPage: true,
+                                                    autoPlay: true,
+                                                    onPageChanged:
+                                                        (index, reason) {
+                                                      controller.activeIndex
+                                                          .value = index;
+                                                      controller.update();
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 5),
+                                              child: buildIndicator(),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      fit: BoxFit.cover,
                                     ),
-                                    // border: Border.all(width: 5)
-                                  ),
+
+                              ///  DashBoard category
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  childAspectRatio: 1.5 / 2,
                                 ),
+                                itemCount: controller.categoryList.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    color: COLOR.background,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: Get.width > 360
+                                              ? MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.15
+                                              : MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.175,
+                                          decoration: BoxDecoration(
+                                            color: COLOR.amber,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                '$IMAGE_URL${controller.categoryList[index].categoryImage}',
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            // border: Border.all(width: 5)
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                               ),
-                              // Expanded(
-                              //   child: AlignWidget(
-                              //     alignment: Alignment.center,
-                              //     child: TextWiget(
-                              //       title: controller
-                              //           .categoryList[index].categoryName,
-                              //       style: Themes.light.textTheme.displaySmall!
-                              //           .copyWith(fontWeight: FontWeight.w600),
-                              //     ),
-                              //   ),
-                              // ),
+
+                              /// Dashboard products
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  childAspectRatio: 1.5 / 2,
+                                ),
+                                itemCount: controller.productList.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    color: COLOR.background,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: Get.width > 360
+                                              ? MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.14
+                                              : MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.15,
+                                          decoration: BoxDecoration(
+                                            color: COLOR.amber,
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                '$IMAGE_URL${controller.productList[index].subcategoryImage}',
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            // border: Border.all(width: 5)
+                                          ),
+                                        ),
+                                        Text(
+                                          controller.productList[index]
+                                                  .productName ??
+                                              "",
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                             ],
-                          ),
-                        );
-                      },
-                    );
+                          );
                   }),
                 ),
-
-                Container(
-                  color: COLOR.background,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: <Widget>[
-                      DividerWidget(thickness: 1),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                        child: AlignWidget(
-                          alignment: Alignment.centerLeft,
-                          child: TextWiget(
-                            title: StringRes.trending,
-                            style: Themes.light.textTheme.headlineSmall,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
-            ),
-          ),
-          SliverPersistentHeader(
-            floating: false,
-            pinned: true,
-            delegate: SliverAppBarDelegate(
-              child: PreferredSize(
-                preferredSize: Size.fromHeight(45),
-                child: InkWell(
-                  onTap: () {},
-                  child: HomeProductHeader(),
-                ),
-              ),
-            ),
-          ),
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final products = _controller.productList[index];
-                // return HomeProductList(products: products);
-              },
-              childCount: _controller.productList.length,
-            ),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: Get.width >= 480 ? 1.15 / 2 : 1 / 2.1,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2,
             ),
           ),
         ],
@@ -314,16 +323,18 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildIndicator() {
-    return AnimatedSmoothIndicator(
-      activeIndex: _controller.activeIndex.value,
-      count: _controller.sliderImage.length,
-      effect: ExpandingDotsEffect(
-        dotWidth: 6,
-        dotHeight: 4,
-        activeDotColor: COLOR.pink,
-        dotColor: COLOR.grey.withOpacity(0.5),
-      ),
-    );
+    return GetBuilder<HomeController>(builder: (controller) {
+      return AnimatedSmoothIndicator(
+        activeIndex: controller.activeIndex.value,
+        count: controller.offerList.length,
+        effect: ExpandingDotsEffect(
+          dotWidth: 6,
+          dotHeight: 4,
+          activeDotColor: COLOR.pink,
+          dotColor: COLOR.grey.withOpacity(0.5),
+        ),
+      );
+    });
   }
 
   void openBottomSheetDelivery(BuildContext context) {
@@ -343,7 +354,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWiget(
-                          title: StringRes.deliveryLocation,
+                          title: 'ADD DELIVERY LOCATION',
                           style: Themes.light.textTheme.displaySmall!
                               .copyWith(color: COLOR.background),
                         ),
@@ -380,9 +391,9 @@ class HomeScreen extends StatelessWidget {
                         focusNode: _controller.fdeliveryPincode,
                         style: Themes.light.textTheme.displayLarge,
                         keyboardType: TextInputType.number,
-                        labelText: StringRes.deliveryPincode,
+                        labelText: 'Type Delivery Pincode',
                         suffixIcon: TextButtonWidget(
-                          text: StringRes.submit,
+                          text: 'SUBMIT',
                           border: 1,
                           style: Themes.light.textTheme.displaySmall!
                               .copyWith(color: COLOR.pink),
