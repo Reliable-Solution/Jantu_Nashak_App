@@ -1,30 +1,27 @@
 // flutter
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-// package
 import 'package:get/get.dart';
 import 'package:keep_app/constant/app_constant.dart';
-import 'package:keep_app/view/SharedProducts/sharedProductScreen.dart';
 import 'package:keep_app/view/home/SliverAppBarDelegate.dart';
-import 'package:keep_app/view/home/priceStroescreen.dart';
-import 'package:keep_app/view/home/widget/homeProductHeader.dart';
-import 'package:keep_app/view/home/widget/homeProductList.dart';
 import 'package:keep_app/widget/alignWidget.dart';
+import 'package:keep_app/widget/categoryWidget.dart';
 import 'package:keep_app/widget/dividerWidgets.dart';
 import 'package:keep_app/widget/inputWidget.dart';
+import 'package:keep_app/widget/productWidget.dart';
 import 'package:keep_app/widget/textButtonWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../constant/colorConst.dart';
 import '../../constant/imagesConst.dart';
 import '../../controller/homeController.dart';
 import '../../theme/nativeTheme.dart';
 import '../../widget/iconButtonWidget.dart';
 import '../../widget/textWidget.dart';
+import '../address/allAddress_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final HomeController _controller = Get.put(HomeController());
+  final HomeController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +113,9 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   color: COLOR.purpleLight,
                   child: InkWell(
-                    onTap: () => openBottomSheetDelivery(context),
+                    onTap: () {
+                      Get.to(() => AllAddressScreen());
+                    },
                     child: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -154,62 +153,71 @@ class HomeScreen extends StatelessWidget {
                         : Column(
                             children: [
                               ///  DashBoard offers
-                              Padding(
-                                padding: const EdgeInsets.all(0),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 5),
-                                  width: MediaQuery.of(context).size.width,
-                                  color: COLOR.background,
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.23,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: CarouselSlider.builder(
-                                            itemCount:
-                                                controller.offerList.length,
-                                            itemBuilder:
-                                                (context, index, realIndex) {
-                                              return Container(
-                                                decoration: BoxDecoration(
-                                                  color: COLOR.pinkLight,
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        '$IMAGE_URL${controller.offerList[index].offerImage}'),
-                                                    fit: BoxFit.cover,
+                              controller.offerList.isEmpty
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.all(0),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        color: COLOR.background,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.23,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: CarouselSlider.builder(
+                                                  itemCount: controller
+                                                      .offerList.length,
+                                                  itemBuilder: (context, index,
+                                                      realIndex) {
+                                                    return Container(
+                                                      decoration: BoxDecoration(
+                                                        color: COLOR.pinkLight,
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              '$IMAGE_URL${controller.offerList[index].offerImage}'),
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                    );
+                                                  },
+                                                  options: CarouselOptions(
+                                                    enlargeCenterPage: true,
+                                                    autoPlay: true,
+                                                    onPageChanged:
+                                                        (index, reason) {
+                                                      controller.activeIndex
+                                                          .value = index;
+                                                      controller.update();
+                                                    },
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
                                                 ),
-                                              );
-                                            },
-                                            options: CarouselOptions(
-                                              enlargeCenterPage: true,
-                                              autoPlay: true,
-                                              onPageChanged: (index, reason) {
-                                                controller.activeIndex.value =
-                                                    index;
-                                                controller.update();
-                                              },
+                                              ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 5),
+                                              child: buildIndicator(),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 5),
-                                        child: buildIndicator(),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                    ),
 
                               ///  DashBoard category
                               GridView.builder(
@@ -218,94 +226,13 @@ class HomeScreen extends StatelessWidget {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
-                                  childAspectRatio: 1.5 / 2,
+                                  childAspectRatio: 1.8 / 2,
                                 ),
                                 itemCount: controller.categoryList.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    color: COLOR.background,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: Get.width > 360
-                                              ? MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.14
-                                              : MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.15,
-                                          decoration: BoxDecoration(
-                                            color: COLOR.amber,
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                '$IMAGE_URL${controller.categoryList[index].categoryImage}',
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
-                                            // border: Border.all(width: 5)
-                                          ),
-                                        ),
-                                        Text(
-                                          controller
-                                              .categoryList[index].categoryName,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-
-                              /// Dashboard products
-                              GridView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 1.5 / 2,
-                                ),
-                                itemCount: controller.productList.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    color: COLOR.background,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: Get.width > 360
-                                              ? MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.14
-                                              : MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.15,
-                                          decoration: BoxDecoration(
-                                            color: COLOR.amber,
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                '$IMAGE_URL${controller.productList[index].subcategoryImage}',
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
-                                            // border: Border.all(width: 5)
-                                          ),
-                                        ),
-                                        Text(
-                                          controller
-                                              .productList[index].productName ?? "",
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                  return CategoryComponent(
+                                      categoryModel:
+                                          controller.categoryList[index]);
                                 },
                               ),
                             ],
@@ -313,6 +240,21 @@ class HomeScreen extends StatelessWidget {
                   }),
                 ),
               ],
+            ),
+          ),
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final products = _controller.productList[index];
+                return ProductComponent(products: products);
+              },
+              childCount: _controller.productList.length,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
             ),
           ),
         ],

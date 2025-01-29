@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // package
 import 'package:get/get.dart';
+import 'package:keep_app/controller/addressController.dart';
 import 'package:keep_app/controller/homeController.dart';
 import 'package:keep_app/models/addressModel.dart';
 
@@ -16,7 +17,7 @@ import '../../widget/inputWidget.dart';
 import '../../widget/textWidget.dart';
 
 class PickupAddressScreen extends StatelessWidget {
-  final HomeController _controller = Get.find<HomeController>();
+  final AddressController _controller = Get.find<AddressController>();
 
   PickupAddressScreen({Key? key}) : super(key: key);
 
@@ -181,14 +182,14 @@ class PickupAddressScreen extends StatelessWidget {
         child: ButtonWidgets(
           title: 'Continue',
           voidCallback: () {
-        AddressModel a1  =  AddressModel(custmoerId:_controller.m1!.customerId, fullName: _controller.txtFullname.text,
-                mobileNumber: _controller.txtMobileno.text,
-                pincode: _controller.txtPincode.text,
-                address: _controller.txtAddress.text,
-                landmark: _controller.txtLandmark.text,
+        AddressModel a1  =  AddressModel(customerId:_controller.customerModel!.value.customerId, addressFullName: _controller.txtFullname.text,
+                addressMobileNo: _controller.txtMobileno.text,
+                addressPincode: _controller.txtPincode.text,
+                addressDefault: _controller.txtAddress.text,
+                addressLandmark: _controller.txtLandmark.text,
                 addressType: _controller.txtType.text);
 
-            _controller.addAddressData(a1: a1);
+            _controller.addAddressData(addressModel: a1);
           },
           // voidCallback: (_controller.cState.text.trim().isNotEmpty)
           //     ? () {

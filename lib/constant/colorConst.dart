@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class COLOR {
   static final Color background = Colors.white;
-  static final Color pink = Color(0xff9e2089);
+  static final Color pink = Color(0xff900C3F);
   static final Color pinkLight = Colors.red.shade50;
   static final Color pink400 = Colors.red.shade400;
   static final Color grey = Colors.grey;

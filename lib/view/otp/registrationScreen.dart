@@ -15,7 +15,7 @@ class RegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration'),
+        title: Text('Registration',style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.purple,
       ),
       body: Padding(

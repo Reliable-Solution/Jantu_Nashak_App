@@ -1,20 +1,14 @@
 //flutter
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
-//packages
 import 'package:get/get.dart';
 import 'package:keep_app/constant/api_endpoints.dart';
 import 'package:keep_app/controller/networkController.dart';
 import 'package:keep_app/models/productModel.dart';
 import 'package:keep_app/models/subCategoryModel.dart';
-import '../models/addressModel.dart';
 import '../models/brandModel.dart';
 import '../models/categoryModel.dart';
 import '../models/customerModel.dart';
 import '../models/offerModel.dart';
-import '../models/productsModel.dart';
 import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
 
@@ -33,7 +27,7 @@ class HomeController extends GetxController
   var activeIndex = 0.obs;
   var selectedFilterIndex = 0.obs;
   var sortValue = 1.obs;
-  List<Category> categoryList = [];
+  List<CategoryModel> categoryList = [];
   List<SubCategory> subCategoryList = [];
   List<ProductModel> productList = [];
   List<OfferModel> offerList = [];
@@ -99,38 +93,6 @@ class HomeController extends GetxController
   //pricelist
   final price = [99, 199, 299, 399, 499];
 
-  addAddressData({AddressModel? a1}) async {
-    subCategoryList.clear();
-    try {
-      final Map<String, dynamic> body = {
-        "CustomerId": a1!.custmoerId,
-        "AddressFullName": a1.fullName,
-        "AddressMobileNo": a1.mobileNumber,
-        "AddressPincode": a1.pincode,
-        "Address": a1.address,
-        "AddressLandmark": a1.landmark,
-        "AddressType": a1.addressType,
-      };
-
-      var response = await ApiService.post(endpoint: addAddress, body: body);
-
-      print("sub category data ${response.data}");
-
-      if (response.data['IsSuccess'] == true) {
-        subCategoryList = (response.data['Data'] as List)
-            .map((subCategoryJson) => SubCategory.fromJson(subCategoryJson))
-            .toList();
-        print("sub category data ${subCategoryList.length}");
-        isCategory = true.obs;
-        update();
-      } else {
-        throw Exception("Error: ${response.data['Message']}");
-      }
-    } catch (e) {
-      print("Error in fetchCategoryData: $e");
-      throw Exception("Failed to fetch category data");
-    }
-  }
 
   /// Get dashboard all data
   Future<void> getDashboardData(String? customerId) async {
@@ -140,7 +102,7 @@ class HomeController extends GetxController
     brandList.clear();
     productList.clear();
 
-      isDashBoardLoading.value = true;
+    isDashBoardLoading.value = true;
 
     try {
       final Map<String, dynamic> body = {
@@ -166,7 +128,7 @@ class HomeController extends GetxController
         }
         if (data[1]['Category'] != null) {
           categoryList = (data[1]['Category'] as List)
-              .map((categoryJson) => Category.fromJson(categoryJson))
+              .map((categoryJson) => CategoryModel.fromJson(categoryJson))
               .toList();
         }
         if (data[2]['Brand'] != null) {
