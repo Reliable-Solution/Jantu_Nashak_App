@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:keep_app/constant/app_constant.dart';
 import 'package:keep_app/view/home/SliverAppBarDelegate.dart';
 import 'package:keep_app/widget/alignWidget.dart';
+import 'package:keep_app/widget/categoryWidget.dart';
 import 'package:keep_app/widget/dividerWidgets.dart';
 import 'package:keep_app/widget/inputWidget.dart';
+import 'package:keep_app/widget/productWidget.dart';
 import 'package:keep_app/widget/textButtonWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../constant/colorConst.dart';
@@ -224,90 +226,13 @@ class HomeScreen extends StatelessWidget {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
-                                  childAspectRatio: 1.5 / 2,
+                                  childAspectRatio: 1.8 / 2,
                                 ),
                                 itemCount: controller.categoryList.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    color: COLOR.background,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: Get.width > 360
-                                              ? MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.15
-                                              : MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.175,
-                                          decoration: BoxDecoration(
-                                            color: COLOR.amber,
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                '$IMAGE_URL${controller.categoryList[index].categoryImage}',
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
-                                            // border: Border.all(width: 5)
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-
-                              /// Dashboard products
-                              GridView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 1.5 / 2,
-                                ),
-                                itemCount: controller.productList.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    color: COLOR.background,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: Get.width > 360
-                                              ? MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.14
-                                              : MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.15,
-                                          decoration: BoxDecoration(
-                                            color: COLOR.amber,
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                '$IMAGE_URL${controller.productList[index].subcategoryImage}',
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
-                                            // border: Border.all(width: 5)
-                                          ),
-                                        ),
-                                        Text(
-                                          controller.productList[index]
-                                                  .productName ??
-                                              "",
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                  return CategoryComponent(
+                                      categoryModel:
+                                          controller.categoryList[index]);
                                 },
                               ),
                             ],
@@ -315,6 +240,21 @@ class HomeScreen extends StatelessWidget {
                   }),
                 ),
               ],
+            ),
+          ),
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final products = _controller.productList[index];
+                return ProductComponent(products: products);
+              },
+              childCount: _controller.productList.length,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
             ),
           ),
         ],

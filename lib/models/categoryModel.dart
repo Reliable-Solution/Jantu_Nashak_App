@@ -1,4 +1,4 @@
-class Category {
+class CategoryModel {
   final String categoryId;
   final String categoryName;
   final String categoryHindiName;
@@ -6,7 +6,7 @@ class Category {
   final String categoryStatus;
   final String categoryCDT;
 
-  Category({
+  CategoryModel({
     required this.categoryId,
     required this.categoryName,
     required this.categoryHindiName,
@@ -16,8 +16,8 @@ class Category {
   });
 
   // Factory method to parse JSON data into a Category object
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
       categoryId: json['CategoryId'],
       categoryName: json['CategoryName'],
       categoryHindiName: json['CategoryHindiName'],
