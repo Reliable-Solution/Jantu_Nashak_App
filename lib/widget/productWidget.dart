@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keep_app/models/productModel.dart';
+import 'package:keep_app/widget/productDetailView.dart';
 import 'package:keep_app/widget/textWidget.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../Theme/nativeTheme.dart';
 import '../constant/app_constant.dart';
@@ -20,9 +23,10 @@ class ProductComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double heightView = (MediaQuery.of(context).size.height * 22) / 100;
     return InkWell(
       onTap: () {
-        // Get.to(() => ProductDetailScreen(products: products!));
+        Get.to(() => ProductDetailScreen(products: products!));
       },
       child: Container(
         // height: (MediaQuery.of(context).size.height * 50) / 100,
@@ -33,46 +37,97 @@ class ProductComponent extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            Container(
-              height: (MediaQuery.of(context).size.height * 25) / 100,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image:
-                      NetworkImage('$IMAGE_URL${products!.subcategoryImage}'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: AlignWidget(
-                  alignment: Alignment.topRight,
-                  child: GetBuilder<HomeController>(
-                    builder: (_controller) => CircleAvatar(
-                      maxRadius: 15,
-                      backgroundColor: COLOR.background.withOpacity(0.8),
-                      child: IconButtonWidget(
-                        voidCallback: () {
-                          if (products!.isFav == false) {
-                            products!.isFav = true;
-                          } else {
-                            products!.isFav = false;
-                          }
+             Stack(
+               children: [
+                 CachedNetworkImage(
+                   imageUrl: '$IMAGE_URL${products!.subcategoryImage}',
+                   height: heightView,
+                   width: double.infinity,
+                   fit: BoxFit.cover,
+                   placeholder: (context, url) => Shimmer.fromColors(
+                     baseColor: Colors.grey[300]!,
+                     highlightColor: Colors.grey[100]!,
+                     child: Container(
+                       height: heightView,
+                       width: double.infinity,
+                       color: Colors.white,
+                     ),
+                   ),
+                   errorWidget: (context, url, error) => Center(
+                     child: Icon(Icons.broken_image, color: Colors.red, size: 50),
+                   ),
+                 ),
+                 Container(
+                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                   child: AlignWidget(
+                     alignment: Alignment.topRight,
+                     child: GetBuilder<HomeController>(
+                       builder: (_controller) => CircleAvatar(
+                         maxRadius: 15,
+                         backgroundColor: COLOR.background.withOpacity(0.8),
+                         child: IconButtonWidget(
+                           voidCallback: () {
+                             if (products!.isFav == false) {
+                               products!.isFav = true;
+                             } else {
+                               products!.isFav = false;
+                             }
 
-                          _controller.update();
-                        },
-                        color:
-                            products!.isFav == false ? COLOR.black : COLOR.pink,
-                        icons: products!.isFav == false
-                            ? Icons.favorite_border
-                            : Icons.favorite,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+                             _controller.update();
+                           },
+                           color:
+                           products!.isFav == false ? COLOR.black : COLOR.appBaseColor,
+                           icons: products!.isFav == false
+                               ? Icons.favorite_border
+                               : Icons.favorite,
+                           size: 20,
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
+               ],
+             ),
+            // Container(
+            //   height: heightView,
+            //   width: MediaQuery.of(context).size.width,
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image:
+            //           NetworkImage('$IMAGE_URL${products!.subcategoryImage}'),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            //   child: Container(
+            //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            //     child: AlignWidget(
+            //       alignment: Alignment.topRight,
+            //       child: GetBuilder<HomeController>(
+            //         builder: (_controller) => CircleAvatar(
+            //           maxRadius: 15,
+            //           backgroundColor: COLOR.background.withOpacity(0.8),
+            //           child: IconButtonWidget(
+            //             voidCallback: () {
+            //               if (products!.isFav == false) {
+            //                 products!.isFav = true;
+            //               } else {
+            //                 products!.isFav = false;
+            //               }
+            //
+            //               _controller.update();
+            //             },
+            //             color:
+            //                 products!.isFav == false ? COLOR.black : COLOR.appBaseColor,
+            //             icons: products!.isFav == false
+            //                 ? Icons.favorite_border
+            //                 : Icons.favorite,
+            //             size: 20,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child: Column(

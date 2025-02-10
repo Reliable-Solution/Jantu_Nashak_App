@@ -1,48 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:keep_app/models/categoryModel.dart';
 import '../constant/app_constant.dart';
 import '../constant/colorConst.dart';
 
 class CategoryComponent extends StatelessWidget {
-  const CategoryComponent({
-    super.key,
-    @required this.categoryModel,
-  });
-
   final CategoryModel? categoryModel;
+
+  const CategoryComponent({super.key, this.categoryModel});
 
   @override
   Widget build(BuildContext context) {
+    double imageHeight = Get.width > 360
+        ? MediaQuery.of(context).size.height * 0.15
+        : MediaQuery.of(context).size.height * 0.175;
+
     return InkWell(
       onTap: () {
-        // Get.to(() => ProductDetailScreen(products: products!));
+        // Navigate to product details if needed
       },
       child: Container(
         color: COLOR.background,
         child: Column(
-          crossAxisAlignment:
-          CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: Get.width > 360
-                  ? MediaQuery.of(context)
-                  .size
-                  .height *
-                  0.15
-                  : MediaQuery.of(context)
-                  .size
-                  .height *
-                  0.175,
-              decoration: BoxDecoration(
-                color: COLOR.amber,
-                image: DecorationImage(
-                  image: NetworkImage(
-                    '$IMAGE_URL${categoryModel!.categoryImage}',
-                  ),
-                  fit: BoxFit.fitHeight,
+            CachedNetworkImage(
+              imageUrl: '$IMAGE_URL${categoryModel?.categoryImage ?? ""}',
+              height: imageHeight,
+              width: double.infinity,
+              fit: BoxFit.fitHeight,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  height: imageHeight,
+                  width: double.infinity,
+                  color: Colors.white,
                 ),
-                // border: Border.all(width: 5)
+              ),
+              errorWidget: (context, url, error) => Center(
+                child: Icon(Icons.broken_image, color: Colors.red, size: 50),
               ),
             ),
           ],

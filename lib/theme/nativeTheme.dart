@@ -8,7 +8,7 @@ import 'package:keep_app/constant/colorConst.dart';
 class Themes {
   static final light = ThemeData(
     // backgroundColor: Colors.white,
-    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: COLOR.pink),
+    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: COLOR.appBaseColor),
     textTheme: TextTheme(
       bodyLarge: TextStyle(
         fontSize: 14,
@@ -44,7 +44,7 @@ class Themes {
       titleLarge: TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.w700,
-        color: COLOR.pink,
+        color: COLOR.appBaseColor,
       ),
     ),
   );

@@ -25,7 +25,7 @@ class DashboardScreen extends StatelessWidget {
             backgroundColor: COLOR.background,
             type: BottomNavigationBarType.fixed,
             unselectedItemColor: COLOR.grey,
-            selectedItemColor: COLOR.pink,
+            selectedItemColor: COLOR.appBaseColor,
             currentIndex: _controller.tabIndex,
             onTap: _controller.changeTabIndex,
             items: [
@@ -71,7 +71,7 @@ class DashboardScreen extends StatelessWidget {
     return BottomNavigationBarItem(
       icon: Icon(icon),
       label: label,
-      backgroundColor: COLOR.pink,
+      backgroundColor: COLOR.appBaseColor,
     );
   }
 }

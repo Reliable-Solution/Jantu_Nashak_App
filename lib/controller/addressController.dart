@@ -99,7 +99,7 @@ class AddressController extends GetxController {
         "AddressId": addressId,
       };
 
-      var response = await ApiService.post(endpoint: deleteAddress, body: body);
+      var response = await ApiService.post(endpoint: deleteAddressApi, body: body);
       if (response.data['IsSuccess'] == true) {
         int index =  allAddressList.indexWhere((item) => item.addressId == addressId);
         allAddressList.removeAt(index);

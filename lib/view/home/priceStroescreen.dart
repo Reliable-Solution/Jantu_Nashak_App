@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 // // theme
 // import 'package:getxnative/theme/nativeTheme.dart';
 // // views
-// import 'package:getxnative/views/AddtoCard/cardScreen.dart';
 // import 'package:getxnative/views/SharedProducts/sharedProductScreen.dart';
 // import 'package:getxnative/views/home/widget/SliverAppBarDelegate.dart';
 // import 'package:getxnative/views/home/widget/homeProductHeader.dart';
@@ -423,7 +422,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                             child: TextButtonWidget(
                               text: 'SUBMIT',
                               style: Themes.light.textTheme.displaySmall!
-                                  .copyWith(color: COLOR.pink),
+                                  .copyWith(color: COLOR.appBaseColor),
                               border: 1,
                               onPressed: (_controller.deliveryPincode.text
                                   .trim()

@@ -182,7 +182,7 @@ class HomeProductHeader extends StatelessWidget {
                     // _controller.update();
                   },
                   contentPadding: EdgeInsets.zero,
-                  activeColor: COLOR.pink,
+                  activeColor: COLOR.appBaseColor,
                   visualDensity: const VisualDensity(
                     horizontal: VisualDensity.minimumDensity,
                     vertical: VisualDensity.minimumDensity,
@@ -205,7 +205,7 @@ class HomeProductHeader extends StatelessWidget {
                     // _controller.update();
                   },
                   contentPadding: EdgeInsets.zero,
-                  activeColor: COLOR.pink,
+                  activeColor: COLOR.appBaseColor,
                   visualDensity: const VisualDensity(
                     horizontal: VisualDensity.minimumDensity,
                     vertical: VisualDensity.minimumDensity,
@@ -228,7 +228,7 @@ class HomeProductHeader extends StatelessWidget {
                     // _controller.sortValue.value = int.parse(value.toString());
                     // _controller.update();
                   },
-                  activeColor: COLOR.pink,
+                  activeColor: COLOR.appBaseColor,
                   visualDensity: const VisualDensity(
                     horizontal: VisualDensity.minimumDensity,
                     vertical: VisualDensity.minimumDensity,
@@ -251,7 +251,7 @@ class HomeProductHeader extends StatelessWidget {
                     // _controller.sortValue.value = int.parse(value.toString());
                     // _controller.update();
                   },
-                  activeColor: COLOR.pink,
+                  activeColor: COLOR.appBaseColor,
                   visualDensity: const VisualDensity(
                     horizontal: VisualDensity.minimumDensity,
                     vertical: VisualDensity.minimumDensity,
@@ -274,7 +274,7 @@ class HomeProductHeader extends StatelessWidget {
                     // _controller.sortValue.value = int.parse(value.toString());
                     // _controller.update();
                   },
-                  activeColor: COLOR.pink,
+                  activeColor: COLOR.appBaseColor,
                   visualDensity: const VisualDensity(
                     horizontal: VisualDensity.minimumDensity,
                     vertical: VisualDensity.minimumDensity,
@@ -301,7 +301,7 @@ class HomeProductHeader extends StatelessWidget {
                     // _controller.sortValue.value = int.parse(value.toString());
                     // _controller.update();
                   },
-                  activeColor: COLOR.pink,
+                  activeColor: COLOR.appBaseColor,
                   title: TextWiget(
                     title: 'Discount',
                     style: _controller.sortValue.value == 6 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
@@ -627,7 +627,7 @@ class HomeProductHeader extends StatelessWidget {
                             isScrollable: true,
                             indicatorSize: TabBarIndicatorSize.label,
                             controller: _controller.myTabController,
-                            indicatorColor: COLOR.pink,
+                            indicatorColor: COLOR.appBaseColor,
                             indicatorPadding: EdgeInsets.zero,
                             labelPadding: EdgeInsets.zero,
                             indicator: BoxDecoration(),
@@ -654,7 +654,7 @@ class HomeProductHeader extends StatelessWidget {
                                               topRight: Radius.circular(5),
                                               bottomRight: Radius.circular(5),
                                             ),
-                                            color: _controller.selectedFilterIndex.value == ind ? COLOR.pink : COLOR.transparent,
+                                            color: _controller.selectedFilterIndex.value == ind ? COLOR.appBaseColor : COLOR.transparent,
                                           ),
                                         ),
                                         Container(
@@ -664,7 +664,7 @@ class HomeProductHeader extends StatelessWidget {
                                           child: TextWiget(
                                             title: _controller.filters[ind],
                                             style: Themes.dark.textTheme.displayLarge!.copyWith(
-                                              color: _controller.selectedFilterIndex.value == ind ? COLOR.pink : COLOR.grey,
+                                              color: _controller.selectedFilterIndex.value == ind ? COLOR.appBaseColor : COLOR.grey,
                                             ),
                                           ),
                                         ),
@@ -1577,7 +1577,7 @@ class ProfileContainer extends StatelessWidget {
         onPressed: voidCallback,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: bordercolor ?? COLOR.pink),
+            side: BorderSide(color: bordercolor ?? COLOR.appBaseColor),
             borderRadius: BorderRadius.circular(60),
           ),
           backgroundColor: color ?? COLOR.pinkLight,

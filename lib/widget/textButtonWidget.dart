@@ -34,11 +34,11 @@ class TextButtonWidget extends StatelessWidget {
               padding: MaterialStateProperty.all<EdgeInsets>(
                 EdgeInsets.symmetric(horizontal: 10, vertical: 11),
               ),
-              foregroundColor: MaterialStateProperty.all<Color>(color ?? COLOR.pink),
+              foregroundColor: MaterialStateProperty.all<Color>(color ?? COLOR.appBaseColor),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
-                  side: BorderSide(color: color ?? COLOR.pink),
+                  side: BorderSide(color: color ?? COLOR.appBaseColor),
                 ),
               ),
             ),

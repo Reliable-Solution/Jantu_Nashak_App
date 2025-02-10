@@ -1,7 +1,25 @@
-class ProductModel {
-  String? productId;
+class CartDetailModel {
+  String? cartId;
+  String? customerId;
   bool? isFav;
+  String? productdetailId;
   List<PackInfo>? packInfo;
+  String? cartQuantity;
+  String? cartReturnStatus;
+  String? cartOrder;
+  String? cartOrderdetail;
+  String? cartStatus;
+  String? cartCDT;
+  String? customerName;
+  String? customerImage;
+  String? customerEmailId;
+  String? customerGender;
+  String? customerFCMToken;
+  String? customerPhoneNo;
+  String? customerCode;
+  String? customerReferCode;
+  String? customerStatus;
+  String? customerCDT;
   String? categoryId;
   String? subcategoryId;
   String? productName;
@@ -17,16 +35,37 @@ class ProductModel {
   String? productOfferCode;
   String? productStatus;
   String? productCDT;
-  String? subcategoryName;
-  String? subcategoryImage;
-  String? subcategoryDesc;
-  String? subcategoryStatus;
-  String? subcategoryCDT;
+  String? productIdReference;
+  String? productdetailImages;
+  String? productdetailMrp;
+  String? productdetailSrp;
+  String? productdetailQty;
+  String? productdetailUnit;
+  String? productdetailStatus;
+  String? productdetailCDT;
 
-  ProductModel(
-      {this.productId,
+  CartDetailModel(
+      {this.cartId,
+        this.customerId,
         this.isFav,
+        this.productdetailId,
         this.packInfo,
+        this.cartQuantity,
+        this.cartReturnStatus,
+        this.cartOrder,
+        this.cartOrderdetail,
+        this.cartStatus,
+        this.cartCDT,
+        this.customerName,
+        this.customerImage,
+        this.customerEmailId,
+        this.customerGender,
+        this.customerFCMToken,
+        this.customerPhoneNo,
+        this.customerCode,
+        this.customerReferCode,
+        this.customerStatus,
+        this.customerCDT,
         this.categoryId,
         this.subcategoryId,
         this.productName,
@@ -42,21 +81,42 @@ class ProductModel {
         this.productOfferCode,
         this.productStatus,
         this.productCDT,
-        this.subcategoryName,
-        this.subcategoryImage,
-        this.subcategoryDesc,
-        this.subcategoryStatus,
-        this.subcategoryCDT});
+        this.productIdReference,
+        this.productdetailImages,
+        this.productdetailMrp,
+        this.productdetailSrp,
+        this.productdetailQty,
+        this.productdetailUnit,
+        this.productdetailStatus,
+        this.productdetailCDT});
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    productId = json['ProductId'];
+  CartDetailModel.fromJson(Map<String, dynamic> json) {
+    cartId = json['CartId'];
+    customerId = json['CustomerId'];
     isFav = json['isFav'];
+    productdetailId = json['ProductdetailId'];
     if (json['PackInfo'] != null) {
       packInfo = <PackInfo>[];
       json['PackInfo'].forEach((v) {
         packInfo!.add(new PackInfo.fromJson(v));
       });
     }
+    cartQuantity = json['CartQuantity'];
+    cartReturnStatus = json['CartReturnStatus'];
+    cartOrder = json['CartOrder'];
+    cartOrderdetail = json['CartOrderdetail'];
+    cartStatus = json['CartStatus'];
+    cartCDT = json['CartCDT'];
+    customerName = json['CustomerName'];
+    customerImage = json['CustomerImage'];
+    customerEmailId = json['CustomerEmailId'];
+    customerGender = json['CustomerGender'];
+    customerFCMToken = json['CustomerFCMToken'];
+    customerPhoneNo = json['CustomerPhoneNo'];
+    customerCode = json['CustomerCode'];
+    customerReferCode = json['CustomerReferCode'];
+    customerStatus = json['CustomerStatus'];
+    customerCDT = json['CustomerCDT'];
     categoryId = json['CategoryId'];
     subcategoryId = json['SubcategoryId'];
     productName = json['ProductName'];
@@ -73,20 +133,41 @@ class ProductModel {
     productOfferCode = json['ProductOfferCode'];
     productStatus = json['ProductStatus'];
     productCDT = json['ProductCDT'];
-    subcategoryName = json['SubcategoryName'];
-    subcategoryImage = json['SubcategoryImage'];
-    subcategoryDesc = json['SubcategoryDesc'];
-    subcategoryStatus = json['SubcategoryStatus'];
-    subcategoryCDT = json['SubcategoryCDT'];
+    productIdReference = json['ProductIdReference'];
+    productdetailImages = json['ProductdetailImages'];
+    productdetailMrp = json['ProductdetailMrp'];
+    productdetailSrp = json['ProductdetailSrp'];
+    productdetailQty = json['ProductdetailQty'];
+    productdetailUnit = json['ProductdetailUnit'];
+    productdetailStatus = json['ProductdetailStatus'];
+    productdetailCDT = json['ProductdetailCDT'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ProductId'] = this.productId;
+    data['CartId'] = this.cartId;
+    data['CustomerId'] = this.customerId;
     data['isFav'] = this.isFav;
+    data['ProductdetailId'] = this.productdetailId;
     if (this.packInfo != null) {
       data['PackInfo'] = this.packInfo!.map((v) => v.toJson()).toList();
     }
+    data['CartQuantity'] = this.cartQuantity;
+    data['CartReturnStatus'] = this.cartReturnStatus;
+    data['CartOrder'] = this.cartOrder;
+    data['CartOrderdetail'] = this.cartOrderdetail;
+    data['CartStatus'] = this.cartStatus;
+    data['CartCDT'] = this.cartCDT;
+    data['CustomerName'] = this.customerName;
+    data['CustomerImage'] = this.customerImage;
+    data['CustomerEmailId'] = this.customerEmailId;
+    data['CustomerGender'] = this.customerGender;
+    data['CustomerFCMToken'] = this.customerFCMToken;
+    data['CustomerPhoneNo'] = this.customerPhoneNo;
+    data['CustomerCode'] = this.customerCode;
+    data['CustomerReferCode'] = this.customerReferCode;
+    data['CustomerStatus'] = this.customerStatus;
+    data['CustomerCDT'] = this.customerCDT;
     data['CategoryId'] = this.categoryId;
     data['SubcategoryId'] = this.subcategoryId;
     data['ProductName'] = this.productName;
@@ -103,21 +184,22 @@ class ProductModel {
     data['ProductOfferCode'] = this.productOfferCode;
     data['ProductStatus'] = this.productStatus;
     data['ProductCDT'] = this.productCDT;
-    data['SubcategoryName'] = this.subcategoryName;
-    data['SubcategoryImage'] = this.subcategoryImage;
-    data['SubcategoryDesc'] = this.subcategoryDesc;
-    data['SubcategoryStatus'] = this.subcategoryStatus;
-    data['SubcategoryCDT'] = this.subcategoryCDT;
+    data['ProductIdReference'] = this.productIdReference;
+    data['ProductdetailImages'] = this.productdetailImages;
+    data['ProductdetailMrp'] = this.productdetailMrp;
+    data['ProductdetailSrp'] = this.productdetailSrp;
+    data['ProductdetailQty'] = this.productdetailQty;
+    data['ProductdetailUnit'] = this.productdetailUnit;
+    data['ProductdetailStatus'] = this.productdetailStatus;
+    data['ProductdetailCDT'] = this.productdetailCDT;
     return data;
   }
 }
 
 class PackInfo {
   String? productdetailId;
-  bool? isCart;
-  String? cartqty;
   String? productIdReference;
-  List<String>? productdetailImages;
+  String? productdetailImages;
   String? productdetailMrp;
   String? productdetailSrp;
   String? productdetailQty;
@@ -127,8 +209,6 @@ class PackInfo {
 
   PackInfo(
       {this.productdetailId,
-        this.isCart,
-        this.cartqty,
         this.productIdReference,
         this.productdetailImages,
         this.productdetailMrp,
@@ -140,10 +220,8 @@ class PackInfo {
 
   PackInfo.fromJson(Map<String, dynamic> json) {
     productdetailId = json['ProductdetailId'];
-    isCart = json['isCart'];
-    cartqty = json['Cartqty']?.toString();
     productIdReference = json['ProductIdReference'];
-    productdetailImages = json['ProductdetailImages'].cast<String>();
+    productdetailImages = json['ProductdetailImages'];
     productdetailMrp = json['ProductdetailMrp'];
     productdetailSrp = json['ProductdetailSrp'];
     productdetailQty = json['ProductdetailQty'];
@@ -155,8 +233,6 @@ class PackInfo {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['ProductdetailId'] = this.productdetailId;
-    data['isCart'] = this.isCart;
-    data['Cartqty'] = this.cartqty?.toString();
     data['ProductIdReference'] = this.productIdReference;
     data['ProductdetailImages'] = this.productdetailImages;
     data['ProductdetailMrp'] = this.productdetailMrp;

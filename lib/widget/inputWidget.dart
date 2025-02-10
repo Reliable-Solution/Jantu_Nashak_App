@@ -75,7 +75,7 @@ class InputFiledArea extends StatelessWidget {
         isDense: true,
         labelText: labelText,
         labelStyle: TextStyle(
-          color: (focusNode != null && focusNode!.hasFocus) ? COLOR.pink : COLOR.grey,
+          color: (focusNode != null && focusNode!.hasFocus) ? COLOR.appBaseColor : COLOR.grey,
         ),
         prefixIcon: prefixIcon,
         suffixText: suffixText,
@@ -99,10 +99,10 @@ class InputFiledArea extends StatelessWidget {
             : UnderlineInputBorder(borderSide: BorderSide(color: COLOR.grey)),
         focusedBorder: (border == 1)
             ? OutlineInputBorder(
-                borderSide: BorderSide(color: COLOR.pink),
+                borderSide: BorderSide(color: COLOR.appBaseColor),
               )
             : UnderlineInputBorder(
-                borderSide: BorderSide(color: COLOR.pink),
+                borderSide: BorderSide(color: COLOR.appBaseColor),
               ),
       ),
       validator: validator,

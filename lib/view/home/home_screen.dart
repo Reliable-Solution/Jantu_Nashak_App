@@ -36,8 +36,8 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: COLOR.background,
             title: Obx(() => TextWiget(
                   title: _controller.customerModel != null
-                      ? _controller.customerModel!.value.customerName
-                      : "",
+                      ? "Hello 🙏🏻 ${_controller.customerModel!.value.customerName}"
+                      : "Hello 🙏🏻",
                   style: Themes.light.textTheme.displayLarge,
                 )),
             leading: Padding(
@@ -226,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
-                                  childAspectRatio: 1.8 / 2,
+                                  childAspectRatio: 1.6 / 2,
                                 ),
                                 itemCount: controller.categoryList.length,
                                 itemBuilder: (context, index) {
@@ -242,21 +242,23 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final products = _controller.productList[index];
-                return ProductComponent(products: products);
-              },
-              childCount: _controller.productList.length,
-            ),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2,
-            ),
-          ),
+          GetBuilder<HomeController>(builder: (controller) {
+            return SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final products = controller.productList[index];
+                  return ProductComponent(products: products);
+                },
+                childCount: controller.productList.length,
+              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
+                crossAxisSpacing: 2,
+                mainAxisSpacing: 2,
+              ),
+            );
+          })
         ],
       ),
     );
@@ -270,7 +272,7 @@ class HomeScreen extends StatelessWidget {
         effect: ExpandingDotsEffect(
           dotWidth: 6,
           dotHeight: 4,
-          activeDotColor: COLOR.pink,
+          activeDotColor: COLOR.appBaseColor,
           dotColor: COLOR.grey.withOpacity(0.5),
         ),
       );
@@ -336,7 +338,7 @@ class HomeScreen extends StatelessWidget {
                           text: 'SUBMIT',
                           border: 1,
                           style: Themes.light.textTheme.displaySmall!
-                              .copyWith(color: COLOR.pink),
+                              .copyWith(color: COLOR.appBaseColor),
                           onPressed: (_controller.deliveryPincode.text
                                   .trim()
                                   .isNotEmpty)

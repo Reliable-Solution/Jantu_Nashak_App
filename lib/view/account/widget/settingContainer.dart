@@ -30,7 +30,7 @@ class Settingcontainer extends StatelessWidget {
           Switch(
             value: value!,
             activeColor: COLOR.background,
-            activeTrackColor: COLOR.pink,
+            activeTrackColor: COLOR.appBaseColor,
             onChanged: onChanged,
           ),
         ],

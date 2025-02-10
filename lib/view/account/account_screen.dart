@@ -78,7 +78,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           voidCallback: () {
                             openBottomSheetSignup(context);
                           },
-                          color: COLOR.pink,
+                          color: COLOR.appBaseColor,
                           style: Themes.light.textTheme.displayLarge!
                               .copyWith(color: Colors.white),
                         ),
@@ -143,6 +143,7 @@ class _AccountScreenState extends State<AccountScreen> {
             AlignWidget(
               alignment: Alignment.centerLeft,
               child: TextWiget(
+                title: "",
                 style: Themes.light.textTheme.displayLarge!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -192,7 +193,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     authenticate.onVerifyCode(txtNumber.text);
                     onTap();
                   },
-                  color: COLOR.pink,
+                  color: COLOR.appBaseColor,
                   style: Themes.light.textTheme.displaySmall!
                       .copyWith(color: COLOR.background),
                   title: StringRes.otp,
@@ -213,7 +214,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       TextWiget(
                         title: StringRes.termsConditions,
                         style: Themes.dark.textTheme.displayLarge!
-                            .copyWith(color: COLOR.pink),
+                            .copyWith(color: COLOR.appBaseColor),
                       ),
                       TextWiget(
                         title: StringRes.and,
@@ -222,7 +223,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       TextWiget(
                         title: StringRes.privacyPolicy,
                         style: Themes.dark.textTheme.displayLarge!
-                            .copyWith(color: COLOR.pink),
+                            .copyWith(color: COLOR.appBaseColor),
                       ),
                     ],
                   ),
@@ -293,7 +294,7 @@ class _AccountScreenState extends State<AccountScreen> {
               child: TextWiget(
                 title: StringRes.changeNumber,
                 style: Themes.light.textTheme.displaySmall!.copyWith(
-                  color: COLOR.pink,
+                  color: COLOR.appBaseColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -319,7 +320,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     voidCallback: () {
                       authenticate.onFormSubmited(controller.message.value!);
                     },
-                    color: COLOR.pink,
+                    color: COLOR.appBaseColor,
                     style: Themes.light.textTheme.displaySmall!
                         .copyWith(color: COLOR.background),
                     title: StringRes.verify,

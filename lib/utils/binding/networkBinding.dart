@@ -1,6 +1,8 @@
 
 import 'package:get/get.dart';
 import 'package:keep_app/controller/addressController.dart';
+import 'package:keep_app/controller/cartController.dart';
+import 'package:keep_app/controller/productDetailController.dart';
 import '../../controller/accountController.dart';
 import '../../controller/dashboardController.dart';
 import '../../controller/homeController.dart';
@@ -16,5 +18,7 @@ class NetworkBinding extends Bindings {
     Get.lazyPut<AccountController>(() => AccountController(), fenix: true);
     Get.lazyPut<ShareProductController>(() => ShareProductController(), fenix: true);
     Get.lazyPut<AddressController>(() => AddressController(), fenix: true);
+    Get.lazyPut<ProductDetailsController>(() => ProductDetailsController(), fenix: true);
+    Get.lazyPut<CartController>(() => CartController(), fenix: true);
   }
 }
