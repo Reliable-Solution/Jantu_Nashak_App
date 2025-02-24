@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:keep_app/controller/otpController.dart';
+import 'package:keep_app/view/otp/otp_screen.dart';
 import 'package:keep_app/view/otp/registrationScreen.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
@@ -9,6 +11,7 @@ import '../../controller/authController.dart';
 
 class LoginScreen extends StatelessWidget {
   final AuthController controller = Get.put(AuthController());
+  final OTPController otpController = Get.put(OTPController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,13 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
-                onPressed: controller.getToken,
+                onPressed: () {
+
+                  // controller.onVerifyCode(controller.phoneNumber.value);
+                  otpController.onVerifyCode(controller.phoneNumber.value);
+                  controller.getToken();
+                  Get.to(OTPVerificationScreen(phoneNumber: controller.phoneNumber.value.toString(),));
+                },
                 child: Text('Continue' ,
                     style: Themes.light.textTheme.displaySmall!.copyWith(color: COLOR.background)),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
@@ -75,4 +84,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-

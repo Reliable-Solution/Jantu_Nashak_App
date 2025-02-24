@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 //controllers
 //views
+import 'package:keep_app/view/otp/phone_auth.dart';
 import 'package:keep_app/controller/networkController.dart';
 import 'package:keep_app/models/customerModel.dart';
 import 'package:keep_app/view/dashboard/dashboardScreen.dart';
@@ -32,9 +33,8 @@ class SplashController extends GetxController {
     Timer(Duration(seconds: 3), () {
       Get.off(
         () =>
-            customerModel == null
-                ? RegistrationScreen()
-                : DashboardScreen(pageIndex: 0),
+            // customerModel == null
+                 RegistrationScreen()
       );
     });
   }

@@ -12,7 +12,7 @@ class AccountController extends GetxController with GetSingleTickerProviderState
   var accountno = TextEditingController();
   var confirmAccountno = TextEditingController();
   var accountHoldername = TextEditingController();
-  RxnString verification = RxnString();
+  // RxnString verification = RxnString();
   RxnString message = RxnString();
 
   TabController? paymentTabController;

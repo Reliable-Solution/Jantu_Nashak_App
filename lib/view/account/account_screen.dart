@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:keep_app/view/account/widget/accountList.dart';
 import 'package:keep_app/view/address/pickupAddressScreen.dart';
-
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
 import '../../constant/imagesConst.dart';
@@ -17,6 +16,7 @@ import '../../widget/appBarWidget.dart';
 import '../../widget/buttonWidget.dart';
 import '../../widget/iconButtonWidget.dart';
 import '../../widget/textWidget.dart';
+import '../otp/OTPVerificationForm.dart';
 import '/utils/global.dart' as global;
 
 class AccountScreen extends StatefulWidget {
@@ -301,7 +301,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.15,
-              // child: OTPVerificationForm(),
+              child: OTPVerificationForm(),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 5),

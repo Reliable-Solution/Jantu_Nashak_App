@@ -112,4 +112,34 @@ class AddressController extends GetxController {
       throw Exception("Failed to fetch delete Address Data");
     }
   }
+  updateAddressData({AddressModel? addressModel,String? addressId}) async {
+    try {
+      print(addressModel);
+      final Map<String, dynamic> body = {
+        "CustomerId": addressModel!.customerId,
+        "AddressFullName": addressModel.addressFullName,
+        "AddressMobileNo": addressModel.addressMobileNo,
+        "AddressPincode": addressModel.addressPincode,
+        "Address": addressModel.addressColony,
+        "AddressLandmark": addressModel.addressLandmark,
+        "AddressType": addressModel.addressType,
+        "AddressId":addressModel.addressId
+      };
+      var response = await ApiService.post(endpoint: updateAddress, body: body);
+      print(" Add Update Address data ${response.data}");
+      if (response.data['IsSuccess'] == true) {
+        int index = allAddressList.indexWhere((element) => element.addressId == addressId,);
+        allAddressList[index] = addressModel;
+        print("Update Address Data ${allAddressList.length}");
+        // isCategory = true.obs;
+        update();
+        Get.back();
+      } else {
+        throw Exception("Error: ${response.data['Message']}");
+      }
+    } catch (e) {
+      print("Error in fetch Update Address Data: $e");
+      throw Exception("Failed to fetch Update Address Data");
+    }
+  }
 }

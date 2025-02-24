@@ -1,0 +1,197 @@
+//flutter
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+//packages
+import 'package:get/get.dart';
+import 'package:keep_app/controller/authController.dart';
+import 'package:keep_app/controller/registrationController.dart';
+import 'package:keep_app/utils/services/firebase_authenticate.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+import '../view/dashboard/dashboardScreen.dart';
+import 'networkController.dart';
+
+class OTPController extends GetxController {
+  // getxcontroller instance
+  NetworkController networkController = Get.put(NetworkController());
+  AuthController authController = AuthController();
+  RegistrationController registrationController = RegistrationController();
+
+  FocusNode? fFirstText;
+  FocusNode? fSecondText;
+  FocusNode? fThirdText;
+  FocusNode? fFourText;
+  FocusNode? fFiveText;
+  FocusNode? fSixText;
+  var secondsRemaining = 60.obs;
+  var isResendEnabled = false.obs;
+  Timer? _timer;
+  var otpCode = "".obs;
+  final otpControllerText = "".obs;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  RxString verificationIdCont = ''.obs;
+  RxBool isLoading = false.obs;
+  RxString v = "".obs;
+
+  @override
+  void onInit() async {
+    fFirstText = FocusNode();
+    fSecondText = FocusNode();
+    fThirdText = FocusNode();
+    fFourText = FocusNode();
+    fFiveText = FocusNode();
+    fSixText = FocusNode();
+    startTimer();
+    super.onInit();
+  }
+
+  void startTimer() {
+    secondsRemaining.value = 60;
+    isResendEnabled.value = false;
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (secondsRemaining.value > 0) {
+        secondsRemaining.value--;
+      } else {
+        isResendEnabled.value = true;
+        timer.cancel();
+      }
+    });
+  }
+
+  void resendOTP() {
+    if (isResendEnabled.value) {
+      startTimer(); // Restart timer when "Resend OTP" is clicked
+      print("Resending OTP via mobile...");
+      // Add API call to resend OTP here
+    }
+  }
+
+  @override
+  void dispose() {
+    fFirstText!.dispose();
+    fSecondText!.dispose();
+    fThirdText!.dispose();
+    fFourText!.dispose();
+    fFiveText!.dispose();
+    fSixText!.dispose();
+    super.dispose();
+  }
+
+  void nextFiled(String value, FocusNode focusNode) {
+    if (value.length == 1) {
+      focusNode.requestFocus();
+    }
+  }
+
+  /// Listen for OTP auto-read with try-catch
+  void listenForOTP() async {
+    try {
+      await SmsAutoFill().listenForCode();
+    } catch (e) {
+      Get.snackbar("Error", "Failed to listen for OTP: $e");
+    }
+  }
+
+  Future<void> onVerifyCode(String number) async {
+    try {
+      print("📞 Sending OTP to: +91$number");
+
+      // ✅ Reset old verificationId
+      verificationIdCont.value = "";
+      v.value = "";
+
+      await _auth.verifyPhoneNumber(
+        timeout: const Duration(seconds: 60),
+        phoneNumber: "+91$number",
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          try {
+            await _auth.signInWithCredential(credential);
+            Get.offAll(() => DashboardScreen(pageIndex: 0));
+          } catch (e) {
+            log("🔴 Auto-verification failed: $e");
+            Fluttertoast.showToast(msg: "Auto-verification failed: $e");
+          }
+        },
+        verificationFailed: (FirebaseAuthException error) {
+          log("❌ Verification failed: ${error.message}");
+          Fluttertoast.showToast(msg: "Verification failed: ${error.message}");
+        },
+        codeSent: (String verificationId, int? forceResendingToken) {
+          verificationIdCont.value = verificationId; // ✅ Update value
+          v.value = verificationId;
+          update(); // ✅ UI update
+
+          print("✅ Verification ID Stored: ${verificationIdCont.value}");
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          verificationIdCont.value = verificationId;
+          log("⏳ Code auto-retrieval timeout.");
+        },
+      );
+    } catch (e) {
+      log("🔴 Error: $e");
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
+  Future<void> onFormSubmitted(String otp) async {
+    print("⚡ Trying OTP Verification...");
+    await Future.delayed(Duration(seconds: 1)); // 🛠 Ensuring state is updated
+
+    print("✅ Stored verificationId: ${verificationIdCont.value}");
+
+    if (verificationIdCont.value.isEmpty) {
+      log("❌ Error: Verification ID is empty.");
+      Fluttertoast.showToast(msg: "Verification ID missing. Please request a new OTP.");
+      return;
+    }
+
+    try {
+      log("🔢 Verifying OTP: $otp");
+
+      if (otp.length != 6) {
+        throw "Enter a valid 6-digit OTP";
+      }
+
+      AuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationIdCont.value,
+        smsCode: otp,
+      );
+
+      UserCredential userCredential = await _auth.signInWithCredential(credential);
+
+      if (userCredential.user != null) {
+        log("✅ Successful Login: ${userCredential.user!.uid}");
+        if (isLoading.value) {
+          Get.snackbar('Success', 'Login SuccessFully');
+          // authController.getToken();
+        }
+        else
+        {
+          Get.snackbar('Success', 'Register SuccessFully');
+
+          // registrationController.getToken();
+        }
+        Get.offAll(() => DashboardScreen(pageIndex: 0));
+      } else {
+        throw "Invalid OTP. Please try again.";
+      }
+    } catch (e) {
+      log("🔴 OTP Verification Error: $e");
+      Fluttertoast.showToast(msg: e.toString());
+      Get.snackbar("Error", e.toString());
+    }
+  }
+
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
+  }
+}

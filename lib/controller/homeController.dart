@@ -9,6 +9,7 @@ import '../models/brandModel.dart';
 import '../models/categoryModel.dart';
 import '../models/customerModel.dart';
 import '../models/offerModel.dart';
+import '../models/searchModel.dart';
 import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
 
@@ -17,9 +18,10 @@ class HomeController extends GetxController
   NetworkController networkController = Get.put(NetworkController());
   SharedHelper helper = SharedHelper();
   var isDashBoardLoading = false.obs;
+  var isLoading = false.obs;
   var search = TextEditingController();
   var deliveryPincode = TextEditingController();
-
+  var products = <dynamic>[].obs;
   var fdeliveryPincode = FocusNode();
   var userName = "";
   TabController? myTabController;
@@ -32,6 +34,7 @@ class HomeController extends GetxController
   List<ProductModel> productList = [];
   List<OfferModel> offerList = [];
   List<BrandModel> brandList = [];
+  List<ProductModel> searchList = [];
 
   PageController filterPage = PageController();
   RxBool isCategory = false.obs;
@@ -41,8 +44,9 @@ class HomeController extends GetxController
   TextEditingController txtAddress = TextEditingController();
   TextEditingController txtLandmark = TextEditingController();
   TextEditingController txtType = TextEditingController();
+  var searchController = TextEditingController();
   CustomerModel? m1 = CustomerModel();
-
+  var searchQuery = ''.obs;
 
   @override
   void onInit() async {
@@ -149,6 +153,41 @@ class HomeController extends GetxController
     } catch (e) {
       print("Error in getDashboardData: $e");
       throw Exception("Failed to get dashboard data: $e");
+    }
+  }
+  void onSearchChanged(String query) {
+    searchQuery.value = query;
+    getSearchData(query);
+  }
+  getSearchData(String productName) async {
+    if (productName.isEmpty) {
+      products.clear();
+      return;
+    }
+    try {
+      isLoading(true);
+      final Map<String, dynamic> body = {
+        "CustomerId": customerModel!.value.customerId,
+        "ProductName": productName,
+      };
+
+      var response = await ApiService.post(endpoint: searchByUser, body: body);
+      if (response.data['IsSuccess'] == true) {
+        searchList = (response.data['Data'] as List)
+            .map((searchJson) => ProductModel.fromJson(searchJson))
+            .toList();
+        print("Search data ${searchList.length}");
+        update();
+      } else {
+        throw Exception("Error: ${response.data['Message']}");
+      }
+    } catch (e) {
+      print("Error in getDashboard Data: $e");
+      throw Exception("Failed to getDashboard Data");
+      print("Error in Fetch Search Data: $e");
+      throw Exception("Failed to fetch Search data");
+    } finally {
+      isLoading(false);
     }
   }
 }

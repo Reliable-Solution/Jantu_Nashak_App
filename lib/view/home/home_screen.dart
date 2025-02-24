@@ -18,6 +18,11 @@ import '../../theme/nativeTheme.dart';
 import '../../widget/iconButtonWidget.dart';
 import '../../widget/textWidget.dart';
 import '../address/allAddress_screen.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:keep_app/view/otp/phone_auth.dart';
+
+import '../search/search_screen.dart';
+
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -64,7 +69,9 @@ class HomeScreen extends StatelessWidget {
                 preferredSize: Size.fromHeight(50),
                 child: InkWell(
                   onTap: () {
-                    // Get.to(() => SearchScreen());
+                    _controller.searchList.clear();
+                    _controller.searchController.clear();
+                    Get.to(() => SearchScreen());
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,

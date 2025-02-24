@@ -5,12 +5,12 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:keep_app/constant/colorConst.dart';
 import 'package:keep_app/controller/registrationController.dart';
 import 'package:keep_app/view/otp/phone_auth.dart';
-
+import 'package:keep_app/view/otp/otp_screen.dart';
 import '../../Theme/nativeTheme.dart';
-
+import '../../controller/otpController.dart';
 class RegistrationScreen extends StatelessWidget {
   final RegistrationController controller = Get.put(RegistrationController());
-
+  final OTPController otpController = Get.put(OTPController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +29,9 @@ class RegistrationScreen extends StatelessWidget {
 
               // Name Field
               Obx(
-                () => TextField(
+                () => TextFormField(
                   onChanged: controller.setName,
+                  autofillHints: [AutofillHints.name],
                   decoration: InputDecoration(
                     labelText: 'Name',
                     border: OutlineInputBorder(),
@@ -44,8 +45,9 @@ class RegistrationScreen extends StatelessWidget {
 
               // Email Field
               Obx(
-                () => TextField(
+                () => TextFormField(
                   onChanged: controller.setEmail,
+                  autofillHints: [AutofillHints.email],
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: 'Email',
@@ -59,22 +61,29 @@ class RegistrationScreen extends StatelessWidget {
               SizedBox(height: 20),
 
               // Phone Number Field
-              IntlPhoneField(
-                decoration: InputDecoration(
-                  labelText: 'Phone Number',
-                  border: OutlineInputBorder(),
-                ),
-                initialCountryCode: 'IN',
-                onChanged: (phone) {
-                  controller.setPhoneNumber(phone.number);
-                },
+          Obx(
+                () => IntlPhoneField(
+              decoration: InputDecoration(
+                labelText: 'Phone Number',
+                border: OutlineInputBorder(),
               ),
+              initialCountryCode: 'IN',
+              onChanged: (val) => controller.phoneNumber.value = val.number,
+              controller: TextEditingController()
+                ..text = controller.phoneController.value,
+            ),),
               SizedBox(height: 20),
 
               // Submit Button
               Center(
                 child: ElevatedButton(
-                  onPressed: controller.submitRegistration,
+                  onPressed: () {
+                    controller.getToken();
+                    otpController.onVerifyCode(controller.phoneNumber.value);
+                    Get.to(OTPVerificationScreen(
+                      registerPhoneNumber: controller.phoneNumber.value,
+                    ));
+                  },
                   child: Text('Register',
                       style: Themes.light.textTheme.displaySmall!
                           .copyWith(color: COLOR.background)),

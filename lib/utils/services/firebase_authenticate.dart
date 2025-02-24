@@ -2,19 +2,24 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
+import '../../view/dashboard/dashboardScreen.dart';
 import '../../controller/accountController.dart';
 
 class FirebaseAuthenticate {
   FirebaseAuth authenticates = FirebaseAuth.instance;
   AccountController controller = AccountController();
-
+  String verification = "";
   void onVerifyCode(String number) async {
     try {
-      print("================= number ${number}");
+      if (number.length != 10) {
+        throw "Enter a valid 10-digit phone number";
+      }
+      print("====== phone number $number");
       authenticates.verifyPhoneNumber(
+        timeout:  Duration(seconds: 60),
         phoneNumber: "+91${number}",
         verificationCompleted: (phoneAuthCredential) async {
+          await authenticates.signInWithCredential(phoneAuthCredential);
           Get.back();
         },
         verificationFailed: (error) async {
@@ -24,7 +29,7 @@ class FirebaseAuthenticate {
         },
         codeSent: (verificationId, forceResendingToken) async {
           print("$number");
-          controller.verification.value = verificationId;
+          verification = verificationId;
         },
         codeAutoRetrievalTimeout: (verificationId) async {},
       );
@@ -37,30 +42,29 @@ class FirebaseAuthenticate {
   }
 
   void onFormSubmited(String message) {
-    AuthCredential authCredential = PhoneAuthProvider.credential(
-        verificationId: controller.verification.value!, smsCode: message);
-    authenticates
-        .signInWithCredential(authCredential)
-        .then((UserCredential value) {
-      if (value.user != null) {
-        print(value.user);
-      } else {
-        Fluttertoast.showToast(msg: "Invalid OTP");
+    // message = "1111";
+    try {
+      if (message.length != 6) {
+        throw "Enter a valid 6-digit OTP";
       }
-    }).catchError((error) {
-      log(error.toString());
-      Fluttertoast.showToast(msg: "$error Something went wrong");
-    });
-    // authenticates.signInWithCredential(authCredential).then((value) {
-    //   if(value.user != null)
-    //     {
-    //       print(value.user);
-    //     }
-    //   else
-    //     {
-    //       Fluttertoast.showToast(msg: "Invalid OTP");
-    //     }
-    //
-    // },).catchError( );
+      AuthCredential authCredential = PhoneAuthProvider.credential(
+          verificationId: verification, smsCode: message);
+      authenticates
+          .signInWithCredential(authCredential)
+          .then((UserCredential value) {
+        if (value.user != null) {
+          Get.offAll(() => DashboardScreen(pageIndex: 0));
+
+          print(value.user);
+        } else {
+          Fluttertoast.showToast(msg: "Invalid OTP");
+        }
+      }).catchError((error) {
+        log(error.toString());
+        Fluttertoast.showToast(msg: "$error Something went wrong");
+      });
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
   }
 }

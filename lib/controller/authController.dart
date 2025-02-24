@@ -16,7 +16,7 @@ class AuthController extends GetxController {
   final otp = ''.obs;
   final isOtpValid = false.obs;
   SharedHelper helper = SharedHelper();
-
+  RxString tokenGet = "".obs;
   void setPhoneNumber(String value) {
     phoneNumber.value = value;
   }
@@ -48,7 +48,7 @@ class AuthController extends GetxController {
           Get.snackbar('Success', response.data['Message']);
           helper.setCustomer(customerModel);
 
-          Get.offAll(() => DashboardScreen(pageIndex: 0));
+          // Get.offAll(() => DashboardScreen(pageIndex: 0));
           update();
         } else {
           print("Error: ${response.data['Message']}");

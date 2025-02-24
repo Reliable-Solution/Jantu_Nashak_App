@@ -11,4 +11,6 @@ const String getCartDetailApi = "getCartDetail";
 const String updateCartQtyApi = "updateCartQty";
 const String removeCartApi = "removeCart";
 const String getCartTotalWithDeliveryChargeV2Api = "getCartTotalWithDeliveryChargeV2";
+const String updateAddress = "updateAddress";
+const String searchByUser = "searchByUser";
 
