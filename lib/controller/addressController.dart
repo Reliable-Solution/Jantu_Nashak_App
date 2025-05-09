@@ -18,6 +18,35 @@ class AddressController extends GetxController {
   TextEditingController txtLandmark = TextEditingController();
   TextEditingController txtType = TextEditingController();
   RxBool isAddress = false.obs;
+  RxList<AddressModel> addressList = <AddressModel>[].obs;
+  RxString selectedAddressId = ''.obs;
+  // var selectedType = ''.obs;
+  //
+  // final List<String> types = ['Home', 'Office', 'Other'];
+  //
+  // void setType(String value) {
+  //   selectedType.value = value;
+  // }
+  var selectedType = ''.obs;
+  var showError = false.obs;
+
+  final List<String> types = ['Home', 'Office', 'Other'];
+
+  void setType(String? value) {
+    selectedType.value = value ?? '';
+    showError.value = false;
+    update();// Hide error on selection
+  }
+
+  bool validate() {
+    if (selectedType.value.isEmpty) {
+      showError.value = true;
+      return false;
+    }
+    return true;
+  }
+
+
 
   @override
   Future<void> onInit() async {
@@ -69,12 +98,16 @@ class AddressController extends GetxController {
 
   getAllAddress() async {
     try {
+      if (allAddressList.isNotEmpty && selectedAddressId.isEmpty) {
+        selectedAddressId.value = allAddressList.last.addressId.toString();
+      }
       final Map<String, dynamic> body = {
         "CustomerId": customerModel!.value.customerId,
       };
 
       var response = await ApiService.post(endpoint: getAddress, body: body);
 
+      print(" Address ${response.data}");
       if (response.data['IsSuccess'] == true) {
         allAddressList.value = (response.data['Data'] as List)
             .map((addressJson) => AddressModel.fromJson(addressJson))
@@ -142,4 +175,30 @@ class AddressController extends GetxController {
       throw Exception("Failed to fetch Update Address Data");
     }
   }
+
+  // Address Add Karne Ka Function
+  void selectAddAddress(AddressModel address) {
+    allAddressList.add(address);
+  }
+
+  // Address Edit Karne Ka Function
+  void editAddress(int index, AddressModel newAddress) {
+    allAddressList[index] = newAddress;
+  }
+
+  // Address Select Karne Ka Function
+  void selectAddress(int addressId) {
+    selectedAddressId.value = addressId.toString();
+    Get.back(); // BottomSheet Close
+  }
+
+  // Address Delete Karne Ka Function
+  void deleteSelectAddressData({required int customerId, required int addressId}) {
+    allAddressList.removeWhere((address) => address.addressId == addressId);
+    if (selectedAddressId.value == addressId.toString()) {
+      selectedAddressId.value = ''; // Selected Address Delete Hua to Clear Karna
+    }
+  }
+
+
 }

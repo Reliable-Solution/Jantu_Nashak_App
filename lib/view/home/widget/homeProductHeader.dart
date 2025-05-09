@@ -13,6 +13,8 @@ import 'package:keep_app/widget/iconButtonWidget.dart';
 import 'package:keep_app/widget/inputWidget.dart';
 import 'package:keep_app/widget/textWidget.dart';
 
+import '../../../utils/string_res.dart';
+
 class HomeProductHeader extends StatelessWidget {
   final HomeController _controller = Get.find<HomeController>();
 
@@ -50,7 +52,7 @@ class HomeProductHeader extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(left: 5),
                         child: TextWiget(
-                          title: 'Sort',
+                          title: StringRes.sort,
                           style: Themes.dark.textTheme.displaySmall,
                         ),
                       ),
@@ -66,7 +68,7 @@ class HomeProductHeader extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(right: 5),
                         child: TextWiget(
-                          title: 'Category',
+                          title: StringRes.category,
                           style: Themes.dark.textTheme.displaySmall,
                         ),
                       ),
@@ -88,7 +90,7 @@ class HomeProductHeader extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(right: 5),
                         child: TextWiget(
-                          title: 'Gender',
+                          title: StringRes.gender,
                           style: Themes.dark.textTheme.displaySmall,
                         ),
                       ),
@@ -116,7 +118,7 @@ class HomeProductHeader extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(left: 5),
                         child: TextWiget(
-                          title: 'Filters',
+                          title: StringRes.filters,
                           style: Themes.dark.textTheme.displaySmall,
                         ),
                       ),
@@ -151,7 +153,7 @@ class HomeProductHeader extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           TextWiget(
-                            title: 'SORT',
+                            title: StringRes.sortNew,
                             style: Themes.light.textTheme.displayLarge,
                           ),
                           Expanded(
@@ -188,7 +190,7 @@ class HomeProductHeader extends StatelessWidget {
                     vertical: VisualDensity.minimumDensity,
                   ),
                   title: TextWiget(
-                    title: 'Relevance',
+                    title: StringRes.relevance,
                     style: _controller.sortValue.value == 1 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
@@ -211,7 +213,7 @@ class HomeProductHeader extends StatelessWidget {
                     vertical: VisualDensity.minimumDensity,
                   ),
                   title: TextWiget(
-                    title: 'New Arrivals',
+                    title: StringRes.newArrivals,
                     style: _controller.sortValue.value == 2 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
@@ -234,7 +236,7 @@ class HomeProductHeader extends StatelessWidget {
                     vertical: VisualDensity.minimumDensity,
                   ),
                   title: TextWiget(
-                    title: 'Price (High to Low)',
+                    title: StringRes.price,
                     style: _controller.sortValue.value == 3 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
@@ -257,7 +259,7 @@ class HomeProductHeader extends StatelessWidget {
                     vertical: VisualDensity.minimumDensity,
                   ),
                   title: TextWiget(
-                    title: 'Price (Low to High)',
+                    title: StringRes.price,
                     style: _controller.sortValue.value == 4 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
@@ -280,7 +282,7 @@ class HomeProductHeader extends StatelessWidget {
                     vertical: VisualDensity.minimumDensity,
                   ),
                   title: TextWiget(
-                    title: 'Rating',
+                    title: StringRes.rating,
                     style: _controller.sortValue.value == 5 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
@@ -303,7 +305,7 @@ class HomeProductHeader extends StatelessWidget {
                   },
                   activeColor: COLOR.appBaseColor,
                   title: TextWiget(
-                    title: 'Discount',
+                    title: StringRes.discount,
                     style: _controller.sortValue.value == 6 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
@@ -345,7 +347,7 @@ class HomeProductHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWiget(
-                          title: 'CATEGORY',
+                          title: StringRes.categoryNew,
                           style: Themes.light.textTheme.displayLarge,
                         ),
                         Expanded(
@@ -366,30 +368,6 @@ class HomeProductHeader extends StatelessWidget {
                 ],
               ),
             ),
-            // Expanded(
-            //   child: Container(
-            //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            //     alignment: Alignment.center,
-            //     child: ListView.builder(
-            //       itemCount: _controller.categoryList.length,
-            //       itemBuilder: (context, index) {
-            //         return GetBuilder<HomeController>(
-            //           builder: (_controiler) => CheckboxListTileWidget(
-            //             title: TextWiget(
-            //               title: _controller.categoryList[index].name,
-            //               style: Themes.light.textTheme.displayLarge,
-            //             ),
-            //             value: _controller.categoryList[index].isCheck,
-            //             onChanged: (bool? value) {
-            //               // _controller.categoryList[index].isCheck = value;
-            //               // _controller.update();
-            //             },
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -401,7 +379,7 @@ class HomeProductHeader extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextWiget(
-                          title: '1000+ Products',
+                          title: StringRes.products,
                         ),
                       ),
                       AlignWidget(
@@ -452,7 +430,7 @@ class HomeProductHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWiget(
-                          title: 'GENDERY',
+                          title: StringRes.genderNew,
                           style: Themes.light.textTheme.displayLarge,
                         ),
                         Expanded(
@@ -488,7 +466,7 @@ class HomeProductHeader extends StatelessWidget {
                           backgroundImage: NetworkImage('https://s.wsj.net/public/resources/images/WW-AA663A_SANDB_M_20150928140602.jpg'),
                         ),
                         TextWiget(
-                          title: 'Women',
+                          title: StringRes.women,
                           style: Themes.light.textTheme.displayLarge,
                         )
                       ],
@@ -501,7 +479,7 @@ class HomeProductHeader extends StatelessWidget {
                           backgroundImage: NetworkImage('https://www.bollywoodhungama.com/wp-content/uploads/2022/01/Hrithik-Roshan-adopts-a-puppy-names-him-Mowgli-on-his-birthday-eve-Varun-Dhawan-says-%E2%80%98best-decision%E2%80%99.jpeg'),
                         ),
                         TextWiget(
-                          title: 'Men',
+                          title: StringRes.men,
                           style: Themes.light.textTheme.displayLarge,
                         )
                       ],
@@ -510,7 +488,7 @@ class HomeProductHeader extends StatelessWidget {
                       children: [
                         CircleAvatar(maxRadius: 30, backgroundColor: COLOR.background, backgroundImage: NetworkImage('https://image.shutterstock.com/image-photo/pretty-curly-little-girl-standing-260nw-572774149.jpg')),
                         TextWiget(
-                          title: 'Girls',
+                          title: StringRes.girls,
                           style: Themes.light.textTheme.displayLarge,
                         )
                       ],
@@ -519,7 +497,7 @@ class HomeProductHeader extends StatelessWidget {
                       children: [
                         CircleAvatar(maxRadius: 30, backgroundColor: COLOR.background, backgroundImage: NetworkImage('https://media.istockphoto.com/photos/boy-having-fun-on-studio-white-background-picture-id1069693268?k=20&m=1069693268&s=612x612&w=0&h=Mp8Jy6jOjqdeIRoCFRc6cvwbZDL89LZuHRZWfyMcRwA=')),
                         TextWiget(
-                          title: 'Boys',
+                          title: StringRes.boys,
                           style: Themes.light.textTheme.displayLarge,
                         )
                       ],
@@ -539,18 +517,11 @@ class HomeProductHeader extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextWiget(
-                          title: '1000+ Products',
+                          title: StringRes.products,
                         ),
                       ),
                       AlignWidget(
                         alignment: Alignment.center,
-                        // child: ButtonWidgets(
-                        //   color: COLOR.pink,
-                        //   title: "Done",
-                        //   style: Themes.light.textTheme.displayLarge!.copyWith(color: Colors.white),
-                        //   padding: EdgeInsets.symmetric(horizontal: 40),
-                        //   voidCallback: () => Get.back(),
-                        // ),
                       ),
                     ],
                   ),
@@ -591,7 +562,7 @@ class HomeProductHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWiget(
-                          title: 'FITERS',
+                          title: StringRes.filters,
                           style: Themes.light.textTheme.displayLarge,
                         ),
                         Expanded(
@@ -678,188 +649,6 @@ class HomeProductHeader extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Expanded(
-                    //   child: GetBuilder<HomeController>(
-                    //     builder: (_controller) {
-                    //       return RotatedBox(
-                    //         quarterTurns: 1,
-                    //         child: TabbarViewWidget(
-                    //           physics: NeverScrollableScrollPhysics(),
-                    //           controller: _controller.myTabController,
-                    //           children: [
-                    //             filterCategory(context, _controller),
-                    //             filterGender(_controller),
-                    //             filterFabric(context, _controller),
-                    //             filterColor(_controller),
-                    //             filterPrice(_controller),
-                    //             filterDiscount(_controller),
-                    //             filterRating(_controller),
-                    //             filterSize(context, _controller),
-                    //             filterCombo(_controller),
-                    //             RotatedBox(
-                    //               quarterTurns: -1,
-                    //               child: Column(
-                    //                 children: [
-                    //                   Padding(
-                    //                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    //                     child: AlignWidget(
-                    //                       alignment: Alignment.centerLeft,
-                    //                       child: TextWiget(
-                    //                         title: 'Material',
-                    //                         style: Themes.light.textTheme.displayLarge!.copyWith(
-                    //                           fontWeight: FontWeight.w500,
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                   Expanded(
-                    //                     child: Padding(
-                    //                       padding: EdgeInsets.symmetric(horizontal: 20),
-                    //                       child: Container(
-                    //                         padding: EdgeInsets.only(top: 5),
-                    //                         alignment: Alignment.center,
-                    //                         child: ListView.builder(
-                    //                           itemCount: _controller.filterMateriallist.length,
-                    //                           itemBuilder: (context, index) {
-                    //                             return GetBuilder<HomeController>(
-                    //                               builder: (_controller) => CheckboxListTileWidget(
-                    //                                 title: TextWiget(
-                    //                                   title: _controller.filterMateriallist[index].name,
-                    //                                   style: Themes.light.textTheme.bodyMedium,
-                    //                                 ),
-                    //                                 value: _controller.filterMateriallist[index].isCheck,
-                    //                                 onChanged: (bool? value) {
-                    //                                   _controller.filterMateriallist[index].isCheck = value;
-                    //                                   _controller.update();
-                    //                                 },
-                    //                               ),
-                    //                             );
-                    //                           },
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             RotatedBox(
-                    //               quarterTurns: -1,
-                    //               child: Padding(
-                    //                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    //                 child: Column(
-                    //                   children: [
-                    //                     Padding(
-                    //                       padding: const EdgeInsets.only(bottom: 10),
-                    //                       child: AlignWidget(
-                    //                         alignment: Alignment.centerLeft,
-                    //                         child: TextWiget(
-                    //                           title: 'Bottom Length',
-                    //                           style: Themes.light.textTheme.displayLarge!.copyWith(
-                    //                             fontWeight: FontWeight.w500,
-                    //                           ),
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                     Expanded(
-                    //                       child: Wrap(
-                    //                         spacing: 8.0,
-                    //                         runSpacing: 8.0,
-                    //                         direction: Axis.horizontal,
-                    //                         children: List.generate(
-                    //                           _controller.filterBottomLength.length,
-                    //                           (index) => GestureDetector(
-                    //                             onTap: () {
-                    //                               if (_controller.filterBottomLength[index].isCheck == false) {
-                    //                                 _controller.filterBottomLength[index].isCheck = true;
-                    //                               } else {
-                    //                                 _controller.filterBottomLength[index].isCheck = false;
-                    //                               }
-                    //                               _controller.update();
-                    //                             },
-                    //                             child: UnconstrainedBox(
-                    //                               child: Container(
-                    //                                 height: 30,
-                    //                                 padding: EdgeInsets.symmetric(horizontal: 15),
-                    //                                 decoration: BoxDecoration(
-                    //                                   borderRadius: BorderRadius.circular(5),
-                    //                                   border: Border.all(
-                    //                                     width: 1,
-                    //                                     color: _controller.filterBottomLength[index].isCheck == true ? COLOR.pink : COLOR.grey,
-                    //                                   ),
-                    //                                 ),
-                    //                                 child: Align(
-                    //                                   child: TextWiget(
-                    //                                     title: _controller.filterBottomLength[index].name,
-                    //                                     style: Themes.dark.textTheme.displayLarge!.copyWith(
-                    //                                       color: _controller.filterBottomLength[index].isCheck == true ? COLOR.pink : COLOR.black,
-                    //                                     ),
-                    //                                   ),
-                    //                                   alignment: Alignment.center,
-                    //                                 ),
-                    //                               ),
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             RotatedBox(
-                    //               quarterTurns: -1,
-                    //               child: Column(
-                    //                 children: [
-                    //                   Padding(
-                    //                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    //                     child: AlignWidget(
-                    //                       alignment: Alignment.centerLeft,
-                    //                       child: TextWiget(
-                    //                         title: 'Bottom Style',
-                    //                         style: Themes.light.textTheme.displayLarge!.copyWith(
-                    //                           fontWeight: FontWeight.w500,
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                   Expanded(
-                    //                     child: Padding(
-                    //                       padding: EdgeInsets.symmetric(horizontal: 20),
-                    //                       child: Container(
-                    //                         padding: EdgeInsets.only(top: 5),
-                    //                         alignment: Alignment.center,
-                    //                         child: ListView.builder(
-                    //                           itemCount: _controller.filterBottomStyle.length,
-                    //                           itemBuilder: (context, index) {
-                    //                             return GetBuilder<HomeController>(
-                    //                               builder: (_controller) => CheckboxListTileWidget(
-                    //                                 title: TextWiget(
-                    //                                   title: _controller.filterBottomStyle[index].name,
-                    //                                   style: Themes.light.textTheme.bodyMedium,
-                    //                                 ),
-                    //                                 value: _controller.filterBottomStyle[index].isCheck,
-                    //                                 onChanged: (bool? value) {
-                    //                                   _controller.filterBottomStyle[index].isCheck = value;
-                    //                                   _controller.update();
-                    //                                 },
-                    //                               ),
-                    //                             );
-                    //                           },
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             _bottomwerFabric(_controller),
-                    //             _ornamentation(_controller),
-                    //           ],
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
-                    // )
                   ],
                 ),
               ),
@@ -875,7 +664,7 @@ class HomeProductHeader extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextWiget(
-                          title: '1000+ Products',
+                          title: StringRes.products,
                         ),
                       ),
                     ],
@@ -911,47 +700,13 @@ class HomeProductHeader extends StatelessWidget {
               child: AlignWidget(
                 alignment: Alignment.centerLeft,
                 child: TextWiget(
-                  title: 'Category',
+                  title: StringRes.category,
                   style: Themes.light.textTheme.displayLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
-            // Container(
-            //     padding: EdgeInsets.only(top: 5),
-            //     height: MediaQuery.of(context).size.height * 0.05,
-            //     child: InputFiledArea(
-            //       controller: _controller.search,
-            //       border: 1,
-            //       contentPadding: EdgeInsets.only(top: 10),
-            //       keyboardType: TextInputType.text,
-            //       hintText: 'Search',
-            //       prefixIcon: Icon(Icons.search),
-            //     )),
-            // Expanded(
-            //   child: Padding(
-            //     padding: EdgeInsets.only(top: 5),
-            //     child: ListView.builder(
-            //       itemCount: _controller.categoryList.length,
-            //       itemBuilder: (context, index) {
-            //         return GetBuilder<HomeController>(
-            //           builder: (_controller) => CheckboxListTileWidget(
-            //             title: TextWiget(
-            //               title: _controller.categoryList[index].name,
-            //               style: Themes.light.textTheme.bodyMedium,
-            //             ),
-            //             value: _controller.categoryList[index].isCheck,
-            //             onChanged: (bool? value) {
-            //               _controller.categoryList[index].isCheck = value;
-            //               _controller.update();
-            //             },
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -970,55 +725,13 @@ class HomeProductHeader extends StatelessWidget {
               child: AlignWidget(
                 alignment: Alignment.centerLeft,
                 child: TextWiget(
-                  title: 'Gender',
+                  title: StringRes.gender,
                   style: Themes.light.textTheme.displayLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
-            // Expanded(
-            //   child: Wrap(
-            //     spacing: 8.0,
-            //     runSpacing: 8.0,
-            //     direction: Axis.horizontal,
-            //     children: List.generate(
-            //       _controller.filtergenderButton.length,
-            //       (index) => GestureDetector(
-            //         onTap: () {
-            //           if (_controller.filtergenderButton[index].isCheck == false) {
-            //             _controller.filtergenderButton[index].isCheck = true;
-            //           } else {
-            //             _controller.filtergenderButton[index].isCheck = false;
-            //           }
-            //           _controller.update();
-            //         },
-            //         child: UnconstrainedBox(
-            //           child: Container(
-            //             height: 30,
-            //             padding: EdgeInsets.symmetric(horizontal: 15),
-            //             decoration: BoxDecoration(
-            //               borderRadius: BorderRadius.circular(5),
-            //               border: Border.all(
-            //                 width: 1,
-            //                 color: _controller.filtergenderButton[index].isCheck == true ? COLOR.pink : COLOR.grey,
-            //               ),
-            //             ),
-            //             child: Align(
-            //               child: TextWiget(
-            //                 title: _controller.filtergenderButton[index].name,
-            //                 style: Themes.dark.textTheme.displayLarge!.copyWith(
-            //                   color: _controller.filtergenderButton[index].isCheck == true ? COLOR.pink : COLOR.black,
-            //                 ),
-            //               ),
-            //               alignment: Alignment.center,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -1037,48 +750,13 @@ class HomeProductHeader extends StatelessWidget {
               child: AlignWidget(
                 alignment: Alignment.centerLeft,
                 child: TextWiget(
-                  title: 'Fabric',
+                  title: StringRes.fabric,
                   style: Themes.light.textTheme.displayLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
-            // Container(
-            //     padding: EdgeInsets.only(top: 5),
-            //     height: MediaQuery.of(context).size.height * 0.05,
-            //     child: InputFiledArea(
-            //       controller: _controller.search,
-            //       border: 1,
-            //       contentPadding: EdgeInsets.only(top: 10),
-            //       keyboardType: TextInputType.text,
-            //       hintText: 'Search',
-            //       prefixIcon: Icon(Icons.search),
-            //     )),
-            // Expanded(
-            //   child: Container(
-            //     padding: EdgeInsets.only(top: 5),
-            //     alignment: Alignment.center,
-            //     child: ListView.builder(
-            //       itemCount: _controller.fabricList.length,
-            //       itemBuilder: (context, index) {
-            //         return GetBuilder<HomeController>(
-            //           builder: (_controller) => CheckboxListTileWidget(
-            //             title: TextWiget(
-            //               title: _controller.fabricList[index].name,
-            //               style: Themes.light.textTheme.bodyMedium,
-            //             ),
-            //             value: _controller.fabricList[index].isCheck,
-            //             onChanged: (bool? value) {
-            //               _controller.fabricList[index].isCheck = value;
-            //               _controller.update();
-            //             },
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -1097,57 +775,13 @@ class HomeProductHeader extends StatelessWidget {
               child: AlignWidget(
                 alignment: Alignment.centerLeft,
                 child: TextWiget(
-                  title: 'Color',
+                  title: StringRes.color,
                   style: Themes.light.textTheme.displayLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
-            // Expanded(
-            //   child: SingleChildScrollView(
-            //     child: Wrap(
-            //       spacing: 8.0,
-            //       runSpacing: 8.0,
-            //       direction: Axis.horizontal,
-            //       children: List.generate(
-            //         _controller.filtercolorButton.length,
-            //         (index) => GestureDetector(
-            //           onTap: () {
-            //             if (_controller.filtercolorButton[index].isCheck == false) {
-            //               _controller.filtercolorButton[index].isCheck = true;
-            //             } else {
-            //               _controller.filtercolorButton[index].isCheck = false;
-            //             }
-            //             _controller.update();
-            //           },
-            //           child: UnconstrainedBox(
-            //             child: Container(
-            //               height: 30,
-            //               padding: EdgeInsets.symmetric(horizontal: 15),
-            //               decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(5),
-            //                 border: Border.all(
-            //                   width: 1,
-            //                   color: _controller.filtercolorButton[index].isCheck == true ? COLOR.pink : COLOR.grey,
-            //                 ),
-            //               ),
-            //               child: Align(
-            //                 child: TextWiget(
-            //                   title: _controller.filtercolorButton[index].name,
-            //                   style: Themes.dark.textTheme.displayLarge!.copyWith(
-            //                     color: _controller.filtercolorButton[index].isCheck == true ? COLOR.pink : COLOR.black,
-            //                   ),
-            //                 ),
-            //                 alignment: Alignment.center,
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -1166,127 +800,19 @@ class HomeProductHeader extends StatelessWidget {
               child: AlignWidget(
                 alignment: Alignment.centerLeft,
                 child: TextWiget(
-                  title: 'Price',
+                  title: StringRes.price,
                   style: Themes.light.textTheme.displayLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
-            // Expanded(
-            //   child: Wrap(
-            //     spacing: 8.0,
-            //     runSpacing: 8.0,
-            //     direction: Axis.horizontal,
-            //     children: List.generate(
-            //       _controller.filterPriceButton.length,
-            //       (index) => GestureDetector(
-            //         onTap: () {
-            //           if (_controller.filterPriceButton[index].isCheck == false) {
-            //             _controller.filterPriceButton[index].isCheck = true;
-            //           } else {
-            //             _controller.filterPriceButton[index].isCheck = false;
-            //           }
-            //           _controller.update();
-            //         },
-            //         child: UnconstrainedBox(
-            //           child: Container(
-            //             height: 30,
-            //             padding: EdgeInsets.symmetric(horizontal: 10),
-            //             decoration: BoxDecoration(
-            //               borderRadius: BorderRadius.circular(5),
-            //               border: Border.all(
-            //                 width: 1,
-            //                 color: _controller.filterPriceButton[index].isCheck == true ? COLOR.pink : COLOR.grey,
-            //               ),
-            //             ),
-            //             child: Align(
-            //               child: TextWiget(
-            //                 title: _controller.filterPriceButton[index].name,
-            //                 style: Themes.dark.textTheme.displayLarge!.copyWith(
-            //                   color: _controller.filterPriceButton[index].isCheck == true ? COLOR.pink : COLOR.black,
-            //                 ),
-            //               ),
-            //               alignment: Alignment.center,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
     );
   }
 
-  // RotatedBox filterDiscount(HomeController _controller) {
-  //   return RotatedBox(
-  //       quarterTurns: -1,
-  //       child: Container(
-  //         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-  //         child: Column(
-  //           children: [
-  //             Padding(
-  //               padding: const EdgeInsets.only(bottom: 10),
-  //               child: AlignWidget(
-  //                 alignment: Alignment.centerLeft,
-  //                 child: TextWiget(
-  //                   title: 'Discount',
-  //                   style: Themes.light.textTheme.displayLarge!.copyWith(
-  //                     fontWeight: FontWeight.w500,
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //             Expanded(
-  //               child: Wrap(
-  //                 spacing: 8.0,
-  //                 runSpacing: 8.0,
-  //                 direction: Axis.horizontal,
-  //                 children: List.generate(
-  //                   _controller.filterDiscountButton.length,
-  //                   (index) => GestureDetector(
-  //                     onTap: () {
-  //                       if (_controller.filterDiscountButton[index].isCheck == false) {
-  //                         _controller.filterDiscountButton[index].isCheck = true;
-  //                       } else {
-  //                         _controller.filterDiscountButton[index].isCheck = false;
-  //                       }
-  //
-  //                       _controller.update();
-  //                     },
-  //                     child: UnconstrainedBox(
-  //                       child: Container(
-  //                         height: 30,
-  //                         padding: EdgeInsets.symmetric(horizontal: 15),
-  //                         decoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.circular(5),
-  //                           border: Border.all(
-  //                             width: 1,
-  //                             color: _controller.filterDiscountButton[index].isCheck == true ? COLOR.pink : COLOR.grey,
-  //                           ),
-  //                         ),
-  //                         child: Align(
-  //                           child: TextWiget(
-  //                             title: _controller.filterDiscountButton[index].name,
-  //                             style: Themes.dark.textTheme.displayLarge!.copyWith(
-  //                               color: _controller.filterDiscountButton[index].isCheck == true ? COLOR.pink : COLOR.black,
-  //                             ),
-  //                           ),
-  //                           alignment: Alignment.center,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ));
-  // }
 
   RotatedBox filterRating(HomeController _controller) {
     return RotatedBox(
@@ -1298,40 +824,13 @@ class HomeProductHeader extends StatelessWidget {
             child: AlignWidget(
               alignment: Alignment.centerLeft,
               child: TextWiget(
-                title: 'Rating',
+                title: StringRes.rating,
                 style: Themes.light.textTheme.displayLarge!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
           ),
-          // Expanded(
-          //   child: Padding(
-          //     padding: EdgeInsets.symmetric(horizontal: 20),
-          //     child: Container(
-          //       padding: EdgeInsets.only(top: 5),
-          //       alignment: Alignment.center,
-          //       child: ListView.builder(
-          //         itemCount: _controller.filterRatinglist.length,
-          //         itemBuilder: (context, index) {
-          //           return GetBuilder<HomeController>(
-          //             builder: (_controller) => CheckboxListTileWidget(
-          //               title: TextWiget(
-          //                 title: _controller.filterRatinglist[index].name,
-          //                 style: Themes.light.textTheme.bodyMedium,
-          //               ),
-          //               value: _controller.filterRatinglist[index].isCheck,
-          //               onChanged: (bool? value) {
-          //                 _controller.filterRatinglist[index].isCheck = value;
-          //                 _controller.update();
-          //               },
-          //             ),
-          //           );
-          //         },
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -1349,7 +848,7 @@ class HomeProductHeader extends StatelessWidget {
               child: AlignWidget(
                 alignment: Alignment.centerLeft,
                 child: TextWiget(
-                  title: 'Size',
+                  title: StringRes.size,
                   style: Themes.light.textTheme.displayLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
@@ -1364,31 +863,13 @@ class HomeProductHeader extends StatelessWidget {
                   border: 1,
                   contentPadding: EdgeInsets.only(top: 10),
                   keyboardType: TextInputType.text,
-                  hintText: 'Search',
+                  hintText: StringRes.searchProduct,
                   prefixIcon: Icon(Icons.search),
                 )),
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(top: 5),
                 alignment: Alignment.center,
-                // child: ListView.builder(
-                //   itemCount: _controller.filterSizelist.length,
-                //   itemBuilder: (context, index) {
-                //     return GetBuilder<HomeController>(
-                //       builder: (_controller) => CheckboxListTileWidget(
-                //         title: TextWiget(
-                //           title: _controller.filterSizelist[index].name,
-                //           style: Themes.light.textTheme.bodyMedium,
-                //         ),
-                //         value: _controller.filterSizelist[index].isCheck,
-                //         onChanged: (bool? value) {
-                //           _controller.filterSizelist[index].isCheck = value;
-                //           _controller.update();
-                //         },
-                //       ),
-                //     );
-                //   },
-                // ),
               ),
             ),
           ],
@@ -1407,7 +888,7 @@ class HomeProductHeader extends StatelessWidget {
             child: AlignWidget(
               alignment: Alignment.centerLeft,
               child: TextWiget(
-                title: 'Combo',
+                title: StringRes.combo,
                 style: Themes.light.textTheme.displayLarge!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -1420,24 +901,6 @@ class HomeProductHeader extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(top: 5),
                 alignment: Alignment.center,
-                // child: ListView.builder(
-                //   itemCount: _controller.filterCombolist.length,
-                //   itemBuilder: (context, index) {
-                //     return GetBuilder<HomeController>(
-                //       builder: (_controller) => CheckboxListTileWidget(
-                //         title: TextWiget(
-                //           title: _controller.filterCombolist[index].name,
-                //           style: Themes.light.textTheme.bodyMedium,
-                //         ),
-                //         value: _controller.filterCombolist[index].isCheck,
-                //         onChanged: (bool? value) {
-                //           _controller.filterCombolist[index].isCheck = value;
-                //           _controller.update();
-                //         },
-                //       ),
-                //     );
-                //   },
-                // ),
               ),
             ),
           ),
@@ -1456,7 +919,7 @@ class HomeProductHeader extends StatelessWidget {
             child: AlignWidget(
               alignment: Alignment.centerLeft,
               child: TextWiget(
-                title: 'Bottomwear Fabric',
+                title: StringRes.bottomwearFabric,
                 style: Themes.light.textTheme.displayLarge!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -1469,24 +932,6 @@ class HomeProductHeader extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(top: 5),
                 alignment: Alignment.center,
-                // child: ListView.builder(
-                //   itemCount: _controller.filterBottomFabric.length,
-                //   itemBuilder: (context, index) {
-                //     return GetBuilder<HomeController>(
-                //       builder: (_controller) => CheckboxListTileWidget(
-                //         title: TextWiget(
-                //           title: _controller.filterBottomFabric[index].name,
-                //           style: Themes.light.textTheme.bodyMedium,
-                //         ),
-                //         value: _controller.filterBottomFabric[index].isCheck,
-                //         onChanged: (bool? value) {
-                //           _controller.filterBottomFabric[index].isCheck = value;
-                //           _controller.update();
-                //         },
-                //       ),
-                //     );
-                //   },
-                // ),
               ),
             ),
           ),
@@ -1505,40 +950,13 @@ class HomeProductHeader extends StatelessWidget {
             child: AlignWidget(
               alignment: Alignment.centerLeft,
               child: TextWiget(
-                title: 'Ornamentation',
+                title: StringRes.ornamentation,
                 style: Themes.light.textTheme.displayLarge!.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
           ),
-          // Expanded(
-          //   child: Padding(
-          //     padding: EdgeInsets.symmetric(horizontal: 20),
-          //     child: Container(
-          //       padding: EdgeInsets.only(top: 5),
-          //       alignment: Alignment.center,
-          //       child: ListView.builder(
-          //         itemCount: _controller.filterOrnamentationlist.length,
-          //         itemBuilder: (context, index) {
-          //           return GetBuilder<HomeController>(
-          //             builder: (_controller) => CheckboxListTileWidget(
-          //               title: TextWiget(
-          //                 title: _controller.filterOrnamentationlist[index].name,
-          //                 style: Themes.light.textTheme.bodyMedium,
-          //               ),
-          //               value: _controller.filterOrnamentationlist[index].isCheck,
-          //               onChanged: (bool? value) {
-          //                 _controller.filterOrnamentationlist[index].isCheck = value;
-          //                 _controller.update();
-          //               },
-          //             ),
-          //           );
-          //         },
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

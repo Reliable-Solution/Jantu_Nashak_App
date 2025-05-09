@@ -104,7 +104,7 @@ class ApiService {
       FormData formData = FormData.fromMap(body ?? {});
 
       // Print the endpoint and body for debugging
-      print("POST Request URL: $endpoint");
+      print("POST Request URL: $baseUrl$endpoint");
       print("POST Request Body: ${body?.toString() ?? '{}'}");
 
       final response = await _dio.post(endpoint, data: formData);

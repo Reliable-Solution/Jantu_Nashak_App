@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //package
 import 'package:get/get.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:keep_app/utils/string_res.dart';
 // utils
 import '/utils/global.dart' as global;
 //theme
@@ -174,7 +175,7 @@ class AccountList extends StatelessWidget {
           //     openBottomRate(context);
           //   },
           // ),
-          DividerWidget(),
+          // DividerWidget(),
           // ListTileWidget(
           //   title: TextWiget(
           //     title: 'Legal and Policies',
@@ -214,12 +215,12 @@ class AccountList extends StatelessWidget {
               Column(
                 children: [
                   TextWiget(
-                    title: 'Would you like to rate us on play',
+                    title: StringRes.rateUsQuestion,
                     style: Themes.dark.textTheme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
                   TextWiget(
-                    title: 'Store?',
+                    title: StringRes.store,
                     style: Themes.dark.textTheme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
@@ -231,7 +232,7 @@ class AccountList extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: FittedBox(
                   child: TextWiget(
-                    title: 'Your feedback helps us make your experience better',
+                    title: StringRes.feedbackText,
                     style: Themes.light.textTheme.displayLarge!.copyWith(
                       color: COLOR.grey,
                     ),
@@ -261,7 +262,7 @@ class AccountList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextWiget(
-                        title: 'WORST',
+                        title: StringRes.worst,
                         style: Themes.dark.textTheme.displayMedium!.copyWith(
                           color: COLOR.grey,
                         ),
@@ -270,7 +271,7 @@ class AccountList extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: TextWiget(
-                          title: 'BEST',
+                          title: StringRes.best,
                           style: Themes.dark.textTheme.displayMedium!.copyWith(
                             color: COLOR.grey,
                           ),

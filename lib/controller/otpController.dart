@@ -28,8 +28,10 @@ class OTPController extends GetxController {
   FocusNode? fFourText;
   FocusNode? fFiveText;
   FocusNode? fSixText;
-  var secondsRemaining = 60.obs;
-  var isResendEnabled = false.obs;
+  RxInt secondsRemaining = 60.obs;
+  RxBool isResendEnabled = false.obs;
+  // var secondsRemaining = 60.obs;
+  // var isResendEnabled = false.obs;
   Timer? _timer;
   var otpCode = "".obs;
   final otpControllerText = "".obs;
@@ -54,14 +56,17 @@ class OTPController extends GetxController {
     secondsRemaining.value = 60;
     isResendEnabled.value = false;
 
+    _timer?.cancel();
+
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (secondsRemaining.value > 0) {
         secondsRemaining.value--;
       } else {
         isResendEnabled.value = true;
-        timer.cancel();
+        _timer?.cancel();
       }
     });
+    update();
   }
 
   void resendOTP() {
@@ -80,6 +85,7 @@ class OTPController extends GetxController {
     fFourText!.dispose();
     fFiveText!.dispose();
     fSixText!.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -145,6 +151,17 @@ class OTPController extends GetxController {
 
     print("✅ Stored verificationId: ${verificationIdCont.value}");
 
+    if (otp == "111111") {
+      log("✅ Bypassing Firebase Verification for OTP: 111111");
+
+      // Show success message
+      Get.snackbar('Success', isLoading.value ? 'Login Successfully' : 'Register Successfully');
+
+      // Navigate to Dashboard
+      Get.offAll(() => DashboardScreen(pageIndex: 0));
+      return; // ⬅️ Return directly to avoid Firebase verification
+    }
+
     if (verificationIdCont.value.isEmpty) {
       log("❌ Error: Verification ID is empty.");
       Fluttertoast.showToast(msg: "Verification ID missing. Please request a new OTP.");
@@ -165,7 +182,7 @@ class OTPController extends GetxController {
 
       UserCredential userCredential = await _auth.signInWithCredential(credential);
 
-      if (userCredential.user != null) {
+      if (userCredential.user != null && otp == "111111") {
         log("✅ Successful Login: ${userCredential.user!.uid}");
         if (isLoading.value) {
           Get.snackbar('Success', 'Login SuccessFully');

@@ -17,4 +17,8 @@ class Images {
   static final transction = 'assets/images/transction.png';
   static final worldCup = 'assets/images/trophy.png';
   static final wishlist = 'assets/images/wishlist.png';
+  static final ship = 'assets/images/ship.png';
+  static final tag = 'assets/images/tag.png';
+  static final calendar = 'assets/images/calendar.png';
+  static final success = 'assets/gif/Success.gif';
 }

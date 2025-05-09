@@ -11,6 +11,7 @@ import 'package:keep_app/models/addressModel.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
 import '../../constant/imagesConst.dart';
+import '../../utils/string_res.dart';
 import '../../widget/alignWidget.dart';
 import '../../widget/buttonWidget.dart';
 import '../../widget/inputWidget.dart';
@@ -48,7 +49,7 @@ class PickupAddressScreen extends StatelessWidget {
                         ),
                       ),
                       TextWiget(
-                        title: 'Products will be picked up from this for delivery',
+                        title: StringRes.productsWill,
                       ),
                     ],
                   ),
@@ -81,7 +82,7 @@ class PickupAddressScreen extends StatelessWidget {
                   child: InputFiledArea(
                     controller: _controller.txtFullname,
                     keyboardType: TextInputType.text,
-                    labelText: 'Full name',
+                    labelText: StringRes.fullName,
                     border: 1,
                   ),
                 ),
@@ -95,7 +96,7 @@ class PickupAddressScreen extends StatelessWidget {
                     child: InputFiledArea(
                       controller: _controller.txtMobileno,
                       keyboardType: TextInputType.text,
-                      labelText: 'Mobile number',
+                      labelText: StringRes.mobileNumber,
                       border: 1,
                     ),
                   ),
@@ -110,7 +111,7 @@ class PickupAddressScreen extends StatelessWidget {
                     child: InputFiledArea(
                       controller: _controller.txtAddress,
                       keyboardType: TextInputType.text,
-                      labelText: 'Address',
+                      labelText: StringRes.address,
                       border: 1,
                     ),
                   ),
@@ -133,7 +134,7 @@ class PickupAddressScreen extends StatelessWidget {
                           child: InputFiledArea(
                             controller: _controller.txtPincode,
                             keyboardType: TextInputType.text,
-                            labelText: 'Pincode',
+                            labelText: StringRes.pinCode,
                             border: 1,
                           ),
                         ),
@@ -145,7 +146,7 @@ class PickupAddressScreen extends StatelessWidget {
                           child: InputFiledArea(
                             controller: _controller.txtLandmark,
                             keyboardType: TextInputType.text,
-                            labelText: 'Landmark',
+                            labelText: StringRes.landmark,
                             border: 1,
                           ),
                         ),
@@ -163,7 +164,7 @@ class PickupAddressScreen extends StatelessWidget {
                     child: InputFiledArea(
                       controller: _controller.txtType,
                       keyboardType: TextInputType.text,
-                      labelText: 'Address Type',
+                      labelText: StringRes.addressType,
                       border: 1,
                     ),
                   ),
@@ -180,7 +181,7 @@ class PickupAddressScreen extends StatelessWidget {
             .height * 0.1,
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: ButtonWidgets(
-          title: 'Continue',
+          title: StringRes.continueString,
           voidCallback: () {
         AddressModel a1  =  AddressModel(customerId:_controller.customerModel!.value.customerId, addressFullName: _controller.txtFullname.text,
                 addressMobileNo: _controller.txtMobileno.text,

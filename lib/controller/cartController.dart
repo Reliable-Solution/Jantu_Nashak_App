@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:keep_app/controller/homeController.dart';
 import 'package:keep_app/models/getCartTotalModel.dart';
 
 import '../constant/api_endpoints.dart';
@@ -11,9 +12,11 @@ import 'networkController.dart';
 
 class CartController extends GetxController {
   NetworkController networkController = Get.put(NetworkController());
+  HomeController homeController = Get.put(HomeController());
   Rx<CustomerModel>? customerModel = CustomerModel().obs;
-  Rx<CartTotal>? cartTotal = CartTotal().obs;
-  List<CartDetailModel> cartList = [];
+  Rx<CartTotal?> cartTotal = Rx<CartTotal?>(null);
+  RxList<CartDetailModel> cartList = <CartDetailModel>[].obs;
+  RxInt cartCount = 0.obs;
 
   var isReadMore = false;
   var isCartLoading = false;
@@ -30,7 +33,9 @@ class CartController extends GetxController {
     CustomerModel? customer = await helper.getCustomer();
     if (customer != null) {
       customerModel!.value = customer;
-      print("Product Detail Screen ${customerModel!.value.customerName}");
+      print("Pro"
+          ""
+          "duct Detail Screen ${customerModel!.value.customerName}");
       getCartDetails(customer.customerId!);
       getCartTotal(customer.customerId!);
     }
@@ -59,7 +64,7 @@ class CartController extends GetxController {
 
         print("API Response: ${response.data}");
         if (data[0]['Cart'] != null) {
-          cartList = (data[0]['Cart'] as List)
+          cartList.value = (data[0]['Cart'] as List)
               .map((productJson) => CartDetailModel.fromJson(productJson))
               .toList();
         }
@@ -109,6 +114,8 @@ class CartController extends GetxController {
       );
 
       if (response.data['IsSuccess'] == true) {
+        homeController.getDashboardData(customerModel!.value.customerId);
+        getCartTotal(customerModel!.value.customerId!);
         update();
       } else {
         throw Exception("Error from API: ${response.data['Message']}");

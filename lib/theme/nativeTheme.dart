@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 //package
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:keep_app/constant/colorConst.dart';
 //constants
 
@@ -14,33 +15,73 @@ class Themes {
         fontSize: 14,
         color: Colors.black87,
       ),
-      bodyMedium: TextStyle(
-        fontSize: 12,
+      bodyMedium: GoogleFonts.poppins(
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
         color: Colors.black87,
       ),
-      displayLarge: TextStyle(
+
+    // TextStyle(
+    //     fontSize: 12,
+    //     color: Colors.black87,
+    //   ),
+      displayLarge: GoogleFonts.roboto(
+      fontSize: 15,
+      fontWeight: FontWeight.bold,
         color: Colors.black87,
-        fontFamily: 'assets/fonts/GentiumPlus-Bold.ttf',
-        fontSize: 15,
+
+
       ),
-      displaySmall: TextStyle(
-        // fontSize: Get.width > 360 ? 16 : 14,
-        fontFamily: 'assets/fontsGentiumPlus-Regular.ttf',
-        color: Colors.black87,
-      ),
-      displayMedium: TextStyle(
-        color: Colors.black,
+
+
+    // TextStyle(
+    //     color: Colors.black87,
+    //     fontFamily: 'assets/fonts/GentiumPlus-Bold.ttf',
+    //     fontSize: 15,
+    //   ),
+      displaySmall: GoogleFonts.poppins(
+
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: Colors.black45,
+    ),
+
+    // TextStyle(
+    //     // fontSize: Get.width > 360 ? 16 : 14,
+    //     fontFamily: 'assets/fontsGentiumPlus-Regular.ttf',
+    //     color: Colors.black87,
+    //   ),
+    //   displayMedium: TextStyle(
+    //     color: Colors.black,
+    //     fontSize: 11,
+    //   ),
+      displayMedium: GoogleFonts.poppins(
         fontSize: 11,
+        // fontWeight: FontWeight.w600,
+        color: Colors.black,
+
+
       ),
+
       headlineMedium: TextStyle(
         color: Colors.grey,
         fontSize: 10,
       ),
-      headlineSmall: TextStyle(
-        color: COLOR.black,
-        fontSize: 21,
-        fontWeight: FontWeight.w700,
-      ),
+      headlineSmall: GoogleFonts.robotoSerif(
+
+      fontSize: 21,
+      fontWeight: FontWeight.w700,
+      color: Colors.black45,
+        // color: COLOR.black,
+        //     fontSize: 21,
+        //     fontWeight: FontWeight.w700,
+    ),
+
+    // TextStyle(
+    //     color: COLOR.black,
+    //     fontSize: 21,
+    //     fontWeight: FontWeight.w700,
+    //   ),
       titleLarge: TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.w700,
@@ -64,11 +105,19 @@ class Themes {
         fontSize: 12,
         color: COLOR.black,
       ),
-      displayMedium: TextStyle(
-        fontSize: 16,
-        color: COLOR.black,
+      displayMedium: GoogleFonts.poppins(
+        fontSize: 12,
         fontWeight: FontWeight.w600,
+        color: Colors.black,
+
+
       ),
+
+      // displayMedium: TextStyle(
+      //   fontSize: 16,
+      //   color: COLOR.black,
+      //   fontWeight: FontWeight.w600,
+      // ),
       displaySmall: TextStyle(
         fontSize: 13,
         color: COLOR.black,

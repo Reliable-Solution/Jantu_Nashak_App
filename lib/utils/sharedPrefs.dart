@@ -26,4 +26,10 @@ class SharedHelper {
       return null;
     }
   }
+
+  Future<void> deleteCustomer() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(customerModelKey);
+    print("Customer data deleted successfully.");
+  }
 }

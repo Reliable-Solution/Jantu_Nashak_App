@@ -33,8 +33,11 @@ class SplashController extends GetxController {
     Timer(Duration(seconds: 3), () {
       Get.off(
         () =>
-            // customerModel == null
-                 RegistrationScreen()
+        customerModel == null
+            ? LoginScreen()
+            : DashboardScreen(pageIndex: 0),
+            // // customerModel == null
+            //      RegistrationScreen()
       );
     });
   }

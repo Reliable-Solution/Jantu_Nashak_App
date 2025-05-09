@@ -13,4 +13,13 @@ const String removeCartApi = "removeCart";
 const String getCartTotalWithDeliveryChargeV2Api = "getCartTotalWithDeliveryChargeV2";
 const String updateAddress = "updateAddress";
 const String searchByUser = "searchByUser";
+const String addRemoveWishlist = "addRemoveWishlist";
+const String getWishlistByCustomerId = "getWishlistByCustomerId";
+const String getProductByCategoryId = "getProductByCategoryId";
+const String getProductbySubcategoryId = "getProductbySubcategoryId";
+const String placeOrder = "placeOrder";
+const String orderHistory = "orderHistory";
+const String cancelOrderProduct = "cancelOrder";
+const String getOrderdetailByOrderIdV2 = "getOrderdetailByOrderIdV2";
+
 

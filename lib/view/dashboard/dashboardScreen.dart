@@ -7,6 +7,7 @@ import 'package:keep_app/constant/colorConst.dart';
 import 'package:keep_app/view/home/home_screen.dart';
 
 import '../../controller/dashboardController.dart';
+import '../../utils/string_res.dart';
 import '../account/account_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class DashboardScreen extends StatelessWidget {
                 icon: _controller.tabIndex == 0
                     ? Icons.home
                     : Icons.home_outlined,
-                label: 'Home',
+                label: StringRes.home,
               ),
               // _bottomNavigationBarItem(
               //   icon: _controller.tabIndex == 1 ? Icons.grid_view_rounded : Icons.grid_view,
@@ -51,7 +52,7 @@ class DashboardScreen extends StatelessWidget {
                 icon: _controller.tabIndex == 4
                     ? Icons.person
                     : Icons.person_outline,
-                label: 'Account',
+                label: StringRes.account,
               )
             ],
           ),

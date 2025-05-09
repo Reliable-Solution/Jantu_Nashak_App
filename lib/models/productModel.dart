@@ -112,7 +112,8 @@ class ProductModel {
   }
 }
 
-class PackInfo {
+class
+PackInfo {
   String? productdetailId;
   bool? isCart;
   String? cartqty;

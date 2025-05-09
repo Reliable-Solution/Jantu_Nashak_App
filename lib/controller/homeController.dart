@@ -5,6 +5,8 @@ import 'package:keep_app/constant/api_endpoints.dart';
 import 'package:keep_app/controller/networkController.dart';
 import 'package:keep_app/models/productModel.dart';
 import 'package:keep_app/models/subCategoryModel.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import '../constant/colorConst.dart';
 import '../models/brandModel.dart';
 import '../models/categoryModel.dart';
 import '../models/customerModel.dart';
@@ -47,6 +49,7 @@ class HomeController extends GetxController
   var searchController = TextEditingController();
   CustomerModel? m1 = CustomerModel();
   var searchQuery = ''.obs;
+  var speechToText = stt.SpeechToText();
 
   @override
   void onInit() async {
@@ -83,20 +86,16 @@ class HomeController extends GetxController
     'Discount',
     'Rating',
     'Size',
-    'Combo'
-        'Material',
+    'Combo',
+    'Material',
     'Bottom Length',
     'Bottom Style',
     'Bottomwear Fabric',
     'Ornmentation'
   ];
 
-
-
-
   //pricelist
   final price = [99, 199, 299, 399, 499];
-
 
   /// Get dashboard all data
   Future<void> getDashboardData(String? customerId) async {
@@ -121,7 +120,6 @@ class HomeController extends GetxController
 
       if (response.data['IsSuccess'] == true) {
         print("API Response: ${response.data}");
-
 
         var data = response.data['Data']; // Assuming Data[0] exists
 
@@ -155,10 +153,58 @@ class HomeController extends GetxController
       throw Exception("Failed to get dashboard data: $e");
     }
   }
+
   void onSearchChanged(String query) {
+    print(" query $query");
+    if (query.isEmpty) {
+      searchList.clear();
+      update();
+    }
     searchQuery.value = query;
     getSearchData(query);
   }
+
+  Future<void> startVoiceSearch(BuildContext context) async {
+    bool available = await speechToText.initialize();
+    if (available) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Listening...",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                SizedBox(height: 15),
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: COLOR.appBaseColor,
+                  child: Icon(Icons.mic, size: 50, color: Colors.white),
+                ),
+                SizedBox(height: 15),
+                Text("Speak now...",
+                    style: TextStyle(fontSize: 16, color: Colors.grey)),
+              ],
+            ),
+          ),
+        ),
+      );
+      speechToText.listen(onResult: (result) {
+        if (result.recognizedWords.isNotEmpty) {
+          getSearchData(result.recognizedWords);
+          searchController.text = result.recognizedWords;
+          Navigator.of(context).pop();
+        }
+      });
+    }
+  }
+
   getSearchData(String productName) async {
     if (productName.isEmpty) {
       products.clear();

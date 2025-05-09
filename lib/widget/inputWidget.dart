@@ -1,5 +1,6 @@
 // Flutter
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // Packages
 import 'package:get/get.dart';
 import 'package:keep_app/constant/colorConst.dart';
@@ -30,6 +31,7 @@ class InputFiledArea extends StatelessWidget {
   final TextStyle? style;
   final bool? autoFocus;
   final EdgeInsetsGeometry? contentPadding;
+  final String? validationMessage;
 
   InputFiledArea({
     Key? key,
@@ -55,57 +57,61 @@ class InputFiledArea extends StatelessWidget {
     this.focusNode,
     this.autoFocus,
     this.style,
+    this.validationMessage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      maxLength: maxlength,
-      onSaved: onSaved,
-      onChanged: onChanged,
-      onTap: onTap,
-      enabled: enabled,
-      readOnly: false,
-      focusNode: focusNode,
-      style: style ?? Themes.light.textTheme.displayLarge,
-      initialValue: initialValue,
-      decoration: InputDecoration(
-        isDense: true,
-        labelText: labelText,
-        labelStyle: TextStyle(
-          color: (focusNode != null && focusNode!.hasFocus) ? COLOR.appBaseColor : COLOR.grey,
+        controller: controller,
+        keyboardType: keyboardType,
+        maxLength: maxlength,
+        onSaved: onSaved,
+        onChanged: onChanged,
+        onTap: onTap,
+        enabled: enabled,
+        readOnly: false,
+        focusNode: focusNode,
+        style: style ?? Themes.light.textTheme.displayLarge,
+        initialValue: initialValue,
+        inputFormatters: [
+          if(maxlength != null) LengthLimitingTextInputFormatter(maxlength)
+        ],
+        decoration: InputDecoration(
+          isDense: true,
+          labelText: labelText,
+          labelStyle: TextStyle(
+            color: (focusNode != null && focusNode!.hasFocus) ? COLOR.appBaseColor : COLOR.grey,
+          ),
+          prefixIcon: prefixIcon,
+          suffixText: suffixText,
+          suffixIcon: suffixIcon,
+          contentPadding: contentPadding ?? null,
+          counterText: counterText,
+          helperText: helperText,
+          suffixStyle: Get.theme.textTheme.titleMedium,
+          hintText: hintText,
+          hintStyle: TextStyle(color: COLOR.grey),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xffDEDEDE)),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xffDEDEDE)),
+          ),
+          enabledBorder: (border == 1)
+              ? OutlineInputBorder(
+            borderSide: BorderSide(color: COLOR.grey),
+          )
+              : UnderlineInputBorder(borderSide: BorderSide(color: COLOR.grey)),
+          focusedBorder: (border == 1)
+              ? OutlineInputBorder(
+            borderSide: BorderSide(color: COLOR.appBaseColor),
+          )
+              : UnderlineInputBorder(
+            borderSide: BorderSide(color: COLOR.appBaseColor),
+          ),
         ),
-        prefixIcon: prefixIcon,
-        suffixText: suffixText,
-        suffixIcon: suffixIcon,
-        contentPadding: contentPadding ?? null,
-        counterText: counterText,
-        helperText: helperText,
-        suffixStyle: Get.theme.textTheme.titleMedium,
-        hintText: hintText,
-        hintStyle: TextStyle(color: COLOR.grey),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Color(0xffDEDEDE)),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Color(0xffDEDEDE)),
-        ),
-        enabledBorder: (border == 1)
-            ? OutlineInputBorder(
-                borderSide: BorderSide(color: COLOR.grey),
-              )
-            : UnderlineInputBorder(borderSide: BorderSide(color: COLOR.grey)),
-        focusedBorder: (border == 1)
-            ? OutlineInputBorder(
-                borderSide: BorderSide(color: COLOR.appBaseColor),
-              )
-            : UnderlineInputBorder(
-                borderSide: BorderSide(color: COLOR.appBaseColor),
-              ),
-      ),
-      validator: validator,
-    );
+        validator: validator,
+      );
   }
 }

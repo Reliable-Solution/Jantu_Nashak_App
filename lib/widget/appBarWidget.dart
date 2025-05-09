@@ -14,6 +14,7 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? titleSpacing;
 
   final double? appbarPadding;
+  final double? actionPadding;
 
   const MyCustomAppBar({
     Key? key,
@@ -24,6 +25,7 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.elevation,
     this.action,
     this.leading,
+    this.actionPadding,
   }) : super(key: key);
 
   @override
@@ -36,8 +38,9 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: EdgeInsets.only(top: appbarPadding!, bottom: appbarPadding!),
           child: AppBar(
+            actionsPadding: EdgeInsets.all(actionPadding ?? 0),
             leading: leading,
-            backgroundColor: COLOR.background,
+            backgroundColor: Color(0xffffedfe),
             elevation: elevation,
             titleSpacing: titleSpacing,
             centerTitle: false,

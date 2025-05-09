@@ -1,10 +1,12 @@
 //packages
 import 'package:get/get.dart';
 import '../constant/api_endpoints.dart';
+import '../models/cartDetailModel.dart';
 import '../models/customerModel.dart';
 import '../models/productModel.dart';
 import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
+import 'cartController.dart';
 import 'networkController.dart';
 
 class ProductDetailsController extends GetxController
@@ -19,6 +21,14 @@ class ProductDetailsController extends GetxController
   bool isUpdateLoading = false;
   bool isCartLoading = false;
   bool isCart = false;
+
+  double downloadProgress = 0.0;
+  bool isImagesDownloaded = false;
+  bool isDescriptionShared = false;
+  bool isSharingDescription = false;
+  var cartCount = 0.obs; // Cart count as observable
+
+
 
   void add() {
     Qty++;
@@ -49,6 +59,12 @@ class ProductDetailsController extends GetxController
     update();
   }
 
+  void updateCartCount() {
+    cartCount++; // Increase count on add to cart
+    update(); // UI refresh
+  }
+
+
   Future<void> addToCart(ProductModel productModel) async {
     try {
       final Map<String, dynamic> body = {
@@ -66,6 +82,16 @@ class ProductDetailsController extends GetxController
       if (response.data['IsSuccess'] == true) {
         print("API Response: ${response.data}");
 
+         // Get.find<CartController>().cartList.add(CartDetailModel.fromJson(response.data['Data']));
+        //
+        // ✅ **Cart total aur UI update karo**
+        Get.find<CartController>().getCartDetails(
+          Get.find<CartController>().customerModel!.value.customerId!,
+        );
+        Get.find<CartController>().getCartTotal(
+          Get.find<CartController>().customerModel!.value.customerId!,
+        );
+        // Get.find<CartController>().update();
         update();
       } else {
         throw Exception("Error from API: ${response.data['Message']}");
@@ -74,6 +100,27 @@ class ProductDetailsController extends GetxController
       print("Error in add to cart: $e");
       throw Exception("Failed to add to cart: $e");
     }
+  }
+  void updateProgress(double progress) {
+    downloadProgress = progress;
+    update();
+  }
+
+  void updateImagesStatus(bool status)
+  {
+    isImagesDownloaded = status;
+    update();
+  }
+
+  void updateDescriptionStatus(bool status) {
+    isDescriptionShared = status;
+    update();
+  }
+
+  void startDescriptionSharing() {
+    isSharingDescription = true;
+    downloadProgress = 0.0; // Reset progress for description
+    update();
   }
 
 

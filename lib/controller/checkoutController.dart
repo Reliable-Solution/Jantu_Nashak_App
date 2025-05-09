@@ -1,0 +1,68 @@
+import 'package:get/get.dart';
+import 'package:keep_app/controller/homeController.dart';
+import 'package:keep_app/view/dashboard/dashboardScreen.dart';
+import 'package:keep_app/view/sucess/payment_sucess.dart';
+
+import '../utils/services/api_services.dart';
+import '../constant/api_endpoints.dart';
+import '../view/home/home_screen.dart';
+
+
+class CheckoutController extends GetxController
+{
+  HomeController homeController = Get.find<HomeController>();
+  RxString selectedPaymentMethod = ''.obs; // Default: Cash on Delivery
+  RxBool isOnlineExpanded = false.obs; // Online Payment Section Expand/Collapse
+  RxBool isLoading = false.obs;
+  RxBool isSelected = false.obs;
+
+  void selectPaymentMethod(String method) {
+  selectedPaymentMethod.value = method;
+  // isOnlineExpanded.value = (method == 'ONLINE'); // Expand   only if online selected
+  isOnlineExpanded.value = (method.toLowerCase() == 'online');
+  update();
+
+  }
+  Future<void> placeOrderCheckout({
+    required String customerId,
+    required String addressId,
+    required String orderPaymentMethod,
+    String? orderTransactionNo,
+  }) async {
+    isLoading.value = true;
+
+    try {
+      final Map<String, dynamic> body = {
+        "CustomerId": customerId,
+        "TotPoint": 0,
+        "Points": false,
+        "AddressId": addressId,
+        "OrderPaymentMethod": orderPaymentMethod,
+        "OrderTransactionNo": orderTransactionNo ?? "",
+      };
+
+      var response = await ApiService.post(
+        endpoint: placeOrder,
+        body: body,
+      );
+
+      if (response.data['IsSuccess'] == true) {
+        print("Order Placed Successfully: ${response.data}");
+
+        // Show success message
+        Get.snackbar("Success", "Your order has been placed!");
+        homeController.getDashboardData(customerId);
+        Get.offAll(PaymentSucess());
+
+      } else {
+        throw Exception("API Error: ${response.data['Message']}");
+      }
+    } catch (e) {
+      print("Checkout Error: $e");
+      Get.snackbar("Error", "Failed to place order: $e");
+    } finally {
+      isLoading.value = false;
+      update();
+    }
+  }
+}

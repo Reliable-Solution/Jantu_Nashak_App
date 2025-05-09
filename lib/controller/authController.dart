@@ -8,6 +8,8 @@ import 'package:keep_app/view/dashboard/dashboardScreen.dart';
 import '../models/customerModel.dart';
 import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
+import '../view/otp/otp_screen.dart';
+import '../view/otp/registrationScreen.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,6 +19,7 @@ class AuthController extends GetxController {
   final isOtpValid = false.obs;
   SharedHelper helper = SharedHelper();
   RxString tokenGet = "".obs;
+  final isLoading = false.obs;
   void setPhoneNumber(String value) {
     phoneNumber.value = value;
   }
@@ -29,7 +32,7 @@ class AuthController extends GetxController {
   Future<void> submitPhoneNumber(String token) async {
     try {
       try {
-
+        isLoading.value = true; // 🔵 Loading Start
 
         final Map<String, dynamic> body = {
           'CustomerPhoneNo': phoneNumber.value.toString(),
@@ -38,25 +41,51 @@ class AuthController extends GetxController {
         print('Request Body: $body');
 
         var response = await ApiService.post(endpoint: login, body: body);
-
-
+        isLoading.value = false; // 🔴 Loading Complete
 
 
         if (response.data['IsSuccess'] == true) {
+          var data = response.data["Data"];
 
-          CustomerModel customerModel = CustomerModel.fromJson(response.data["Data"][0]);
-          Get.snackbar('Success', response.data['Message']);
-          helper.setCustomer(customerModel);
-
-          // Get.offAll(() => DashboardScreen(pageIndex: 0));
-          update();
+          if (data is List && data.isNotEmpty) {
+            // ✅ User exists, login successful
+            CustomerModel customerModel = CustomerModel.fromJson(data[0]);
+            helper.setCustomer(customerModel);
+            Get.snackbar('Success', 'OTP sent to your mobile.');
+            Get.to(() => OTPVerificationScreen(phoneNumber: phoneNumber.value));
+            // Get.snackbar('Success', 'Login successful.');
+            // Get.offAll(() => DashboardScreen(pageIndex: 0));
+          }
+          else if (data is List && data.isEmpty) {
+            // ✅ User doesn't exist, redirect to registration
+            Get.snackbar('Info', 'No account found. Please register.');
+            Get.offAll(() => RegistrationScreen());
+          }
+          else {
+            Get.snackbar('Error', 'Unexpected response received.');
+          }
         } else {
-          print("Error: ${response.data['Message']}");
-          Get.snackbar(response.data['Message'],'Please try Sign Up');
-
+          Get.snackbar('Error', response.data['Message']);
         }
+        // if (response.data['IsSuccess'] == true) {
+        //
+        //   CustomerModel customerModel = CustomerModel.fromJson(response.data["Data"][0]);
+        //   Get.snackbar('Success', response.data['Message']);
+        //   helper.setCustomer(customerModel);
+        //   Get.snackbar('Success', response.data['Message']);
+        //   Get.offAll(() => DashboardScreen(pageIndex: 0));
+        //
+        //   // Get.offAll(() => DashboardScreen(pageIndex: 0));
+        //   update();
+        // } else {
+        //   print("Error: ${response.data['Message']}");
+        //   Get.snackbar(response.data['Message'],'Please try Sign Up');
+        //
+        // }
       } catch (e) {
         // Handle exceptions and network errors
+        isLoading.value = false; // 🔴 Loading Complete (in case of error)
+
         print("Error in register: $e");
         Get.snackbar('Error', 'Failed to register. Please try again.');
         throw Exception("Failed to register");
@@ -87,6 +116,8 @@ class AuthController extends GetxController {
   void getToken() async {
     if (phoneNumber.value.length == 10) {
       FirebaseMessaging messaging = FirebaseMessaging.instance;
+      isLoading.value = true;  // 🔵 API call start hone se pehle loading true
+
 
       NotificationSettings settings = await messaging.requestPermission(
         alert: true,
@@ -103,9 +134,12 @@ class AuthController extends GetxController {
         String? token = await messaging.getToken();
         submitPhoneNumber(token!);
         print('FCM Token: $token');
+
       } else {
         print('User declined or has not accepted permission');
       }
+      isLoading.value = false;  // 🔴 API call complete hone ke baad loading false
+
     } else {
       Get.snackbar('Error', 'Enter a valid 10-digit mobile number');
     }

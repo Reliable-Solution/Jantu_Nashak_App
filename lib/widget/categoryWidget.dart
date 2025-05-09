@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keep_app/view/home/priceStroescreen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
@@ -15,10 +16,11 @@ class CategoryComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     double imageHeight = Get.width > 360
         ? MediaQuery.of(context).size.height * 0.15
-        : MediaQuery.of(context).size.height * 0.175;
+        : MediaQuery.of(context).size.height * 0.17;
 
     return InkWell(
       onTap: () {
+        Get.to(SubCategoryScreen(category: categoryModel!.categoryId));
         // Navigate to product details if needed
       },
       child: Container(

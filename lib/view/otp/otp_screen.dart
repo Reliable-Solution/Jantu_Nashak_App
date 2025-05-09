@@ -8,6 +8,7 @@ import '../../controller/authController.dart';
 import '../../controller/otpController.dart';
 import '../../controller/registrationController.dart';
 import '../../utils/services/firebase_authenticate.dart';
+import '../../utils/string_res.dart';
 
 
 class OTPVerificationScreen extends StatefulWidget {
@@ -31,6 +32,14 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Color(0xFFEDE7F6),
+      appBar: AppBar(
+        title: Text(
+         "Enter Verification Code",
+          style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),
+        ),
+        backgroundColor: COLOR.appBaseColor,
+      ),
+
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -45,12 +54,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "Enter your Verification Code",
+                    StringRes.enterVerificationCode,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "We have sent a One Time Passcode to your mobile number",
+                  StringRes.otpSentMessage,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
@@ -88,15 +97,22 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Didn't get it? "),
+                    Text(StringRes.didntGetOtp),
                     Obx(() => TextButton(
                       onPressed: otpController.isResendEnabled.value
                           ? otpController.resendOTP
                           : null,
-                      child: Text("Send Again"),
+                      child: Text(StringRes.sendAgain),
                     )),
                     Spacer(),
-                    Obx(() => Text(" ${otpController.secondsRemaining.value}s")),
+                    Obx(() {
+                      return Text(
+                        "${otpController.secondsRemaining.value}s",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      );
+                    })
+
+                    // Obx(() => Text(" ${otpController.secondsRemaining.value}s")),
                   ],
                 ),
                 SizedBox(height: 10),
@@ -126,14 +142,14 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   ),
-                  child: Text("Verify OTP"),
+                  child: Text(StringRes.verifyOtp),
                 ),
                 TextButton(
                   onPressed: () {
                     Get.to(LoginScreen());
                     print("Changing phone number...");
                   },
-                  child: Text("Change Phone Number"),
+                  child: Text(StringRes.changeNumber),
                 ),
               ],
             ),
