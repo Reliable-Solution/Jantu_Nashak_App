@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:keep_app/controller/homeController.dart';
 import 'package:keep_app/utils/sharedPrefs.dart';
+import 'package:keep_app/view/account/editProfile.dart';
+import 'package:keep_app/view/account/primary.dart';
+import 'package:keep_app/view/account/profile_screen.dart';
 import 'package:keep_app/view/account/widget/accountList.dart';
 import 'package:keep_app/view/address/pickupAddressScreen.dart';
 import 'package:keep_app/view/order/orderScreen.dart';
@@ -106,7 +109,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         alignment: Alignment.centerRight,
                         child: IconButtonWidget(
                           voidCallback: () {
-                            // Get.to(() => ProfileScreen());
+                             Get.to(() => EditProfileScreen());
                           },
                           icons: Icons.navigate_next_outlined,
                           size: 35,

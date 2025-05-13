@@ -107,6 +107,26 @@ class ApiService {
       print("POST Request URL: $baseUrl$endpoint");
       print("POST Request Body: ${body?.toString() ?? '{}'}");
 
+      final fullUrl = "$baseUrl$endpoint";
+
+      // Build cURL string
+      final curl = StringBuffer();
+      curl.write("curl -X POST '$fullUrl' \\\n");
+
+      // Headers (add content-type for FormData)
+      curl.write("  -H 'Content-Type: multipart/form-data' \\\n");
+
+      // Body
+      if (body != null && body.isNotEmpty) {
+        for (var entry in body.entries) {
+          curl.write("  -F '${entry.key}=${entry.value}' \\\n");
+        }
+      }
+
+      // Print the cURL command
+      print("======== cURL Command ========");
+      print(curl.toString());
+      print("==============================");
       final response = await _dio.post(endpoint, data: formData);
       if (response.statusCode == 200) {
         return response;

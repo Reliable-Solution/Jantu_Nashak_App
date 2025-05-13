@@ -46,6 +46,8 @@ class CheckoutController extends GetxController
         body: body,
       );
 
+
+      print("============== Place Order Data ${response.data}");
       if (response.data['IsSuccess'] == true) {
         print("Order Placed Successfully: ${response.data}");
 

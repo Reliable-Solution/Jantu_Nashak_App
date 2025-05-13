@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:keep_app/controller/cartController.dart';
 import 'package:keep_app/controller/checkoutController.dart';
 import 'package:keep_app/controller/homeController.dart';
+import 'package:keep_app/view/checkout/priceDetailsScreen.dart';
 import 'package:keep_app/view/home/home_screen.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -453,7 +454,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               //   ),
               // ),
               // Divider(),
-              PriceDetailsWidget(),
+              // PriceDetailsWidget(),
               // Divider(),
               SizedBox(height: 75),
             ],

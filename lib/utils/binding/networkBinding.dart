@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:keep_app/controller/addressController.dart';
 import 'package:keep_app/controller/cartController.dart';
 import 'package:keep_app/controller/checkoutController.dart';
+import 'package:keep_app/controller/editController.dart';
 import 'package:keep_app/controller/languageController.dart';
 import 'package:keep_app/controller/orderController.dart';
 import 'package:keep_app/controller/productDetailController.dart';
@@ -28,5 +29,6 @@ class NetworkBinding extends Bindings {
     Get.lazyPut<SubCategoryController>(() => SubCategoryController(), fenix: true);
     Get.lazyPut<CheckoutController>(() => CheckoutController(), fenix: true);
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
+    Get.lazyPut<EditProfileController>(() => EditProfileController(), fenix: true);
   }
 }

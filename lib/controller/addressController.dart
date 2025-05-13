@@ -98,9 +98,12 @@ class AddressController extends GetxController {
 
   getAllAddress() async {
     try {
+      isAddress.value = false;
+
       if (allAddressList.isNotEmpty && selectedAddressId.isEmpty) {
         selectedAddressId.value = allAddressList.last.addressId.toString();
       }
+      allAddressList.clear();
       final Map<String, dynamic> body = {
         "CustomerId": customerModel!.value.customerId,
       };
@@ -113,7 +116,7 @@ class AddressController extends GetxController {
             .map((addressJson) => AddressModel.fromJson(addressJson))
             .toList();
         print("address data ${allAddressList.length}");
-        isAddress.value = true;
+          isAddress.value = true;
         // isCategory = true.obs;
         update();
       } else {

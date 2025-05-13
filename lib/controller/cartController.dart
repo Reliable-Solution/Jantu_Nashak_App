@@ -14,9 +14,11 @@ class CartController extends GetxController {
   NetworkController networkController = Get.put(NetworkController());
   HomeController homeController = Get.put(HomeController());
   Rx<CustomerModel>? customerModel = CustomerModel().obs;
-  Rx<CartTotal?> cartTotal = Rx<CartTotal?>(null);
+  // Rx<CartTotal?> cartTotal = Rx<CartTotal?>(null);
+  final Rx<CartTotal> cartTotal = CartTotal().obs;
   RxList<CartDetailModel> cartList = <CartDetailModel>[].obs;
   RxInt cartCount = 0.obs;
+
 
   var isReadMore = false;
   var isCartLoading = false;
@@ -48,7 +50,7 @@ class CartController extends GetxController {
   }
 
   Future<void> getCartDetails(String customerID) async {
-    isCartLoading = false;
+    isCartLoading = true;
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerID,
@@ -73,10 +75,15 @@ class CartController extends GetxController {
       } else {
         throw Exception("Error from API: ${response.data['Message']}");
       }
-    } catch (e) {
-      print("Error in getDashboardData: $e");
-      throw Exception("Failed to get dashboard data: $e");
-    }
+     } catch (e) {
+  Get.snackbar('Error', 'Failed to fetch cart: $e');
+  } finally {
+  isCartLoading = false;
+  }
+    // catch (e) {
+    //   print("Error in getDashboardData: $e");
+    //   throw Exception("Failed to get dashboard data: $e");
+    // }
   }
 
   Future<void> updateCartQty(String cartID, String cartQuantity) async {
@@ -126,7 +133,7 @@ class CartController extends GetxController {
     }
   }
 
-  Future<void> getCartTotal(String customerID) async {
+  Future<void> getCartTotal(customerID) async {
     isCartLoading = false;
     try {
       final Map<String, dynamic> body = {

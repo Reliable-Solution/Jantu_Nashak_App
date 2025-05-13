@@ -48,13 +48,15 @@ class SubCategoryProductScreen extends StatefulWidget {
   SubCategoryProductScreen({super.key, required this.subCategory});
 
   @override
-  State<SubCategoryProductScreen> createState() => _SubCategoryProductScreenState();
+  State<SubCategoryProductScreen> createState() =>
+      _SubCategoryProductScreenState();
 }
 
 class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
   // String category;
   final SubCategoryController _controller = Get.find<SubCategoryController>();
-  final ProductDetailsController productDetailsController = Get.find<ProductDetailsController>();
+  final ProductDetailsController productDetailsController =
+      Get.find<ProductDetailsController>();
 
   // PriceStroeScreen({Key? key,required this.category}) : super(key: key);
 
@@ -125,8 +127,8 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                   IconButtonWidget(
                     voidCallback: () {
                       Get.to(() => CartScreen(
-                        removeCart: productRemove,
-                      ));
+                          // removeCart: productRemove,
+                          ));
                     },
                     icons: Icons.shopping_cart_outlined,
                     color: COLOR.black,
@@ -135,25 +137,26 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                     right: 0,
                     top: 0,
                     // alignment: Alignment(5, 5),
-                    child: GetBuilder<CartController>(builder: (cartController) {
+                    child:
+                        GetBuilder<CartController>(builder: (cartController) {
                       int cartCount = cartController.cartList.length;
                       return cartCount > 0
                           ? Container(
-                        padding: EdgeInsets.all(5),
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          cartCount.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
+                              padding: EdgeInsets.all(5),
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Text(
+                                cartCount.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
                           : SizedBox();
                       // IconButtonWidget(
                       //   voidCallback: () {
@@ -191,7 +194,6 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                   ),
                 ],
               ),
-
             ],
             elevation: 0,
           ),
@@ -234,23 +236,61 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
               ],
             ),
           ),
+          // GetBuilder<SubCategoryController>(
+          //   builder: (controller) {
+          //     if (controller.categoryProductList.isEmpty) {
+          //       return SliverToBoxAdapter(
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(20),
+          //           child: Center(child: Text("Data not found")),
+          //         ),
+          //       );
+          //     } else {
+          //       return SliverGrid(
+          //         delegate: SliverChildBuilderDelegate(
+          //           (context, index) {
+          //             final product = controller.categoryProductList[index];
+          //             return ProductComponent(products: product);
+          //           },
+          //           childCount: controller.categoryProductList.length,
+          //         ),
+          //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //           crossAxisCount: 2,
+          //           childAspectRatio: 1 / 1.4,
+          //           crossAxisSpacing: 2,
+          //           mainAxisSpacing: 2,
+          //         ),
+          //       );
+          //     }
+          //   },
+          // ),
+
           GetBuilder<SubCategoryController>(builder: (controller) {
-            return SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                  final products = controller.subCategoryProductList[index];
-                  return ProductComponent(products: products);
-                },
-                childCount: controller.subCategoryProductList.length,
-              ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                // childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
-                childAspectRatio: 1/1.4,
-                crossAxisSpacing: 2,
-                mainAxisSpacing: 2,
-              ),
-            );
+            if (controller.subCategoryProductList.isEmpty) {
+              return SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Center(child: Text("Data not found")),
+                ),
+              );
+            } else {
+              return SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final products = controller.subCategoryProductList[index];
+                    return ProductComponent(products: products);
+                  },
+                  childCount: controller.subCategoryProductList.length,
+                ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  // childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
+                  childAspectRatio: 1 / 1.4,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 2,
+                ),
+              );
+            }
           })
           // Container(
           //   color: Colors.white,
@@ -540,11 +580,11 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                                   .copyWith(color: COLOR.appBaseColor),
                               border: 1,
                               onPressed: (_controller.deliveryPincode.text
-                                  .trim()
-                                  .isNotEmpty)
+                                      .trim()
+                                      .isNotEmpty)
                                   ? () {
-                                Get.back();
-                              }
+                                      Get.back();
+                                    }
                                   : null,
                             ),
                           ),
