@@ -30,7 +30,8 @@ import '../search/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final HomeController _controller = Get.put(HomeController()); // ensure registration
+  final HomeController _controller =
+      Get.put(HomeController()); // ensure registration
   // final HomeController _controller = Get.find();
   final CartController cartController = Get.put(CartController());
   ProductDetailsController productDetailsController = Get.find();
@@ -42,481 +43,349 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("HomeScreen name: ${_controller.customerModel!.value?.customerName}");
+
     print("language changes ${StringRes.searchProduct}");
     return Scaffold(
       backgroundColor: COLOR.greyLight,
       body: GetBuilder<HomeController>(
-        builder: (controller) =>  controller.categoryList.isEmpty
-            ? Container(margin: EdgeInsets.only(top: 25),padding: EdgeInsets.all(0),child: CategoryDetailShimmer())
-            :CustomScrollView(
-          slivers: [
-            SliverAppBar(actionsPadding: EdgeInsets.symmetric(horizontal: 10),
-              snap: false,
-              pinned: true,
-              floating: true,
-              backgroundColor: Color(0xffffedfe),
-              title: Obx(() => TextWiget(
-                    title: _controller.customerModel != null
-                        ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
-                        : StringRes.hello,
-                    style: Themes.light.textTheme.displayMedium,
-                  )),
-              actions: [
-
-                // Stack(
-                //   children: [
-                //     IconButtonWidget(
-                //        voidCallback: () {
-                //            Get.to(() => CartScreen(
-                //               removeCart: productRemove,
-                //             ));
-                //       },
-                //       icons: Icons.shopping_cart_outlined,
-                //       color: COLOR.black,
-                //     ),
-                //     Positioned(
-                //       right: 0,
-                //       top: 0,
-                //       // alignment: Alignment(5, 5),
-                //       child:
-                //           GetBuilder<CartController>(builder: (cartController) {
-                //          cartController.cartCount.value = cartController.cartList.length;
-                //         return cartController.cartCount.value > 0
-                //             ? Container(
-                //                 padding: EdgeInsets.all(5),
-                //                 alignment: Alignment.centerLeft,
-                //                 decoration: BoxDecoration(
-                //                   color: Colors.red,
-                //                   shape: BoxShape.circle,
-                //                 ),
-                //                 child: Text(
-                //                   cartController.cartCount.value.toString(),
-                //                   style: TextStyle(
-                //                     color: Colors.white,
-                //                     fontSize: 12,
-                //                     fontWeight: FontWeight.bold,
-                //                   ),
-                //                 ),
-                //               )
-                //             : SizedBox();
-                //         // IconButtonWidget(
-                //         //   voidCallback: () {
-                //         //     Get.to(LoginScreen());
-                //         //   },
-                //         //   icons: Icons.login,
-                //         //   color: COLOR.black,
-                //         // ),
-                //         // IconButtonWidget(
-                //         //   voidCallback: () {
-                //         //  Get.to(LoginScreen());
-                //         //   },
-                //         //   icons: Icons.login,
-                //         //   color: COLOR.black,
-                //         // ),
-                //         // IconButton(
-                //         //     onPressed: () {
-                //         //       Navigator.push(
-                //         //           context,
-                //         //           MaterialPageRoute(
-                //         //             builder: (context) => LoginScreen(),
-                //         //           ));
-                //         //     },
-                //         //     icon: Icon(Icons.login)),
-                //         // IconButton(
-                //         //     onPressed: () {
-                //         //       Navigator.push(
-                //         //           context,
-                //         //           MaterialPageRoute(
-                //         //             builder: (context) => WishlistScreen(),
-                //         //           ));
-                //         //     },
-                //         //     icon: Icon(Icons.favorite));
-                //       }),
-                //     ),
-                //   ],
-                // ),
-                // Align(alignment: Alignment(2, 1),
-                //     // right: 50,
-                //     // top: 50,
-                //     child: GetBuilder<CartController>(builder: (cartController) {
-                //       int cartCount = cartController.cartList.length;
-                //       return cartCount > 0
-                //           ? Container(
-                //               padding: EdgeInsets.all(5),
-                //               decoration: BoxDecoration(
-                //                 color: Colors.red,
-                //                 shape: BoxShape.circle,
-                //               ),
-                //               child: Text(
-                //                 cartCount.toString(),
-                //                 style: TextStyle(
-                //                   color: Colors.white,
-                //                   fontSize: 12,
-                //                   fontWeight: FontWeight.bold,
-                //                 ),
-                //               ),
-                //             )
-                //           : SizedBox();
-                //       // IconButtonWidget(
-                //       //   voidCallback: () {
-                //       //     Get.to(LoginScreen());
-                //       //   },
-                //       //   icons: Icons.login,
-                //       //   color: COLOR.black,
-                //       // ),
-                //       // IconButtonWidget(
-                //       //   voidCallback: () {
-                //       //  Get.to(LoginScreen());
-                //       //   },
-                //       //   icons: Icons.login,
-                //       //   color: COLOR.black,
-                //       // ),
-                //       // IconButton(
-                //       //     onPressed: () {
-                //       //       Navigator.push(
-                //       //           context,
-                //       //           MaterialPageRoute(
-                //       //             builder: (context) => LoginScreen(),
-                //       //           ));
-                //       //     },
-                //       //     icon: Icon(Icons.login)),
-                //       IconButton(
-                //           onPressed: () {
-                //             Navigator.push(
-                //                 context,
-                //                 MaterialPageRoute(
-                //                   builder: (context) => WishlistScreen(),
-                //                 ));
-                //           },
-                //           icon: Icon(Icons.favorite));
-                //     })),
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WishlistScreen(),
-                          ));
-                    },
-                    icon: Icon(Icons.favorite_border)),
-                Stack(
-                  children: [
-                    IconButtonWidget(
-                      voidCallback: () {
-                        Get.to(() => CartScreen(
-                          removeCart: productRemove,
-                        ));
-                      },
-                      icons: Icons.shopping_cart_outlined,
-                      color: COLOR.black,
-                    ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      // alignment: Alignment(5, 5),
-                      child:
-                      GetBuilder<CartController>(builder: (cartController) {
-                        cartController.cartCount.value = cartController.cartList.length;
-                        return cartController.cartCount.value > 0
-                            ? Container(
-                          padding: EdgeInsets.all(5),
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
+        builder: (controller) => controller.categoryList.isEmpty
+            ? Container(
+                margin: EdgeInsets.only(top: 25),
+                padding: EdgeInsets.all(0),
+                child: SizedBox())
+            : CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    actionsPadding: EdgeInsets.symmetric(horizontal: 10),
+                    snap: false,
+                    pinned: true,
+                    floating: true,
+                    backgroundColor: Color(0xffffedfe),
+                    title: Obx(() => TextWiget(
+                          title: _controller.customerModel != null
+                              ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
+                              : StringRes.hello,
+                          style: Themes.light.textTheme.displayMedium,
+                        )),
+                    actions: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WishlistScreen(),
+                                ));
+                          },
+                          icon: Icon(Icons.favorite_border)),
+                      Stack(
+                        children: [
+                          IconButtonWidget(
+                            voidCallback: () {
+                              Get.to(() => CartScreen(
+                                    removeCart: productRemove,
+                                  ));
+                            },
+                            icons: Icons.shopping_cart_outlined,
+                            color: COLOR.black,
                           ),
-                          child: Text(
-                            cartController.cartCount.value.toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                            : SizedBox();
-                        // IconButtonWidget(
-                        //   voidCallback: () {
-                        //     Get.to(LoginScreen());
-                        //   },
-                        //   icons: Icons.login,
-                        //   color: COLOR.black,
-                        // ),
-                        // IconButtonWidget(
-                        //   voidCallback: () {
-                        //  Get.to(LoginScreen());
-                        //   },
-                        //   icons: Icons.login,
-                        //   color: COLOR.black,
-                        // ),
-                        // IconButton(
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //             builder: (context) => LoginScreen(),
-                        //           ));
-                        //     },
-                        //     icon: Icon(Icons.login)),
-                        // IconButton(
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //             builder: (context) => WishlistScreen(),
-                        //           ));
-                        //     },
-                        //     icon: Icon(Icons.favorite));
-                      }),
-                    ),
-                  ],
-                ),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            // alignment: Alignment(5, 5),
+                            child: GetBuilder<CartController>(
+                                builder: (cartController) {
+                              cartController.cartCount.value =
+                                  cartController.cartList.length;
+                              return cartController.cartCount.value > 0
+                                  ? Container(
+                                      padding: EdgeInsets.all(5),
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                        cartController.cartCount.value
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox();
 
-              ],
-              leading: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(Images.profileicon),
-                        fit: BoxFit.cover,
+                            }),
+                          ),
+                        ],
                       ),
-                      shape: BoxShape.circle,
-                      color: COLOR.greyLight,
-                    ),
-                  )),
-              elevation: 0,
-            ),
-            SliverPersistentHeader(
-              floating: false,
-              pinned: true,
-              delegate: SliverAppBarDelegate(
-                child: PreferredSize(
-                  preferredSize: Size.fromHeight(50),
-                  child: InkWell(
-                    onTap: () {
-                      _controller.searchList.clear();
-                      _controller.searchController.clear();
-                      Get.to(() => SearchScreen());
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: COLOR.background,
-                      padding: EdgeInsets.symmetric(horizontal: 13, vertical: 2),
-                      child: Card(
-                        elevation: 0,
+                    ],
+                    leading: Padding(
+                        padding: const EdgeInsets.only(left: 15),
                         child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.07,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          height: 60,
+                          width: 60,
                           decoration: BoxDecoration(
-                            color: COLOR.background,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: COLOR.grey,
-                              width: 1,
+                            image: DecorationImage(
+                              image: AssetImage(Images.profileicon),
+                              fit: BoxFit.cover,
                             ),
+                            shape: BoxShape.circle,
+                            color: COLOR.greyLight,
                           ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.search,
-                                size: 25,
-                                color: COLOR.grey,
-                              ),
-                              SizedBox(width: 4),
-                              Expanded(
-                                child: TextWiget(
-                                  // title: 'Search Keyword or Product ID',
-                                  title: StringRes.searchProduct,
+                        )),
+                    elevation: 0,
+                  ),
+                  SliverPersistentHeader(
+                    floating: false,
+                    pinned: true,
+                    delegate: SliverAppBarDelegate(
+                      child: PreferredSize(
+                        preferredSize: Size.fromHeight(50),
+                        child: InkWell(
+                          onTap: () {
+                            _controller.searchList.clear();
+                            _controller.searchController.clear();
+                            Get.to(() => SearchScreen());
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: COLOR.background,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 13, vertical: 2),
+                            child: Card(
+                              elevation: 0,
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.07,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  color: COLOR.background,
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                    color: COLOR.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.search,
+                                      size: 25,
+                                      color: COLOR.grey,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Expanded(
+                                      child: TextWiget(
+                                        // title: 'Search Keyword or Product ID',
+                                        title: StringRes.searchProduct,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  Divider(),
-                  // Container(
-                  //   color: COLOR.purpleLight,
-                  //   child: InkWell(
-                  //     onTap: () {
-                  //       Get.to(() => AllAddressScreen());
-                  //     },
-                  //     child: Padding(
-                  //       padding:
-                  //           EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  //       child: Row(
-                  //         children: <Widget>[
-                  //           Container(
-                  //             alignment: Alignment.centerLeft,
-                  //             child: Icon(
-                  //               Icons.location_on_outlined,
-                  //               color: COLOR.purple,
-                  //               size: 20,
-                  //             ),
-                  //           ),
-                  //           TextWiget(
-                  //               title: StringRes.addDeliveryLocation,
-                  //               style: Themes.dark.textTheme.displayLarge),
-                  //           Icon(Icons.navigate_next),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  Container(
-                    color: COLOR.background,
-                    margin: EdgeInsets.all(2),
-                    padding: EdgeInsets.all(6),
-                    // padding: EdgeInsets.symmetric(vertical: 10),
-                    width: MediaQuery.of(context).size.width,
-                    child: GetBuilder<HomeController>(builder: (controller) {
-                      return controller.isDashBoardLoading.value
-                          ? SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              child: Center(child: CircularProgressIndicator()))
-                          : Column(
-                              children: [
-                                ///  DashBoard offers
-                                controller.offerList.isEmpty
-                                    ? Container()
-                                    : Padding(
-                                        padding: const EdgeInsets.all(0),
-                                        child: Container(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          color: COLOR.background,
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10),
-                                                child: Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.23,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  child: CarouselSlider.builder(
-                                                    itemCount: controller
-                                                        .offerList.length,
-                                                    itemBuilder: (context, index,
-                                                        realIndex) {
-                                                      return Container(
-                                                        decoration: BoxDecoration(
-                                                          color: COLOR.pinkLight,
-                                                          image: DecorationImage(
-                                                            image: NetworkImage(
-                                                                '$IMAGE_URL${controller.offerList[index].offerImage}'),
-                                                            fit: BoxFit.fill,
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Divider(),
+                        // Container(
+                        //   color: COLOR.purpleLight,
+                        //   child: InkWell(
+                        //     onTap: () {
+                        //       Get.to(() => AllAddressScreen());
+                        //     },
+                        //     child: Padding(
+                        //       padding:
+                        //           EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                        //       child: Row(
+                        //         children: <Widget>[
+                        //           Container(
+                        //             alignment: Alignment.centerLeft,
+                        //             child: Icon(
+                        //               Icons.location_on_outlined,
+                        //               color: COLOR.purple,
+                        //               size: 20,
+                        //             ),
+                        //           ),
+                        //           TextWiget(
+                        //               title: StringRes.addDeliveryLocation,
+                        //               style: Themes.dark.textTheme.displayLarge),
+                        //           Icon(Icons.navigate_next),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        Container(
+                          color: COLOR.background,
+                          margin: EdgeInsets.all(2),
+                          padding: EdgeInsets.all(6),
+                          // padding: EdgeInsets.symmetric(vertical: 10),
+                          width: MediaQuery.of(context).size.width,
+                          child:
+                              GetBuilder<HomeController>(builder: (controller) {
+                            return controller.isDashBoardLoading.value
+                                ? SizedBox(
+                                    height: MediaQuery.of(context).size.height,
+                                    child: Center(
+                                        child: CircularProgressIndicator()))
+                                : Column(
+                                    children: [
+                                      ///  DashBoard offers
+                                      controller.offerList.isEmpty
+                                          ? Container()
+                                          : Padding(
+                                              padding: const EdgeInsets.all(0),
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 5),
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                color: COLOR.background,
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 10),
+                                                      child: Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height *
+                                                            0.23,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        child: CarouselSlider
+                                                            .builder(
+                                                          itemCount: controller
+                                                              .offerList.length,
+                                                          itemBuilder: (context,
+                                                              index,
+                                                              realIndex) {
+                                                            return Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: COLOR
+                                                                    .pinkLight,
+                                                                image:
+                                                                    DecorationImage(
+                                                                  image: NetworkImage(
+                                                                      '$IMAGE_URL${controller.offerList[index].offerImage}'),
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                              ),
+                                                            );
+                                                          },
+                                                          options:
+                                                              CarouselOptions(
+                                                            enlargeCenterPage:
+                                                                true,
+                                                            autoPlay: true,
+                                                            onPageChanged:
+                                                                (index,
+                                                                    reason) {
+                                                              controller
+                                                                  .activeIndex
+                                                                  .value = index;
+                                                              controller
+                                                                  .update();
+                                                            },
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
                                                         ),
-                                                      );
-                                                    },
-                                                    options: CarouselOptions(
-                                                      enlargeCenterPage: true,
-                                                      autoPlay: true,
-                                                      onPageChanged:
-                                                          (index, reason) {
-                                                        controller.activeIndex
-                                                            .value = index;
-                                                        controller.update();
-                                                      },
+                                                      ),
                                                     ),
-                                                  ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 5),
+                                                      child: buildIndicator(),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.only(top: 5),
-                                                child: buildIndicator(),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+
+                                      ///  DashBoard category
+                                      GridView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1.6 / 2,
                                         ),
+                                        itemCount:
+                                            controller.categoryList.length,
+                                        itemBuilder: (context, index) {
+                                          return CategoryComponent(
+                                              categoryModel: controller
+                                                  .categoryList[index]);
+                                        },
                                       ),
-
-                                ///  DashBoard category
-                                GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    childAspectRatio: 1.6 / 2,
-                                  ),
-                                  itemCount: controller.categoryList.length,
-                                  itemBuilder: (context, index) {
-                                    return CategoryComponent(
-                                        categoryModel:
-                                            controller.categoryList[index]);
-                                  },
-                                ),
-                              ],
-                            );
-                    }),
-                  ),
-
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                width: MediaQuery.sizeOf(context).width,
-                color: COLOR.background,
-                margin: EdgeInsets.symmetric(vertical: 5),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Text(
-                    "Trending Products",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      // color: Color(0xff900C3F),
+                                    ],
+                                  );
+                          }),
+                        ),
+                      ],
                     ),
                   ),
-                ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      color: COLOR.background,
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Text(
+                          "Trending Products",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            // color: Color(0xff900C3F),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GetBuilder<HomeController>(builder: (controller) {
+                    return SliverGrid(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final products = controller.productList[index];
+                          return ProductComponent(products: products);
+                        },
+                        childCount: controller.productList.length,
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1 / 1.4,
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 2,
+                      ),
+                    );
+                  })
+                ],
               ),
-            ),
-            GetBuilder<HomeController>(builder: (controller) {
-              return SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final products = controller.productList[index];
-                    return ProductComponent(products: products);
-                  },
-                  childCount: controller.productList.length,
-                ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.4,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
-                ),
-              );
-            })
-          ],
-        ),
       ),
     );
   }

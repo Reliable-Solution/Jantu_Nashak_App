@@ -68,15 +68,38 @@ class HomeController extends GetxController
     super.dispose();
   }
 
-  getPrefs() async {
+  HomeController() {
+    print("HomeController instance created with hash: ${this.hashCode}");
+  }
+
+  Future<void> getPrefs() async {
     CustomerModel? customer = await helper.getCustomer();
     if (customer != null) {
       customerModel!.value = customer;
-      print("Phone  Number ${customerModel!.value.customerName}");
-    }
-    update();
-  }
+      print("✅ Name: ${customer.customerName}");
+      print("Controller hash in HomeController: ${this.hashCode}");
+      print("Updated Name: ${customer.customerName}");
+      update(); // agar tu GetBuilder bhi use kar raha hai
 
+    }
+  }
+  // getPrefs() async {
+  //   CustomerModel? customer = await helper.getCustomer();
+  //   if (customer != null) {
+  //     customerModel!.value = customer;
+  //     print("Phone  Number ${customerModel!.value.customerName}");
+  //   }
+  //   update();
+  // }
+
+  // getPrefs() async {
+  //   CustomerModel? customer = await helper.getCustomer();
+  //   if (customer != null) {
+  //     customerModel!.value = customer;
+  //     print("Phone Number: ${customer.customerName}");
+  //   }
+  //   // update(); // Not needed if using Obx()
+  // }
   List<String> filters = [
     'Category',
     'Gender',

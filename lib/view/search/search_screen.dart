@@ -17,7 +17,9 @@ import '../home/widget/homeProductHeader.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
-  final HomeController homeController = Get.put(HomeController());
+  final HomeController homeController = Get.find<HomeController>();
+
+  // final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {

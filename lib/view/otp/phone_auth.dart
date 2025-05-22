@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -111,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                 child: RichText(
                   text: TextSpan(
                     text:
-                        'By continuing, you agree to the Terms & Conditions and Privacy Policy.',
+                    'By continuing, you agree to the Terms & Conditions and Privacy Policy.',
                     style: TextStyle(
                       color: COLOR.black,
                       fontSize: 16,

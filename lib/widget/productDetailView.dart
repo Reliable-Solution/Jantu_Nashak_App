@@ -69,6 +69,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("ProductWidget name: ${homeController.customerModel!.value?.customerName}");
+
     return SafeArea(
       top: false,
       child: Scaffold(

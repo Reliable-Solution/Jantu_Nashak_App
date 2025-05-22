@@ -67,4 +67,8 @@ class FirebaseAuthenticate {
       Get.snackbar("Error", e.toString());
     }
   }
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
 }

@@ -440,7 +440,9 @@ class _CartScreenState extends State<CartScreen> {
 
   // final CartController cartController = Get.find();
 
-  HomeController homeController = Get.find();
+  final HomeController homeController = Get.find<HomeController>();
+
+  // HomeController homeController = Get.find();
 
   bool isUpdateLoading = false;
 
@@ -492,6 +494,8 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("CartScreen name: ${homeController.customerModel!.value?.customerName}");
+
     return SafeArea(
       top: false,
       bottom: true,

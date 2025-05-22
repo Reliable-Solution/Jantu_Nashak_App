@@ -1,3 +1,7 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:keep_app/controller/homeController.dart';
 import 'package:keep_app/models/getCartTotalModel.dart';
@@ -7,17 +11,23 @@ import '../models/cartDetailModel.dart';
 import '../models/customerModel.dart';
 import '../models/productModel.dart';
 import '../utils/services/api_services.dart';
+import '../utils/services/services.dart';
 import '../utils/sharedPrefs.dart';
 import 'networkController.dart';
 
 class CartController extends GetxController {
   NetworkController networkController = Get.put(NetworkController());
-  HomeController homeController = Get.put(HomeController());
+  final HomeController homeController = Get.find<HomeController>();
+
+  // HomeController homeController = Get.put(HomeController());
   Rx<CustomerModel>? customerModel = CustomerModel().obs;
   // Rx<CartTotal?> cartTotal = Rx<CartTotal?>(null);
   final Rx<CartTotal> cartTotal = CartTotal().obs;
   RxList<CartDetailModel> cartList = <CartDetailModel>[].obs;
   RxInt cartCount = 0.obs;
+  RxBool isUpdateLoading = false.obs;
+  RxBool isCartRemoveLoading = false.obs;
+
 
 
   var isReadMore = false;
@@ -86,6 +96,46 @@ class CartController extends GetxController {
     // }
   }
 
+  // updateCartQty(String cartID, String cartQuantity) async {
+  //   try {
+  //     final result = await InternetAddress.lookup('google.com');
+  //     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //       // setState(() {
+  //         isUpdateLoading.value = true;
+  //       // });
+  //         final Map<String, dynamic> body = {
+  //           'CartId': cartID,
+  //           'CartQuantity': cartQuantity,
+  //         };
+  //       // FormData body = FormData.fromMap(
+  //       //     {"CartId": "", "CartQuantity": });
+  //       Services.postForSave(apiName: 'updateCartQty', body: body).then(
+  //               (responseList) async {
+  //             if (responseList.IsSuccess == true && responseList.Data == "1") {
+  //               // setState(() {
+  //                 log("update");
+  //                 isUpdateLoading.value = false;
+  //               // });
+  //               // widget.onQtyUpdate!();
+  //             } else {
+  //               // setState(() {
+  //                 isUpdateLoading.value = false;
+  //               // });
+  //               Fluttertoast.showToast(msg: "Something went wrong");
+  //               //show "data not found" in dialog
+  //             }
+  //           }, onError: (e) {
+  //         // setState(() {
+  //           isUpdateLoading.value = false;
+  //         // });
+  //         log("error on call -> ${e.message}");
+  //         Fluttertoast.showToast(msg: "Something Went Wrong");
+  //       });
+  //     }
+  //   } on SocketException catch (_) {
+  //     Fluttertoast.showToast(msg: "No Internet Connection.");
+  //   }
+  // }
   Future<void> updateCartQty(String cartID, String cartQuantity) async {
     try {
       final Map<String, dynamic> body = {
@@ -108,6 +158,47 @@ class CartController extends GetxController {
       throw Exception("Failed to update cart data: $e");
     }
   }
+
+
+//   removeFromCart({required String cartID}) async {
+//     try {
+//       final result = await InternetAddress.lookup('google.com');
+//       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+//         // setState(() {
+//           isCartRemoveLoading.value = true;
+//         // });
+//           final Map<String, dynamic> body = {
+//             'CartId': cartID,
+//           };
+//         // FormData body =
+//         // FormData.fromMap({"CartId": "${widget.cartData["CartId"]}"});
+//         Services.postForSave(apiName: '/removeCart', body: body).then(
+//                 (responseRemove) async {
+//               if (responseRemove.IsSuccess == true && responseRemove.Data == "1") {
+//                 // widget.onRemove!();
+//                 // Provider.of<CartProvider>(context, listen: false).decreaseCart(
+//                 //     productId: int.parse(widget.cartData["ProductId"]));
+//                 // setState(() {
+//                   isCartRemoveLoading.value = false;
+//                 // });
+//                 // widget.onQtyUpdate!();
+//                 Fluttertoast.showToast(
+//                     msg: "Product Removed Successfully",
+//                     gravity: ToastGravity.BOTTOM);
+//               }
+//             }, onError: (e) {
+//           // setState(() {
+//             isCartRemoveLoading.value = false;
+//           // });
+//           log("error on call -> ${e.message}");
+//           Fluttertoast.showToast(msg: "something went wrong");
+//         });
+//       }
+//     } on SocketException catch (_) {
+//       Fluttertoast.showToast(msg: "No Internet Connection");
+// //      showMsg("No Internet Connection.");
+//     }
+//   }
 
   Future<void> removeFromCart({required String cartID}) async {
     try {

@@ -46,7 +46,8 @@
           update();
         }
       } catch (e) {
-        Get.snackbar("Error", "Failed to fetch mobile number: $e");
+        print("Error : Failed to fetch mobile number: $e");
+        // Get.snackbar("Error", "Failed to fetch mobile number: $e");
       }
     }
   

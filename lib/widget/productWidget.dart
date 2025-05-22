@@ -100,12 +100,12 @@ class ProductComponent extends StatelessWidget {
                                if (products!.isFav == false) {
                                  controller.addWishlist(productId: products!.productId!);
                                  products!.isFav = true;
-                                 homeController.getDashboardData(homeController.customerModel!.value.customerId);
+                                 // homeController.getDashboardData(homeController.customerModel!.value.customerId);
                                  _controller.update();
                                } else {
                                  controller.removeWishList(productId: products!.productId!);
                                  products!.isFav = false;
-                                 homeController.getDashboardData(homeController.customerModel!.value.customerId);
+                                 // homeController.getDashboardData(homeController.customerModel!.value.customerId);
                                  _controller.update();
                                }
 

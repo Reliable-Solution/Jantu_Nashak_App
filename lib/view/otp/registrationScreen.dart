@@ -6,6 +6,7 @@ import 'package:keep_app/constant/colorConst.dart';
 import 'package:keep_app/controller/registrationController.dart';
 import 'package:keep_app/view/otp/phone_auth.dart';
 import 'package:keep_app/view/otp/otp_screen.dart';
+import 'package:keep_app/widget/buttonWidget.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../controller/otpController.dart';
 import '../../utils/string_res.dart';
@@ -20,12 +21,12 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     txtNumber.text = "${controller.phoneNumber.value}";
+    txtNumber.text = "${controller.phoneNumber.value}";
     return Scaffold(
       appBar: AppBar(
         title: Text(
           StringRes.register,
-          style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         backgroundColor: COLOR.appBaseColor,
       ),
@@ -41,78 +42,77 @@ class RegistrationScreen extends StatelessWidget {
                 SizedBox(height: 20),
 
                 // Name Field
-               TextFormField(
-                    controller: txtName,
-                    onChanged: controller.setName,
-                    autofillHints: [AutofillHints.name],
-                    decoration: InputDecoration(
-                      labelText: StringRes.name,
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) return StringRes.nameRequired;
-                      if (value.length < 3) return StringRes.validName;
-                      return null;
-                    },
+                TextFormField(
+                  controller: txtName,
+                  onChanged: controller.setName,
+                  autofillHints: [AutofillHints.name],
+                  decoration: InputDecoration(
+                    labelText: StringRes.name,
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) return StringRes.nameRequired;
+                    if (value.length < 3) return StringRes.validName;
+                    return null;
+                  },
+                ),
                 SizedBox(height: 20),
 
                 // Email Field
-            TextFormField(
-                    controller: txtEmail,
-                    onChanged: (value) {
-                        controller.setEmail(txtEmail.text);
-                        controller.update();
-                    },
-                    autofillHints: [AutofillHints.email],
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: StringRes.email,
-                      border: OutlineInputBorder(),
-                    ),
-
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return StringRes.addressRequired;  // 🛑 Empty email error
-                      }
-                      String emailPattern =
-                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                      RegExp regex = RegExp(emailPattern);
-                      print("Email Validation: ${regex.hasMatch(value)}");
-
-                      if (!regex.hasMatch(value)) {
-                        return StringRes.validEmail;  // 🛑 Invalid email format
-                      }
-
-                      return null;  // ✅ Valid email
-                      // if (value!.isEmpty) return StringRes.addressRequired;
-                      // if (value.length < 5) return StringRes.validEmail;
-                      // return null;
-                    },
+                TextFormField(
+                  controller: txtEmail,
+                  onChanged: (value) {
+                    controller.setEmail(txtEmail.text);
+                    controller.update();
+                  },
+                  autofillHints: [AutofillHints.email],
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: StringRes.email,
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return StringRes.addressRequired; // 🛑 Empty email error
+                    }
+                    String emailPattern =
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                    RegExp regex = RegExp(emailPattern);
+                    print("Email Validation: ${regex.hasMatch(value)}");
+
+                    if (!regex.hasMatch(value)) {
+                      return StringRes.validEmail; // 🛑 Invalid email format
+                    }
+
+                    return null; // ✅ Valid email
+                    // if (value!.isEmpty) return StringRes.addressRequired;
+                    // if (value.length < 5) return StringRes.validEmail;
+                    // return null;
+                  },
+                ),
                 SizedBox(height: 20),
 
                 // Phone Number Field
-                 GetBuilder<RegistrationController>(
-                  builder: (controller) =>  TextFormField(
-                      decoration: InputDecoration(
-                        labelText: StringRes.phoneNumber,
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: txtNumber,
-                      onChanged: (value) {
-                        controller.setPhoneNumber(txtNumber.text);
-                        controller.update();
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) return StringRes.mobileInvalid;
-                        if (!RegExp(r'^[6-9]\d{9}$').hasMatch(value)) {
-                          return StringRes.mobileRequired;
-                        }
-                        return null;
-                      },
+                GetBuilder<RegistrationController>(
+                  builder: (controller) => TextFormField(
+                    decoration: InputDecoration(
+                      labelText: StringRes.phoneNumber,
+                      border: OutlineInputBorder(),
                     ),
-                 ),
+                    controller: txtNumber,
+                    onChanged: (value) {
+                      controller.setPhoneNumber(txtNumber.text);
+                      controller.update();
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) return StringRes.mobileInvalid;
+                      if (!RegExp(r'^[6-9]\d{9}$').hasMatch(value)) {
+                        return StringRes.mobileRequired;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
 
                 SizedBox(height: 20),
 
@@ -144,17 +144,31 @@ class RegistrationScreen extends StatelessWidget {
                 // ),
                 Obx(() {
                   return controller.isLoading.value
-                      ? Center(child: CircularProgressIndicator()) // 🟢 Loading Indicator
-                      : ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        otpController.onVerifyCode(txtNumber.text);
-                        otpController.startTimer();
-                        controller.getToken();
-                      }
-                    },
-                    child: Text(StringRes.register),
-                  );
+                      ? Center(
+                          child:
+                              CircularProgressIndicator()) // 🟢 Loading Indicator
+                      : Center(
+                          child: ButtonWidgets(
+                            voidCallback: () {
+                              if (_formKey.currentState!.validate()) {
+                                otpController.onVerifyCode(txtNumber.text);
+                                otpController.startTimer();
+                                controller.getToken();
+                              }
+                            },
+                            // onPressed: () {
+                            //   if (_formKey.currentState!.validate()) {
+                            //     otpController.onVerifyCode(txtNumber.text);
+                            //     otpController.startTimer();
+                            //     controller.getToken();
+                            //   }
+                            // },
+                            title: StringRes.register,
+                            color: COLOR.appBaseColor,
+                            style: TextStyle(color: Colors.white),
+                            // child: Text(StringRes.register),
+                          ),
+                        );
                 }),
 
                 SizedBox(height: 10),
@@ -162,8 +176,7 @@ class RegistrationScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: RichText(
                     text: TextSpan(
-                      text:
-                      StringRes.agreeTerms,
+                      text: StringRes.agreeTerms,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,

@@ -66,6 +66,8 @@
 //     }
 //   }
 // }
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -106,6 +108,7 @@ class ApiService {
       // Print the endpoint and body for debugging
       print("POST Request URL: $baseUrl$endpoint");
       print("POST Request Body: ${body?.toString() ?? '{}'}");
+      log("POST Request Body: ${body}");
 
       final fullUrl = "$baseUrl$endpoint";
 

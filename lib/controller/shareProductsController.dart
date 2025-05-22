@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 //packages
 import 'package:get/get.dart';
+import 'package:keep_app/controller/homeController.dart';
 //controllers
 //models
 import 'package:keep_app/controller/networkController.dart';
@@ -16,6 +17,9 @@ import '../utils/sharedPrefs.dart';
 class ShareProductController extends GetxController {
   // getxcontroller instance
   NetworkController networkController = Get.put(NetworkController());
+  final HomeController homeController = Get.find<HomeController>();
+
+  // HomeController homeController = Get.put(HomeController());
   Rx<CustomerModel>? customerModel = CustomerModel().obs;
   RxList<WishlistModel> wishList = <WishlistModel>[].obs;
   var isReadMore = false;
@@ -65,6 +69,7 @@ class ShareProductController extends GetxController {
       if (response.data['IsSuccess'] == true) {
 
         Fluttertoast.showToast(msg: "Product Added To WishList Successfully");
+        homeController.getDashboardData(homeController.customerModel!.value.customerId);
         update();
       } else {
         throw Exception("Error from API: ${response.data['Message']}");
@@ -89,6 +94,8 @@ class ShareProductController extends GetxController {
 
       if (response.data['IsSuccess'] == true) {
         wishList.removeWhere((item) => item.productId == productId);
+
+        homeController.getDashboardData(homeController.customerModel!.value.customerId);
 
         Fluttertoast.showToast(msg: "Product Removed To WishList Successfully");
 

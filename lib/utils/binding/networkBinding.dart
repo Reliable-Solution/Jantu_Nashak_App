@@ -18,7 +18,7 @@ class NetworkBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<NetworkController>(() => NetworkController());
-    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
+    // Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<DashboardController>(() => DashboardController(), fenix: true);
     Get.lazyPut<AccountController>(() => AccountController(), fenix: true);
     Get.lazyPut<ShareProductController>(() => ShareProductController(), fenix: true);

@@ -376,6 +376,8 @@ class _MyCartComponentState extends State<MyCartComponent> {
   Widget _buildCartItem(
       // CartDetailModel item, int index
       ) {
+    print("CartWidget name: ${homeController.customerModel!.value?.customerName}");
+
     return Container(
       decoration: BoxDecoration(
         border: Border(

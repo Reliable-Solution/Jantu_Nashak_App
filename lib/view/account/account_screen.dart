@@ -42,9 +42,12 @@ class _AccountScreenState extends State<AccountScreen> {
   TextEditingController txtNumber = TextEditingController();
   TextEditingController txtMsg = TextEditingController();
   AccountController controller = AccountController();
+  final HomeController _controller = Get.find<HomeController>();
+
+
 
   // ProductDetailsController productDetailsController = Get.find();
-  final HomeController _controller = Get.find();
+  // final HomeController _controller = Get.find();
   String? fcmToken;
 
   @override
@@ -92,9 +95,12 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                         Text( _controller.customerModel != null
-                             ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
-                             : "${StringRes.hello}",),
+                         Obx(
+
+                           () =>  Text( _controller.customerModel != null
+                               ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
+                               : "${StringRes.hello}",),
+                         ),
                           Padding(
                             padding: EdgeInsets.only(top: 5),
                             child: TextWiget(
@@ -212,7 +218,7 @@ class _AccountScreenState extends State<AccountScreen> {
             //     ),
             //   ),
             // )
-            
+
             // ElevatedButton(
             //   onPressed: () {
             //     showLanguageBottomSheet(context);
@@ -490,9 +496,15 @@ class _AccountScreenState extends State<AccountScreen> {
                     backgroundColor: Colors.purple,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     SharedHelper helper = SharedHelper();
-helper.deleteCustomer();
+                    await helper.deleteCustomer(); // agar yeh async method hai
+                     await authenticate.signOut(); // agar aapka FirebaseAuthenticate class mein signOut method hai
+                    // global.customer = null; // ya jo bhi aapka global state reset karna hai
+
+                    // Get.offAll(() => PhoneAuth());
+                    // SharedHelper helper = SharedHelper();
+// helper.deleteCustomer();
                     Get.offAll(() => LoginScreen());
                     // Logout logic here
                     Get.back();
@@ -510,50 +522,7 @@ helper.deleteCustomer();
       exitBottomSheetDuration: Duration(milliseconds: 300),
     );
   }
-  // void _showLogoutBottomSheet(BuildContext context) {
-  //   Get.bottomSheet(
-  //     Container(
-  //       padding: const EdgeInsets.all(16.0),
-  //       decoration: BoxDecoration(
-  //         color: Colors.white,
-  //         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-  //       ),
-  //       child: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: [
-  //           Text(
-  //             "Are you sure you want to logout?",
-  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-  //           ),
-  //           const SizedBox(height: 20),
-  //           Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //             children: [
-  //               TextButton(
-  //                 onPressed: () => Get.back(),
-  //                 child: Text("Cancel", style: TextStyle(fontSize: 16)),
-  //               ),
-  //               ElevatedButton(
-  //                 style: ElevatedButton.styleFrom(
-  //                   backgroundColor: Colors.purple,
-  //                 ),
-  //                 onPressed: () {
-  //                   // Logout logic here
-  //                   Get.back();
-  //                 },
-  //                 child: Text("Logout", style: TextStyle(fontSize: 16)),
-  //               ),
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //     isDismissible: true,
-  //     enableDrag: true,
-  //     enterBottomSheetDuration: Duration(milliseconds: 300),
-  //     exitBottomSheetDuration: Duration(milliseconds: 300),
-  //   );
-  // }
+
 
   void openBottomSheetOTP(BuildContext context) {
     Get.bottomSheet(
