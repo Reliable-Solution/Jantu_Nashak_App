@@ -8,6 +8,7 @@ import 'package:keep_app/controller/languageController.dart';
 import 'package:keep_app/controller/orderController.dart';
 import 'package:keep_app/controller/productDetailController.dart';
 import 'package:keep_app/controller/subCategoreyController.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../controller/accountController.dart';
 import '../../controller/dashboardController.dart';
 import '../../controller/homeController.dart';
@@ -30,5 +31,6 @@ class NetworkBinding extends Bindings {
     Get.lazyPut<CheckoutController>(() => CheckoutController(), fenix: true);
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
     Get.lazyPut<EditProfileController>(() => EditProfileController(), fenix: true);
+    Get.lazyPut<WebViewController>(() => WebViewController(), fenix: true);
   }
 }

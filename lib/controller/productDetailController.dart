@@ -1,6 +1,7 @@
 //packages
 import 'package:get/get.dart';
 import '../constant/api_endpoints.dart';
+import '../constant/app_constant.dart';
 import '../models/cartDetailModel.dart';
 import '../models/customerModel.dart';
 import '../models/productModel.dart';
@@ -13,6 +14,9 @@ class ProductDetailsController extends GetxController
     with GetSingleTickerProviderStateMixin {
   NetworkController networkController = Get.put(NetworkController());
   Rx<CustomerModel>? customerModel = CustomerModel().obs;
+  RxInt selectedSize = 0.obs;
+  RxInt selectColor = 0.obs;
+
 
   var isReadMore = false;
   int Qty = 0;
@@ -65,13 +69,15 @@ class ProductDetailsController extends GetxController
   }
 
 
-  Future<void> addToCart(ProductModel productModel) async {
+  Future<void> addToCart(ProductModel productModel,String productDetailId ) async {
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerModel!.value.customerId,
         'ProductId': productModel.productId,
-        'ProductdetailId': productModel.packInfo![0].productdetailId,
+        'ProductdetailId': productDetailId?? productModel.packInfo![0].productdetailId,
         'CartQuantity': "1",
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(
@@ -80,7 +86,7 @@ class ProductDetailsController extends GetxController
       );
 
       if (response.data['IsSuccess'] == true) {
-        print("API Response: ${response.data}");
+        print("Add To Cart API Response: ${response.data}");
 
          // Get.find<CartController>().cartList.add(CartDetailModel.fromJson(response.data['Data']));
         //

@@ -3,6 +3,8 @@ class CartDetailModel {
   String? customerId;
   bool? isFav;
   String? productdetailId;
+  String? productSize;
+  String? productColor;
   List<PackInfo>? packInfo;
   String? cartQuantity;
   String? cartReturnStatus;
@@ -49,6 +51,8 @@ class CartDetailModel {
         this.customerId,
         this.isFav,
         this.productdetailId,
+        this.productSize,
+        this.productColor,
         this.packInfo,
         this.cartQuantity,
         this.cartReturnStatus,
@@ -95,6 +99,8 @@ class CartDetailModel {
     customerId = json['CustomerId'];
     isFav = json['isFav'];
     productdetailId = json['ProductdetailId'];
+    productSize = json['ProductSize'];
+    productColor = json['ProductColor'];
     if (json['PackInfo'] != null) {
       packInfo = <PackInfo>[];
       json['PackInfo'].forEach((v) {
@@ -149,6 +155,8 @@ class CartDetailModel {
     data['CustomerId'] = this.customerId;
     data['isFav'] = this.isFav;
     data['ProductdetailId'] = this.productdetailId;
+    data['ProductSize'] = this.productSize;
+    data['ProductColor'] = this.productColor;
     if (this.packInfo != null) {
       data['PackInfo'] = this.packInfo!.map((v) => v.toJson()).toList();
     }
@@ -199,18 +207,26 @@ class CartDetailModel {
 class PackInfo {
   String? productdetailId;
   String? productIdReference;
-  String? productdetailImages;
+  List<String>? productdetailImages;
+  List<String>? color;
   String? productdetailMrp;
   String? productdetailSrp;
   String? productdetailQty;
   String? productdetailUnit;
   String? productdetailStatus;
   String? productdetailCDT;
+  String? productColor;
+  String? productSize;
+  List<String>? size;
 
   PackInfo(
       {this.productdetailId,
         this.productIdReference,
         this.productdetailImages,
+        this.color,
+        this.size,
+        this.productSize,
+        this.productColor,
         this.productdetailMrp,
         this.productdetailSrp,
         this.productdetailQty,
@@ -221,7 +237,16 @@ class PackInfo {
   PackInfo.fromJson(Map<String, dynamic> json) {
     productdetailId = json['ProductdetailId'];
     productIdReference = json['ProductIdReference'];
-    productdetailImages = json['ProductdetailImages'];
+    // productdetailImages = json['ProductdetailImages'];
+    productdetailImages = (json['ProductdetailImages'] as List?)?.map((e) => e.toString()).toList();
+    color = (json['Color'] as List?)?.map((e) => e.toString()).toList();
+    size = (json['Size'] as List?)?.map((e) => e.toString()).toList();
+
+
+    // color = json['Color'];
+    // size = json['Size'];
+    productColor = json['ProductColor'];
+    productSize = json['ProductSize'];
     productdetailMrp = json['ProductdetailMrp'];
     productdetailSrp = json['ProductdetailSrp'];
     productdetailQty = json['ProductdetailQty'];
@@ -234,9 +259,15 @@ class PackInfo {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['ProductdetailId'] = this.productdetailId;
     data['ProductIdReference'] = this.productIdReference;
+    // data['ProductdetailImages'] = this.productdetailImages;
+    data['Color'] = this.color;
+    data['Size'] = this.size;
     data['ProductdetailImages'] = this.productdetailImages;
+
     data['ProductdetailMrp'] = this.productdetailMrp;
     data['ProductdetailSrp'] = this.productdetailSrp;
+    data['ProductColor'] = this.productColor;
+    data['ProductSize'] = this.productSize;
     data['ProductdetailQty'] = this.productdetailQty;
     data['ProductdetailUnit'] = this.productdetailUnit;
     data['ProductdetailStatus'] = this.productdetailStatus;

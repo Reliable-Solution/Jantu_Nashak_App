@@ -199,5 +199,90 @@
   static String get combo => "combo".tr;
   static String get bottomwearFabric => "bottomwearFabric".tr;
   static String get ornamentation => "ornamentation".tr;
+
+
+  static String get orders => "orders".tr;
+  static String get faq => "faq".tr;
+  static String get deleteAccount => "deleteAccount".tr;
+  static String get logout => "logout".tr;
+  static String get changeLanguage => "changeLanguage".tr;
+  static String get logoutConfirmation => "logoutConfirmation".tr;
+  static String get deleteAccountConfirmation => "deleteAccountConfirmation".tr;
+  static String get cancel => "cancel".tr;
+  // static String get delete => "delete".tr;
+
+  // static String get orders => "orders".tr;
+  // static String get faq => "faq".tr;
+  // static String get deleteAccount => "deleteAccount".tr;
+  // static String get logout => "logout".tr;
+  // static String get changeLanguage => "changeLanguage".tr;
+  // static String get logoutConfirmation => "logoutConfirmation".tr;
+  // static String get deleteAccountConfirmation => "deleteAccountConfirmation".tr;
+  // static String get cancel => "cancel".tr;
+  // // static String get delete => "delete".tr;
+
+  static String get profileInformation => "profileInformation".tr; // Added for EditProfileScreen
+  static String get editProfileTitle => 'editProfileTitle'.tr;
+  static String get socialProfile => 'ChooseTheInformationYouWantToShow on your social profile.'.tr;
+
+  static String get addressTypeHint => "addressTypeHint".tr; // For 'Address Type'
+  static String get selectAddressType => "selectAddressType".tr; // For 'Please select address type'
+  static String get pinCodeSixDigits => "pinCodeSixDigits".tr; // For 'Only 6 Digit allowed'
+  static String get addressMaxLength => "addressMaxLength".tr; //
+
+  // static String get cartTitle => "cartTitle".tr; // For "CART"
+  static String get continueNoDeduction => "continueNoDeduction".tr; // For "Clicking on 'Continue' will not deduct any money"
+  static String get viewPriceDetails => "viewPriceDetails".tr; // For "VIEW PRICE DETAILS"
+  static String get continueButton => "continueButton".tr; // For "Continue"
+  static String get cartStep => "cartStep".tr; // For "Cart"
+  static String get addressStep => "addressStep".tr; // For "Address"
+  static String get paymentStep => "paymentStep".tr; // For "Payment"
+  static String get summaryStep => "summaryStep".tr; // For "Summary"
+  static String get returnsPolicy => "returnsPolicy".tr; // For "Only wrong/defect item returns allowed"
+  static String get sizeFree => "sizeFree".tr; // For "Size: 'Free Size'}"
+  // static String get freeDelivery => "freeDelivery".tr; // For "Free Delivery"
+  static String get removeItem => "removeItem".tr;
+
+  static String get subTotal => "subTotal".tr; // For "Sub Total"
+  static String get orderTotal => "orderTotal".tr; // For "Order Total"
+  static String get save => "save".tr; // For "Order Total"
+  static String get cart => "cart".tr; // For "Order Total"
+  static String get payment => "payment".tr; // For "Order Total"
+  static String get summary => "summary".tr; // For "Order Total"
+  // static String get viewPriceDetails => "viewPriceDetails".tr; // For "VIEW PRICE DETAILS" => "summary".tr; // For "Order Total"
+  // static String get returnsPolicy => "returnsPolicy".tr; // For "VIEW PRICE DETAILS" => "summary".tr; // For "Order Total"
+  // static String get emptyCartMessage => "emptyCartMessage".tr; // For "Your cart is empty"
+  // static String get viewProducts => "viewProducts".tr;
+
+  static String get selectDeliveryAddress => "selectDeliveryAddress".tr;
+  static String get addNewAddress => "addNewAddress".tr;
+  static String get noAddressesFound => "noAddressesFound".tr;
+  static String get deliverToThisAddress => "deliverToThisAddress".tr;
+  // static String get edit => "edit".tr;
+  // static String get cart => "cart".tr;
+  // static String get address => "address".tr;
+  // static String get payment => "payment".tr;
+  // static String get summary => "summary".tr;
+  // static String get name => "name".tr;
+
+  //ChcekOut Screen
+  static String get checkout => "checkout".tr;
+  static String get noAddressSelected => "noAddressSelected".tr;
+  static String get selectAddress => "selectAddress".tr;
+  static String get selectPaymentMethod => "selectPaymentMethod".tr;
+  static String get cashOnDelivery => "cashOnDelivery".tr;
+  static String get payOnline => "payOnline".tr;
+  static String get phonePe => "phonePe".tr;
+  static String get razorpay => "razorpay".tr;
+  static String get cashfree => "cashfree".tr;
+  static String get offersAvailable => "offersAvailable".tr;
+  static String get paymentSuccess => "paymentSuccess".tr;
+  static String get paymentCancelled => "paymentCancelled".tr;
+  static String get externalWallet => "externalWallet".tr;
+  static String get pleaseSelectPaymentMethod => "pleaseSelectPaymentMethod".tr;
+  static String get pleaseSelectAddressMethod => "pleaseSelectAddressMethod".tr;
+  static String get shopping => "shopping".tr;
  }
+
+
 

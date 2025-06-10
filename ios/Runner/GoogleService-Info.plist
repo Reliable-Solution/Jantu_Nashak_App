@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1099306183609-2tj9eju7542n1k1crqood6m3q30keo1c.apps.googleusercontent.com</string>
+	<string>1099306183609-brhtiadhlaugaqbtltvu67nbr4223kf1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1099306183609-2tj9eju7542n1k1crqood6m3q30keo1c</string>
+	<string>com.googleusercontent.apps.1099306183609-brhtiadhlaugaqbtltvu67nbr4223kf1</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>1099306183609-fihn2vaa2mrsf299rmab7d5em4c6aoor.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.keepApp</string>
+	<string>com.reliable.keepApp</string>
 	<key>PROJECT_ID</key>
 	<string>keep-app-2890d</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1099306183609:ios:e41b39269141171d84a468</string>
+	<string>1:1099306183609:ios:7defe76ade911f4b84a468</string>
 </dict>
 </plist>

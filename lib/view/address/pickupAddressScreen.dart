@@ -49,21 +49,7 @@ class PickupAddressScreen extends StatelessWidget {
             title: StringRes.addAddress,
             style: Themes.light.textTheme.displayLarge,
           ),
-          // leading: InkWell(
-          //   onTap: () {
-          //     Get.back();
-          //   },
-          //   child: Icon(
-          //     Icons.arrow_back_ios,
-          //     color: COLOR.greyback,
-          //     size: 20,
-          //   ),
-          // ),
         ),
-        // appBar: AppBar(
-        //   title: Text(StringRes.addAddress),
-        // ),
-        // backgroundColor: COLOR.background,
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -157,7 +143,7 @@ class PickupAddressScreen extends StatelessWidget {
                               if (value!.isEmpty)
                                 return StringRes.pinCodeRequired;
                               if (value.length != 6) {
-                                return "Only 6 Digit allowed";
+                                return StringRes.pinCodeSixDigits;
                               }
                               if (!RegExp(r'^\d{6}$').hasMatch(value)) {
                                 return StringRes.pinCodeInvalid;
@@ -198,7 +184,7 @@ class PickupAddressScreen extends StatelessWidget {
                                 : _controller.selectedType.value,
                             decoration: InputDecoration(
                               fillColor: COLOR.background,
-                              hintText: 'Address Type',
+                              hintText: StringRes.addressType,
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 14),
                               border: OutlineInputBorder(
@@ -220,223 +206,13 @@ class PickupAddressScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 6, left: 4),
                               child: Text(
-                                'Please select address type',
+                                StringRes.selectAddressType,
                                 style:
                                     TextStyle(color: Colors.red, fontSize: 12),
                               ),
                             ),
                         ],
                       )),
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     DropdownButtonFormField<String>(
-                  //       dropdownColor: COLOR.background,
-                  //       value: _controller.selectedType.value.isEmpty
-                  //           ? null
-                  //           : _controller.selectedType.value,
-                  //       decoration: InputDecoration(
-                  //         hintText: 'Address Type',
-                  //         hintStyle: TextStyle(color: Colors.grey),
-                  //         contentPadding:
-                  //         EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                  //         border: OutlineInputBorder(
-                  //           borderRadius: BorderRadius.circular(8),
-                  //         ),
-                  //       ),
-                  //       isExpanded: true,
-                  //       items: _controller.types.map((type) {
-                  //         return DropdownMenuItem<String>(
-                  //           value: type,
-                  //           child: Text(type),
-                  //         );
-                  //       }).toList(),
-                  //       onChanged: (value) {
-                  //         _controller.setType(value);
-                  //       },
-                  //     ),
-                  //     if (_controller.showError.value)
-                  //       Padding(
-                  //         padding: const EdgeInsets.only(top: 6, left: 4),
-                  //         child: Text(
-                  //           'Please select address type',
-                  //           style: TextStyle(color: Colors.red, fontSize: 12),
-                  //         ),
-                  //       ),
-                  //   ],
-                  // ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     if (_controller.validate()) {
-                  //       // Proceed with form submission
-                  //       print(
-                  //           "Address type selected: ${_controller.selectedType.value}");
-                  //     }
-                  //   },
-                  //   child: Text('Submit'),
-                  // ),
-                  //     // DropdownMenuItem(
-                  //     //     value: 1,
-                  //     //     //Searchable DropDown SubTitle Text
-                  //     //     child: Text(
-                  //     //       "New",
-                  //     //       // style: appCss.dmDenseMedium14
-                  //     //       //     .textColor(appColor(context).darkText),
-                  //     //     )),
-                  //     DropdownButton(
-                  //       underline: Container(),
-                  //       dropdownColor: COLOR.background,
-                  //       // dropdownStyleData: DropdownStyleData(
-                  //       //     maxHeight: Sizes.s400,
-                  //       //     decoration: BoxDecoration(color: appColor(context).whiteBg)),
-                  //       isExpanded: true,
-                  //       isDense: true,
-                  //        // iconStyleData: IconStyleData(icon: Container()),
-                  //       //searchable IconStyle
-                  //       hint: Text(
-                  //         "Hello",
-                  //       ),
-                  //
-                  //       //Searchable DropDown Title Text
-                  //       items: [
-                  //         DropdownMenuItem(
-                  //             value: 1,
-                  //             //Searchable DropDown SubTitle Text
-                  //             child: Text(
-                  //               "New",
-                  //               // style: appCss.dmDenseMedium14
-                  //               //     .textColor(appColor(context).darkText),
-                  //             )),
-                  //         DropdownMenuItem(
-                  //             value: 1,
-                  //             //Searchable DropDown SubTitle Text
-                  //             child: Text(
-                  //               "New 1",
-                  //               // style: appCss.dmDenseMedium14
-                  //               //     .textColor(appColor(context).darkText),
-                  //             )),
-                  //       ],
-                  //       // value: value.state,
-                  //       onChanged: (val) {
-                  //         // print("Location value ${val!.countryId}");
-                  //         // print("Location value ${val!.name}");
-                  //         // print("Location value ${val!.createdAt}");
-                  //         // print("Location value ${val!.id}");
-                  //         // print("Location value ${val!.updatedAt}");
-                  //         // StateModel? country = val;
-                  //         // value.onChangeState(context, country!.id, country);
-                  //       },
-                  //
-                  //       // buttonStyleData: ButtonStyleData(
-                  //         elevation: 0,
-                  //       //   decoration: BoxDecoration(
-                  //             borderRadius: BorderRadius.circular(8),
-                  //       //       color: appColor(context).whiteBg,
-                  //       //       border: Border.all(color: appColor(context).trans)),
-                  //       //   padding: const EdgeInsets.symmetric(horizontal: Insets.i30),
-                  //       //   height: Sizes.s50,
-                  //       // ),
-                  //       // //search ButtonStyle Data
-                  //       // menuItemStyleData: const MenuItemStyleData(
-                  //       //   height: Sizes.s40,
-                  //     ),
-                  //     // dropdownSearchData: DropdownSearchData(
-                  //     //     searchController: value.countryCtrl,
-                  //     //     searchInnerWidgetHeight: Sizes.s60,
-                  //     //     searchInnerWidget: Container(
-                  //     //         height: Sizes.s50,
-                  //     //         padding: const EdgeInsets.only(
-                  //     //             top: Insets.i8,
-                  //     //             bottom: Insets.i4,
-                  //     //             right: Insets.i8,
-                  //     //             left: Insets.i8),
-                  //     //         child: TextFormField(
-                  //     //             expands: true,
-                  //     //             maxLines: null,
-                  //     //             controller: value.countryCtrl,
-                  //     //             decoration: InputDecoration(
-                  //     //                 isDense: true,
-                  //     //                 contentPadding: const EdgeInsets.all(10),
-                  //     //                 hintText:
-                  //     //                 language(context, translations!.searchHere),
-                  //     //                 hintStyle: const TextStyle(fontSize: 12),
-                  //     //                 enabledBorder: OutlineInputBorder(
-                  //     //                     borderRadius: BorderRadius.circular(8)),
-                  //     //                 border: OutlineInputBorder(
-                  //     //                     borderRadius: BorderRadius.circular(8))))),
-                  //     //     //searchable layout container
-                  //     //     searchMatchFn: (item, searchValue) {
-                  //     //       return item.value!.name
-                  //     //           .toString()
-                  //     //           .toLowerCase()
-                  //     //           .contains(searchValue);
-                  //     //     }),
-                  //     //This to clear the search value when you close the menu
-                  //     // onMenuStateChange: (isOpen) {
-                  //     //   if (!isOpen) {
-                  //     //     value.countryCtrl.clear();
-                  //     //   }
-                  //     // }
-                  //     // ),
-                  // DropdownButton(
-                  //     underline: Container(),
-                  //     focusColor: Colors.white,
-                  //     value: 1,
-                  //     style: const TextStyle(
-                  //         color: Colors.white),
-                  //     iconEnabledColor:
-                  //     COLOR
-                  //         .black,
-                  //     items:
-                  //     // appArray
-                  //     //     .monthList
-                  //     //     .map<DropdownMenuItem>(
-                  //     //         (monthValue) {
-                  //            DropdownMenuItem(
-                  //               // onTap: () => value
-                  //               //     .onTapMonth(
-                  //               //     monthValue[
-                  //               //     'title']),
-                  //               value: 1,
-                  //               child: Text(
-                  //               "New"
-                  //                   // monthValue[
-                  //                   // 'title'],
-                  //                   // style: appCss
-                  //                   //     .dmDenseLight14
-                  //                   //     .textColor(
-                  //                   //     appColor(context)
-                  //                   //         .darkText))
-                  //           );
-                  //         })
-                  // .toList(),
-                  // icon: SvgPicture.asset(
-                  //     eSvgAssets.dropDown),
-                  // onChanged: (choseVal) =>
-                  //     value
-                  //         .onDropDownChange(
-                  //         choseVal))
-                  // ),
-                  // .boxShapeExtension(
-                  // color: appColor(context)
-                  //     .fieldCardBg,
-                  // radius: AppRadius.r4),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 10),
-                  //   child: SizedBox(
-                  //     height: MediaQuery.of(context).size.height * 0.06,
-                  //     child: InputFiledArea(
-                  //       controller: _controller.txtType,
-                  //       keyboardType: TextInputType.text,
-                  //       labelText: StringRes.addressType,
-                  //       validator: (value) {
-                  //         if (value!.isEmpty) return StringRes.addressType;
-                  //         return null;
-                  //       },
-                  //       border: 1,
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -456,16 +232,6 @@ class PickupAddressScreen extends StatelessWidget {
 
               AddressModel addressModel = AddressModel();
               if (_formKey.currentState!.validate()) {
-                // bool isValid = Get.find<AddressController>().validate();
-                // if (isValid) {
-                // Proceed further
-
-//                   if (_controller.validate()) {
-//                     // Proceed with form submission
-//                     print("Address type selected: ${_controller.selectedType
-//                         .value}");
-//
-// }
                 addressModel = AddressModel(
                     customerId: _controller.customerModel!.value.customerId,
                     addressFullName: _controller.txtFullname.text,
@@ -498,10 +264,7 @@ class PickupAddressScreen extends StatelessWidget {
                   );
                   _controller.getAllAddress();
 
-                  // _controller.updateAddressData(addressModel: updatedAddress);
                 }
-
-                // _controller.addAddressData(addressModel: addressModel);
               }
             },
             color: COLOR.appBaseColor,

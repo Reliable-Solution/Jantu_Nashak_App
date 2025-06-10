@@ -10,6 +10,7 @@ import 'package:keep_app/controller/networkController.dart';
 import 'package:keep_app/models/wishlistModel.dart';
 
 import '../constant/api_endpoints.dart';
+import '../constant/app_constant.dart';
 import '../models/customerModel.dart';
 import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
@@ -59,6 +60,8 @@ class ShareProductController extends GetxController {
       final Map<String, dynamic> body = {
         'CustomerId': customerModel!.value.customerId,
         'ProductId': productId,
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(
@@ -85,6 +88,8 @@ class ShareProductController extends GetxController {
       final Map<String, dynamic> body = {
         'CustomerId': customerModel!.value.customerId,
         'ProductId': productId,
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(
@@ -114,6 +119,8 @@ class ShareProductController extends GetxController {
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerID,
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(

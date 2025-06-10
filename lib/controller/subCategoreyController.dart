@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:keep_app/models/productModel.dart';
 
 import '../constant/api_endpoints.dart';
+import '../constant/app_constant.dart';
 import '../models/customerModel.dart';
 import '../models/subCategoryModel.dart';
 import '../utils/services/api_services.dart';
@@ -50,6 +51,8 @@ class SubCategoryController extends GetxController {
     try {
       final Map<String, dynamic> body = {
         'CategoryId': categoryId,
+        'FirmId':firmId
+
       };
 
       // Make the API call
@@ -88,6 +91,7 @@ class SubCategoryController extends GetxController {
       final Map<String, dynamic> body = {
         'CustomerId': customerId,
         'CategoryId': categoryId,
+        'FirmId':firmId
       };
 
       // Make the API call
@@ -127,6 +131,7 @@ class SubCategoryController extends GetxController {
       final Map<String, dynamic> body = {
         'CustomerId': customerModel!.value.customerId,
         'SubcategoryId': subCategoryId,
+        'FirmId':firmId
       };
 
       // Make the API call

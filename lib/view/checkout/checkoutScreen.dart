@@ -48,6 +48,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
     _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay!.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay!.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    checkoutController.getPaymentMethod();
   }
 
   @override
@@ -114,255 +115,73 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
           appbarPadding: 0,
           elevation: 1,
           title: TextWiget(
-            title: "CHECKOUT",
+            title: StringRes.checkout,
             style: Themes.light.textTheme.displayLarge,
           ),
-          // leading: InkWell(
-          //   onTap: () {
-          //     Get.back();
-          //   },
-          //   child: Icon(
-          //     Icons.arrow_back_ios,
-          //     color: COLOR.greyback,
-          //     size: 20,
-          //   ),
-          // ),
         ),
         backgroundColor: COLOR.background.withOpacity(0.96),
-        // backgroundColor: COLOR.greyLight,
-        // appBar: AppBar(
-        //   title: Text("Checkout"),
-        // ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Divider(),
 
               SizedBox(height: 05),
 
               Obx(() {
                 var selectedAddress = controller.allAddressList
                     .firstWhereOrNull((address) =>
-                        address.addressId.toString() ==
-                        controller.selectedAddressId.value);
+                address.addressId.toString() ==
+                    controller.selectedAddressId.value);
                 return selectedAddress == null
                     ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(child: Text("No Address Selected")),
-                      )
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text(StringRes.noAddressSelected)),
+                )
                     : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery
+                          .sizeOf(context)
+                          .width,
+                      // margin: EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        // mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            // margin: EdgeInsets.all(16.0),
-                            padding: EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              // borderRadius: BorderRadius.circular(20.0),
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //     color: Colors.black12,
-                              //     blurRadius: 15.0,
-                              //     offset: Offset(0, 6),
-                              //   ),
-                              // ],
-                            ),
-                            child: Column(
-                              // mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${selectedAddress.addressFullName}",
-                                  style: Themes.light.textTheme.displayMedium!
-                                      .copyWith(fontSize: 20),
-
-                                  // style: TextStyle(
-                                  //     fontSize: 22.0,
-                                  //     fontWeight: FontWeight.bold,
-                                  //     color: Colors.black87,
-                                  //     fontFamily: 'GentiumPlus'
-                                  // ),
-                                ),
-                                Text(
-                                  // "${selectedAddress.addressFullName}\n"
-                                  "${selectedAddress.addressColony}\n${selectedAddress.cityName},${selectedAddress.stateName}, ${selectedAddress.addressPincode}\n"
-                                  "Landmark : ${selectedAddress.addressLandmark}\n+91 ${selectedAddress.addressMobileNo}",
-                                  style: Themes.light.textTheme.bodyMedium!
-                                      .copyWith(fontSize: 14),
-
-                                  // TextStyle(
-                                  //     fontSize: 16.0,
-                                  //     color: Colors.black87,
-                                  //     fontWeight: FontWeight.w500,
-                                  //     height: 1.5,
-                                  //     fontFamily: 'GentiumPlus-Regular'
-                                  // ),
-                                ),
-
-                                // Row(
-                                //   children: [
-                                //     // Icon(
-                                //     //   Icons.person,
-                                //     //   color: Colors.teal,
-                                //     //   size: 28,
-                                //     // ),
-                                //     SizedBox(width: 10.0),
-                                //     Text(
-                                //       "${selectedAddress.addressFullName}",
-                                //       style: TextStyle(
-                                //           fontSize: 22.0,
-                                //           fontWeight: FontWeight.bold,
-                                //           color: Colors.black87,
-                                //           fontFamily: 'GentiumPlus'
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                // SizedBox(height: 06.0),
-                                // Address
-                                // Row(
-                                //   crossAxisAlignment: CrossAxisAlignment.start,
-                                //   children: [
-                                //     // Icon(
-                                //     //   Icons.location_on,
-                                //     //   color: Colors.teal,
-                                //     //   size: 28,
-                                //     // ),
-                                //     SizedBox(width: 10.0),
-                                //     Expanded(
-                                //       child:
-                                //       Text(
-                                //         // "${selectedAddress.addressFullName}\n"
-                                //             "${selectedAddress.addressColony}\n${selectedAddress.cityName},${selectedAddress.stateName}, ${selectedAddress.addressPincode}\n"
-                                //             "Landmark : ${selectedAddress.addressLandmark}\n+91 ${selectedAddress.addressMobileNo}",
-                                //         style: TextStyle(
-                                //             fontSize: 16.0,
-                                //             color: Colors.black87,
-                                //             fontWeight: FontWeight.w500,
-                                //             height: 1.5,
-                                //             fontFamily: 'GentiumPlus-Regular'
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                // SizedBox(height: 06.0),
-                                // Phone
-                                // Row(
-                                //   children: [
-                                //     // Icon(
-                                //     //   Icons.phone,
-                                //     //   color: Colors.teal,
-                                //     //   size: 28,
-                                //     // ),
-                                //     SizedBox(width: 10.0),
-                                //     // Text(
-                                //     //   "+91 ${controller.allAddressList[index].addressMobileNo}",
-                                //     //   style: TextStyle(
-                                //     //     fontSize: 16.0,
-                                //     //     color: Colors.black54,
-                                //     //   ),
-                                //     // ),
-                                //   ],
-                                // ),
-                                // SizedBox(height: 10.0),
-                                // // Action Buttons
-                                // Row(
-                                //   mainAxisAlignment:
-                                //   MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     ElevatedButton.icon(
-                                //       onPressed: () {
-                                //         // Get.to(PickupAddressScreen(
-                                //         //   address:
-                                //         //   controller.allAddressList[index],
-                                //         // ));
-                                //         // Add navigation or edit functionality
-                                //       },
-                                //       icon: Icon(Icons.edit,color: COLOR.background,),
-                                //       label: Text(StringRes.edit,style: TextStyle(color: COLOR.background),),
-                                //       style: ElevatedButton.styleFrom(
-                                //         backgroundColor: COLOR.appBaseColor,
-                                //         // primary: Colors.teal,
-                                //         shape: RoundedRectangleBorder(
-                                //           borderRadius:
-                                //           BorderRadius.circular(10.0),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //     // OutlinedButton.icon(
-                                //     //   onPressed: () {
-                                //     //     controller.deleteAddressData(
-                                //     //         customerId: controller
-                                //     //             .allAddressList[index]
-                                //     //             .customerId,
-                                //     //         addressId: controller
-                                //     //             .allAddressList[index]
-                                //     //             .addressId);
-                                //     //   },
-                                //     //   icon:
-                                //     //   Icon(Icons.delete, color: Colors.red),
-                                //     //   label: Text(
-                                //     //     StringRes.delete,
-                                //     //     style: TextStyle(color: Colors.red),
-                                //     //   ),
-                                //     //   style: OutlinedButton.styleFrom(
-                                //     //     side: BorderSide(color: Colors.red),
-                                //     //     shape: RoundedRectangleBorder(
-                                //     //       borderRadius:
-                                //     //       BorderRadius.circular(10.0),
-                                //     //     ),
-                                //     //   ),
-                                //     // ),
-                                //   ],
-                                // ),
-                              ],
-                            ),
+                          Text(
+                            "${selectedAddress.addressFullName}",
+                            style: Themes.light.textTheme.displayMedium!
+                                .copyWith(fontSize: 20),
                           ),
-
-                          // Container(
-                          //   width: MediaQuery.sizeOf(context).width,
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(10),
-                          //       color: Colors.white),
-                          //   // color: Colors.grey,
-                          //   padding:
-                          //   EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          //   // margin: EdgeInsets.all(10),
-                          //   child: Text(
-                          //     "${selectedAddress.addressFullName}\n${selectedAddress.addressColony}\n${selectedAddress.cityName},${selectedAddress.stateName}, ${selectedAddress.addressPincode}\n"
-                          //         "Landmark : ${selectedAddress.addressLandmark}\n+91 ${selectedAddress.addressMobileNo}",
-                          //     style: TextStyle(
-                          //         fontSize: 18, fontWeight: FontWeight.bold),
-                          //   ),
-                          // )
+                          Text(
+                            // "${selectedAddress.addressFullName}\n"
+                            "${selectedAddress.addressColony}\n${selectedAddress
+                                .cityName},${selectedAddress
+                                .stateName}, ${selectedAddress
+                                .addressPincode}\n"
+                                "${StringRes.landmark} : ${selectedAddress
+                                .addressLandmark}\n+91 ${selectedAddress
+                                .addressMobileNo}",
+                            style: Themes.light.textTheme.bodyMedium!
+                                .copyWith(fontSize: 14),
+                          ),
                         ],
-                      );
+                      ),
+                    ),
+                  ],
+                );
               }),
               SizedBox(height: 05),
               Center(
                 child: ButtonWidgets(
                     style: Themes.light.textTheme.displayLarge!
                         .copyWith(color: Colors.white),
-                    // text: StringRes.addtoCart,
-                    // onPressed: () {
-                    //   if (widget.products!.packInfo![0].isCart ??
-                    //       false) {
-                    //     Fluttertoast.showToast(
-                    //         msg: StringRes.alreadyInCart);
-                    //   } else {
-                    //     controller.addToCart(widget.products!);
-                    //     widget.products!.packInfo![0].isCart = true;
-                    //     Get.find<CartController>().getCartDetails(
-                    //       Get.find<CartController>()
-                    //           .customerModel!
-                    //           .value
-                    //           .customerId!,
-                    //     );
-                    //   }
-                    title: "Select Address",
+                    title: StringRes.selectAddress,
                     voidCallback: () {
                       showAddressBottomSheet(context);
                       // if (widget.products!.packInfo![0].isCart ??
@@ -381,10 +200,10 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                       // }
                     },
                     color: COLOR.appBaseColor
-                    // widget.products!.packInfo![0].isCart ?? false
-                    //     ? COLOR.grey
-                    //     : COLOR.appBaseColor,
-                    ),
+                  // widget.products!.packInfo![0].isCart ?? false
+                  //     ? COLOR.grey
+                  //     : COLOR.appBaseColor,
+                ),
               ),
               // Center(
               //   child: ElevatedButton(
@@ -402,39 +221,45 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Select payment method",
+                      StringRes.selectPaymentMethod,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 12),
 
-                    Obx(() => buildPaymentOption(
-                          image: "money.png",
-                          title: "Cash on Delivery",
-                          price:
-                              "₹${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
-                          icon: Icons.money,
-                          method: "cod",
-                          controller: controller,
-                        )),
+                    // Obx(() =>
+                    //     buildPaymentOption(
+                    //       image: "money.png",
+                    //       title: StringRes.cashOnDelivery,
+                    //       price:
+                    //       "₹${cartController.cartTotal.value?.totalInteger
+                    //           .toString() ?? 0}",
+                    //       icon: Icons.money,
+                    //       method: "cod",
+                    //       controller: controller,
+                    //     )),
 
                     SizedBox(height: 12),
 
                     // Pay Online
-                    Obx(() => buildPaymentOption(
+                    Obx(() =>
+                        buildPaymentOption(
                           image: "payment-online.png",
 
-                          title: "Pay Online",
+                          title: StringRes.payOnline,
                           price:
-                              "₹${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
+                          "₹${cartController.cartTotal.value?.totalInteger
+                              .toString() ?? 0}",
                           discount:
-                              "Save ${cartController.cartTotal.value?.save.toString() ?? 0}",
+                          "Save ${cartController.cartTotal.value?.save
+                              .toString() ?? 0}",
                           // extraText: "Extra discount with bank offers",
                           icon: Icons.credit_card,
                           method: "online",
                           controller: controller,
                         )),
-                    Obx(() => checkoutController.isOnlineExpanded.value
+                    Obx(() =>
+                    checkoutController.isOnlineExpanded.value
                         ? buildOnlinePaymentOptions()
                         : SizedBox()),
 
@@ -477,7 +302,10 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 )
               ],
             ),
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             padding: EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -494,144 +322,155 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                           color: COLOR.appBaseColor),
                     ),
                     Obx(
-                      () => Text(
-                        "Rs.${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
+                          () =>
+                          Text(
+                            "Rs.${cartController.cartTotal.value?.totalInteger
+                                .toString() ?? 0}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
                     ),
                   ],
                 ),
                 GetBuilder<CheckoutController>(
-                    builder: (checkoutController) => ButtonWidgets(
-                        style: Themes.light.textTheme.displayLarge!
-                            .copyWith(color: Colors.white),
-                        // text: StringRes.addtoCart,
-                        // onPressed: () {
-                        //   if (widget.products!.packInfo![0].isCart ??
-                        //       false) {
-                        //     Fluttertoast.showToast(
-                        //         msg: StringRes.alreadyInCart);
-                        //   } else {
-                        //     controller.addToCart(widget.products!);
-                        //     widget.products!.packInfo![0].isCart = true;
-                        //     Get.find<CartController>().getCartDetails(
-                        //       Get.find<CartController>()
-                        //           .customerModel!
-                        //           .value
-                        //           .customerId!,
-                        //     );
-                        //   }
-                        title: StringRes.continueString,
-                        voidCallback: isButtonEnabled
-                            ? () {
+                    builder: (checkoutController) =>
+                        ButtonWidgets(
+                            style: Themes.light.textTheme.displayLarge!
+                                .copyWith(color: Colors.white),
+                            // text: StringRes.addtoCart,
+                            // onPressed: () {
+                            //   if (widget.products!.packInfo![0].isCart ??
+                            //       false) {
+                            //     Fluttertoast.showToast(
+                            //         msg: StringRes.alreadyInCart);
+                            //   } else {
+                            //     controller.addToCart(widget.products!);
+                            //     widget.products!.packInfo![0].isCart = true;
+                            //     Get.find<CartController>().getCartDetails(
+                            //       Get.find<CartController>()
+                            //           .customerModel!
+                            //           .value
+                            //           .customerId!,
+                            //     );
+                            //   }
+                            title: StringRes.continueString,
+                            voidCallback: isButtonEnabled
+                                ? () {
+                              print(
+                                  "check out controller ${checkoutController
+                                      .selectedPaymentMethod.value}");
+                              if (checkoutController
+                                  .selectedPaymentMethod.value ==
+                                  "online") {
+                                openPaymentGateway(cartController
+                                    .cartTotal.value!.totalInteger);
+                              } else if (checkoutController
+                                  .selectedPaymentMethod.value ==
+                                  "cod") {
                                 print(
-                                    "check out controller ${checkoutController.selectedPaymentMethod.value}");
-                                if (checkoutController
-                                        .selectedPaymentMethod.value ==
-                                    "online") {
-                                  openPaymentGateway(cartController
-                                      .cartTotal.value!.totalInteger);
-                                } else if (checkoutController
-                                        .selectedPaymentMethod.value ==
-                                    "cod") {
-                                  print(
-                                      "======================= Payment method ${checkoutController.selectedPaymentMethod}");
-                                  checkoutController.placeOrderCheckout(
-                                    customerId:
-                                        "${controller.customerModel!.value.customerId}",
-                                    addressId:
-                                        "${controller.selectedAddressId}",
-                                    orderPaymentMethod:
-                                        "${checkoutController.selectedPaymentMethod}",
-                                    orderTransactionNo: "",
-                                  );
-                                  cartController.cartCount.value =
-                                      cartController.cartList.length;
-                                  // cartController.cartList.clear();
-                                  print(
-                                      "Cart Count ${cartController.cartCount.value}");
-                                  homeController.getDashboardData(controller
-                                      .customerModel!.value.customerId);
-                                  cartController.cartList.clear();
-                                  cartController.update();
-                                } else if (checkoutController
-                                        .selectedPaymentMethod.value ==
-                                    "") {
-                                  Fluttertoast.showToast(
-                                      msg: "Please Select Payment Method");
-                                }
+                                    "======================= Payment method ${checkoutController
+                                        .selectedPaymentMethod}");
+                                checkoutController.placeOrderCheckout(
+                                  customerId:
+                                  "${controller.customerModel!.value
+                                      .customerId}",
+                                  addressId:
+                                  "${controller.selectedAddressId}",
+                                  orderPaymentMethod:
+                                  "${checkoutController.selectedPaymentMethod}",
+                                  orderTransactionNo: "",
+                                );
+                                cartController.cartCount.value =
+                                    cartController.cartList.length;
+                                // cartController.cartList.clear();
+                                print(
+                                    "Cart Count ${cartController.cartCount
+                                        .value}");
+                                homeController.getDashboardData(controller
+                                    .customerModel!.value.customerId);
+                                cartController.cartList.clear();
+                                cartController.update();
+                              } else if (checkoutController
+                                  .selectedPaymentMethod.value ==
+                                  "") {
+                                Fluttertoast.showToast(
+                                    msg: StringRes.pleaseSelectAddressMethod);
                               }
-                            : (){
-                                // checkoutController.selectedPaymentMethod.value == ""
-                                //     ? Fluttertoast.showToast(
-                                //     msg: "Please Select Payment Method")
-                                //     : null;
-                                controller.selectedAddressId.value.isEmpty
-                                    ? Fluttertoast.showToast(msg: "Please Select Address Method")
-                                    : checkoutController.selectedPaymentMethod.value == ""
-                                    ?Fluttertoast.showToast(
-                              msg: "Please Select Payment Method"):null;
-                        },
-                        //     () {
-                        //   // if (widget.products!.packInfo![0].isCart ??
-                        //   //     false) {
-                        //   //   Fluttertoast.showToast(
-                        //   //       msg: StringRes.alreadyInCart);
-                        //   // } else {
-                        //   //   controller.addToCart(widget.products!);
-                        //   //   widget.products!.packInfo![0].isCart = true;
-                        //   //   Get.find<CartController>().getCartDetails(
-                        //   //     Get.find<CartController>()
-                        //   //         .customerModel!
-                        //   //         .value
-                        //   //         .customerId!,
-                        //   //   );
-                        //   // }
-                        // },
-                        color: controller.selectedAddressId.value.isEmpty
-                            ? Colors.grey
-                            : checkoutController.selectedPaymentMethod.value == ""
-                            ?Colors.grey:COLOR.appBaseColor
-                        // widget.products!.packInfo![0].isCart ?? false
-                        //     ? COLOR.grey
-                        //     : COLOR.appBaseColor,
+                            }
+                                : () {
+                              // checkoutController.selectedPaymentMethod.value == ""
+                              //     ? Fluttertoast.showToast(
+                              //     msg: "Please Select Payment Method")
+                              //     : null;
+                              controller.selectedAddressId.value.isEmpty
+                                  ? Fluttertoast.showToast(
+                                  msg: StringRes.pleaseSelectAddressMethod)
+                                  : checkoutController.selectedPaymentMethod
+                                  .value == ""
+                                  ? Fluttertoast.showToast(
+                                  msg: StringRes.pleaseSelectPaymentMethod)
+                                  : null;
+                            },
+                            //     () {
+                            //   // if (widget.products!.packInfo![0].isCart ??
+                            //   //     false) {
+                            //   //   Fluttertoast.showToast(
+                            //   //       msg: StringRes.alreadyInCart);
+                            //   // } else {
+                            //   //   controller.addToCart(widget.products!);
+                            //   //   widget.products!.packInfo![0].isCart = true;
+                            //   //   Get.find<CartController>().getCartDetails(
+                            //   //     Get.find<CartController>()
+                            //   //         .customerModel!
+                            //   //         .value
+                            //   //         .customerId!,
+                            //   //   );
+                            //   // }
+                            // },
+                            color: controller.selectedAddressId.value.isEmpty
+                                ? Colors.grey
+                                : checkoutController.selectedPaymentMethod
+                                .value == ""
+                                ? Colors.grey : COLOR.appBaseColor
+                          // widget.products!.packInfo![0].isCart ?? false
+                          //     ? COLOR.grey
+                          //     : COLOR.appBaseColor,
                         )
-                    // ElevatedButton(
-                    // onPressed:
-                    // isButtonEnabled
-                    //     ?
-                    //     () {
-                    //   if(checkoutController.selectedPaymentMethod.value == "online")
-                    //   {
-                    //     openPaymentGateway(cartController.cartTotal.value!.totalInteger);
-                    //   }
-                    //   else if(checkoutController.selectedPaymentMethod.value == "cod") {
-                    //     print(
-                    //         "======================= Payment method ${checkoutController
-                    //             .selectedPaymentMethod}");
-                    //     checkoutController.placeOrderCheckout(
-                    //       customerId: "${controller.customerModel!.value
-                    //           .customerId}",
-                    //       addressId: "${controller.selectedAddressId}",
-                    //       orderPaymentMethod: "${checkoutController
-                    //           .selectedPaymentMethod}",
-                    //       orderTransactionNo: "",
-                    //     );
-                    //      cartController.cartCount.value = cartController.cartList.length;
-                    //     // cartController.cartList.clear();
-                    //     print("Cart Count ${cartController.cartCount.value}");
-                    //     homeController.getDashboardData(controller.customerModel!.value.customerId);
-                    //      cartController.cartList.clear();
-                    //     cartController.update();
-                    //
-                    //   }
-                    //   // Get.to(HomeScreen());
-                    // }
-                    //     : null,
-                    // child: Text("Continue")),
-                    )
+                  // ElevatedButton(
+                  // onPressed:
+                  // isButtonEnabled
+                  //     ?
+                  //     () {
+                  //   if(checkoutController.selectedPaymentMethod.value == "online")
+                  //   {
+                  //     openPaymentGateway(cartController.cartTotal.value!.totalInteger);
+                  //   }
+                  //   else if(checkoutController.selectedPaymentMethod.value == "cod") {
+                  //     print(
+                  //         "======================= Payment method ${checkoutController
+                  //             .selectedPaymentMethod}");
+                  //     checkoutController.placeOrderCheckout(
+                  //       customerId: "${controller.customerModel!.value
+                  //           .customerId}",
+                  //       addressId: "${controller.selectedAddressId}",
+                  //       orderPaymentMethod: "${checkoutController
+                  //           .selectedPaymentMethod}",
+                  //       orderTransactionNo: "",
+                  //     );
+                  //      cartController.cartCount.value = cartController.cartList.length;
+                  //     // cartController.cartList.clear();
+                  //     print("Cart Count ${cartController.cartCount.value}");
+                  //     homeController.getDashboardData(controller.customerModel!.value.customerId);
+                  //      cartController.cartList.clear();
+                  //     cartController.update();
+                  //
+                  //   }
+                  //   // Get.to(HomeScreen());
+                  // }
+                  //     : null,
+                  // child: Text("Continue")),
+                )
               ],
             ),
           );
@@ -643,9 +482,14 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
   Widget buildOnlinePaymentOptions() {
     return Column(
       children: [
-        buildPaymentOption2("PhonePe", "Offers Available", 'PhonePe'),
-        buildPaymentOption2("Razorpay", "Offers Available", 'Razorpay'),
-        buildPaymentOption2("Cashfree", "Offers Available", 'Cashfree'),
+        Expanded(
+          child: ListView.builder(itemBuilder: (context, index) {
+            return buildPaymentOption2(checkoutController.paymentMethodList[index].gatewayName!, "Offers Available", checkoutController.paymentMethodList[index].gatewayName!);
+          },),
+        )
+        // buildPaymentOption2("PhonePe", "Offers Available", 'PhonePe'),
+        // buildPaymentOption2("Razorpay", "Offers Available", 'Razorpay'),
+        // buildPaymentOption2("Cashfree", "Offers Available", 'Cashfree'),
         // buildExpandableTile("Pay by any UPI App", "Offers Available"),
         // buildExpandableTile("Wallet", "Offers Available"),
         // buildExpandableTile("Debit/Credit Cards", "Offers Available"),
@@ -771,7 +615,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   SizedBox(height: 4),
                   Text(title,
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   if (extraText != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 4),

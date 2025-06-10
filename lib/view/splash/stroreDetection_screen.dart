@@ -305,7 +305,13 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:keep_app/constant/app_constant.dart';
+import 'package:keep_app/controller/dashboardController.dart';
 
+import '../../controller/homeController.dart';
+import '../../controller/splashController.dart';
 import '../../models/customerModel.dart';
 import '../../utils/sharedPrefs.dart';
 import '../dashboard/dashboardScreen.dart';
@@ -320,6 +326,10 @@ class StoreSelectionScreen extends StatefulWidget {
 class _StoreSelectionScreenState extends State<StoreSelectionScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+  final controller = Get.put(SplashController());
+   final HomeController homeController =
+      Get.put(HomeController());
+
 
   SharedHelper helper = SharedHelper();
 
@@ -350,27 +360,50 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen> with Single
     super.dispose();
   }
 
-  Future<void> _navigateToLogin(String store) async {
+  Future<void> _navigateToLogin(String store,String? firmIdSave) async {
+    print("Store button ${store}");
     CustomerModel? customerModel = await helper.getCustomer();
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            customerModel == null
-                ? LoginScreen()
-                : DashboardScreen(pageIndex: 0),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-        transitionDuration: Duration(milliseconds: 500),
-      ),
+     // Get.put(HomeController());  // Sirf yaha ek baar
+
+    await helper.storeString("firmIdKey", firmIdSave!);
+     firmId = firmIdSave ?? '';
+    print("Saved firm ID: $firmId");
+    DashboardController dashboardController =Get.find();
+    dashboardController.tabIndex =0;
+    dashboardController.update();
+    Get.off(
+      customerModel == null
+          ? LoginScreen()
+          : DashboardScreen(pageIndex: 0),
+      transition: Transition.fade,
+      duration: const Duration(milliseconds: 500),
     );
+    homeController.getDashboardData(customerModel!.customerId);
+
+
+    // Navigator.of(context).push(
+    //   PageRouteBuilder(
+    //     pageBuilder: (context, animation, secondaryAnimation) =>
+    //         customerModel == null
+    //             ? LoginScreen()
+    //             : DashboardScreen(pageIndex: 0),
+    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //       return FadeTransition(opacity: animation, child: child);
+    //     },
+    //     transitionDuration: Duration(milliseconds: 500),
+    //   ),
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF900C3F),
-      body: Center(
+      body:
+      controller.firmList.isEmpty
+          ? Center(child: Text('No firms found.',style: TextStyle(color: Colors.white),))
+
+    :  Center(
         child: ScaleTransition(
           scale: _scaleAnimation,
           child: Container(
@@ -403,16 +436,16 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen> with Single
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _buildStoreButton(
-                      'Reeya Saree',
-                      'assets/images/logo1.png',
+                      controller.firmList[0].firmName!,
+                      controller.firmList[0].firmLogo!,
                       // Icons.shopping_bag,
-                          () => _navigateToLogin('Reeya Saree'),
+                          () => _navigateToLogin('Reeya Saree',controller.firmList[0].firmId),
                     ),
                     _buildStoreButton(
-                      'Keep Fashion',
-                      'assets/images/logo2.png',
+                      controller.firmList[1].firmName!,
+                      controller.firmList[1].firmLogo!,
                       // Icons.devices,
-                          () => _navigateToLogin('Keep Fashion'),
+                          () => _navigateToLogin('Keep Fashion',controller.firmList[1].firmId),
                     ),
                   ],
                 ),
@@ -452,15 +485,25 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen> with Single
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              // icon,
-              image,
-              // 'assets/images/p1.png',
+            Image.network(
+              "${IMAGE_URL + image}" ??
+                  'http://surti.idnmserver.com/resources/product_no_image.png',
+              fit: BoxFit.cover,
               height: 50,
               width: 50,
-              // size: 50,
-              // color: Color(0xFF900C3F),
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset("assets/images/noInternet.jpg");
+              },
             ),
+            // Image.asset(
+            //   // icon,
+            //   image,
+            //   // 'assets/images/p1.png',
+            //   height: 50,
+            //   width: 50,
+            //   // size: 50,
+            //   // color: Color(0xFF900C3F),
+            // ),
             SizedBox(height: 10),
             Text(
               name,

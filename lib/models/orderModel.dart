@@ -29,8 +29,10 @@ class OrderModel {
 
 class OrderDataModel {
   String? orderId;
+  String? firmId;
   String? customerId;
   String? addressId;
+  String? ordertrackingLink;
   String? orderDoctorName;
   String? orderPaymentMethod;
   String? orderTransactionNo;
@@ -78,8 +80,10 @@ class OrderDataModel {
 
   OrderDataModel(
       {this.orderId,
+      this.firmId,
         this.customerId,
         this.addressId,
+        this.ordertrackingLink,
         this.orderDoctorName,
         this.orderPaymentMethod,
         this.orderTransactionNo,
@@ -127,8 +131,10 @@ class OrderDataModel {
 
   OrderDataModel.fromJson(Map<String, dynamic> json) {
     orderId = json['OrderId'];
+    firmId = json['FirmId'];
     customerId = json['CustomerId'];
     addressId = json['AddressId'];
+    ordertrackingLink = json['OrdertrackingLink'];
     orderDoctorName = json['OrderDoctorName'];
     orderPaymentMethod = json['OrderPaymentMethod'];
     orderTransactionNo = json['OrderTransactionNo'];
@@ -178,8 +184,10 @@ class OrderDataModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['OrderId'] = this.orderId;
+    data['FirmId'] = this.firmId;
     data['CustomerId'] = this.customerId;
     data['AddressId'] = this.addressId;
+    data['OrdertrackingLink'] = this.ordertrackingLink;
     data['OrderDoctorName'] = this.orderDoctorName;
     data['OrderPaymentMethod'] = this.orderPaymentMethod;
     data['OrderTransactionNo'] = this.orderTransactionNo;

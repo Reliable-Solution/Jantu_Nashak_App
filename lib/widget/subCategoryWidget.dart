@@ -21,9 +21,7 @@ class SubCategoryComponet extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.to(SubCategoryProductScreen(subCategory: categoryModel!.subcategoryId!));
-
-        // Navigate to product details if needed
-      },
+        },
       child: Container(
         color: COLOR.background,
         child: Column(

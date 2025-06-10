@@ -116,32 +116,6 @@ class RegistrationScreen extends StatelessWidget {
 
                 SizedBox(height: 20),
 
-                // Submit Button
-                // Center(
-                //   child: ElevatedButton(
-                //     onPressed: () {
-                //       if (_formKey.currentState!.validate()) {
-                //         txtNumber.text = controller.phoneNumber.value;
-                //         controller.getToken();
-                //         otpController
-                //             .onVerifyCode(controller.phoneNumber.value);
-                //         Get.to(OTPVerificationScreen(
-                //           registerPhoneNumber: controller.phoneNumber.value,
-                //         ));
-                //         controller.update();
-                //       }
-                //     },
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: COLOR.appBaseColor,
-                //     ),
-                //     child: Text(
-                //       StringRes.register,
-                //       style: Themes.light.textTheme.displaySmall!.copyWith(
-                //         color: COLOR.background,
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Obx(() {
                   return controller.isLoading.value
                       ? Center(
@@ -151,18 +125,11 @@ class RegistrationScreen extends StatelessWidget {
                           child: ButtonWidgets(
                             voidCallback: () {
                               if (_formKey.currentState!.validate()) {
-                                otpController.onVerifyCode(txtNumber.text);
+                                otpController.onVerifyCode(txtNumber.text,context);
                                 otpController.startTimer();
                                 controller.getToken();
                               }
                             },
-                            // onPressed: () {
-                            //   if (_formKey.currentState!.validate()) {
-                            //     otpController.onVerifyCode(txtNumber.text);
-                            //     otpController.startTimer();
-                            //     controller.getToken();
-                            //   }
-                            // },
                             title: StringRes.register,
                             color: COLOR.appBaseColor,
                             style: TextStyle(color: Colors.white),

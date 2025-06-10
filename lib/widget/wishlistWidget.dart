@@ -80,9 +80,7 @@ class _MyWishComponetState extends State<MyWishComponet> {
                         height: 120,
                         errorBuilder: (context, exception, stackTrace) {
                           return Image.asset("assets/no-image.png",
-                              height: 120, width: 100);
-                          // Image.network('http://surti.idnmserver.com/resources/product_no_image.png');
-                        },
+                              height: 120, width: 100);},
                       ),
                     )),
                 Expanded(

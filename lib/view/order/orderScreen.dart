@@ -14,6 +14,7 @@ import '../../widget/appBarWidget.dart';
 import '../../widget/textButtonWidget.dart';
 import '../../widget/textWidget.dart';
 import '../dashboard/dashboardScreen.dart';
+import '../webView/webView_screen.dart';
 
 class Orderscreen extends StatefulWidget {
   const Orderscreen({super.key});
@@ -37,30 +38,9 @@ class _OrderscreenState extends State<Orderscreen> {
           title: "Orders",
           style: Themes.light.textTheme.displayLarge,
         ),
-        // leading: InkWell(
-        //   onTap: () {
-        //     Get.back();
-        //   },
-        //   child: Icon(
-        //     Icons.arrow_back_ios,
-        //     color: COLOR.greyback,
-        //     size: 20,
-        //   ),
-        // ),
       ),
       // backgroundColor: COLOR.background.withOpacity(),
       backgroundColor: Colors.white,
-      // backgroundColor: COLOR.background,
-      // appBar: AppBar(
-      //   title: Text("My Orders"),
-      // ),
-      // appBar: MyCustomAppBar(
-      //   title: Text("My Orders",
-      //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      //   leading: IconButton(
-      //     icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-      //     onPressed: () => Get.back(),
-      //   ),
 
       body: GetBuilder<OrderController>(
         builder: (orderController) => RefreshIndicator(
@@ -138,9 +118,6 @@ class OrderCard extends StatelessWidget {
       onTap: () {
         orderController.getOrderDetail(order.orderId);
         Get.to(Orderdetailscreen());
-        // MaterialPageRoute(
-        //   builder: (context) => Orderdetailscreen(),
-        // );
         print("Order data id is ${order.orderId}");
       },
       child: Container(
@@ -193,19 +170,6 @@ class OrderCard extends StatelessWidget {
                         ),
                       ),
 
-                      // Expanded(
-                      //   child: Center(
-                      //       child: Icon(Icons.arrow_forward_ios)
-                      //       // Container(
-                      //       //     height: 20,
-                      //       //     width: 20,
-                      //       //     child: Image.asset(
-                      //       //       Images.calendar,
-                      //       //       // color: Colors.black,
-                      //       //       // width: 2,
-                      //       //     ))),
-                      //   )
-                      // ),
                     ],
                   ),
                 ),
@@ -217,12 +181,8 @@ class OrderCard extends StatelessWidget {
                     )),
               ],
             ),
-            // SizedBox(height: 10),
-            // Text("Order Date: ${order.orderDate ?? "N/A"}"),
-            // SizedBox(height: 4),
             SizedBox(height: 18),
             Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Row(
@@ -230,8 +190,6 @@ class OrderCard extends StatelessWidget {
                       Image.asset(
                         height: 20, width: 20,
                         Images.tag,
-                        // color: Colors.black,
-                        // width: 2,
                       ),
                       SizedBox(
                         width: 08,
@@ -245,8 +203,6 @@ class OrderCard extends StatelessWidget {
                               "Order",
                               style: TextStyle(
                                   fontSize: 14,
-
-                                  // fontWeight: FontWeight.bold,
                                   color: Colors.grey),
                             ),
                             Text(
@@ -262,44 +218,6 @@ class OrderCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Expanded(
-                //   child: Row(
-                //     children: [
-                //       Image.asset(
-                //         height: 10,width: 10,
-                //         Images.tag,
-                //         // color: Colors.black,
-                //         // width: 2,
-                //       ),
-                //       SizedBox(
-                //         width: 08,
-                //       ),
-                //       Expanded(
-                //         child: Column(
-                //             mainAxisSize: MainAxisSize.min,
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           children: [
-                //             Text(
-                //               "Order",
-                //               style: TextStyle(
-                //                 // fontWeight: FontWeight.bold,
-                //                   color: Colors.grey),
-                //             ),
-                //             Text(
-                //               "${order.orderId ?? "N/A"}",
-                //               style:
-                //               Themes.light.textTheme.displayLarge!.copyWith(
-                //                 fontWeight: FontWeight.w600,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
-                // Spacer(),
                 Expanded(
                   child: Row(
                     children: [
@@ -309,8 +227,6 @@ class OrderCard extends StatelessWidget {
                               width: 22,
                               child: Image.asset(
                                 Images.calendar,
-                                // color: Colors.black,
-                                // width: 2,
                               ))),
                       SizedBox(
                         width: 10,
@@ -343,49 +259,72 @@ class OrderCard extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10,),
-            //
-            // Text("Order ID: ${order.orderId ?? "N/A"}"),
-            // SizedBox(height: 4),
-            // Text("Shipping Date: ${order.orderDeliveryDate ?? "N/A"}"),
-            // SizedBox(height: 10),
-            // Text(order.orderStageDropDown.obs.toString(),
-            //     style:
-            //         TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
-            // SizedBox(height: 4),
-            //  Text("${orderData.orderDate}"),
-            // SizedBox(height: 4),
-            // Text("Order ID: ${orderData.orderId}"),
-            // SizedBox(height: 4),
-            // Text(
-            //     "Shipping Date: ${orderData.orderDeliveredDate}"),
-            // SizedBox(height: 10),
-            order.orderStageDropDown == "PlaceOrder"
-                ? Align(
-                    alignment: Alignment.topLeft,
-                    child: ElevatedButton(
-                      // onPressed: () {},
-                      onPressed: () {
-                        orderController.cancelOrder(
-                            orderController.customerModel!.value.customerId,
-                            order.orderId);
-                        orderController.getOrder(
-                            orderController.customerModel!.value.customerId);
-                      },
-                      style: ElevatedButton.styleFrom(elevation: 0,
-                          shape: ContinuousRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20),
-                              bottom: Radius.circular(20),
-                            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              children: [
+                order.orderStageDropDown == "PlaceOrder"
+                    ? Align(
+                        alignment: Alignment.topLeft,
+                        child:
+                        ElevatedButton(
+                          // onPressed: () {},
+                          onPressed: () {
+                            orderController.cancelOrder(
+                                orderController.customerModel!.value.customerId,
+                                order.orderId);
+                            orderController.getOrder(
+                                orderController.customerModel!.value.customerId);
+                          },
+                          style: ElevatedButton.styleFrom(elevation: 0,
+                              shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20),
+                                  bottom: Radius.circular(20),
+                                ),
+                              ),
+                              backgroundColor: Colors.red.shade400),
+                          child: Text(
+                            "Cancel Order",
+                            style: TextStyle(color: Colors.white),
                           ),
-                          backgroundColor: Colors.red.shade400),
-                      child: Text(
-                        "Cancel Order",
-                        style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    : SizedBox.shrink(),
+
+                order.ordertrackingLink != null ? ElevatedButton(
+                  // onPressed: () {},
+                  onPressed: () {
+                       Get.to(WebViewScreen(url: "${order.ordertrackingLink}"));
+
+                       print("Order Tracking ${order.ordertrackingLink}");
+                    // orderController.cancelOrder(
+                    //     orderController.customerModel!.value.customerId,
+                    //     order.orderId);
+                    // orderController.getOrder(
+                    //     orderController.customerModel!.value.customerId);
+                  },
+                  style: ElevatedButton.styleFrom(elevation: 0,
+                      shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                          bottom: Radius.circular(20),
+                        ),
                       ),
-                    ),
-                  )
-                : SizedBox.shrink(),
+                      backgroundColor: Colors.blue.shade400),
+                  child: Text(
+                    "Track Order",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ):SizedBox.shrink(),
+
+              ],
+            ),
+            // ElevatedButton(onPressed: () {
+            //
+            //    Get.to(WebViewScreen(url: "${order.ordertrackingLink}"));
+            //
+            //    print("Order Tracking ${order.ordertrackingLink}");
+            // }, child: Text("Track Order"))
           ],
         ),
       ),

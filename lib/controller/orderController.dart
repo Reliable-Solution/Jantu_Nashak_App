@@ -5,6 +5,7 @@ import 'package:keep_app/models/orderDetailModel.dart';
 import 'package:keep_app/models/orderModel.dart';
 
 import '../constant/api_endpoints.dart';
+import '../constant/app_constant.dart';
 import '../models/customerModel.dart';
 import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
@@ -44,6 +45,8 @@ class OrderController extends GetxController {
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerId,
+        'FirmId':firmId
+
       };
 
       // Make the API call
@@ -58,7 +61,7 @@ class OrderController extends GetxController {
 
         var data = response.data['Data']; // Assuming Data[0] exists
 
-        if (data != null) {
+        if (data  != null) {
           orderList.value = (data as List)
               .map((orderJson) => OrderDataModel.fromJson(orderJson))
               .toList();
@@ -84,6 +87,7 @@ class OrderController extends GetxController {
     try {
       final Map<String, dynamic> body = {
         'OrderId': orderId,
+        'FirmId':firmId
       };
 
       // Make the API call
@@ -125,6 +129,8 @@ class OrderController extends GetxController {
       final Map<String, dynamic> body = {
         'CustomerId': customerId,
         "OrderId": orderId,
+        'FirmId':firmId
+
       };
 
       // Make the API call

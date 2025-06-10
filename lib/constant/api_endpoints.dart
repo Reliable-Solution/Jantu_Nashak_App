@@ -21,5 +21,8 @@ const String placeOrder = "placeOrder";
 const String orderHistory = "orderHistory";
 const String cancelOrderProduct = "cancelOrder";
 const String getOrderdetailByOrderIdV2 = "getOrderdetailByOrderIdV2";
+const String get_firms = "get_firms";
+const String get_active_payment_gateways = "get_active_payment_gateways";
+
 
 

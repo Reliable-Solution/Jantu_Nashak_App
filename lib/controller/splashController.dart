@@ -46,8 +46,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:keep_app/constant/app_constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constant/api_endpoints.dart';
 import '../models/customerModel.dart';
+import '../models/firmModel.dart';
+import '../utils/services/api_services.dart';
 import '../utils/sharedPrefs.dart';
 import 'networkController.dart';
 
@@ -55,10 +60,10 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController controller;
   late AnimationController? popUpAnimationController;
   late Animation<double>? animation2;
-    NetworkController networkController = Get.put(NetworkController());
+  NetworkController networkController = Get.put(NetworkController());
   SharedHelper helper = SharedHelper();
-
-
+  List<FirmInfo> firmList = [];
+  RxBool isLoading = false.obs;
 
 
   RxDouble size = 50.0.obs;
@@ -66,6 +71,7 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onInit() {
     super.onInit();
+    getFirm();
     controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -86,6 +92,50 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
   void onChangeSize() {
     size.value = 200;
     popUpAnimationController?.forward();
+  }
+
+  // /// Save Firm ID
+  // Future<void> saveFirmId(String firmId) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString(_fir, firmId);
+  // }
+
+  /// Get Firm ID
+  Future<String?> getFirmId() async {
+    return helper.getStoredString("firmIdKey");
+  }
+
+  /// Get Firm all data
+  Future<void> getFirm() async {
+    try {
+      isLoading.value = true;
+
+      var response = await ApiService.get(get_firms);
+
+
+      if (response.data['IsSuccess'] == true) {
+        print("API Response: ${response.data}");
+
+        FirmModel firmModel = FirmModel.fromJson(response.data);
+
+
+        if (firmModel.data != null && firmModel.data!.isNotEmpty) {
+          firmList = firmModel.data!;
+
+          // String firmId = firmList[0].firmId ?? '';
+          // await helper.storeString("firmIdKey", firmId);
+          // print("Saved firm ID: $firmId");
+        }
+
+          isLoading.value = false;
+          update();
+      } else {
+        throw Exception("Error from API: ${response.data['Message']}");
+      }
+    } catch (e) {
+      print("Error in getFirmData: $e");
+      throw Exception("Failed to get firm data: $e");
+    }
   }
 
   @override

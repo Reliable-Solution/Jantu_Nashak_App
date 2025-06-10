@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../constant/api_endpoints.dart';
+import '../constant/app_constant.dart';
 import '../models/addressModel.dart';
 import '../models/customerModel.dart';
 import '../utils/services/api_services.dart';
@@ -17,8 +18,12 @@ class AddressController extends GetxController {
   TextEditingController txtAddress = TextEditingController();
   TextEditingController txtLandmark = TextEditingController();
   TextEditingController txtType = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
+
   RxBool isAddress = false.obs;
   RxList<AddressModel> addressList = <AddressModel>[].obs;
+  RxList<AddressModel> filteredList = <AddressModel>[].obs;
+
   RxString selectedAddressId = ''.obs;
   // var selectedType = ''.obs;
   //
@@ -51,6 +56,7 @@ class AddressController extends GetxController {
   @override
   Future<void> onInit() async {
     getPrefs();
+    filteredList.assignAll(addressList);
     super.onInit();
   }
 
@@ -65,6 +71,16 @@ class AddressController extends GetxController {
     getAllAddress();
   }
 
+  void searchCategory(String query) {
+    if (query.isEmpty) {
+      filteredList.assignAll(addressList);
+    } else {
+      filteredList.assignAll(
+        addressList.where((item) =>
+            item.addressColony!.toLowerCase().contains(query.toLowerCase())),
+      );
+    }
+  }
   addAddressData({AddressModel? addressModel}) async {
     try {
       final Map<String, dynamic> body = {
@@ -75,6 +91,7 @@ class AddressController extends GetxController {
         "Address": addressModel.addressColony,
         "AddressLandmark": addressModel.addressLandmark,
         "AddressType": addressModel.addressType,
+        'FirmId':firmId
       };
 
       var response = await ApiService.post(endpoint: addAddress, body: body);
@@ -106,6 +123,7 @@ class AddressController extends GetxController {
       allAddressList.clear();
       final Map<String, dynamic> body = {
         "CustomerId": customerModel!.value.customerId,
+        'FirmId':firmId
       };
 
       var response = await ApiService.post(endpoint: getAddress, body: body);
@@ -133,6 +151,7 @@ class AddressController extends GetxController {
       final Map<String, dynamic> body = {
         "CustomerId": customerId,
         "AddressId": addressId,
+        'FirmId':firmId
       };
 
       var response = await ApiService.post(endpoint: deleteAddressApi, body: body);
@@ -159,7 +178,9 @@ class AddressController extends GetxController {
         "Address": addressModel.addressColony,
         "AddressLandmark": addressModel.addressLandmark,
         "AddressType": addressModel.addressType,
-        "AddressId":addressModel.addressId
+        "AddressId":addressModel.addressId,
+        'FirmId':firmId
+
       };
       var response = await ApiService.post(endpoint: updateAddress, body: body);
       print(" Add Update Address data ${response.data}");

@@ -210,33 +210,12 @@ class _SplashScreenState extends State<SplashScreen>
               transitionDuration: Duration(milliseconds: 800),
             ),
           );
-          // Get.off(() =>  StoreSelectionDialog());
 
-          // _showStoreDialog(context); // <-- FIXED
         });
       });
     });
   }
 
-  //   // Start the transition animation after a delay
-  //   Future.delayed(const Duration(seconds: 2), () {
-  //     _transitionController.forward().then((_) {
-  //       // Navigate to home screen after animation completes
-  //       Future.delayed(const Duration(milliseconds: 500), () async {
-  //         CustomerModel? customerModel = await helper.getCustomer();
-  //
-  //         Get.off(
-  //       () =>
-  //       customerModel == null
-  //           ? LoginScreen()
-  //           :       _showStoreDialog(context));
-  //
-  //             // DashboardScreen(pageIndex: 0));
-  //         // Get.offNamed('/home');
-  //       });
-  //     });
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -308,45 +287,6 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(Duration(seconds: 2), () {
-  //     _showStoreDialog(context);
-  //   });
-  // }
-
-  // void _showStoreDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: false, // force selection
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: const Text('Choose Store'),
-  //         content: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context);
-  //                 Get.to(() => LoginScreen()); // store A
-  //               },
-  //               child: const Text('Store A'),
-  //             ),
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context);
-  //                 Get.to(() => LoginScreen()); // store B
-  //               },
-  //               child: const Text('Store B'),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   void _showStoreDialog(BuildContext context) {
     showGeneralDialog(
@@ -457,46 +397,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ],
                     ),
 
-                    // ElevatedButton(
-                    //   onPressed: () { Navigator.pop(context);
-                    //   Get.to(() =>  LoginScreen());},
-                    //   child: Image.asset('assets/images/logo1.png', color: Colors.white), // icon of the button
-                    //   style: ElevatedButton.styleFrom( // styling the button
-                    //     shape: CircleBorder(),
-                    //     padding: EdgeInsets.all(20),
-                    //     backgroundColor: Colors.green, // Button color
-                    //     foregroundColor: Colors.cyan, // Splash color
-                    //   ),
-                    // ),
-                    // Button
-                    // ElevatedButton.icon(
-                    //   style: ElevatedButton.styleFrom(
-                    //     backgroundColor: Colors.deepPurple,
-                    //     minimumSize: const Size(double.infinity, 45),
-                    //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    //   ),
-                    //   onPressed: () {
-                    //     Navigator.pop(context);
-                    //     Get.to(() =>  LoginScreen());
-                    //   },
-                    //   icon: const Icon(Icons.storefront),
-                    //   label: const Text('Store A'),
-                    // ),
                     SizedBox(height: 10),
-                    // ElevatedButton.icon(
-                    //   style: ElevatedButton.styleFrom(
-                    //     backgroundColor: Colors.purpleAccent,
-                    //     minimumSize: const Size(double.infinity, 45),
-                    //     shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(10)),
-                    //   ),
-                    //   onPressed: () {
-                    //     Navigator.pop(context);
-                    //     Get.to(() => LoginScreen());
-                    //   },
-                    //   icon: const Icon(Icons.store),
-                    //   label: const Text('Store B'),
-                    // ),
                   ],
                 ),
               ),
@@ -507,111 +408,6 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
-  // void _showStoreDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: Text('Choose Store'),
-  //         content: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context); // Close dialog
-  //                 Get.to(() => LoginScreen());
-  //               },
-  //               child: Text('Store A'),
-  //             ),
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context);
-  //                 Get.to(() => LoginScreen());
-  //               },
-  //               child: Text('Store B'),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // Widget _buildRotatingProducts() {
-  //   return SizedBox(
-  //     width: 300,
-  //     height: 300,
-  //     child: Stack(
-  //       alignment: Alignment.center,
-  //       children: List.generate(_productImages.length, (index) {
-  //         // Calculate position on the circle
-  //         final double angle = _rotationAnimation.value + (index * (2 * math.pi / _productImages.length));
-  //         final double radius = 130.0; // Radius of the orbit
-  //
-  //         // Calculate x and y position
-  //         final double x = radius * math.cos(angle);
-  //         final double y = radius * math.sin(angle);
-  //
-  //         // Calculate z for perspective effect (depth)
-  //         final double z = 100 * math.sin(angle);
-  //
-  //         // Calculate scale based on z position for better 3D effect
-  //         // Items in front appear larger, items in back appear smaller
-  //         final double scale = _mapRange(z, -100, 100, 0.7, 1.3);
-  //
-  //         // Calculate opacity based on z position for better 3D effect
-  //         // Items in front are more opaque, items in back are more transparent
-  //         final double opacity = _mapRange(z, -100, 100, 0.6, 1.0);
-  //
-  //         return Positioned(
-  //           left: 150 + x - 30, // Center + offset - half of product size
-  //           top: 150 + y - 30,  // Center + offset - half of product size
-  //           child: Transform(
-  //             // Apply proper 3D transformation
-  //             transform: Matrix4.identity()
-  //               ..setEntry(3, 2, 0.001) // Perspective
-  //               ..translate(0.0, 0.0, z)
-  //               ..scale(scale),
-  //             alignment: Alignment.center,
-  //             child: Opacity(
-  //               opacity: opacity,
-  //               child: Container(
-  //                 width: 60,
-  //                 height: 60,
-  //                 decoration: BoxDecoration(
-  //                    color: Colors.white38,
-  //                   shape: BoxShape.circle,
-  //                   boxShadow: [
-  //                     BoxShadow(
-  //                       color: Colors.black.withOpacity(0.1),
-  //                       blurRadius: 5,
-  //                       spreadRadius: 1,
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 child: ClipOval(
-  //                   child: Image.asset(
-  //                     _productImages[index],
-  //                     width: 60,
-  //                     height: 60,
-  //                     fit: BoxFit.fitHeight,
-  //                     errorBuilder: (context, error, stackTrace) {
-  //                       return Icon(
-  //                         _getIconForIndex(index),
-  //                         size: 30,
-  //                         color: _getColorForIndex(index),
-  //                       );
-  //                     },
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         );
-  //       }),
-  //     ),
-  //   );
-  // }
   Widget _buildRotatingProducts() {
     return LayoutBuilder(
       builder: (context, constraints) {

@@ -23,8 +23,6 @@ class _PaymentSucessState extends State<PaymentSucess> {
       Get.off(
             () =>
              DashboardScreen(pageIndex: 0),
-        // // customerModel == null
-        //      RegistrationScreen()
       );
     });
     super.initState();
@@ -42,14 +40,6 @@ class _PaymentSucessState extends State<PaymentSucess> {
             SizedBox(height: 30,),
             Text("Payment SuccessFully",style: TextStyle(color: Colors.white,fontSize: 18),)
             
-            // Container(height: 100,width: 100,
-            //
-            //   // color: Colors.yellow,
-            //   decoration: BoxDecoration(
-            //       // color: Colors.yellow,
-            //
-            //       image: DecorationImage(image: AssetImage(Images.success))),
-            // )
           ],
         ),
       ),

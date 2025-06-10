@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 //controllers
 // import 'package:getxnative/controllers/networkController.dart';
 
+import '../models/customerModel.dart';
+import '../utils/sharedPrefs.dart';
 import 'networkController.dart';
 
 class EditProfileController extends GetxController with GetSingleTickerProviderStateMixin {
@@ -36,6 +38,11 @@ class EditProfileController extends GetxController with GetSingleTickerProviderS
   var switchVal1 = true.obs;
   var switchval2 = false.obs;
 
+  SharedHelper helper = SharedHelper();
+
+  CustomerModel? m1 = CustomerModel();
+
+
   // var selectValueLanges = ''.obs;
 
   List<String> genderList = [
@@ -62,7 +69,24 @@ class EditProfileController extends GetxController with GetSingleTickerProviderS
   @override
   void onInit() async {
     tabController = TabController(vsync: this, length: editprofileTabs.length);
+    m1 = await helper.getCustomer();
+
+    getData();
+
     super.onInit();
+  }
+
+  getData(){
+    cFullName.text = m1!.customerName!;
+    cPhoneNo.text = m1!.customerPhoneNo!;
+    cEmail.text = m1!.customerEmailId!;
+    cPincode.text = m1!.customerCode!;
+    print("Profile name : ${cFullName.text}");
+    print("Profile name : ${cPhoneNo.text}");
+    print("Profile name : ${cEmail.text}");
+    print("Profile name : ${cPincode.text}");
+    // print("Profile name : ${cFullName.text}");
+    update();
   }
 
   @override

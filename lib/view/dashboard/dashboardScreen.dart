@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keep_app/constant/colorConst.dart';
 import 'package:keep_app/view/home/home_screen.dart';
+import 'package:keep_app/view/splash/splashScreen.dart';
+import 'package:keep_app/view/splash/stroreDetection_screen.dart';
 
 import '../../controller/dashboardController.dart';
 import '../../utils/string_res.dart';
 import '../account/account_screen.dart';
+import '../store/storeSelection_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final int? pageIndex;
@@ -36,10 +39,10 @@ class DashboardScreen extends StatelessWidget {
                     : Icons.home_outlined,
                 label: StringRes.home,
               ),
-              // _bottomNavigationBarItem(
-              //   icon: _controller.tabIndex == 1 ? Icons.grid_view_rounded : Icons.grid_view,
-              //   label: 'Categories',
-              // ),
+              _bottomNavigationBarItem(
+                icon: _controller.tabIndex == 1 ? Icons.store_outlined : Icons.store,
+                label: 'Change Store',
+              ),
               // _bottomNavigationBarItem(
               //   icon: _controller.tabIndex == 2 ? Icons.shopping_bag_rounded : Icons.shopping_bag_outlined,
               //   label: 'Orders',
@@ -63,6 +66,7 @@ class DashboardScreen extends StatelessWidget {
 
   List<Widget> screens() => [
         HomeScreen(),
+    StoreselectionScreen(),
         // CategorieScreen(),
         //OrderScreen(), CommunityScreen(),
         AccountScreen()

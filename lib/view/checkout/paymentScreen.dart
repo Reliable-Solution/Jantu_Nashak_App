@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:keep_app/constant/app_constant.dart';
 import 'package:keep_app/controller/addressController.dart';
 import 'package:keep_app/controller/cartController.dart';
 import 'package:keep_app/controller/checkoutController.dart';
@@ -25,9 +26,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final CartController cartController = Get.find();
   final CheckoutController checkoutController = Get.find();
   final AddressController controller = Get.find();
-  String selectedPayment = 'Razorpay';
 
+  // String selectedPayment = 'Razorpay';
 
+  @override
+  void initState() {
+    checkoutController.getPaymentMethod();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +76,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildProgressStep(1, "Cart", false, true),
+                  _buildProgressStep(1, StringRes.cart, false, true),
                   _buildProgressLine(true),
-                  _buildProgressStep(2, "Address", false, true),
+                  _buildProgressStep(2, StringRes.address, false, true),
                   _buildProgressLine(true),
-                  _buildProgressStep(3, "Payment", true, false),
+                  _buildProgressStep(3, StringRes.payment, true, false),
                   _buildProgressLine(false),
-                  _buildProgressStep(4, "Summary", false, false),
+                  _buildProgressStep(4, StringRes.summary, false, false),
                 ],
               ),
             ),
@@ -137,46 +143,122 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
             Container(
               color: Colors.white,
+              width:  MediaQuery.sizeOf(context).width * 0.99,
               padding: EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Select payment method",
-                    style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    StringRes.selectPaymentMethod,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: 12),
+                  Obx(() {
+                    if (checkoutController.isLoading.value) {
+                      return Center(child: CircularProgressIndicator(color: COLOR.appBaseColor,));
+                    } else if (checkoutController.paymentMethodList.isEmpty) {
+                      return const Center(child: Text("No Payment Methods Found"));
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: checkoutController.paymentMethodList.length,
+                        itemBuilder: (context, index) {
+                          final gateway = checkoutController.paymentMethodList[index];
+                          return GestureDetector(
+                            onTap: () {
+                              checkoutController.selectPaymentMethod(gateway.gatewayName ?? '');
+                              checkoutController.selectPaymentGateWay(gateway);
+                            },
+                            child: ListTile(
+                              trailing: Obx(() => Radio<String>(
+                                value: gateway.gatewayName ?? '',
+                                groupValue: checkoutController.selectedPaymentMethod.value,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    checkoutController.selectPaymentMethod(value);
+                                    checkoutController.selectPaymentGateWay(gateway);
+                                  }
+                                },
+                                activeColor: COLOR.appBaseColor,
+                              )),
+                              leading: gateway.gatewayLogo != null
+                                  ? Image.network('$IMAGE_URL${gateway.gatewayLogo}')
+                                  : const Icon(Icons.image_not_supported),
+                              title: Text(gateway.gatewayName ?? 'Unknown'),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
 
-                  Obx(() => buildPaymentOption(
-                    image: "money.png",
-                    title: "Cash on Delivery",
-                    price:
-                    "₹${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
-                    icon: Icons.money,
-                    method: "cod",
-                    controller: controller,
-                  )),
 
-                  SizedBox(height: 12),
+                  // GetBuilder<CheckoutController>(
+                  //         builder: (checkoutController) => checkoutController.paymentMethodList.isNotEmpty
+                  //     ? ListView.builder(
+                  //       shrinkWrap: true,
+                  //       itemCount:
+                  //       checkoutController.paymentMethodList.length,
+                  //       itemBuilder: (context, index) {
+                  //         final gateway =
+                  //         checkoutController.paymentMethodList[index];
+                  //         return GestureDetector(
+                  //           onTap: () {
+                  //             // checkoutController.selectPaymentMethod(gateway.gatewayName!);
+                  //           },
+                  //           child: ListTile(
+                  //             trailing: Obx(() => Radio<String>(
+                  //               value: gateway.gatewayName ?? '',
+                  //               groupValue: checkoutController.selectedPaymentMethod.value,
+                  //               onChanged: (value) {
+                  //                 if (value != null) {
+                  //                   checkoutController.selectPaymentMethod(value);
+                  //                   checkoutController.selectPaymentGateWay(gateway);
+                  //                   print("Selected Value ${gateway.gatewayName}");
+                  //                 }
+                  //               },
+                  //               activeColor: COLOR.appBaseColor, // Match your app's theme
+                  //             )),
+                  //             // trailing:  Radio(value: 0, groupValue: 0, onChanged: (value) {
+                  //             // },),
+                  //             leading:
+                  //             Image.network('$IMAGE_URL${gateway.gatewayLogo}' ?? ''),
+                  //             title: Text(gateway.gatewayName ?? 'Unknown'),
+                  //             // subtitle: Text(
+                  //             //     "Merchant ID: ${gateway.gatewayCredentialsJson?['merchantId'] ?? 'N/A'}"),
+                  //           ),
+                  //         );
+                  //       },
+                  //     )
+                  //     : SizedBox()),
+
+                  // Obx(() => buildPaymentOption(
+                  //       image: "money.png",
+                  //       title: "Cash on Delivery",
+                  //       price:
+                  //           "₹${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
+                  //       icon: Icons.money,
+                  //       method: "cod",
+                  //       controller: controller,
+                  //     )),
+
+                  // SizedBox(height: 12),
 
                   // Pay Online
-                  Obx(() => buildPaymentOption(
-                    image: "payment-online.png",
+                  // Obx(() => buildPaymentOption(
+                  //       image: "payment-online.png",
+                  //
+                  //       title: "Pay Online",
+                  //       price:
+                  //           "₹${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
+                  //       discount:
+                  //           "Save ${cartController.cartTotal.value?.save.toString() ?? 0}",
+                  //       // extraText: "Extra discount with bank offers",
+                  //       icon: Icons.credit_card,
+                  //       method: "online",
+                  //       controller: controller,
+                  //     )),
 
-                    title: "Pay Online",
-                    price:
-                    "₹${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
-                    discount:
-                    "Save ${cartController.cartTotal.value?.save.toString() ?? 0}",
-                    // extraText: "Extra discount with bank offers",
-                    icon: Icons.credit_card,
-                    method: "online",
-                    controller: controller,
-                  )),
-                  Obx(() => checkoutController.isOnlineExpanded.value
-                      ? buildOnlinePaymentOptions()
-                      : SizedBox()),
 
                   SizedBox(height: 30),
                 ],
@@ -372,12 +454,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
                       ),
                       Obx(() => Text(
-                        "+ ₹${cartController.cartTotal.value?.totalInteger ?? 0}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )),
+                            "+ ₹${cartController.cartTotal.value?.totalInteger ?? 0}",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -422,7 +504,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             ],
           ),
           child: Obx(
-            () =>  ButtonWidgets(
+            () => ButtonWidgets(
               title: "Continue",
               style: Themes.light.textTheme.displayLarge!.copyWith(
                 color: Colors.white,
@@ -433,13 +515,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 }
                 if (checkoutController.selectedPaymentMethod.value.isEmpty) {
                   Fluttertoast.showToast(
-                    msg:
-                    "Please Select Payment Method",
+                    msg: "Please Select Payment Method",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.SNACKBAR,
                     timeInSecForIosWeb: 1,
                   );
-
 
                   // Get.to(() => const SummaryScreen());
                 }
@@ -453,12 +533,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
     );
   }
+
   Widget buildOnlinePaymentOptions() {
     return Column(
       children: [
-        buildPaymentOption2("PhonePe", "Offers Available", 'PhonePe'),
-        buildPaymentOption2("Razorpay", "Offers Available", 'Razorpay'),
-        buildPaymentOption2("Cashfree", "Offers Available", 'Cashfree'),
+        // buildPaymentOption2("PhonePe", "Offers Available", 'PhonePe'),
+        // buildPaymentOption2("Razorpay", "Offers Available", 'Razorpay'),
+        // buildPaymentOption2("Cashfree", "Offers Available", 'Cashfree'),
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return buildPaymentOption2(
+                  checkoutController.paymentMethodList[index].gatewayName!,
+                  "Offers Available",
+                  checkoutController.paymentMethodList[index].gatewayName!);
+            },
+          ),
+        )
         // buildExpandableTile("Pay by any UPI App", "Offers Available"),
         // buildExpandableTile("Wallet", "Offers Available"),
         // buildExpandableTile("Debit/Credit Cards", "Offers Available"),
@@ -467,37 +558,67 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget buildPaymentOption2(String title, String subText, String value) {
-    return Column(
-      children: [
-        ListTile(
-          onTap: () {
-            setState(() => selectedPayment = value);
+  // Widget buildPaymentOption2(String title, String subText, String value) {
+  //   return Column(
+  //     children: [
+  //       ListTile(
+  //         onTap: () {
+  //           print("Payment screen value new  ${value}");
+  //           setState(() => checkoutController.selectedPayment.value = value);
+  //
+  //           print("Payment screen value ${checkoutController.selectedPayment.value}");
+  //           // String? newValue;
+  //           // setState(() => selectedPayment = newValue!);
+  //           // print("Payment");
+  //         },
+  //         leading: Radio<String>(
+  //           value: value,
+  //           groupValue: checkoutController.selectedPayment.value,
+  //           onChanged: (String? newValue) {
+  //             setState(() => checkoutController.selectedPayment.value = newValue!);
+  //           },
+  //         ),
+  //         title: Text(title,
+  //             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+  //         subtitle: subText.isNotEmpty
+  //             ? Text(subText, style: TextStyle(color: Colors.green))
+  //             : null,
+  //       ),
+  //       Divider(),
+  //     ],
+  //   );
+  // }
 
-            // String? newValue;
-            // setState(() => selectedPayment = newValue!);
-            // print("Payment");
-          },
-          leading: Radio<String>(
-            value: value,
-            groupValue: selectedPayment,
-            onChanged: (String? newValue) {
-              setState(() => selectedPayment = newValue!);
-            },
-          ),
-          title: Text(title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          subtitle: subText.isNotEmpty
-              ? Text(subText, style: TextStyle(color: Colors.green))
-              : null,
-        ),
-        Divider(),
-      ],
-    );
+  Widget buildPaymentOption2(String title, String subText, String value) {
+    return Obx(() => Column(
+          children: [
+            ListTile(
+              onTap: () {
+                print("Payment screen tapped value: $value");
+                checkoutController.selectedPayment.value = value;
+              },
+              leading: Radio<String>(
+                value: value,
+                groupValue: checkoutController.selectedPayment.value,
+                onChanged: (String? newValue) {
+                  checkoutController.selectedPayment.value = newValue!;
+                },
+              ),
+              title: Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              subtitle: subText.isNotEmpty
+                  ? Text(subText, style: TextStyle(color: Colors.green))
+                  : null,
+            ),
+            Divider(),
+          ],
+        ));
   }
 
-
-  Widget _buildProgressStep(int step, String label, bool isActive, bool isCompleted) {
+  Widget _buildProgressStep(
+      int step, String label, bool isActive, bool isCompleted) {
     return Column(
       children: [
         Container(
@@ -505,9 +626,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
           height: 30,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? Colors.blue : (isCompleted ? Colors.blue : Colors.grey.shade300),
+            color: isActive
+                ? Colors.blue
+                : (isCompleted ? Colors.blue : Colors.grey.shade300),
             border: Border.all(
-              color: isActive || isCompleted ? Colors.blue : Colors.grey.shade400,
+              color:
+                  isActive || isCompleted ? Colors.blue : Colors.grey.shade400,
               width: 1,
             ),
           ),
@@ -515,12 +639,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
             child: isCompleted
                 ? const Icon(Icons.check, color: Colors.white, size: 16)
                 : Text(
-              step.toString(),
-              style: TextStyle(
-                color: isActive ? Colors.white : Colors.grey.shade600,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+                    step.toString(),
+                    style: TextStyle(
+                      color: isActive ? Colors.white : Colors.grey.shade600,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
           ),
         ),
         const SizedBox(height: 4),
@@ -529,7 +653,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
           style: TextStyle(
             fontSize: 12,
             color: isActive || isCompleted ? Colors.blue : Colors.grey.shade600,
-            fontWeight: isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
+            fontWeight:
+                isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
           ),
         ),
       ],
@@ -543,6 +668,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       color: isActive ? Colors.blue : Colors.grey.shade300,
     );
   }
+
   Widget buildPaymentOption({
     required String title,
     required String price,
@@ -554,7 +680,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     String? extraText,
   }) {
     bool isSelected = checkoutController.selectedPaymentMethod.value == method;
-
+    print(
+        "Payment screen value ${checkoutController.selectedPaymentMethod.value}");
     return GestureDetector(
       onTap: () => checkoutController.selectPaymentMethod(method),
       child: Container(
@@ -611,7 +738,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   SizedBox(height: 4),
                   Text(title,
                       style:
-                      TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   if (extraText != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 4),

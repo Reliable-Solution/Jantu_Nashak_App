@@ -264,7 +264,8 @@ class OtherDetail {
     orderDeliveryDate = json['OrderDeliveryDate'];
     deliveryCharge = json['DeliveryCharge'];
     earnedPoints = json['EarnedPoints'];
-    total = json['Total'];
+    total = json['Total']?.toString(); // 👈 This line fixes the issue
+    // total = json['Total'];
     orderPaymentMethod = json['OrderPaymentMethod'];
   }
 

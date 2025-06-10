@@ -541,7 +541,7 @@ class _AddressScreenState extends State<AddressScreen> {
           appbarPadding: 0,
           elevation: 1,
           title: TextWiget(
-            title: "SELECT DELIVERY ADDRESS",
+            title: StringRes.selectDeliveryAddress,
             style: Themes.light.textTheme.displayLarge,
           ),
           leading: InkWell(
@@ -570,13 +570,13 @@ class _AddressScreenState extends State<AddressScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildProgressStep(1, "Cart", false, true),
+                    _buildProgressStep(1, StringRes.cart, false, true),
                     _buildProgressLine(true),
-                    _buildProgressStep(2, "Address", true, false),
+                    _buildProgressStep(2, StringRes.address, true, false),
                     _buildProgressLine(false),
-                    _buildProgressStep(3, "Payment", false, false),
+                    _buildProgressStep(3, StringRes.payment, false, false),
                     _buildProgressLine(false),
-                    _buildProgressStep(4, "Summary", false, false),
+                    _buildProgressStep(4, StringRes.summary, false, false),
                   ],
                 ),
               ),
@@ -594,7 +594,7 @@ class _AddressScreenState extends State<AddressScreen> {
                     });
                   },
                   child: Text(
-                    "* ADD NEW ADDRESS",
+                    "* ${StringRes.addAddress}",
                     style: TextStyle(
                       color: COLOR.appBaseColor,
                       fontWeight: FontWeight.w500,
@@ -609,7 +609,7 @@ class _AddressScreenState extends State<AddressScreen> {
               Expanded(
                 child: Obx(() {
                   if (controller.allAddressList.isEmpty) {
-                    return const Center(child: Text("No addresses found"));
+                    return  Center(child: Text(StringRes.noAddressesFound));
                   }
                   return ListView.builder(
                     itemCount: controller.allAddressList.length,
@@ -630,7 +630,7 @@ class _AddressScreenState extends State<AddressScreen> {
                             ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                               title: Text(
-                                address.addressFullName ?? "Name",
+                                address.addressFullName ?? StringRes.name,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -678,7 +678,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                   });
                                 },
                                 child: Text(
-                                  "EDIT",
+                                  StringRes.edit,
                                   style: TextStyle(
                                     color: COLOR.appBaseColor,
                                     fontWeight: FontWeight.w500,
@@ -693,7 +693,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: ButtonWidgets(
-                                    title: "Deliver to this Address",
+                                    title: StringRes.deliverToThisAddress,
                                     style: Themes.light.textTheme.displayLarge!.copyWith(
                                       color: Colors.white,
                                     ),

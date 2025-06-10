@@ -112,7 +112,6 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       );
                     })
 
-                    // Obx(() => Text(" ${otpController.secondsRemaining.value}s")),
                   ],
                 ),
                 SizedBox(height: 10),
@@ -133,9 +132,6 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     } catch (e) {
                       Get.snackbar("Error", e.toString());
                     }
-                    // authenticate.onFormSubmited("${otpFields[0].text+otpFields[1].text+otpFields[2].text+otpFields[3].text+otpFields[4].text+otpFields[5].text}");
-
-                    // Add OTP verification logic here
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: COLOR.appBaseColor,
@@ -159,3 +155,4 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 }
+

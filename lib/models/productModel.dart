@@ -2,6 +2,8 @@ class ProductModel {
   String? productId;
   bool? isFav;
   List<PackInfo>? packInfo;
+  List<String>? size;
+  List<String>? color;
   String? categoryId;
   String? subcategoryId;
   String? productName;
@@ -27,6 +29,8 @@ class ProductModel {
       {this.productId,
         this.isFav,
         this.packInfo,
+        this.size,
+        this.color,
         this.categoryId,
         this.subcategoryId,
         this.productName,
@@ -59,6 +63,8 @@ class ProductModel {
     }
     categoryId = json['CategoryId'];
     subcategoryId = json['SubcategoryId'];
+    size = json['Size'].cast<String>();
+    color = json['Color'].cast<String>();
     productName = json['ProductName'];
     brandId = json['BrandId'];
     hsnId = json['HsnId'];
@@ -89,6 +95,8 @@ class ProductModel {
     }
     data['CategoryId'] = this.categoryId;
     data['SubcategoryId'] = this.subcategoryId;
+    data['Size'] = this.size;
+    data['Color'] = this.color;
     data['ProductName'] = this.productName;
     data['BrandId'] = this.brandId;
     data['HsnId'] = this.hsnId;
@@ -121,6 +129,8 @@ PackInfo {
   List<String>? productdetailImages;
   String? productdetailMrp;
   String? productdetailSrp;
+  String? productColor;
+  String? productSize;
   String? productdetailQty;
   String? productdetailUnit;
   String? productdetailStatus;
@@ -134,6 +144,8 @@ PackInfo {
         this.productdetailImages,
         this.productdetailMrp,
         this.productdetailSrp,
+        this.productColor,
+        this.productSize,
         this.productdetailQty,
         this.productdetailUnit,
         this.productdetailStatus,
@@ -147,6 +159,8 @@ PackInfo {
     productdetailImages = json['ProductdetailImages'].cast<String>();
     productdetailMrp = json['ProductdetailMrp'];
     productdetailSrp = json['ProductdetailSrp'];
+    productColor = json['ProductColor'];
+    productSize = json['ProductSize'];
     productdetailQty = json['ProductdetailQty'];
     productdetailUnit = json['ProductdetailUnit'];
     productdetailStatus = json['ProductdetailStatus'];
@@ -162,6 +176,8 @@ PackInfo {
     data['ProductdetailImages'] = this.productdetailImages;
     data['ProductdetailMrp'] = this.productdetailMrp;
     data['ProductdetailSrp'] = this.productdetailSrp;
+    data['ProductColor'] = this.productColor;
+    data['ProductSize'] = this.productSize;
     data['ProductdetailQty'] = this.productdetailQty;
     data['ProductdetailUnit'] = this.productdetailUnit;
     data['ProductdetailStatus'] = this.productdetailStatus;

@@ -33,8 +33,9 @@ class ProductComponent extends StatelessWidget {
   final ShareProductController controller = Get.find();
   final HomeController homeController = Get.find();
   double calculateDiscount(double mrp, double srp) {
-    if (mrp <= 0 || srp > mrp) {
-      throw Exception("Invalid MRP or SRP values");
+    print('Invalid MRP or SRP values $mrp $srp');
+    if (mrp <= 0 ) {
+      throw Exception("Invalid MRP or SRP values $mrp $srp");
     }
     double discount = ((mrp - srp) / mrp) * 100;
     return discount;
@@ -44,7 +45,6 @@ class ProductComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // double percentage = products!.packInfo[0].productdetailSrp - products!.packInfo[0].productdetailMrp;
     double heightView = (MediaQuery.of(context).size.height * 22) / 100;
     ProductDetailsController productDetailsController = Get.find();
 
@@ -53,7 +53,6 @@ class ProductComponent extends StatelessWidget {
         Get.to(() => ProductDetailScreen(products: products!,isExpanded: true,));
       },
       child: Container(
-        // height: (MediaQuery.of(context).size.height * 50) / 100,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: COLOR.background,
@@ -66,7 +65,7 @@ class ProductComponent extends StatelessWidget {
                children: [
                  Hero(
                    transitionOnUserGestures: true,
-                   tag: "photonew${products!.packInfo![0].productdetailId}",
+                   tag: "photonew${products!.packInfo?[0].productdetailId}",
                    child: CachedNetworkImage(
                      imageUrl: '$IMAGE_URL${products!.packInfo![0].productdetailImages![0]}',
                      height: heightView,
@@ -100,12 +99,10 @@ class ProductComponent extends StatelessWidget {
                                if (products!.isFav == false) {
                                  controller.addWishlist(productId: products!.productId!);
                                  products!.isFav = true;
-                                 // homeController.getDashboardData(homeController.customerModel!.value.customerId);
                                  _controller.update();
                                } else {
                                  controller.removeWishList(productId: products!.productId!);
                                  products!.isFav = false;
-                                 // homeController.getDashboardData(homeController.customerModel!.value.customerId);
                                  _controller.update();
                                }
 
@@ -125,46 +122,6 @@ class ProductComponent extends StatelessWidget {
                  ),
                ],
              ),
-            // Container(
-            //   height: heightView,
-            //   width: MediaQuery.of(context).size.width,
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image:
-            //           NetworkImage('$IMAGE_URL${products!.subcategoryImage}'),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            //   child: Container(
-            //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            //     child: AlignWidget(
-            //       alignment: Alignment.topRight,
-            //       child: GetBuilder<HomeController>(
-            //         builder: (_controller) => CircleAvatar(
-            //           maxRadius: 15,
-            //           backgroundColor: COLOR.background.withOpacity(0.8),
-            //           child: IconButtonWidget(
-            //             voidCallback: () {
-            //               if (products!.isFav == false) {
-            //                 products!.isFav = true;
-            //               } else {
-            //                 products!.isFav = false;
-            //               }
-            //
-            //               _controller.update();
-            //             },
-            //             color:
-            //                 products!.isFav == false ? COLOR.black : COLOR.appBaseColor,
-            //             icons: products!.isFav == false
-            //                 ? Icons.favorite_border
-            //                 : Icons.favorite,
-            //             size: 20,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child: Column(
@@ -275,105 +232,8 @@ class ProductComponent extends StatelessWidget {
                             ;
                           })
     )],
+
                   ),
-                  // AlignWidget(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Container(
-                  //     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  //     decoration: BoxDecoration(
-                  //       color: COLOR.green50,
-                  //       borderRadius: BorderRadius.circular(5),
-                  //     ),
-                  //     child: TextWiget(
-                  //       title:
-                  //           '₹${products!.packInfo![0].productdetailSrp!} with 1 Special Offer',
-                  //       style: Themes.light.textTheme.displayMedium!.copyWith(
-                  //         color: COLOR.green,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 5),
-                  //   child: AlignWidget(
-                  //     alignment: Alignment.centerLeft,
-                  //     child: Container(
-                  //       height: 15,
-                  //       child: Row(
-                  //         children: [
-                  //           TextWiget(
-                  //               title: '₹5 ${StringRes.off}',
-                  //               style: Themes.light.textTheme.displayMedium),
-                  //           VerticalDivider(
-                  //             thickness: 0.5,
-                  //             width: 6,
-                  //             color: COLOR.black,
-                  //           ),
-                  //           TextWiget(
-                  //             title: StringRes.firstOrderDiscount,
-                  //             style: Themes.light.textTheme.displayMedium,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // AlignWidget(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Container(
-                  //     padding:
-                  //         EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  //     decoration: BoxDecoration(
-                  //       color: COLOR.greyLight.withOpacity(0.5),
-                  //       borderRadius: BorderRadius.circular(5),
-                  //     ),
-                  //     child: TextWiget(
-                  //       title: StringRes.specialOffer,
-                  //       style: Themes.light.textTheme.headlineMedium!
-                  //           .copyWith(color: COLOR.black),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 5),
-                  //   child: AlignWidget(
-                  //     alignment: Alignment.centerLeft,
-                  //     child: Row(
-                  //       children: [
-                  //         Container(
-                  //           padding: EdgeInsets.symmetric(
-                  //               vertical: 5, horizontal: 6),
-                  //           decoration: BoxDecoration(
-                  //             color: COLOR.green,
-                  //             borderRadius: BorderRadius.circular(5),
-                  //           ),
-                  //           child: Row(
-                  //             children: [
-                  //               TextWiget(
-                  //                 title: '${products!.categoryId}',
-                  //                 style: Themes.light.textTheme.displaySmall!
-                  //                     .copyWith(
-                  //                   fontWeight: FontWeight.w500,
-                  //                   color: COLOR.background,
-                  //                 ),
-                  //               ),
-                  //               Icon(Icons.star,
-                  //                   size: 13, color: COLOR.background)
-                  //             ],
-                  //           ),
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.only(left: 4),
-                  //           child: TextWiget(
-                  //             title: '(28,717)',
-                  //             style: Themes.light.textTheme.bodyMedium!
-                  //                 .copyWith(color: COLOR.grey),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             )

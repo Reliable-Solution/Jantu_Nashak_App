@@ -2,6 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
@@ -11,17 +12,19 @@ import 'package:keep_app/view/otp/registrationScreen.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
 import '../../controller/authController.dart';
+import '../../utils/sharedPrefs.dart';
 import '../../utils/string_res.dart';
+import '../dashboard/dashboardScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   final AuthController controller = Get.put(AuthController());
-  final OTPController otpController = Get.put(OTPController());
+   final OTPController otpController = Get.put(OTPController());
+
   TextEditingController txtNumber = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // txtNumber.text = "+91";
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -67,12 +70,24 @@ class LoginScreen extends StatelessWidget {
                 child: Obx(() => controller.isLoading.value
                     ? CircularProgressIndicator(color: COLOR.appBaseColor)  // 🔵 Loader dikhana
                     : ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async{
+                    SharedHelper helper = SharedHelper();
+
+                  bool? isDeleted =  await helper.getStoredBool(key: SharedHelper.deleteAccountKey);
+                  if(isDeleted ?? false){
+                    Fluttertoast.showToast(msg: 'You have deleted your account please contact Admin');
+                    return;
+                  }
+
                     if (_formKey.currentState!.validate()) {
                       txtNumber.text = controller.phoneNumber.value;
-                      otpController.onVerifyCode(txtNumber.text);
-                      otpController.startTimer();
-                      controller.getToken();
+                      // Get.offAll(() => DashboardScreen(pageIndex: 0));
+
+                        otpController.onVerifyCode(txtNumber.text,context);
+                       // otpService.requestOtp(txtNumber.text);
+                       otpController.startTimer();
+
+                       controller.getToken();
                     }
                   },
                   style: ElevatedButton.styleFrom(backgroundColor: COLOR.appBaseColor),
@@ -84,29 +99,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                 )),
               ),
-              // Center(
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       if (_formKey.currentState!.validate()) {
-              //         txtNumber.text = controller.phoneNumber.value;
-              //         otpController.onVerifyCode(txtNumber.text);
-              //         controller.getToken();
-              //         Get.to(OTPVerificationScreen(
-              //           phoneNumber: txtNumber.text.toString(),
-              //         ));
-              //         controller.update();
-              //       }
-              //     },
-              //     style: ElevatedButton.styleFrom(
-              //         backgroundColor: COLOR.appBaseColor),
-              //     child: Text(
-              //       StringRes.continueString,
-              //       style: Themes.light.textTheme.displaySmall!.copyWith(
-              //         color: COLOR.background,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -128,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Get.offAll(() => RegistrationScreen());
+                             Get.offAll(() => RegistrationScreen());
                           },
                       ),
                     ],

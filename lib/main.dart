@@ -1,4 +1,4 @@
-
+//
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +21,7 @@ Future<void> main() async {
   await Get.putAsync(() async => LanguageController());
   await LocalizationService.loadTranslations();
 
-  Get.put(HomeController());  // Sirf yaha ek baar
+  // Get.put(HomeController());  // Sirf yaha ek baar
 
   try {
     if (Platform.isAndroid) {

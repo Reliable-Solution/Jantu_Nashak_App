@@ -26,13 +26,12 @@ import '../AddtoCard/cartScreen.dart';
 import '../address/allAddress_screen.dart';
 import 'package:keep_app/view/otp/phone_auth.dart';
 
+import '../faq/faq_screen.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final HomeController _controller =
-      Get.put(HomeController()); // ensure registration
-  // final HomeController _controller = Get.find();
+  final HomeController _controller = Get.put(HomeController()); // ensure registration
   final CartController cartController = Get.put(CartController());
   ProductDetailsController productDetailsController = Get.find();
 
@@ -61,8 +60,7 @@ class HomeScreen extends StatelessWidget {
                     snap: false,
                     pinned: true,
                     floating: true,
-                    backgroundColor: Color(0xffffedfe),
-                    title: Obx(() => TextWiget(
+                      title: Obx(() => TextWiget(
                           title: _controller.customerModel != null
                               ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
                               : StringRes.hello,
@@ -92,7 +90,6 @@ class HomeScreen extends StatelessWidget {
                           Positioned(
                             right: 0,
                             top: 0,
-                            // alignment: Alignment(5, 5),
                             child: GetBuilder<CartController>(
                                 builder: (cartController) {
                               cartController.cartCount.value =
@@ -197,39 +194,10 @@ class HomeScreen extends StatelessWidget {
                     delegate: SliverChildListDelegate(
                       [
                         Divider(),
-                        // Container(
-                        //   color: COLOR.purpleLight,
-                        //   child: InkWell(
-                        //     onTap: () {
-                        //       Get.to(() => AllAddressScreen());
-                        //     },
-                        //     child: Padding(
-                        //       padding:
-                        //           EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                        //       child: Row(
-                        //         children: <Widget>[
-                        //           Container(
-                        //             alignment: Alignment.centerLeft,
-                        //             child: Icon(
-                        //               Icons.location_on_outlined,
-                        //               color: COLOR.purple,
-                        //               size: 20,
-                        //             ),
-                        //           ),
-                        //           TextWiget(
-                        //               title: StringRes.addDeliveryLocation,
-                        //               style: Themes.dark.textTheme.displayLarge),
-                        //           Icon(Icons.navigate_next),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Container(
                           color: COLOR.background,
                           margin: EdgeInsets.all(2),
                           padding: EdgeInsets.all(6),
-                          // padding: EdgeInsets.symmetric(vertical: 10),
                           width: MediaQuery.of(context).size.width,
                           child:
                               GetBuilder<HomeController>(builder: (controller) {
@@ -387,6 +355,12 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
       ),
+      floatingActionButton: FloatingActionButton(elevation: 10,onPressed: () {
+
+        Get.to(FaqScreen());
+
+      },
+        child: Icon(Icons.help,color: COLOR.background,),backgroundColor: COLOR.appBaseColor,),
     );
   }
 
@@ -496,37 +470,3 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-//
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Home'),
-//         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             const Text(
-//               'Welcome to the App!',
-//               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () {
-//                 Get.back();
-//               },
-//               child: const Text('Go Back to Splash'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

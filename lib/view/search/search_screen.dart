@@ -19,7 +19,6 @@ class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
   final HomeController homeController = Get.find<HomeController>();
 
-  // final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -299,10 +298,7 @@ class SearchScreen extends StatelessWidget {
                         gridDelegate:
                         SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          // childAspectRatio:
-                          // Get.width >= 480 ? 1.15 / 2 : 1 / 2.1,
                           childAspectRatio: 1/1.4,
-
                           crossAxisSpacing: 2,
                           mainAxisSpacing: 2,
                         ),
@@ -321,38 +317,6 @@ class SearchScreen extends StatelessWidget {
             SizedBox(
               height: MediaQuery.sizeOf(context).height * 0.01,
             ),
-
-            // Obx(() {
-            //   if(homeController.isLoading.value)
-            //   {
-            //     return Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: Center(child: CircularProgressIndicator()),
-            //     );
-            //
-            //   }
-            //   else if(homeController.searchList.isEmpty)
-            //   {
-            //     return Center(child: Text('No products found'));
-            //
-            //   }
-            //   return
-            //     SizedBox(
-            //       height: MediaQuery.of(context).size.height * 0.9, // Ensuring proper scroll
-            //       child: GridView.builder(
-            //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //           crossAxisCount: 2,
-            //           childAspectRatio: Get.width >= 480 ? 1.15 / 2 : 1 / 2.1,
-            //           crossAxisSpacing: 2,
-            //           mainAxisSpacing: 2,
-            //         ),
-            //         itemCount: homeController.searchList.length,
-            //         itemBuilder: (context, index) {
-            //           return ProductComponent(products: homeController.searchList[index]);
-            //         },
-            //       ),
-            //     );
-            // },)
           ],
         ),
       ),

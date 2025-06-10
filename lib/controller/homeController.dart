@@ -6,6 +6,7 @@ import 'package:keep_app/controller/networkController.dart';
 import 'package:keep_app/models/productModel.dart';
 import 'package:keep_app/models/subCategoryModel.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import '../constant/app_constant.dart';
 import '../constant/colorConst.dart';
 import '../models/brandModel.dart';
 import '../models/categoryModel.dart';
@@ -51,12 +52,16 @@ class HomeController extends GetxController
   var searchQuery = ''.obs;
   var speechToText = stt.SpeechToText();
 
+  RxInt indexNew = 0.obs;
+
+
   @override
   void onInit() async {
     myTabController = TabController(vsync: this, length: filters.length);
     m1 = await helper.getCustomer();
-    getDashboardData(m1!.customerId);
+    // getDashboardData(m1!.customerId);
     getPrefs();
+
     // fetchCategoryData();
     super.onInit();
   }
@@ -133,6 +138,7 @@ class HomeController extends GetxController
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerId,
+        'FirmId':firmId
       };
 
       // Make the API call
@@ -146,15 +152,23 @@ class HomeController extends GetxController
 
         var data = response.data['Data']; // Assuming Data[0] exists
 
+        print("Raw Category Data: ${data[1]['Category']}");
+        print("Category Count from API: ${(data[1]['Category'] as List).length}");
+
         if (data[0]['Offer'] != null) {
           offerList = (data[0]['Offer'] as List)
               .map((offerJson) => OfferModel.fromJson(offerJson))
               .toList();
         }
         if (data[1]['Category'] != null) {
+          print("Category Count from API: ${(data[1]['Category'] as List).length}");
+          (data[1]['Category'] as List).forEach((category) {
+            print("Category ID: ${category['CategoryId']}, Name: ${category['CategoryName']}, FirmId: ${category['FirmId']}");
+          });
           categoryList = (data[1]['Category'] as List)
               .map((categoryJson) => CategoryModel.fromJson(categoryJson))
               .toList();
+          print("Category list data : ${categoryList.length}");
         }
         if (data[2]['Brand'] != null) {
           brandList = (data[2]['Brand'] as List)
@@ -238,6 +252,8 @@ class HomeController extends GetxController
       final Map<String, dynamic> body = {
         "CustomerId": customerModel!.value.customerId,
         "ProductName": productName,
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(endpoint: searchByUser, body: body);

@@ -10,7 +10,9 @@ import 'package:keep_app/view/account/primary.dart';
 import 'package:keep_app/view/account/profile_screen.dart';
 import 'package:keep_app/view/account/widget/accountList.dart';
 import 'package:keep_app/view/address/pickupAddressScreen.dart';
+import 'package:keep_app/view/faq/faq_screen.dart';
 import 'package:keep_app/view/order/orderScreen.dart';
+import 'package:keep_app/view/webView/webView_screen.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
 import '../../constant/imagesConst.dart';
@@ -46,8 +48,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
 
 
-  // ProductDetailsController productDetailsController = Get.find();
-  // final HomeController _controller = Get.find();
   String? fcmToken;
 
   @override
@@ -56,6 +56,8 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
       backgroundColor: COLOR.greyLight,
       appBar: MyCustomAppBar(
+        leading: SizedBox(),
+        action: [],
         actionPadding: 10,
         height: 90,
         appbarPadding: 0,
@@ -68,12 +70,6 @@ class _AccountScreenState extends State<AccountScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Get.to(PickupAddressScreen());
-            //     },
-            //     child: Text(StringRes.address)),
-            //  DividerWidget(thickness: 4,height: 2,),
             Padding(
               padding: EdgeInsets.only(top: 4),
               child: Container(
@@ -160,27 +156,7 @@ class _AccountScreenState extends State<AccountScreen> {
               padding: EdgeInsets.only(top: 04),
               child: InkWell(
                 onTap: () {
-                  _showLogoutBottomSheet(context);
-                },
-                child: Container(
-                   height: MediaQuery.of(context).size.height * 0.06,
-                  color: COLOR.background,
-                  // margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Logout ",style: Themes.light.textTheme.displayLarge!,),
-                      Icon(Icons.logout),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 04),
-              child: InkWell(
-                onTap: () {
+                  // Get.to(WebViewScreen(url: 'https://flutter.dev/'));
                   Get.to(Orderscreen());
                 },
                 child: Container(
@@ -191,40 +167,80 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Orders",style: Themes.light.textTheme.displayLarge!,),
+                      Text(StringRes.orders,style: Themes.light.textTheme.displayLarge!,),
                       Icon(Icons.shopping_bag),
                     ],
                   ),
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(10),
-            //   child: InkWell(
-            //     onTap: () {
-            //       _showLogoutBottomSheet(context);
-            //
-            //     },
-            //     child: Container(
-            //       color: COLOR.background,
-            //
-            //       width: MediaQuery.sizeOf(context).width,
-            //       child: Row(
-            //         children: [
-            //           Text("Logout "),
-            //           Icon(Icons.logout),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // )
+            Padding(
+              padding: EdgeInsets.only(top: 04),
+              child: InkWell(
+                onTap: () {
+                  Get.to(FaqScreen());
+                },
+                child: Container(
+                   height: MediaQuery.of(context).size.height * 0.06,
+                  color: COLOR.background,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("FAQ",style: Themes.light.textTheme.displayLarge!,),
+                      Icon(Icons.help),
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
-            // ElevatedButton(
-            //   onPressed: () {
-            //     showLanguageBottomSheet(context);
-            //   },
-            //   child: Text("Change Language"),
-            // ),
+            Padding(
+              padding: EdgeInsets.only(top: 04),
+              child: InkWell(
+                onTap: () {
+                  _showDeleteBottomSheet(context);
+                  // _showLogoutBottomSheet(context);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  color: COLOR.background,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(StringRes.deleteAccount,style: Themes.light.textTheme.displayLarge!,),
+                      Icon(Icons.delete),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(top: 04),
+              child: InkWell(
+                onTap: () {
+                  _showLogoutBottomSheet(context);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  color: COLOR.background,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(StringRes.logout,style: Themes.light.textTheme.displayLarge!,),
+                      Icon(Icons.logout),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
           ],
         ),)
       );
@@ -259,7 +275,7 @@ class _AccountScreenState extends State<AccountScreen> {
             Icon(Icons.location_on, color: Color(0xff900C3F), size: 30),
             SizedBox(height: 5),
             Text(
-              "Add Address",
+              StringRes.addAddress,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
@@ -288,13 +304,6 @@ class _AccountScreenState extends State<AccountScreen> {
             color: Colors.grey.shade50,
             border: Border.all(color: Colors.grey,width: 0.5),
             borderRadius: BorderRadius.circular(12),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.black12,
-            //     blurRadius: 4,
-            //     offset: Offset(0, 2),
-            //   ),
-            // ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -332,7 +341,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               const SizedBox(height: 5),
               Text(
-                "Change Language",
+                StringRes.changeLanguage,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ],
@@ -465,55 +474,112 @@ class _AccountScreenState extends State<AccountScreen> {
   }
   void _showLogoutBottomSheet(BuildContext context) {
     Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      SafeArea(
+        bottom: true,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Are you sure you want to logout?",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      side: BorderSide(color: Colors.black),
+                    ),
+                    onPressed: () => Get.back(),
+                    child: Text(StringRes.cancel, style: TextStyle(fontSize: 16)),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: COLOR.appBaseColor,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      // SharedHelper helper = SharedHelper();
+                      // await helper.deleteCustomer(); // agar yeh async method hai\
+                      // await helper.storeBool(value: true,key: SharedHelper.deleteAccountKey);
+                       await authenticate.signOut();
+                      Get.offAll(() => LoginScreen());
+                      // Logout logic here
+                      Get.back();
+                    },
+                    child: Text(StringRes.logout, style: TextStyle(fontSize: 16)),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "Are you sure you want to logout?",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
-                    side: BorderSide(color: Colors.black),
+      ),
+      isDismissible: true,
+      enableDrag: true,
+      enterBottomSheetDuration: Duration(milliseconds: 300),
+      exitBottomSheetDuration: Duration(milliseconds: 300),
+    );
+  }
+  void _showDeleteBottomSheet(BuildContext context) {
+    Get.bottomSheet(
+      SafeArea(
+        bottom: true,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Are you sure you want to Delete Account?",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      side: BorderSide(color: Colors.black),
+                    ),
+                    onPressed: () => Get.back(),
+                    child: Text(StringRes.cancel, style: TextStyle(fontSize: 16)),
                   ),
-                  onPressed: () => Get.back(),
-                  child: Text("Cancel", style: TextStyle(fontSize: 16)),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    foregroundColor: Colors.white,
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: COLOR.appBaseColor,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      SharedHelper helper = SharedHelper();
+                      await helper.deleteCustomer(); // agar yeh async method hai\
+                      await helper.storeBool(value: true,key: SharedHelper.deleteAccountKey);
+                       await authenticate.signOut();
+                      Get.offAll(() => LoginScreen());
+                      // Logout logic here
+                      Get.back();
+                    },
+                    child: Text(StringRes.delete, style: TextStyle(fontSize: 16)),
                   ),
-                  onPressed: () async {
-                    SharedHelper helper = SharedHelper();
-                    await helper.deleteCustomer(); // agar yeh async method hai
-                     await authenticate.signOut(); // agar aapka FirebaseAuthenticate class mein signOut method hai
-                    // global.customer = null; // ya jo bhi aapka global state reset karna hai
-
-                    // Get.offAll(() => PhoneAuth());
-                    // SharedHelper helper = SharedHelper();
-// helper.deleteCustomer();
-                    Get.offAll(() => LoginScreen());
-                    // Logout logic here
-                    Get.back();
-                  },
-                  child: Text("Logout", style: TextStyle(fontSize: 16)),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       isDismissible: true,
@@ -578,10 +644,10 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.15,
-              child: OTPVerificationForm(),
-            ),
+            // Container(
+            //   height: MediaQuery.of(context).size.height * 0.15,
+            //   child: OTPVerificationForm(),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 5),
               child: TextWiget(

@@ -36,7 +36,6 @@ import '../../widget/textWidget.dart';
 import 'editProfile.dart';
 
 class ProfileScreen extends StatelessWidget {
-  // final ProfileController _controller = Get.find<ProfileController>();
   ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -222,7 +221,7 @@ class ProfileScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                               border: 1,
-                               onPressed: () => Get.to(() => EditProfileScreen()),
+                               // onPressed: () => Get.to(() => EditProfileScreen()),
                             ),
                           ],
                         ),
@@ -273,67 +272,6 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(top: 6),
-            //   child: Container(
-            //     padding: EdgeInsets.only(top: 5),
-            //     color: COLOR.background,
-            //     child: Column(
-            //       children: <Widget>[
-            //         Padding(
-            //           padding: const EdgeInsets.only(top: 5),
-            //           child: Padding(
-            //             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            //             child: AlignWidget(
-            //               alignment: Alignment.centerLeft,
-            //               child: TextWiget(
-            //                 title: 'MY Activity',
-            //                 style: Themes.light.textTheme.headlineSmall,
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         SizedBox(
-            //           width: MediaQuery.of(context).size.width,
-            //           child: Column(
-            //             children: [
-            //               AlignWidget(
-            //                 alignment: Alignment.centerLeft,
-            //                 child: TabBar(
-            //                   isScrollable: true,
-            //                   indicatorSize: TabBarIndicatorSize.label,
-            //                   controller: _controller.tabController,
-            //                   indicatorColor: COLOR.pink,
-            //                   unselectedLabelColor: COLOR.black,
-            //                   labelColor: COLOR.pink,
-            //                   tabs: _controller.profileTabs,
-            //                 ),
-            //               ),
-            //               DividerWidget(thickness: 1, height: 0.0),
-            //             ],
-            //           ),
-            //         ),
-            //         Container(
-            //           height: MediaQuery.of(context).size.height * 0.81,
-            //           alignment: Alignment.bottomCenter,
-            //           child: TabbarViewWidget(
-            //             controller: _controller.tabController,
-            //             children: [
-            //               Center(
-            //                 child: TextWiget(title: 'timeline'),
-            //               ),
-            //               Center(
-            //                 child: TextWiget(title: 'reviews'),
-            //               ),
-            //               WishlistScreen(),
-            //               SharedScreen(),
-            //             ],
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // )
           ],
         ),
       ),

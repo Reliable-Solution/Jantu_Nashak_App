@@ -1,6 +1,7 @@
   import 'package:firebase_messaging/firebase_messaging.dart';
   import 'package:get/get.dart';
   import 'package:keep_app/constant/api_endpoints.dart';
+import 'package:keep_app/constant/app_constant.dart';
   import 'package:keep_app/models/customerModel.dart';
   import 'package:keep_app/view/dashboard/dashboardScreen.dart';
   import 'package:keep_app/controller/otpController.dart';
@@ -30,7 +31,7 @@
     void onInit() {
       // TODO: implement onInit
       super.onInit();
-      getHintNumber();
+      // getHintNumber();
     }
   
     /// Fetch mobile number hint with error handling
@@ -57,9 +58,9 @@
         if (phoneNumber.value.length < 10) {
           throw "Invalid phone number";
         }
-        Get.to(OTPVerificationScreen(
-          registerPhoneNumber: phoneNumber.value,
-        ));
+        // Get.to(OTPVerificationScreen(
+        //   registerPhoneNumber: phoneNumber.value,
+        // ));
       } catch (e) {
         Get.snackbar("Error", e.toString());
       }
@@ -122,6 +123,8 @@
           'CustomerEmailId': email.value.toString(),
           'CustomerPhoneNo': phoneNumber.value.toString(),
           'CustomerFCMToken': token,
+          'FirmId':firmId
+
         };
   
         print("Request Body: $body"); // Debugging ke liye
@@ -141,7 +144,7 @@
   
             helper.setCustomer(customerModel);
             Get.snackbar('Success', 'OTP sent to your mobile.');
-            Get.to(() => OTPVerificationScreen(registerPhoneNumber: phoneNumber.value));
+             Get.to(() => OTPVerificationScreen(registerPhoneNumber: phoneNumber.value));
           }  else if (data == 0) {
             // ✅ Customer pehle se registered hai
             Get.snackbar('Info', 'You already have an account. Please sign in.');

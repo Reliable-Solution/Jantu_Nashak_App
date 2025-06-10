@@ -9,6 +9,13 @@ class DashboardController extends GetxController {
 
   var tabIndex = 0;
 
+   @override
+  void onInit() {
+    // TODO: implement onInit
+     tabIndex = 0;
+     print("tab index ${tabIndex}");
+    super.onInit();
+  }
   void changeTabIndex(int index) {
     try {
       tabIndex = index;

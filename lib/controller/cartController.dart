@@ -7,6 +7,7 @@ import 'package:keep_app/controller/homeController.dart';
 import 'package:keep_app/models/getCartTotalModel.dart';
 
 import '../constant/api_endpoints.dart';
+import '../constant/app_constant.dart';
 import '../models/cartDetailModel.dart';
 import '../models/customerModel.dart';
 import '../models/productModel.dart';
@@ -31,7 +32,7 @@ class CartController extends GetxController {
 
 
   var isReadMore = false;
-  var isCartLoading = false;
+  RxBool isCartLoading = false.obs;
 
   @override
   void onInit() async {
@@ -60,10 +61,14 @@ class CartController extends GetxController {
   }
 
   Future<void> getCartDetails(String customerID) async {
-    isCartLoading = true;
+    isCartLoading.value = true;
+    cartList.clear();
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerID,
+        // 'Points':1,
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(
@@ -80,15 +85,16 @@ class CartController extends GetxController {
               .map((productJson) => CartDetailModel.fromJson(productJson))
               .toList();
         }
-        isCartLoading = false;
+        isCartLoading.value = false;
         update();
       } else {
         throw Exception("Error from API: ${response.data['Message']}");
       }
      } catch (e) {
+      print("Failed to fetch cart: $e");
   Get.snackbar('Error', 'Failed to fetch cart: $e');
   } finally {
-  isCartLoading = false;
+  isCartLoading.value = false;
   }
     // catch (e) {
     //   print("Error in getDashboardData: $e");
@@ -141,6 +147,8 @@ class CartController extends GetxController {
       final Map<String, dynamic> body = {
         'CartId': cartID,
         'CartQuantity': cartQuantity,
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(
@@ -204,6 +212,8 @@ class CartController extends GetxController {
     try {
       final Map<String, dynamic> body = {
         'CartId': cartID,
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(
@@ -225,10 +235,12 @@ class CartController extends GetxController {
   }
 
   Future<void> getCartTotal(customerID) async {
-    isCartLoading = false;
+    isCartLoading.value = false;
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerID,
+        'Points':"",
+        'FirmId':firmId
       };
 
       var response = await ApiService.post(
@@ -243,14 +255,14 @@ class CartController extends GetxController {
         if (data[0] != null) {
           updateCartTotal(CartTotal.fromJson(data[0]));
         }
-        isCartLoading = false;
+        isCartLoading.value = false;
         update();
       } else {
         throw Exception("Error from API: ${response.data['Message']}");
       }
     } catch (e) {
-      print("Error in getDashboardData: $e");
-      throw Exception("Failed to get dashboard data: $e");
+      print("Error in getCartDetailData: $e");
+        throw Exception("Failed to get cart data: $e");
     }
   }
 }

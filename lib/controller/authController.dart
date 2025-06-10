@@ -52,14 +52,14 @@ class AuthController extends GetxController {
             CustomerModel customerModel = CustomerModel.fromJson(data[0]);
             helper.setCustomer(customerModel);
             Get.snackbar('Success', 'OTP sent to your mobile.');
-            Get.to(() => OTPVerificationScreen(phoneNumber: phoneNumber.value));
+             Get.to(() => OTPVerificationScreen(phoneNumber: phoneNumber.value));
             // Get.snackbar('Success', 'Login successful.');
             // Get.offAll(() => DashboardScreen(pageIndex: 0));
           }
           else if (data is List && data.isEmpty) {
             // ✅ User doesn't exist, redirect to registration
             Get.snackbar('Info', 'No account found. Please register.');
-            Get.offAll(() => RegistrationScreen());
+             Get.offAll(() => RegistrationScreen());
           }
           else {
             Get.snackbar('Error', 'Unexpected response received.');
@@ -181,7 +181,8 @@ class AuthController extends GetxController {
         isLoading.value = false;
       }
     } else {
-      Get.snackbar('Error', 'Enter a valid 10-digit mobile number');
+      print('Enter a valid 10-digit mobile number');
+      // Get.snackbar('Error', 'Enter a valid 10-digit mobile number');
     }
   }
 }

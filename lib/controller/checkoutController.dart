@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:keep_app/controller/homeController.dart';
 import 'package:keep_app/view/dashboard/dashboardScreen.dart';
 import 'package:keep_app/view/sucess/payment_sucess.dart';
 
+import '../constant/app_constant.dart';
+import '../models/PaymenntModel.dart';
 import '../utils/services/api_services.dart';
 import '../constant/api_endpoints.dart';
 import '../view/home/home_screen.dart';
@@ -15,11 +19,24 @@ class CheckoutController extends GetxController
   RxBool isOnlineExpanded = false.obs; // Online Payment Section Expand/Collapse
   RxBool isLoading = false.obs;
   RxBool isSelected = false.obs;
+  RxString selectedPayment = 'Razorpay'.obs;
+  List<PaymentGateway> paymentMethodList = [];
+  PaymentGateway? paymentGateway ;
+
+
 
   void selectPaymentMethod(String method) {
   selectedPaymentMethod.value = method;
   // isOnlineExpanded.value = (method == 'ONLINE'); // Expand   only if online selected
   isOnlineExpanded.value = (method.toLowerCase() == 'online');
+  update();
+
+  }
+
+  void selectPaymentGateWay(PaymentGateway payment) {
+  paymentGateway = payment;
+  // isOnlineExpanded.value = (method == 'ONLINE'); // Expand   only if online selected
+  // isOnlineExpanded.value = (method.toLowerCase() == 'online');
   update();
 
   }
@@ -39,6 +56,8 @@ class CheckoutController extends GetxController
         "AddressId": addressId,
         "OrderPaymentMethod": orderPaymentMethod,
         "OrderTransactionNo": orderTransactionNo ?? "",
+        'FirmId':firmId
+
       };
 
       var response = await ApiService.post(
@@ -62,6 +81,56 @@ class CheckoutController extends GetxController
     } catch (e) {
       print("Checkout Error: $e");
       Get.snackbar("Error", "Failed to place order: $e");
+    } finally {
+      isLoading.value = false;
+      update();
+    }
+  }
+
+  Future<void> getPaymentMethod() async {
+    isLoading.value = true;
+
+    try {
+      final Map<String, dynamic> body = {
+        "FirmId":firmId
+      };
+
+      var response = await ApiService.post(
+        endpoint: get_active_payment_gateways,
+        body: body,
+      );
+
+
+      print("============== Payment Method Data ${response.data}");
+      if (response.data['IsSuccess'] == true) {
+
+        print("Payment Method  : ${response.data}");
+
+        print("API Response: ${response.data}");
+        log("API Response: ${response.data}");
+
+        final dynamic rawData = response.data['Data'];
+
+        if (rawData is List) {
+          paymentMethodList = rawData.map((e) {
+            try {
+              return PaymentGateway.fromJson(e);
+            } catch (err) {
+              log("❌ Parsing error on item: $e \nError: $err");
+              return null;
+            }
+          }).whereType<PaymentGateway>().toList();
+        } else {
+          log("❌ 'Data' is not a List: $rawData");
+        }
+        update();
+
+      } else {
+        throw Exception("API Error: ${response.data['Message']}");
+      }
+    } catch (e) {
+      print("Payment Method Error: $e");
+      Get.snackbar("Error", "Failed to Payment Method: $e");
     } finally {
       isLoading.value = false;
       update();

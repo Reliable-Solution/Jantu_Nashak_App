@@ -23,6 +23,7 @@ import 'package:keep_app/view/account/primary.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
 import '../../controller/editController.dart';
+import '../../utils/string_res.dart';
 import '../../widget/alignWidget.dart';
 import '../../widget/appBarWidget.dart';
 import '../../widget/buttonWidget.dart';
@@ -46,7 +47,7 @@ class EditProfileScreen extends StatelessWidget {
           elevation: 1,
           titleSpacing: 0.0,
           title: TextWiget(
-            title: 'EDIT PROFILE INFORMATION',
+            title: StringRes.profileInformation,
             style: Themes.light.textTheme.displayLarge,
           ),
           leading: InkWell(
@@ -96,36 +97,6 @@ class EditProfileScreen extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar:
-         _controller.tabController!.index == 0
-             ?
-        Container(
-          height: MediaQuery.of(context).size.height * 0.11,
-          color: COLOR.background,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              DividerWidget(thickness: 1, height: 0),
-              Expanded(
-                child: AlignWidget(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    child: ButtonWidgets(
-                      title: 'Save',
-                      voidCallback: () {},
-                      color: COLOR.pink,
-                      style: Themes.light.textTheme.displayLarge!.copyWith(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-             : null,
       ),
     );
   }

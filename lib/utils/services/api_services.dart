@@ -74,10 +74,14 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static String baseUrl =
-      "https://kffashionnew.reliablesolution.in/Admin/Ajax/";
+        // "https://kffashionnew.reliablesolution.in/Admin/Ajax/";
+       "https://keep.reliablesolution.in/Admin/Ajax/";
+      // "http://192.168.1.112:8000/Admin/Ajax/";
   static final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: "https://kffashionnew.reliablesolution.in/Admin/Ajax/",
+       // baseUrl: "https://kffashionnew.reliablesolution.in/Admin/Ajax/",
+       baseUrl: "https://keep.reliablesolution.in/Admin/Ajax/",
+      // baseUrl: "http://192.168.1.112:8000/Admin/Ajax/",
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
@@ -93,7 +97,17 @@ class ApiService {
       } else {
         throw Exception("Failed to fetch data: ${response.statusCode}");
       }
-    } catch (e) {
+    }
+    on DioException catch (e) {
+      if (e.response != null) {
+        throw Exception(
+            "Error: ${e.response!.statusCode}, Message: ${e.response!.data}");
+      } else {
+        throw Exception("Network Error: ${e.message}");
+      }
+    // catch (e) {
+    //   throw Exception("Unexpected Error: ${e.toString()}");
+    }catch (e) {
       throw Exception("Error: $e");
     }
   }
