@@ -21,4 +21,6 @@ class Images {
   static final tag = 'assets/images/tag.png';
   static final calendar = 'assets/images/calendar.png';
   static final success = 'assets/gif/Success.gif';
+  static final arrowDownPNG = 'assets/gif/Success.gif';
+  static final maintainerMode = 'assets/images/maintenance.png';
 }

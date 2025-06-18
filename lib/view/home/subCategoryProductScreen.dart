@@ -57,6 +57,8 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
   final ProductDetailsController productDetailsController =
       Get.find<ProductDetailsController>();
 
+  final CartController cartController = Get.put(CartController());
+
 
   @override
   void initState() {
@@ -108,6 +110,9 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                 children: [
                   IconButtonWidget(
                     voidCallback: () {
+                      cartController.getCartDetails(cartController.customerModel!.value.customerId!);
+                      cartController.getCartTotal(cartController.customerModel!.value.customerId!);
+
                       Get.to(() => CartScreen(
                           // removeCart: productRemove,
                           ));
@@ -118,7 +123,6 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                   Positioned(
                     right: 0,
                     top: 0,
-                    // alignment: Alignment(5, 5),
                     child:
                         GetBuilder<CartController>(builder: (cartController) {
                       int cartCount = cartController.cartList.length;
@@ -159,7 +163,7 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
               return SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Center(child: Text("Data not found")),
+                  child: Center(child: Text(StringRes.dataNotFound)),
                 ),
               );
             } else {
@@ -173,7 +177,6 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                 ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  // childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
                   childAspectRatio: 1 / 1.4,
                   crossAxisSpacing: 2,
                   mainAxisSpacing: 2,

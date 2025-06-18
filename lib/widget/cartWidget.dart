@@ -113,7 +113,7 @@ class _MyCartComponentState extends State<MyCartComponent> {
                       Text(
                         // item.productName
                         widget.cartData.productName
-                            ?? "Product Name",
+                            ?? StringRes.productName,
                         style: const TextStyle(fontSize: 14),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -131,7 +131,7 @@ class _MyCartComponentState extends State<MyCartComponent> {
                         // item.isEasyReturn == 1
                         //     ? "All issue easy returns allowed"
                         //     :
-                        "Only wrong/defect item returns allowed",
+                        StringRes.onlyWrongDefectItemReturnsAllowed,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey.shade700,
@@ -141,7 +141,7 @@ class _MyCartComponentState extends State<MyCartComponent> {
                       Row(
                         children: [
                           Text(
-                            "Size: ${widget.cartData.productSize ?? 'Size'}",
+                            "${StringRes.size}: ${widget.cartData.productSize ?? '${StringRes.size}'}",
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey.shade700,
@@ -149,7 +149,7 @@ class _MyCartComponentState extends State<MyCartComponent> {
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            "Quantity : ${Qty}",
+                            "${StringRes.quantity} : ${Qty}",
                             // "Qty: ${item.categoryId ?? 1}",
                             style: TextStyle(
                               fontSize: 12,
@@ -159,7 +159,7 @@ class _MyCartComponentState extends State<MyCartComponent> {
                         ],
                       ),
                       Text(
-                        "Color: ${widget.cartData.productColor ?? 'Color'}",
+                        "${StringRes.color}: ${widget.cartData.productColor ?? '${StringRes.color}'}",
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey.shade700,
@@ -374,10 +374,10 @@ class _MyCartComponentState extends State<MyCartComponent> {
                 ),
 
                 // Arrow icon
-                Icon(
-                  Icons.chevron_right,
-                  color: Colors.grey.shade400,
-                ),
+                // Icon(
+                //   Icons.chevron_right,
+                //   color: Colors.grey.shade400,
+                // ),
               ],
             ),
           ),
@@ -388,14 +388,14 @@ class _MyCartComponentState extends State<MyCartComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Sold by : ${widget.cartData.productName ?? 'Seller'}",
+                  "${StringRes.soldBy} : ${widget.cartData.productName ?? '${StringRes.seller}'}",
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey.shade700,
                   ),
                 ),
-                const Text(
-                  "Free Delivery",
+                 Text(
+                  StringRes.freeDelivery,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,

@@ -36,6 +36,7 @@ class CartController extends GetxController {
 
   @override
   void onInit() async {
+
     getPrefs();
     super.onInit();
   }
@@ -49,6 +50,8 @@ class CartController extends GetxController {
       print("Pro"
           ""
           "duct Detail Screen ${customerModel!.value.customerName}");
+      // await Future.delayed(Duration(seconds: 10)); // ⏳ delay for 2 seconds
+
       getCartDetails(customer.customerId!);
       getCartTotal(customer.customerId!);
     }
@@ -62,11 +65,13 @@ class CartController extends GetxController {
 
   Future<void> getCartDetails(String customerID) async {
     isCartLoading.value = true;
+
     cartList.clear();
+    // await Future.delayed(Duration(seconds: 2)); // ⏳ delay for 2 seconds
+
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerID,
-        // 'Points':1,
         'FirmId':firmId
 
       };
@@ -81,9 +86,7 @@ class CartController extends GetxController {
 
         print("API Response: ${response.data}");
         if (data[0]['Cart'] != null) {
-          cartList.value = (data[0]['Cart'] as List)
-              .map((productJson) => CartDetailModel.fromJson(productJson))
-              .toList();
+          cartList.value = (data[0]['Cart'] as List).map((productJson) => CartDetailModel.fromJson(productJson)).toList();
         }
         isCartLoading.value = false;
         update();
@@ -250,11 +253,22 @@ class CartController extends GetxController {
 
       if (response.data['IsSuccess'] == true) {
         var data = response.data['Data'];
-
         print("API Response: ${response.data}");
-        if (data[0] != null) {
+
+        if (data != null && data is List && data.isNotEmpty) {
           updateCartTotal(CartTotal.fromJson(data[0]));
+        } else {
+          print("No cart data available.");
+          // You can call updateCartTotal with default or empty object if needed
+          // updateCartTotal(CartTotal.empty());
         }
+
+        // var data = response.data['Data'];
+        //
+        // print("API Response: ${response.data}");
+        // if (data[0] != null) {
+        //   updateCartTotal(CartTotal.fromJson(data[0]));
+        // }
         isCartLoading.value = false;
         update();
       } else {

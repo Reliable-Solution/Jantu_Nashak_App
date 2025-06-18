@@ -35,7 +35,7 @@ class _OrderscreenState extends State<Orderscreen> {
         appbarPadding: 0,
         elevation: 1,
         title: TextWiget(
-          title: "Orders",
+          title: StringRes.orders,
           style: Themes.light.textTheme.displayLarge,
         ),
       ),
@@ -64,7 +64,7 @@ class _OrderscreenState extends State<Orderscreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextWiget(
-                        title: "Your Orders is empty",
+                        title: StringRes.yourOrdersAreEmpty,
                         style: Themes.light.textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -78,9 +78,7 @@ class _OrderscreenState extends State<Orderscreen> {
                   ],
                 );
 
-                // return Center(child: Text("No orders found"));
               } else {
-                // return Text("hello");
                 return ListView.builder(
                   padding: EdgeInsets.all(10),
                   itemCount: orderController.orderList.length,
@@ -107,9 +105,6 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (order.orderDataModel == null || order.orderDataModel!.isEmpty) {
-    //   return SizedBox.shrink(); // Return an empty widget if data is missing
-    // }
 
     var orderData = order; // Safely access first item
     print("Orders data ${orderData}");
@@ -200,7 +195,7 @@ class OrderCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Order",
+                              StringRes.orders,
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey),
@@ -236,7 +231,7 @@ class OrderCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Shipping Date",
+                              StringRes.shippingDate,
                               style: TextStyle(
                                   fontSize: 14,
                                   // fontWeight: FontWeight.bold,
@@ -284,7 +279,7 @@ class OrderCard extends StatelessWidget {
                               ),
                               backgroundColor: Colors.red.shade400),
                           child: Text(
-                            "Cancel Order",
+                            StringRes.cancelOrder,
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -297,11 +292,6 @@ class OrderCard extends StatelessWidget {
                        Get.to(WebViewScreen(url: "${order.ordertrackingLink}"));
 
                        print("Order Tracking ${order.ordertrackingLink}");
-                    // orderController.cancelOrder(
-                    //     orderController.customerModel!.value.customerId,
-                    //     order.orderId);
-                    // orderController.getOrder(
-                    //     orderController.customerModel!.value.customerId);
                   },
                   style: ElevatedButton.styleFrom(elevation: 0,
                       shape: ContinuousRectangleBorder(
@@ -312,19 +302,13 @@ class OrderCard extends StatelessWidget {
                       ),
                       backgroundColor: Colors.blue.shade400),
                   child: Text(
-                    "Track Order",
+                    StringRes.trackOrder,
                     style: TextStyle(color: Colors.white),
                   ),
                 ):SizedBox.shrink(),
 
               ],
             ),
-            // ElevatedButton(onPressed: () {
-            //
-            //    Get.to(WebViewScreen(url: "${order.ordertrackingLink}"));
-            //
-            //    print("Order Tracking ${order.ordertrackingLink}");
-            // }, child: Text("Track Order"))
           ],
         ),
       ),

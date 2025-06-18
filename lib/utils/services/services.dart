@@ -1,8 +1,10 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../constant/app_constant.dart';
 
@@ -72,6 +74,116 @@ class Services {
       throw Exception(e.toString());
     }
   }
+  Future<bool> askPhotosPermission({String? title, String? description}) async {
+    if (Platform.isAndroid) {
+      return askAndroidPhotoPermission();
+    } else {
+      return askIOSPhotoPermission();
+    }
+  }
+
+
+
+  Future<bool> askIOSPhotoPermission({String? title, String? description}) async {
+    bool permissionGranted = false;
+    PermissionStatus permissionStatus = await Permission.photos.status;
+
+    if (permissionStatus == PermissionStatus.granted) {
+      permissionGranted = true;
+    } else if (permissionStatus == PermissionStatus.denied) {
+      PermissionStatus permissionStatus = await Permission.photos.request();
+      permissionGranted = (permissionStatus == PermissionStatus.granted);
+    } else {
+      await openAppSettings();
+    }
+
+    return permissionGranted;
+  }
+
+
+  Future<bool> askAndroidCameraPermission(
+      {String? title, String? description}) async {
+    bool permissionGranted = false;
+    bool shouldShowRationalBefore =
+    await Permission.camera.shouldShowRequestRationale;
+    PermissionStatus permissionStatus = await Permission.camera.request();
+    if (permissionStatus == PermissionStatus.granted) {
+      permissionGranted = true;
+    } else {
+      bool shouldShowRationalAfter =
+      await Permission.camera.shouldShowRequestRationale;
+      if (shouldShowRationalBefore == shouldShowRationalAfter) {
+        await openAppSettings();
+      }
+    }
+    return permissionGranted;
+  }
+
+
+  Future<bool> askAndroidPhotoPermission(
+      {String? title, String? description}) async {
+    // bool permissionGranted = false;
+    // bool shouldShowRationalBefore =
+    //     await Permission.storage.shouldShowRequestRationale;
+    // PermissionStatus permissionStatus = await Permission.storage.request();
+    // if (permissionStatus == PermissionStatus.granted) {
+    //   permissionGranted = true;
+    // } else {
+    //   bool shouldShowRationalAfter =
+    //       await Permission.storage.shouldShowRequestRationale;
+    //   if (shouldShowRationalBefore == shouldShowRationalAfter) {
+    //     await openAppSettings();
+    //   }
+    // }
+    // return permissionGranted;
+    return true;
+  }
+
+  Future<bool> askCameraPermission({String? title, String? description}) async {
+    if (Platform.isAndroid) {
+      return askAndroidCameraPermission();
+    } else {
+      return askIOSCameraPermission();
+    }
+  }
+  Future<bool> askIOSCameraPermission(
+      {String? title, String? description}) async {
+    bool permissionGranted = false;
+    PermissionStatus permissionStatus = await Permission.camera.status;
+
+    if (permissionStatus == PermissionStatus.granted) {
+      permissionGranted = true;
+    } else if (permissionStatus == PermissionStatus.denied) {
+      PermissionStatus permissionStatus = await Permission.camera.request();
+      permissionGranted = (permissionStatus == PermissionStatus.granted);
+    } else {
+      await openAppSettings();
+    }
+
+    return permissionGranted;
+  }
+
+
+  // Future<bool> askAndroidCameraPermission(
+  //     {String? title, String? description}) async {
+  //   bool permissionGranted = false;
+  //   bool shouldShowRationalBefore =
+  //   await Permission.camera.shouldShowRequestRationale;
+  //   PermissionStatus permissionStatus = await Permission.camera.request();
+  //   if (permissionStatus == PermissionStatus.granted) {
+  //     permissionGranted = true;
+  //   } else {
+  //     bool shouldShowRationalAfter =
+  //     await Permission.camera.shouldShowRequestRationale;
+  //     if (shouldShowRationalBefore == shouldShowRationalAfter) {
+  //       await openAppSettings();
+  //     }
+  //   }
+  //   return permissionGranted;
+  // }
+  //
+
+
 }
 
 

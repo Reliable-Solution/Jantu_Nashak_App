@@ -641,7 +641,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Text(
                                   "${address.addressColony ?? ''}, ${address.cityName ?? ''}, ${address.stateName ?? ''}, ${address.addressPincode ?? ''}\n"
-                                      "New York ${address.addressPincode ?? ''}\n"
+                                      // "New York ${address.addressPincode ?? ''}\n"
                                       "${address.addressMobileNo ?? ''}",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -728,9 +728,9 @@ class _AddressScreenState extends State<AddressScreen> {
           height: 30,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? Colors.blue : (isCompleted ? Colors.blue : Colors.grey.shade300),
+            color: isActive ? COLOR.appBaseColor : (isCompleted ? COLOR.appBaseColor : Colors.grey.shade300),
             border: Border.all(
-              color: isActive || isCompleted ? Colors.blue : Colors.grey.shade400,
+              color: isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade400,
               width: 1,
             ),
           ),
@@ -751,7 +751,7 @@ class _AddressScreenState extends State<AddressScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive || isCompleted ? Colors.blue : Colors.grey.shade600,
+            color: isActive || isCompleted ?COLOR.appBaseColor : Colors.grey.shade600,
             fontWeight: isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -763,7 +763,7 @@ class _AddressScreenState extends State<AddressScreen> {
     return Container(
       width: 40,
       height: 1,
-      color: isActive ? Colors.blue : Colors.grey.shade300,
+      color: isActive ? COLOR.appBaseColor : Colors.grey.shade300,
     );
   }
 }

@@ -60,4 +60,57 @@ Future<void> main() async {
     ),
   );
 }
-
+//
+// void _resetZoom() {
+//   for (var controller in _transformationControllers) {
+//     controller.value = Matrix4.identity();
+//   }
+// }
+//
+// // Build the image viewer with enhanced zoom functionality
+// Widget _buildImageViewer(int index) {
+//   return Focus(
+//     focusNode: _focusNodes[index],
+//     child: InteractiveViewer(
+//       transformationController: _transformationControllers[index],
+//       panEnabled: true,
+//       scaleEnabled: true,
+//       minScale: 1.0,
+//       maxScale: 4.0,
+//       onInteractionStart: (_) {
+//         // Ensure focus for immediate gesture recognition
+//         if (!_focusNodes[index].hasFocus) {
+//           _focusNodes[index].requestFocus();
+//         }
+//       },
+//       child: Image.network(
+//         productImages[index],
+//         fit: BoxFit.contain,
+//         loadingBuilder: (context, child, loadingProgress) {
+//           if (loadingProgress == null) return child;
+//           return Center(
+//             child: CircularProgressIndicator(
+//               value: loadingProgress.expectedTotalBytes != null
+//                   ? loadingProgress.cumulativeBytesLoaded /
+//                   loadingProgress.expectedTotalBytes!
+//                   : null,
+//               color: Theme.of(context).primaryColor,
+//             ),
+//           );
+//         },
+//         errorBuilder: (context, error, stackTrace) {
+//           return const Center(
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Icon(Icons.error_outline, size: 40, color: Colors.red),
+//                 SizedBox(height: 8),
+//                 Text('Image not available'),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     ),
+//   );
+// }

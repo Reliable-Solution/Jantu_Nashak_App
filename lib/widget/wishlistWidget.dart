@@ -101,7 +101,7 @@ class _MyWishComponetState extends State<MyWishComponet> {
                               children: <TextSpan>[
                                 TextSpan(
                                   text:
-                                  "Inr ${widget.wishdata.packInfo![0].productdetailMrp}",
+                                  "${StringRes.inr} ${widget.wishdata.packInfo![0].productdetailMrp}",
                                   style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 14,
@@ -113,7 +113,7 @@ class _MyWishComponetState extends State<MyWishComponet> {
                           children: [
                             Expanded(
                               child: Text(
-                                  " Inr " "${widget.wishdata.packInfo![0].productdetailSrp}",
+                                  " ${StringRes.inr} " "${widget.wishdata.packInfo![0].productdetailSrp}",
                                   style: const TextStyle(
                                       fontSize: 17,
                                       color: Colors.black,

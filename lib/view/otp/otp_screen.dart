@@ -34,7 +34,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
       // backgroundColor: Color(0xFFEDE7F6),
       appBar: AppBar(
         title: Text(
-         "Enter Verification Code",
+          StringRes.enterVerificationCode,
           style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),
         ),
         backgroundColor: COLOR.appBaseColor,
@@ -98,10 +98,16 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(StringRes.didntGetOtp),
-                    Obx(() => TextButton(
-                      onPressed: otpController.isResendEnabled.value
-                          ? otpController.resendOTP
-                          : null,
+                    GetBuilder<OTPController>(builder: (otpController) =>  TextButton(
+                      onPressed: () {
+
+                        otpController.isResendEnabled.value
+                            ? otpController.resendOTP(context,widget.phoneNumber!)
+                            : false;
+                      },
+                      // otpController.isResendEnabled.value
+                      //     ? otpController.resendOTP(context)
+                      //     : null,
                       child: Text(StringRes.sendAgain),
                     )),
                     Spacer(),
@@ -118,19 +124,16 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 ElevatedButton(
                   onPressed: () {
                     try {
-                      String otp = "${otpFields[0].text+otpFields[1].text+otpFields[2].text+otpFields[3].text+otpFields[4].text+otpFields[5].text}";
-                      if(widget.phoneNumber!=null){
-                        otpController.onFormSubmitted(otp);
-                        otpController.isLoading.value = true;
-
-                      }
-                      else if(widget.registerPhoneNumber != null)
-                      {
-                        otpController.onFormSubmitted(otp);
-
+                      String otp = otpFields.map((field) => field.text.trim()).join();
+                      if (widget.phoneNumber != null) {
+                        otpController.verifyPhoneOtp(context, otp, widget.phoneNumber!);
+                      } else if (widget.registerPhoneNumber != null) {
+                        otpController.verifyPhoneOtp(context, otp, widget.registerPhoneNumber!);
+                      } else {
+                        Get.snackbar(StringRes.error, StringRes.phoneNumberMissing);
                       }
                     } catch (e) {
-                      Get.snackbar("Error", e.toString());
+                      Get.snackbar(StringRes.error, e.toString());
                     }
                   },
                   style: ElevatedButton.styleFrom(

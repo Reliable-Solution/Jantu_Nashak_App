@@ -12,6 +12,8 @@ import 'package:keep_app/view/account/widget/accountList.dart';
 import 'package:keep_app/view/address/pickupAddressScreen.dart';
 import 'package:keep_app/view/faq/faq_screen.dart';
 import 'package:keep_app/view/order/orderScreen.dart';
+import 'package:keep_app/view/raise%20ticket/create_ticket.dart';
+import 'package:keep_app/view/raise%20ticket/ticketMainScreen.dart';
 import 'package:keep_app/view/webView/webView_screen.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
@@ -46,204 +48,252 @@ class _AccountScreenState extends State<AccountScreen> {
   AccountController controller = AccountController();
   final HomeController _controller = Get.find<HomeController>();
 
-
-
   String? fcmToken;
 
   @override
   Widget build(BuildContext context) {
     print(" name ${_controller.customerModel!.value.customerName}");
     return Scaffold(
-      backgroundColor: COLOR.greyLight,
-      appBar: MyCustomAppBar(
-        leading: SizedBox(),
-        action: [],
-        actionPadding: 10,
-        height: 90,
-        appbarPadding: 0,
-        title: TextWiget(
-          title: StringRes.account,
-          style: Themes.light.textTheme.displayLarge,
+        backgroundColor: COLOR.greyLight,
+        appBar: MyCustomAppBar(
+          leading: SizedBox(),
+          action: [],
+          actionPadding: 10,
+          height: 90,
+          appbarPadding: 0,
+          title: TextWiget(
+            title: StringRes.account,
+            style: Themes.light.textTheme.displayLarge,
+          ),
+          elevation: 1,
         ),
-        elevation: 1,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 4),
-              child: Container(
-                color: COLOR.background,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 18),
-                      child: CircleAvatar(
-                        maxRadius: 31,
-                        backgroundImage: AssetImage(Images.profileicon),
-                        backgroundColor: COLOR.greyLight,
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                         Obx(
-
-                           () =>  Text( _controller.customerModel != null
-                               ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
-                               : "${StringRes.hello}",),
-                         ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: TextWiget(
-                                title: StringRes.viewProfile,
-                                style: Themes.light.textTheme.displaySmall),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: AlignWidget(
-                        alignment: Alignment.centerRight,
-                        child: IconButtonWidget(
-                          voidCallback: () {
-                             Get.to(() => EditProfileScreen());
-                          },
-                          icons: Icons.navigate_next_outlined,
-                          size: 35,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: Container(
+                  color: COLOR.background,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(right: 18),
+                        child: CircleAvatar(
+                          maxRadius: 31,
+                          backgroundImage: AssetImage(Images.profileicon),
+                          backgroundColor: COLOR.greyLight,
                         ),
                       ),
-                    )
-                  ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Obx(
+                              () => Text(
+                                _controller.customerModel != null
+                                    ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
+                                    : "${StringRes.hello}",
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 5),
+                              child: TextWiget(
+                                  title: StringRes.viewProfile,
+                                  style: Themes.light.textTheme.displaySmall),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: AlignWidget(
+                          alignment: Alignment.centerRight,
+                          child: IconButtonWidget(
+                            voidCallback: () {
+                              Get.to(
+                                () => EditProfileScreen(),
+                                transition: Transition.rightToLeftWithFade,
+                              );
+                            },
+                            icons: Icons.navigate_next_outlined,
+                            size: 35,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: AccountList(),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 06),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.14,
-                color: COLOR.background,
-                // margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    changeLanguageButton(() {
-                      showLanguageBottomSheet(context);
-
-                    },),
-                    buildAddAddressButton(
-                      onTap: () {
-                        Get.to(() => AllAddressScreen());
-                        print("Add Address Clicked!");
-                        // Navigate to Add Address Screen
-                      },
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: AccountList(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 06),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.14,
+                  color: COLOR.background,
+                  // margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      changeLanguageButton(
+                        () {
+                          showLanguageBottomSheet(context);
+                        },
+                      ),
+                      buildAddAddressButton(
+                        onTap: () {
+                          Get.to(
+                            () => AllAddressScreen(),
+                            transition: Transition.rightToLeftWithFade,
+                          );
+                          print("Add Address Clicked!");
+                          // Navigate to Add Address Screen
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 04),
+                child: InkWell(
+                  onTap: () {
+                    // Get.to(WebViewScreen(url: 'https://flutter.dev/'));
+                    Get.to(
+                      Orderscreen(),
+                      transition: Transition.rightToLeftWithFade,
+                    );
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    color: COLOR.background,
+                    // margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          StringRes.orders,
+                          style: Themes.light.textTheme.displayLarge!,
+                        ),
+                        Icon(Icons.shopping_bag),
+                      ],
                     ),
-
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 04),
-              child: InkWell(
-                onTap: () {
-                  // Get.to(WebViewScreen(url: 'https://flutter.dev/'));
-                  Get.to(Orderscreen());
-                },
-                child: Container(
-                   height: MediaQuery.of(context).size.height * 0.06,
-                  color: COLOR.background,
-                  // margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(StringRes.orders,style: Themes.light.textTheme.displayLarge!,),
-                      Icon(Icons.shopping_bag),
-                    ],
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 04),
-              child: InkWell(
-                onTap: () {
-                  Get.to(FaqScreen());
-                },
-                child: Container(
-                   height: MediaQuery.of(context).size.height * 0.06,
-                  color: COLOR.background,
-                  // margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("FAQ",style: Themes.light.textTheme.displayLarge!,),
-                      Icon(Icons.help),
-                    ],
+              Padding(
+                padding: EdgeInsets.only(top: 04),
+                child: InkWell(
+                  onTap: () {
+                    Get.to(
+                      FaqScreen(),
+                      transition: Transition.rightToLeftWithFade,
+                    );
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    color: COLOR.background,
+                    // margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "FAQ",
+                          style: Themes.light.textTheme.displayLarge!,
+                        ),
+                        Icon(Icons.help),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(top: 04),
-              child: InkWell(
-                onTap: () {
-                  _showDeleteBottomSheet(context);
-                  // _showLogoutBottomSheet(context);
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  color: COLOR.background,
-                  // margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(StringRes.deleteAccount,style: Themes.light.textTheme.displayLarge!,),
-                      Icon(Icons.delete),
-                    ],
+              Padding(
+                padding: EdgeInsets.only(top: 04),
+                child: InkWell(
+                  onTap: () {
+                    // Get.to(CreateComplainScreen());
+                    Get.to(
+                      TicketMainScreen(),
+                      transition: Transition.rightToLeftWithFade,
+                    );
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    color: COLOR.background,
+                    // margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Raise A Ticket",
+                          style: Themes.light.textTheme.displayLarge!,
+                        ),
+                        Icon(Icons.help),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(top: 04),
-              child: InkWell(
-                onTap: () {
-                  _showLogoutBottomSheet(context);
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  color: COLOR.background,
-                  // margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(StringRes.logout,style: Themes.light.textTheme.displayLarge!,),
-                      Icon(Icons.logout),
-                    ],
+              Padding(
+                padding: EdgeInsets.only(top: 04),
+                child: InkWell(
+                  onTap: () {
+                    _showDeleteBottomSheet(context);
+                    // _showLogoutBottomSheet(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    color: COLOR.background,
+                    // margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          StringRes.deleteAccount,
+                          style: Themes.light.textTheme.displayLarge!,
+                        ),
+                        Icon(Icons.delete),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-
-          ],
-        ),)
-      );
+              Padding(
+                padding: EdgeInsets.only(top: 04),
+                child: InkWell(
+                  onTap: () {
+                    _showLogoutBottomSheet(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    color: COLOR.background,
+                    // margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          StringRes.logout,
+                          style: Themes.light.textTheme.displayLarge!,
+                        ),
+                        Icon(Icons.logout),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget buildAddAddressButton({required VoidCallback onTap}) {
@@ -251,10 +301,11 @@ class _AccountScreenState extends State<AccountScreen> {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
-    decoration: BoxDecoration(
-    color: Colors.grey.shade50,
-    border: Border.all(color: Colors.grey,width: 0.5),
-    borderRadius: BorderRadius.circular(12),),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade50,
+          border: Border.all(color: Colors.grey, width: 0.5),
+          borderRadius: BorderRadius.circular(12),
+        ),
         // padding: EdgeInsets.all(10),
         // decoration: BoxDecoration(
         //   color: Colors.white,
@@ -288,65 +339,72 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-
-
   Widget changeLanguageButton(VoidCallback onTap) {
     return Material(
-      color: Colors.transparent, // Transparent background for ripple effect
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12), // Ripple effect ke liye
-        splashColor: COLOR.appBaseColor.withOpacity(0.2), // Ripple ka color
-        highlightColor: COLOR.appBaseColor.withOpacity(0.1), // Button press effect
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade50,
-            border: Border.all(color: Colors.grey,width: 0.5),
+        color: Colors.transparent, // Transparent background for ripple effect
+        child: InkWell(
+            onTap: onTap,
             borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
+            // Ripple effect ke liye
+            splashColor: COLOR.appBaseColor.withOpacity(0.2),
+            // Ripple ka color
+            highlightColor: COLOR.appBaseColor.withOpacity(0.1),
+            // Button press effect
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                border: Border.all(color: Colors.grey, width: 0.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.language, size: 30, color: COLOR.appBaseColor),
-                  Positioned(
-                    top: -5,
-                    right: -5,
-                    child: Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                         color:  COLOR.appBaseColor,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "अ",
-                            style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Icon(Icons.language, size: 30, color: COLOR.appBaseColor),
+                      Positioned(
+                        top: -5,
+                        right: -5,
+                        child: Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            color: COLOR.appBaseColor,
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          SizedBox(width: 2),
-                          Text(
-                            "A",
-                            style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "अ",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 2),
+                              Text(
+                                "A",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    StringRes.changeLanguage,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              const SizedBox(height: 5),
-              Text(
-                StringRes.changeLanguage,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        )));
+            )));
   }
 
   void openBottomSheetSignup(BuildContext context) {
@@ -472,6 +530,7 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
     );
   }
+
   void _showLogoutBottomSheet(BuildContext context) {
     Get.bottomSheet(
       SafeArea(
@@ -500,65 +559,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       side: BorderSide(color: Colors.black),
                     ),
                     onPressed: () => Get.back(),
-                    child: Text(StringRes.cancel, style: TextStyle(fontSize: 16)),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: COLOR.appBaseColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () async {
-                      // SharedHelper helper = SharedHelper();
-                      // await helper.deleteCustomer(); // agar yeh async method hai\
-                      // await helper.storeBool(value: true,key: SharedHelper.deleteAccountKey);
-                       await authenticate.signOut();
-                      Get.offAll(() => LoginScreen());
-                      // Logout logic here
-                      Get.back();
-                    },
-                    child: Text(StringRes.logout, style: TextStyle(fontSize: 16)),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      isDismissible: true,
-      enableDrag: true,
-      enterBottomSheetDuration: Duration(milliseconds: 300),
-      exitBottomSheetDuration: Duration(milliseconds: 300),
-    );
-  }
-  void _showDeleteBottomSheet(BuildContext context) {
-    Get.bottomSheet(
-      SafeArea(
-        bottom: true,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Are you sure you want to Delete Account?",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      side: BorderSide(color: Colors.black),
-                    ),
-                    onPressed: () => Get.back(),
-                    child: Text(StringRes.cancel, style: TextStyle(fontSize: 16)),
+                    child:
+                        Text(StringRes.cancel, style: TextStyle(fontSize: 16)),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -567,14 +569,16 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     onPressed: () async {
                       SharedHelper helper = SharedHelper();
-                      await helper.deleteCustomer(); // agar yeh async method hai\
-                      await helper.storeBool(value: true,key: SharedHelper.deleteAccountKey);
-                       await authenticate.signOut();
+                      await helper
+                          .deleteCustomer(); // agar yeh async method hai\
+                      // await helper.storeBool(value: true,key: SharedHelper.deleteAccountKey);
+                      await authenticate.signOut();
                       Get.offAll(() => LoginScreen());
                       // Logout logic here
                       Get.back();
                     },
-                    child: Text(StringRes.delete, style: TextStyle(fontSize: 16)),
+                    child:
+                        Text(StringRes.logout, style: TextStyle(fontSize: 16)),
                   ),
                 ],
               ),
@@ -589,6 +593,68 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
+  void _showDeleteBottomSheet(BuildContext context) {
+    Get.bottomSheet(
+      SafeArea(
+        bottom: true,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                StringRes.logoutConfirmation,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      side: BorderSide(color: Colors.black),
+                    ),
+                    onPressed: () => Get.back(),
+                    child:
+                        Text(StringRes.cancel, style: TextStyle(fontSize: 16)),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: COLOR.appBaseColor,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      SharedHelper helper = SharedHelper();
+                      await helper
+                          .deleteCustomer(); // agar yeh async method hai\
+                      await helper.storeBool(
+                          value: true, key: SharedHelper.deleteAccountKey);
+                      await authenticate.signOut();
+                      Get.offAll(() => LoginScreen());
+                      // Logout logic here
+                      Get.back();
+                    },
+                    child:
+                        Text(StringRes.delete, style: TextStyle(fontSize: 16)),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      isDismissible: true,
+      enableDrag: true,
+      enterBottomSheetDuration: Duration(milliseconds: 300),
+      exitBottomSheetDuration: Duration(milliseconds: 300),
+    );
+  }
 
   void openBottomSheetOTP(BuildContext context) {
     Get.bottomSheet(

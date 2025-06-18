@@ -247,6 +247,7 @@ class PickupAddressScreen extends StatelessWidget {
                   _controller.getAllAddress();
                 } else {
                   print("========== Address Screen ${_controller.txtType.text}");
+                  print("========== Address Screen Id ${address!.addressId}");
                   // ✅ Update Existing Address
                   addressModel = AddressModel(
                       customerId: _controller.customerModel!.value.customerId,
@@ -256,6 +257,8 @@ class PickupAddressScreen extends StatelessWidget {
                       addressColony: _controller.txtAddress.text,
                       addressLandmark: _controller.txtLandmark.text,
                       addressType: _controller.selectedType.value);
+                  print("========== Address Screen Id  in App ${address!.addressId}");
+
                   _controller.updateAddressData(
                       addressId: address!.addressId,
                       addressModel: addressModel);

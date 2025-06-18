@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:keep_app/controller/cartController.dart';
 import 'package:keep_app/Theme/nativeTheme.dart';
 
+import '../../utils/string_res.dart';
+
 class PriceDetailsWidget extends StatelessWidget {
   PriceDetailsWidget({Key? key}) : super(key: key);
 
@@ -12,12 +14,12 @@ class PriceDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(16),
+      padding:  EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "PRICE DETAILS",
+            StringRes.priceDetails,
             style: Themes.light.textTheme.displayMedium!.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w600,
@@ -29,8 +31,8 @@ class PriceDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Item Total",
+               Text(
+                StringRes.itemTotal,
                 style: TextStyle(fontSize: 14),
               ),
               Obx(() => Text(
@@ -45,12 +47,12 @@ class PriceDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Delivery Fee",
+               Text(
+                StringRes.deliveryFee,
                 style: TextStyle(fontSize: 14),
               ),
-              const Text(
-                "FREE",
+               Text(
+                StringRes.free,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.green,
@@ -65,8 +67,8 @@ class PriceDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Discount",
+               Text(
+                StringRes.discount,
                 style: TextStyle(fontSize: 14),
               ),
               Obx(() => Text(
@@ -89,7 +91,7 @@ class PriceDetailsWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Total Amount",
+                StringRes.totalAmount,
                 style: Themes.light.textTheme.displayMedium!.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -115,7 +117,7 @@ class PriceDetailsWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
             ),
             child: Obx(() => Text(
-              "You will save ₹${cartController.cartTotal.value?.save ?? 0} on this order",
+              "${ StringRes.youWillSave} ₹${cartController.cartTotal.value?.save ?? 0} on this order",
               style: const TextStyle(
                 color: Colors.green,
                 fontWeight: FontWeight.w500,

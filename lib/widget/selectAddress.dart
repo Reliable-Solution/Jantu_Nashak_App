@@ -5,6 +5,7 @@ import 'package:keep_app/widget/buttonWidget.dart';
 import '../Theme/nativeTheme.dart';
 import '../constant/colorConst.dart';
 import '../controller/addressController.dart';
+import '../utils/string_res.dart';
 import '../view/address/pickupAddressScreen.dart';
 
 void showAddressBottomSheet(BuildContext context) {
@@ -29,9 +30,9 @@ void showAddressBottomSheet(BuildContext context) {
           if (controller.allAddressList.isEmpty) {
             return Column(
               children: [
-                Center(child: Text("No Data Found")),
+                Center(child: Text(StringRes.noDataFound)),
                 ButtonWidgets(
-                  title: "Add Address",
+                  title: StringRes.addAddress,
                   voidCallback: () {
                     clearTextFields(controller);
                     Get.to(() => PickupAddressScreen())?.then((_) {
@@ -129,7 +130,7 @@ void showAddressBottomSheet(BuildContext context) {
                   ),
                 ),
                 ButtonWidgets(
-                  title: "Add Address",
+                  title: StringRes.addAddress,
                   voidCallback: () {
                     clearTextFields(controller);
                     Get.to(() => PickupAddressScreen())?.then((_) {

@@ -20,7 +20,10 @@ class CategoryComponent extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Get.to(SubCategoryScreen(category: categoryModel!.categoryId));
+        Get.to(
+          SubCategoryScreen(category: categoryModel!.categoryId),
+          transition: Transition.zoom,
+        );
         // Navigate to product details if needed
       },
       child: Container(

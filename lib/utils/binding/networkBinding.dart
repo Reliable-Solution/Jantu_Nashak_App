@@ -1,4 +1,5 @@
 
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:keep_app/controller/addressController.dart';
 import 'package:keep_app/controller/cartController.dart';
@@ -8,6 +9,7 @@ import 'package:keep_app/controller/languageController.dart';
 import 'package:keep_app/controller/orderController.dart';
 import 'package:keep_app/controller/productDetailController.dart';
 import 'package:keep_app/controller/subCategoreyController.dart';
+import 'package:keep_app/controller/ticketController.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../controller/accountController.dart';
 import '../../controller/dashboardController.dart';
@@ -32,5 +34,7 @@ class NetworkBinding extends Bindings {
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
     Get.lazyPut<EditProfileController>(() => EditProfileController(), fenix: true);
     Get.lazyPut<WebViewController>(() => WebViewController(), fenix: true);
+    Get.lazyPut<TicketController>(() => TicketController(), fenix: true);
+    Get.lazyPut<Dio>(() => Dio(), fenix: true);
   }
 }

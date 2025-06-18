@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../constant/imagesConst.dart';
+import '../../utils/string_res.dart';
 import '../dashboard/dashboardScreen.dart';
 
 class PaymentSucess extends StatefulWidget {
@@ -38,7 +39,7 @@ class _PaymentSucessState extends State<PaymentSucess> {
           children: [
             Transform.scale(child:  Image.asset(Images.success,scale: 0.2,),scale: 0.5,),
             SizedBox(height: 30,),
-            Text("Payment SuccessFully",style: TextStyle(color: Colors.white,fontSize: 18),)
+            Text(StringRes.paymentSuccessFully,style: TextStyle(color: Colors.white,fontSize: 18),)
             
           ],
         ),

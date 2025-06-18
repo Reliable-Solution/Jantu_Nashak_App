@@ -7,6 +7,7 @@ import 'package:keep_app/view/dashboard/dashboardScreen.dart';
   import '../../constant/app_constant.dart';
   import '../../constant/colorConst.dart';
 import '../../controller/orderController.dart';
+import '../../utils/string_res.dart';
 
   class Orderdetailscreen extends StatefulWidget {
     const Orderdetailscreen({super.key});
@@ -30,7 +31,7 @@ import '../../controller/orderController.dart';
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        title: Text('ORDER DETAILS'),
+        title: Text(StringRes.orderDetails),
         ),
       body: SingleChildScrollView(
         child: Obx(() {
@@ -43,18 +44,13 @@ import '../../controller/orderController.dart';
 
 
           if (orderController.orderDetailList.isEmpty == null) {
-            return Center(child: Text("No Order Found"));
+            return Center(child: Text(StringRes.noOrderFound));
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Order Summary
               OrderSummary(ordersDetailsList: orderController.orderDetailList),
-              // orderSummary(context),
-
-              // SizedBox(height: 20),
-              // Order Tracking
-              // orderTracking(context),
 
               SizedBox(height: 20),
               // Cancel Order Button
@@ -86,16 +82,16 @@ import '../../controller/orderController.dart';
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Order Placed", style: TextStyle(fontWeight: FontWeight.bold)),
-          Text("Delivery by ${orderController.orderDetailList[0].otherDetail![0].orderDate}", style: TextStyle(color: Colors.grey)),
+          Text(StringRes.orderPlaced, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text("${StringRes.deliveryBy} ${orderController.orderDetailList[0].otherDetail![0].orderDate}", style: TextStyle(color: Colors.grey)),
           SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              trackingStep("Ordered", "${orderController.orderDetailList[0].otherDetail![0].orderDate}", true),
-              trackingStep("Shipped", "", false),
-              trackingStep("Out for Delivery", "", false),
-              trackingStep("Delivery", "${orderController.orderDetailList[0].otherDetail![0].orderDeliveryDate}", false),
+              trackingStep(StringRes.ordered, "${orderController.orderDetailList[0].otherDetail![0].orderDate}", true),
+              trackingStep(StringRes.shipped, "", false),
+              trackingStep(StringRes.outForDelivery, "", false),
+              trackingStep(StringRes.delivery, "${orderController.orderDetailList[0].otherDetail![0].orderDeliveryDate}", false),
             ],
           ),
         ],
@@ -135,7 +131,7 @@ import '../../controller/orderController.dart';
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-            Expanded(child: Text("Cancellation available till shopping",)),
+            Expanded(child: Text(StringRes.cancellationAvailableTillShipping,)),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: COLOR.appBaseColor,
@@ -150,7 +146,7 @@ import '../../controller/orderController.dart';
                 orderController.getOrderDetail( orderController.orderDetailList[0].otherDetail![0].orderId);
                 orderController.update();
               },
-              child: Text("Cancel Order", style: TextStyle(color: Colors.white)),
+              child: Text(StringRes.cancelOrder, style: TextStyle(color: Colors.white)),
             ),
                     ],
                   ),
@@ -173,7 +169,7 @@ import '../../controller/orderController.dart';
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Delivery Address",
+              Text(StringRes.deleiveryAddress,
                   style: TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
@@ -189,7 +185,7 @@ import '../../controller/orderController.dart';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Recently Viewed", style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(StringRes.recentlyViewed, style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -210,7 +206,7 @@ import '../../controller/orderController.dart';
         children: [
           Image.network('https://via.placeholder.com/100',
               width: 100, height: 100),
-          Text("Shirt", style: TextStyle(fontSize: 12)),
+          Text(StringRes.shirt, style: TextStyle(fontSize: 12)),
         ],
       ),
     );
@@ -227,7 +223,7 @@ import '../../controller/orderController.dart';
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Total Product Price ₹${orderController.orderDetailList[0].otherDetail![0].total}",
+          Text("${StringRes.totalProductPrice} ₹${orderController.orderDetailList[0].otherDetail![0].total}",
               style: TextStyle(fontWeight: FontWeight.bold)),
           // Text("You saved ₹30", style: TextStyle(color: Colors.green)),
           SizedBox(height: 10),
@@ -272,7 +268,7 @@ import '../../controller/orderController.dart';
             if (orderDetail != null && orderDetail.isNotEmpty) {
               return OrderCard(order: orderDetail);
             } else {
-              return Center(child: Text("No Order Details Available"));
+              return Center(child: Text(StringRes.noOrderDetailsAvailable));
             }
             // return OrderCard(order: orders[0].orderDetailData![0].orders![index]);
           },
@@ -336,7 +332,7 @@ import '../../controller/orderController.dart';
                                 Text(
                                   // item.productName
                                   order[index].productName
-                                      ?? "Product Name",
+                                      ?? StringRes.productName,
                                   style: const TextStyle(fontSize: 14),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -354,7 +350,7 @@ import '../../controller/orderController.dart';
                                   // item.isEasyReturn == 1
                                   //     ? "All issue easy returns allowed"
                                   //     :
-                                  "Only wrong/defect item returns allowed",
+                                  StringRes.onlyWrongDefectItemReturnsAllowed,
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey.shade700,
@@ -364,7 +360,7 @@ import '../../controller/orderController.dart';
                                 Row(
                                   children: [
                                     Text(
-                                      "Size: 'Free Size'",
+                                      "${StringRes.size}: '${StringRes.freeSize}'",
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey.shade700,
@@ -388,14 +384,14 @@ import '../../controller/orderController.dart';
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Sold by : ${order[index].productName ?? 'Seller'}",
+                            "${StringRes.soldBy} : ${order[index].productName ?? '${StringRes.seller}'}",
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey.shade700,
                             ),
                           ),
-                          const Text(
-                            "Free Delivery",
+                           Text(
+                            StringRes.freeDelivery,
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -443,8 +439,8 @@ import '../../controller/orderController.dart';
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Cancelled',
+                   Text(
+                    StringRes.cancelled,
                     style: TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
@@ -477,8 +473,8 @@ import '../../controller/orderController.dart';
               // Navigate to Dashboard
               // Navigator.pushNamed(context, '/dashboard');
             },
-            child: const Text(
-              'GO TO DASHBOARD',
+            child:  Text(
+              StringRes.goToDashboard,
               style: TextStyle(
                 color: Colors.purple,
                 fontWeight: FontWeight.bold,

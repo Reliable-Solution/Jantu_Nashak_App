@@ -74,13 +74,14 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static String baseUrl =
-        // "https://kffashionnew.reliablesolution.in/Admin/Ajax/";
-       "https://keep.reliablesolution.in/Admin/Ajax/";
+        "https://kffashionnew.reliablesolution.in/Admin/Ajax/";
+       // "https://keep.reliablesolution.in/Admin/Ajax/";
       // "http://192.168.1.112:8000/Admin/Ajax/";
+
   static final Dio _dio = Dio(
     BaseOptions(
-       // baseUrl: "https://kffashionnew.reliablesolution.in/Admin/Ajax/",
-       baseUrl: "https://keep.reliablesolution.in/Admin/Ajax/",
+       baseUrl: "https://kffashionnew.reliablesolution.in/Admin/Ajax/",
+       // baseUrl: "https://keep.reliablesolution.in/Admin/Ajax/",
       // baseUrl: "http://192.168.1.112:8000/Admin/Ajax/",
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
@@ -93,6 +94,7 @@ class ApiService {
       print("Response $response");
 
       if (response.statusCode == 200) {
+        print("Response  code ${response.statusCode}");
         return response;
       } else {
         throw Exception("Failed to fetch data: ${response.statusCode}");
@@ -144,7 +146,11 @@ class ApiService {
       print("======== cURL Command ========");
       print(curl.toString());
       print("==============================");
-      final response = await _dio.post(endpoint, data: formData);
+      final response = await _dio.post(endpoint, data: formData, options: Options(
+        headers: {
+          "Cookie" : 'ci_session=a4546d65e592cda9a7a377fddf8145473b17410b'
+        }
+      ));
       if (response.statusCode == 200) {
         return response;
       } else {

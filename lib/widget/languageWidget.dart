@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../constant/colorConst.dart';
 import '../controller/languageController.dart';
+import '../utils/string_res.dart';
 
 void showLanguageBottomSheet(BuildContext context) {
   showModalBottomSheet(
@@ -35,7 +36,7 @@ class LanguageSelectionSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Change Language",
+                  StringRes.changeLanguage,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 IconButton(

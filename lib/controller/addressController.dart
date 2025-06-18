@@ -19,8 +19,10 @@ class AddressController extends GetxController {
   TextEditingController txtLandmark = TextEditingController();
   TextEditingController txtType = TextEditingController();
   final TextEditingController searchController = TextEditingController();
+  final RxString errorMessage = ''.obs;
 
   RxBool isAddress = false.obs;
+  RxBool isSearching = false.obs;
   RxList<AddressModel> addressList = <AddressModel>[].obs;
   RxList<AddressModel> filteredList = <AddressModel>[].obs;
 
@@ -56,7 +58,7 @@ class AddressController extends GetxController {
   @override
   Future<void> onInit() async {
     getPrefs();
-    filteredList.assignAll(addressList);
+    // filteredList.assignAll(addressList);
     super.onInit();
   }
 
@@ -72,15 +74,38 @@ class AddressController extends GetxController {
   }
 
   void searchCategory(String query) {
-    if (query.isEmpty) {
-      filteredList.assignAll(addressList);
-    } else {
-      filteredList.assignAll(
-        addressList.where((item) =>
-            item.addressColony!.toLowerCase().contains(query.toLowerCase())),
-      );
-    }
+    isSearching.value = true; // ✅ Start loader
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (query.isEmpty) {
+        filteredList.assignAll(allAddressList);
+      } else {
+        filteredList.assignAll(
+          allAddressList.where((item) =>
+          item.addressFullName!.toLowerCase().contains(query.toLowerCase()) ||
+              item.addressMobileNo!.toLowerCase().contains(query.toLowerCase()) ||
+              item.addressColony!.toLowerCase().contains(query.toLowerCase())),
+        );
+      }
+      isSearching.value = false; // ✅ Stop loader after filtering
+    });
   }
+
+  // void searchCategory(String query) {
+  //   if (query.isEmpty) {
+  //     filteredList.assignAll(allAddressList);
+  //   } else {
+  //     filteredList.assignAll(
+  //         allAddressList.where((item) =>
+  //         item.addressFullName!.toLowerCase().contains(query.toLowerCase()) ||
+  //             item.addressMobileNo!.toLowerCase().contains(query.toLowerCase()) ||
+  //             item.addressColony!.toLowerCase().contains(query.toLowerCase())
+  //         ));
+  //     //   addressList.where((item) =>
+  //     //       item.addressColony!.toLowerCase().contains(query.toLowerCase())),
+  //     // );
+  //   }
+  // }
   addAddressData({AddressModel? addressModel}) async {
     try {
       final Map<String, dynamic> body = {
@@ -100,6 +125,7 @@ class AddressController extends GetxController {
 
       if (response.data['IsSuccess'] == true) {
         allAddressList.add(addressModel);
+        filteredList.add(addressModel);
         print("sub category data ${allAddressList.length}");
         // isCategory = true.obs;
         update();
@@ -115,12 +141,15 @@ class AddressController extends GetxController {
 
   getAllAddress() async {
     try {
-      isAddress.value = false;
+      isAddress.value = true;
+      allAddressList.clear();
+      filteredList.clear();
+
 
       if (allAddressList.isNotEmpty && selectedAddressId.isEmpty) {
         selectedAddressId.value = allAddressList.last.addressId.toString();
       }
-      allAddressList.clear();
+      // allAddressList.clear();
       final Map<String, dynamic> body = {
         "CustomerId": customerModel!.value.customerId,
         'FirmId':firmId
@@ -134,16 +163,27 @@ class AddressController extends GetxController {
             .map((addressJson) => AddressModel.fromJson(addressJson))
             .toList();
         print("address data ${allAddressList.length}");
-          isAddress.value = true;
+
+        filteredList.assignAll(allAddressList);
+
         // isCategory = true.obs;
         update();
       } else {
+        print("Address list ${allAddressList.length}");
+        print("Address list ${filteredList.length}");
         throw Exception("Error: ${response.data['Message']}");
       }
+      // isAddress.value = false;
+      update();
     } catch (e) {
       print("Error in Fetch Address Data: $e");
       throw Exception("Failed to fetch address data");
     }
+    finally {
+      isAddress.value = false;
+      update();
+    }
+
   }
 
   deleteAddressData({String? customerId, String? addressId}) async {
@@ -170,6 +210,7 @@ class AddressController extends GetxController {
   updateAddressData({AddressModel? addressModel,String? addressId}) async {
     try {
       print(addressModel);
+      print("Address Id ${addressId}");
       final Map<String, dynamic> body = {
         "CustomerId": addressModel!.customerId,
         "AddressFullName": addressModel.addressFullName,
@@ -178,7 +219,7 @@ class AddressController extends GetxController {
         "Address": addressModel.addressColony,
         "AddressLandmark": addressModel.addressLandmark,
         "AddressType": addressModel.addressType,
-        "AddressId":addressModel.addressId,
+        "AddressId": addressId,
         'FirmId':firmId
 
       };
@@ -186,8 +227,17 @@ class AddressController extends GetxController {
       print(" Add Update Address data ${response.data}");
       if (response.data['IsSuccess'] == true) {
         int index = allAddressList.indexWhere((element) => element.addressId == addressId,);
-        allAddressList[index] = addressModel;
+        // allAddressList[index] = addressModel;
+        print("All Address IDs: ${allAddressList.map((e) => e.addressId).toList()}");
+
         print("Update Address Data ${allAddressList.length}");
+        if (index != -1) {
+          allAddressList[index] = addressModel;
+          print("Updated Address at index $index");
+        } else {
+          print("No address found with ID $addressId. Skipping update.");
+        }
+        getAllAddress();
         // isCategory = true.obs;
         update();
         Get.back();

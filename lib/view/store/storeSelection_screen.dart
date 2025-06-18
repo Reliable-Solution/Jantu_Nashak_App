@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../constant/colorConst.dart';
+import '../../utils/string_res.dart';
 import '../splash/splashScreen.dart';
 
 class StoreselectionScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _StoreselectionScreenState extends State<StoreselectionScreen>  with Ticke
 
   void _confirmStoreSwitch() {
     Get.defaultDialog(
-      title: 'Switch Store?',
+      title: StringRes.chooseStore,
       middleText: 'Are you sure you want to switch to Store?',
       textConfirm: 'YES',
       textCancel: 'NO',
@@ -104,13 +105,13 @@ class _StoreselectionScreenState extends State<StoreselectionScreen>  with Ticke
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'Switch Store?',
+                 Text(
+                  StringRes.switchStore,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Are you sure you want to switch to Store?',
+                 Text(
+                  StringRes.confirmSwitchStore,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -124,14 +125,14 @@ class _StoreselectionScreenState extends State<StoreselectionScreen>  with Ticke
                       onPressed: (){
                         Get.offAll(() => SplashScreen());
                       },
-                      child: const Text('YES', style: TextStyle(color: Colors.white)),
+                      child:  Text(StringRes.yes, style: TextStyle(color: Colors.white)),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[200],
                       ),
                       onPressed: () => Get.back(),
-                      child: const Text('NO', style: TextStyle(color: Colors.black)),
+                      child:  Text(StringRes.no, style: TextStyle(color: Colors.black)),
                     ),
                   ],
                 ),

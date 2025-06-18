@@ -109,6 +109,9 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                 children: [
                   IconButtonWidget(
                     voidCallback: () {
+                      cartController.getCartDetails(cartController.customerModel!.value.customerId!);
+                      cartController.getCartTotal(cartController.customerModel!.value.customerId!);
+
                       Get.to(() => CartScreen(
                             removeCart: productRemove,
                           ));
@@ -159,7 +162,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Text(
-                    "Sub categories",
+                    StringRes.subCategories,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -175,9 +178,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
               [
                 Container(
                   color: COLOR.background,
-                  // margin: EdgeInsets.all(2),
                   padding: EdgeInsets.all(6),
-                  // padding: EdgeInsets.symmetric(vertical: 10),
                   width: MediaQuery.of(context).size.width,
                   child:
                       GetBuilder<SubCategoryController>(builder: (controller) {
@@ -219,7 +220,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Text(
-                  "All Products",
+                  StringRes.allProducts,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -236,7 +237,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                 ? SliverToBoxAdapter(
                     child: Padding(
                     padding: const EdgeInsets.all(20),
-                    child: Center(child: Text("Data not founded")),
+                    child: Center(child: Text(StringRes.dataNotFound)),
                   ))
                 : SliverGrid(
                     delegate: SliverChildBuilderDelegate(

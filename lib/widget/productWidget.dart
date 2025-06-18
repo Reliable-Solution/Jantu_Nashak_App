@@ -23,7 +23,6 @@ import 'alignWidget.dart';
 import 'iconButtonWidget.dart';
 
 class ProductComponent extends StatelessWidget {
-
   ProductComponent({
     super.key,
     @required this.products,
@@ -32,16 +31,15 @@ class ProductComponent extends StatelessWidget {
   final ProductModel? products;
   final ShareProductController controller = Get.find();
   final HomeController homeController = Get.find();
+
   double calculateDiscount(double mrp, double srp) {
     print('Invalid MRP or SRP values $mrp $srp');
-    if (mrp <= 0 ) {
+    if (mrp <= 0) {
       throw Exception("Invalid MRP or SRP values $mrp $srp");
     }
     double discount = ((mrp - srp) / mrp) * 100;
     return discount;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +48,13 @@ class ProductComponent extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Get.to(() => ProductDetailScreen(products: products!,isExpanded: true,));
+        Get.to(
+          () => ProductDetailScreen(
+            products: products!,
+            isExpanded: true,
+          ),
+          transition: Transition.rightToLeftWithFade,
+        );
       },
       child: Container(
         alignment: Alignment.center,
@@ -61,67 +65,72 @@ class ProductComponent extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-             Stack(
-               children: [
-                 Hero(
-                   transitionOnUserGestures: true,
-                   tag: "photonew${products!.packInfo?[0].productdetailId}",
-                   child: CachedNetworkImage(
-                     imageUrl: '$IMAGE_URL${products!.packInfo![0].productdetailImages![0]}',
-                     height: heightView,
-                     width: double.infinity,
-                     fit: BoxFit.fitHeight,
-                     placeholder: (context, url) => Shimmer.fromColors(
-                       baseColor: Colors.grey[300]!,
-                       highlightColor: Colors.grey[100]!,
-                       child: Container(
-                         height: heightView,
-                         width: double.infinity,
-                         color: Colors.white,
-                       ),
-                     ),
-                     errorWidget: (context, url, error) => Center(
-                       child: Icon(Icons.broken_image, color: Colors.red, size: 50),
-                     ),
-                   ),
-                 ),
-                 Container(
-                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                   child: AlignWidget(
-                     alignment: Alignment.topRight,
-                     child: GetBuilder<HomeController>(
-                       builder: (_controller) => CircleAvatar(
-                         maxRadius: 15,
-                         backgroundColor: COLOR.background.withOpacity(0.8),
-                         child: GetBuilder<ShareProductController>(
-                           builder:(controller) =>  IconButtonWidget(
-                             voidCallback: () {
-                               if (products!.isFav == false) {
-                                 controller.addWishlist(productId: products!.productId!);
-                                 products!.isFav = true;
-                                 _controller.update();
-                               } else {
-                                 controller.removeWishList(productId: products!.productId!);
-                                 products!.isFav = false;
-                                 _controller.update();
-                               }
+            Stack(
+              children: [
+                Hero(
+                  transitionOnUserGestures: true,
+                  tag: "photonew${products!.packInfo?[0].productdetailId}",
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        '$IMAGE_URL${products!.packInfo![0].productdetailImages![0]}',
+                    height: heightView,
+                    width: double.infinity,
+                    fit: BoxFit.fitHeight,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        height: heightView,
+                        width: double.infinity,
+                        color: Colors.white,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Center(
+                      child:
+                          Icon(Icons.broken_image, color: Colors.red, size: 50),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: AlignWidget(
+                    alignment: Alignment.topRight,
+                    child: GetBuilder<HomeController>(
+                      builder: (_controller) => CircleAvatar(
+                        maxRadius: 15,
+                        backgroundColor: COLOR.background.withOpacity(0.8),
+                        child: GetBuilder<ShareProductController>(
+                          builder: (controller) => IconButtonWidget(
+                            voidCallback: () {
+                              if (products!.isFav == false) {
+                                controller.addWishlist(
+                                    productId: products!.productId!);
+                                products!.isFav = true;
+                                _controller.update();
+                              } else {
+                                controller.removeWishList(
+                                    productId: products!.productId!);
+                                products!.isFav = false;
+                                _controller.update();
+                              }
 
-                               _controller.update();
-                             },
-                             color:
-                             products!.isFav == false ? COLOR.black : COLOR.appBaseColor,
-                             icons: products!.isFav == false
-                                 ? Icons.favorite_border
-                                 : Icons.favorite,
-                             size: 20,
-                           ),
-                         ),
-                       ),
-                     ),
-                   ),
-                 ),
-               ],
-             ),
+                              _controller.update();
+                            },
+                            color: products!.isFav == false
+                                ? COLOR.black
+                                : COLOR.appBaseColor,
+                            icons: products!.isFav == false
+                                ? Icons.favorite_border
+                                : Icons.favorite,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child: Column(
@@ -140,9 +149,9 @@ class ProductComponent extends StatelessWidget {
                                 title: '${products!.productName}',
                                 style:
                                     Themes.light.textTheme.bodyMedium!.copyWith(
-                                      fontSize: 15,
+                                  fontSize: 15,
                                   color: COLOR.black,
-                                   fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w800,
                                   //     fontFamily: 'GentiumPlus'
                                 ),
                               ),
@@ -156,7 +165,7 @@ class ProductComponent extends StatelessWidget {
                                 ),
                                 TextWiget(
                                   title:
-                                  '₹${products!.packInfo![0].productdetailMrp!} ',
+                                      '₹${products!.packInfo![0].productdetailMrp!} ',
                                   style: Themes.light.textTheme.bodyMedium!
                                       .copyWith(
                                     color: COLOR.grey,
@@ -164,8 +173,9 @@ class ProductComponent extends StatelessWidget {
                                   ),
                                 ),
                                 TextWiget(
-                                  title: '${calculateDiscount(double.parse(products!.packInfo![0].productdetailMrp!), double.parse(products!.packInfo![0].productdetailSrp!)).toInt()} % ${StringRes.off}',
-                                style: Themes.dark.textTheme.displayMedium!
+                                  title:
+                                      '${calculateDiscount(double.parse(products!.packInfo![0].productdetailMrp!), double.parse(products!.packInfo![0].productdetailSrp!)).toInt()} % ${StringRes.off}',
+                                  style: Themes.dark.textTheme.displayMedium!
                                       .copyWith(
                                     color: COLOR.green,
                                   ),
@@ -176,63 +186,65 @@ class ProductComponent extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 30,
-                        child: IconButtonWidget(
-                           icons: Icons.share_outlined,
+                          width: 30,
+                          child: IconButtonWidget(
+                              icons: Icons.share_outlined,
+                              voidCallback: () async {
+                                showSharingDialog(context);
+                                List<XFile> files = [];
+                                List<String> images = products!
+                                        .packInfo![0].productdetailImages ??
+                                    [];
+                                for (int i = 0; i < images.length; i++) {
+                                  final url =
+                                      Uri.parse('$IMAGE_URL${images[i]}');
+                                  final response = await http.get(url);
 
-                          voidCallback: () async {
-                            showSharingDialog(context);
-                            List<XFile> files = [];
-                            List<String> images = products!
-                                .packInfo![0].productdetailImages ??
-                                [];
-                            for (int i = 0; i < images.length; i++) {
-                              final url =
-                              Uri.parse('$IMAGE_URL${images[i]}');
-                              final response = await http.get(url);
+                                  var dir = await getTemporaryDirectory();
 
-                              var dir = await getTemporaryDirectory();
+                                  File file =
+                                      await File('${dir.path}/$i\\myItem.png')
+                                          .writeAsBytes(response.bodyBytes);
 
-                              File file =
-                              await File('${dir.path}/$i\\myItem.png')
-                                  .writeAsBytes(response.bodyBytes);
+                                  files.add(XFile(file.path));
 
-                              files.add(XFile(file.path));
-
-                              productDetailsController.updateProgress((i + 1));
-                            }
-                            productDetailsController.updateImagesStatus(true);
-
-                            await Share.shareXFiles(files);
-                            productDetailsController.startDescriptionSharing();
-
-                            for (int i = 0; i <= 100; i += 10) {
-                              await Future.delayed(
-                                  Duration(milliseconds: 100));
-                              productDetailsController.updateProgress(i / 100);
-                            }
-                            await Share.share(
-                                '${products!.productDescription}');
-                            productDetailsController.updateDescriptionStatus(
-                                true);
-                            productDetailsController
-                                .updateProgress(1.0); // Complete progress
-
-                            Future.delayed(Duration(milliseconds: 500),
-                                  () {
-                                Navigator.pop(
-                                    context); // Close popup after sharing
-                                productDetailsController.updateImagesStatus(
-                                    false);
+                                  productDetailsController
+                                      .updateProgress((i + 1));
+                                }
                                 productDetailsController
-                                    .updateDescriptionStatus(false);
-                              },
-                              // icons: Icons.share_outlined,
-                            )
-                            ;
-                          })
-    )],
+                                    .updateImagesStatus(true);
 
+                                await Share.shareXFiles(files);
+                                productDetailsController
+                                    .startDescriptionSharing();
+
+                                for (int i = 0; i <= 100; i += 10) {
+                                  await Future.delayed(
+                                      Duration(milliseconds: 100));
+                                  productDetailsController
+                                      .updateProgress(i / 100);
+                                }
+                                await Share.share(
+                                    '${products!.productDescription}');
+                                productDetailsController
+                                    .updateDescriptionStatus(true);
+                                productDetailsController
+                                    .updateProgress(1.0); // Complete progress
+
+                                Future.delayed(
+                                  Duration(milliseconds: 500),
+                                  () {
+                                    Navigator.pop(
+                                        context); // Close popup after sharing
+                                    productDetailsController
+                                        .updateImagesStatus(false);
+                                    productDetailsController
+                                        .updateDescriptionStatus(false);
+                                  },
+                                  // icons: Icons.share_outlined,
+                                );
+                              }))
+                    ],
                   ),
                 ],
               ),

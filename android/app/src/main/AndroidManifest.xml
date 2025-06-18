@@ -5,6 +5,15 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Camera permission for capturing images -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Storage permissions for Android 12 and below -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+
+    <!-- Media permission for Android 13 and above -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <queries>
         <intent>
@@ -30,6 +39,7 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
 
+
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme"
@@ -51,11 +61,16 @@
                 <data android:scheme="com.keepapp.phonepe"/>
             </intent-filter>
 
+
         </activity>
 
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
     <queries>

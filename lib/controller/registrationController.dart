@@ -1,4 +1,6 @@
   import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
   import 'package:get/get.dart';
   import 'package:keep_app/constant/api_endpoints.dart';
 import 'package:keep_app/constant/app_constant.dart';
@@ -108,7 +110,7 @@ import 'package:keep_app/constant/app_constant.dart';
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         print('User granted permission');
         String? token = await messaging.getToken();
-        registerUser(token!);
+        // registerUser(context,token!);
         print('FCM Token: $token');
       } else {
         print('User declined or has not accepted permission');
@@ -116,7 +118,7 @@ import 'package:keep_app/constant/app_constant.dart';
       isLoading.value = false; // 🔴 API call complete hone ke baad loading false
     }
   
-    registerUser(String token) async {
+    registerUser(BuildContext context,String token) async {
       try {
         final Map<String, dynamic> body = {
           'CustomerName': name.value.toString(),
@@ -141,12 +143,12 @@ import 'package:keep_app/constant/app_constant.dart';
           if (data  is List && data.isNotEmpty) {
             CustomerModel customerModel = CustomerModel.fromJson(data[0]);
             print("Customer Name: ${customerModel.customerName}");
-  
+
             helper.setCustomer(customerModel);
             Get.snackbar('Success', 'OTP sent to your mobile.');
+            sendOTPPhone(context,phoneNumber.value);
              Get.to(() => OTPVerificationScreen(registerPhoneNumber: phoneNumber.value));
           }  else if (data == 0) {
-            // ✅ Customer pehle se registered hai
             Get.snackbar('Info', 'You already have an account. Please sign in.');
             Get.offAll(() => LoginScreen());
           }
@@ -180,4 +182,134 @@ import 'package:keep_app/constant/app_constant.dart';
         throw Exception("Failed to register");
       }
     }
+
+    Future<void> sendOTPPhone(BuildContext context,String phoneNumber) async {
+      try {
+        isLoading.value = true; // Loader start
+
+        if (phoneNumber.isEmpty || phoneNumber.length < 10) {
+          snackBarMessengers(context,
+              message: "Please enter a valid phone number.");
+          return;
+        }
+        // Request body
+        final Map<String, dynamic> body = {
+          "dial_code": "91",
+          "phone": phoneNumber.toString(),
+        };
+        print('Request Body Phone Number : $body');
+
+        // Dio POST call
+        var response = await ApiService.post(endpoint: SendOtp, body: body);
+        if (response.data['IsSuccess'] == true) {
+          Get.snackbar('Success', 'OTP sent to your mobile.');
+          Get.to(() => OTPVerificationScreen(phoneNumber: phoneNumber));
+          isLoading.value = false;
+          update();
+        } else {
+          Get.snackbar('Error', response.data['Message']);
+        }
+      } catch (e) {
+        isLoading.value = false;
+        print("Error in sendOtp: $e");
+        Get.snackbar('Error', 'Something went wrong. Please try again.');
+      }
+    }
+
+    // Future<void> verifyPhoneOtp(BuildContext context, String otp, String phoneNumber) async {
+    //   try {
+    //     isLoading.value = true;
+    //     if (otp.length != 6) {
+    //       throw "Enter a valid 6-digit OTP";
+    //     }
+    //     print(otp);
+    //     final Map<String, dynamic> body = {
+    //       'otp': otp.trim(),
+    //       'phone': phoneNumber.toString(),
+    //     };
+    //     var response = await ApiService.post(endpoint: VerifyOtp, body: body);
+    //
+    //     if (response.data['IsSuccess'] == true) {
+    //       print("Responces Data ${response.data}");
+    //
+    //       // var data = response.data["Data"];
+    //       var data = response.data['Data'];
+    //       var userData = data['userData'];
+    //
+    //       if (userData is List && userData.isNotEmpty) {
+    //         Get.snackbar('Success', response.data['Message']);
+    //         CustomerModel customerModel = CustomerModel.fromJson(userData[0]);
+    //         helper.setCustomer(customerModel);
+    //         Get.snackbar('Success', 'Login Successfully');
+    //         Get.offAll(() => DashboardScreen(pageIndex: 0));
+    //         homeController.getPrefs();
+    //         homeController.getDashboardData(customerModel.customerId);
+    //         update();
+    //       }
+    //       // if (data is List && data.isNotEmpty) {
+    //       //   Get.snackbar('Success', response.data['Message']);
+    //       //   CustomerModel customerModel = CustomerModel.fromJson(data[0]);
+    //       //   helper.setCustomer(customerModel);
+    //       //   if (isLoading.value) {
+    //       //     Get.snackbar('Success', 'Login SuccessFully');
+    //       //   } else {
+    //       //     Get.snackbar('Success', 'Register SuccessFully');
+    //       //   }
+    //       //   Get.offAll(() => DashboardScreen(pageIndex: 0));
+    //       //   isLoading.value = false;
+    //       //
+    //       //   update();
+    //       // }
+    //     } else {
+    //       print(" OTP Verification Failed: ${response.data['Message']}");
+    //       Get.snackbar('Error', response.data['Message'], backgroundColor: Colors.red);
+    //     }
+    //   } catch (e) {
+    //     isLoading.value = false;
+    //     print(" CATCH verifyOtp: $e");
+    //     Get.snackbar('Error', 'Failed to verify OTP. Please try again.', backgroundColor: Colors.red);
+    //   }
+    // }
+
+    snackBarMessengers(context, {message, color, isDuration = false}) {
+      ScaffoldMessenger.of(context).showSnackBar(isDuration
+          ? SnackBar(
+          duration: const Duration(milliseconds: 500),
+          content: Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color: color ?? Colors.red,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Text(
+                message.toString(),
+                // style: appCss.dmDenseMedium16
+                //     .textColor(appColor(context).whiteBg)
+              )),
+          backgroundColor: Colors.transparent,
+          behavior: SnackBarBehavior.floating,
+          elevation: 0,
+          padding: EdgeInsets.zero)
+          : SnackBar(
+          content: Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color: color ?? Colors.red,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Text(
+                message.toString(),
+                // style: appCss.dmDenseMedium16
+                //     .textColor(Colors.white)
+              )),
+          backgroundColor: Colors.transparent,
+          behavior: SnackBarBehavior.floating,
+          elevation: 0,
+          padding: EdgeInsets.zero));
+      /* ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Text(message.toString(),
+          style: appCss.dmDenseMedium16.textColor(appColor(context).whiteBg)),
+      backgroundColor: color ?? Colors.red.withOpacity(0.8)));*/
+    }
+
   }
+

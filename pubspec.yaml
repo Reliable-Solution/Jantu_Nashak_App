@@ -104,6 +104,13 @@ dependencies:
   pinput: ^5.0.1
   webview_flutter: ^4.4.2
   toggle_list: ^0.3.1
+  connectivity_plus: ^5.0.2
+  another_flushbar: ^1.12.30
+  permission_handler: ^12.0.0+1
+  intl: ^0.20.2
+  sentry_flutter: ^8.14.2
+  image_cropper: ^9.1.0
+
 
 
 
@@ -138,6 +145,7 @@ flutter:
     - assets/fonts/
     - assets/language/
     - assets/gif/
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

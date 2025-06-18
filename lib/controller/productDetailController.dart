@@ -25,6 +25,7 @@ class ProductDetailsController extends GetxController
   bool isUpdateLoading = false;
   bool isCartLoading = false;
   bool isCart = false;
+  RxBool isLoader = false.obs;
 
   double downloadProgress = 0.0;
   bool isImagesDownloaded = false;
@@ -71,6 +72,8 @@ class ProductDetailsController extends GetxController
 
   Future<void> addToCart(ProductModel productModel,String productDetailId ) async {
     try {
+      isLoader.value = true;
+      print("Add to Cart in ${ isLoader.value}");
       final Map<String, dynamic> body = {
         'CustomerId': customerModel!.value.customerId,
         'ProductId': productModel.productId,
@@ -97,6 +100,11 @@ class ProductDetailsController extends GetxController
         Get.find<CartController>().getCartTotal(
           Get.find<CartController>().customerModel!.value.customerId!,
         );
+        isLoader.value = false;
+        print("Add to Cart out ${ isLoader.value}");
+
+
+        // isLoader = false.obs;
         // Get.find<CartController>().update();
         update();
       } else {

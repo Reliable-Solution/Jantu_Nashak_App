@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,9 +16,11 @@ import '../dashboard/dashboardScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   final AuthController controller = Get.put(AuthController());
-   final OTPController otpController = Get.put(OTPController());
+  final OTPController otpController = Get.put(OTPController());
 
   TextEditingController txtNumber = TextEditingController();
+  TextEditingController txtPhoneNumber = TextEditingController();
+  TextEditingController txtOtpNumber = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -29,7 +29,8 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           StringRes.signIn,
-          style: TextStyle(color: COLOR.background,fontWeight: FontWeight.w500),
+          style:
+              TextStyle(color: COLOR.background, fontWeight: FontWeight.w500),
         ),
         backgroundColor: COLOR.appBaseColor,
       ),
@@ -37,11 +38,13 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction, // Auto validate on interaction
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          // Auto validate on interaction
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(StringRes.enterYourPhoneNumber, style: TextStyle(fontSize: 18)),
+              Text(StringRes.enterYourPhoneNumber,
+                  style: TextStyle(fontSize: 18)),
               SizedBox(height: 10),
               TextFormField(
                 controller: txtNumber,
@@ -53,14 +56,13 @@ class LoginScreen extends StatelessWidget {
                 onChanged: (phone) {
                   controller.setPhoneNumber(txtNumber.text);
                   controller.update();
-
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return StringRes.mobileRequired;
                   }
                   if (!RegExp(r'^[6-9]\d{9}$').hasMatch(value)) {
-                    return "Enter a valid 10-digit number";
+                    return StringRes.invalidPhoneNumber;
                   }
                   return null;
                 },
@@ -68,36 +70,35 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 20),
               Center(
                 child: Obx(() => controller.isLoading.value
-                    ? CircularProgressIndicator(color: COLOR.appBaseColor)  // 🔵 Loader dikhana
+                    ? CircularProgressIndicator(
+                        color: COLOR.appBaseColor) // 🔵 Loader dikhana
                     : ElevatedButton(
-                  onPressed: () async{
-                    SharedHelper helper = SharedHelper();
+                        onPressed: () async {
+                          SharedHelper helper = SharedHelper();
 
-                  bool? isDeleted =  await helper.getStoredBool(key: SharedHelper.deleteAccountKey);
-                  if(isDeleted ?? false){
-                    Fluttertoast.showToast(msg: 'You have deleted your account please contact Admin');
-                    return;
-                  }
+                          bool? isDeleted = await helper.getStoredBool(
+                              key: SharedHelper.deleteAccountKey);
+                          if (isDeleted ?? false) {
+                            Fluttertoast.showToast(
+                                msg:
+                                StringRes.accountDeleted);
+                            return;
+                          }
 
-                    if (_formKey.currentState!.validate()) {
-                      txtNumber.text = controller.phoneNumber.value;
-                      // Get.offAll(() => DashboardScreen(pageIndex: 0));
-
-                        otpController.onVerifyCode(txtNumber.text,context);
-                       // otpService.requestOtp(txtNumber.text);
-                       otpController.startTimer();
-
-                       controller.getToken();
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: COLOR.appBaseColor),
-                  child: Text(
-                    StringRes.continueString,
-                    style: Themes.light.textTheme.displaySmall!.copyWith(
-                      color: COLOR.background,
-                    ),
-                  ),
-                )),
+                          if (_formKey.currentState!.validate()) {
+                            txtNumber.text = controller.phoneNumber.value;
+                            await controller.sendOTPPhone(context);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: COLOR.appBaseColor),
+                        child: Text(
+                          StringRes.continueString,
+                          style: Themes.light.textTheme.displaySmall!.copyWith(
+                            color: COLOR.background,
+                          ),
+                        ),
+                      )),
               ),
               SizedBox(height: 10),
               Padding(
@@ -105,14 +106,14 @@ class LoginScreen extends StatelessWidget {
                 child: RichText(
                   text: TextSpan(
                     text:
-                    'By continuing, you agree to the Terms & Conditions and Privacy Policy.',
+                    StringRes.agreeTerms,
                     style: TextStyle(
                       color: COLOR.black,
                       fontSize: 16,
                     ),
                     children: [
                       TextSpan(
-                        text: 'Sign Up',
+                        text: StringRes.signUp,
                         style: TextStyle(
                           color: COLOR.appBaseColor,
                           fontSize: 16,
@@ -120,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                             Get.offAll(() => RegistrationScreen());
+                            Get.offAll(() => RegistrationScreen());
                           },
                       ),
                     ],

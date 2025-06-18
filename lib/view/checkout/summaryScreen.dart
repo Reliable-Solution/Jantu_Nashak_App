@@ -19,6 +19,7 @@ import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../constant/app_constant.dart';
+import '../../utils/string_res.dart';
 import '../AddtoCard/cartScreen.dart';
 import 'addressScreen.dart';
 
@@ -99,91 +100,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
     });
   }
 
-  // void startPhonePeTransaction(int amount) async {
-  //   try {
-  //     Map<String, dynamic> payload = getPhonePePayload(amount);
-  //     print("PhonePe Payload: $payload");
-  //     print("PhonePe Checksum: $checksum");
-  //     Map<dynamic, dynamic>? response = await PhonePePaymentSdk.startTransaction(
-  //       json.encode(payload),
-  //       checksum,
-  //       // packageName: "com.phonepe.app",
-  //     );
-  //     print("PhonePe Transaction Response: $response");
-  //     setState(() {
-  //       if (response != null) {
-  //         String status = response['status']?.toString() ?? 'UNKNOWN';
-  //         String error = response['error']?.toString() ?? '';
-  //         print("Summary Screen ${status}");
-  //         if (status == 'SUCCESS') {
-  //           result = "PhonePe Flow Completed - Status: Success!";
-  //           checkoutController.placeOrderCheckout(
-  //             customerId: "${addressController.customerModel!.value.customerId}",
-  //             addressId: "${addressController.selectedAddressId}",
-  //             orderPaymentMethod: "${checkoutController.selectedPaymentMethod}",
-  //             orderTransactionNo: "",
-  //           );
-  //           cartController.cartCount.value = 0;
-  //           cartController.cartList.clear();
-  //           cartController.update();
-  //           homeController.getDashboardData(
-  //               addressController.customerModel!.value.customerId);
-  //           Fluttertoast.showToast(
-  //             msg: "PhonePe Payment Successful",
-  //             toastLength: Toast.LENGTH_LONG,
-  //             gravity: ToastGravity.BOTTOM,
-  //             timeInSecForIosWeb: 4,
-  //             backgroundColor: Colors.green,
-  //             textColor: Colors.white,
-  //             fontSize: 16.0,
-  //           );
-  //           Get.offAll(() => DashboardScreen(pageIndex: 0));
-  //         } else {
-  //           result = "PhonePe Flow Completed - Status: $status, Error: $error";
-  //           Fluttertoast.showToast(
-  //             msg: "PhonePe Payment Failed: $error",
-  //             toastLength: Toast.LENGTH_LONG,
-  //             gravity: ToastGravity.BOTTOM,
-  //             timeInSecForIosWeb: 4,
-  //             backgroundColor: Colors.red,
-  //             textColor: Colors.white,
-  //             fontSize: 16.0,
-  //           );
-  //         }
-  //       } else {
-  //         result = "PhonePe Flow Incomplete";
-  //         Fluttertoast.showToast(
-  //           msg: "PhonePe Payment Incomplete",
-  //           toastLength: Toast.LENGTH_LONG,
-  //           gravity: ToastGravity.BOTTOM,
-  //           timeInSecForIosWeb: 4,
-  //           backgroundColor: Colors.red,
-  //           textColor: Colors.white,
-  //           fontSize: 16.0,
-  //         );
-  //       }
-  //     });
-  //   } catch (error) {
-  //     handlePhonePeError(error);
-  //   }
-  // }
 
-  // Object getPhonePePayload(int amount) {
-  //   Map<String, dynamic> reqData = {
-  //     "merchantId": merchantId,
-  //     "merchantTransactionId": "MT${DateTime.now().millisecondsSinceEpoch}",
-  //     "merchantUserId": "${addressController.customerModel!.value.customerId}",
-  //     "amount": amount * 100,
-  //     "callbackUrl": callback,
-  //     "mobileNumber": "${addressController.customerModel!.value.customerPhoneNo ?? '9999999999'}",
-  //     "paymentInstrument": {"type": "PAY_PAGE"},
-  //     "deviceContext": {"deviceOS": "ANDROID"},
-  //   };
-  //   return base64Encode(utf8.encode(jsonEncode(reqData)));
-  //   String base64Body = base64.encode(utf8.encode(json.encode(reqData)));
-  //   checksum = '${sha256.convert(utf8.encode(base64Body + apiEndPoint + saltKey))}###$saltIndex';
-  //   return reqData;
-  // }
   String generateBase64Body(int amount) {
     Map<String, dynamic> payload = {
       "merchantId": merchantId,
@@ -209,9 +126,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
     try {
       String base64Body = generateBase64Body(amount);
       String checksum = generateChecksum(base64Body);
-
-      print("PhonePe Payload: $base64Body");
-      print("PhonePe Checksum: $checksum");
 
       PhonePePaymentSdk.startTransaction(base64Body, callback, checksum, null)
           .then((response) {
@@ -324,13 +238,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  void openPaymentGateway(int amount,PaymentGateway gateWay) async {
+  void openPaymentGateway(int amount, PaymentGateway gateWay) async {
     int finalAmount = amount * 100;
     print("RazorPay key ${gateWay.gatewayCredentialsJson!['key_id']}");
     var options = {
       'key': gateWay.gatewayCredentialsJson!['key_id'],
       'amount': finalAmount,
-      'name': '${addressController.customerModel!.value.customerName}',
+      'name': addressController.customerModel!.value.customerName,
       'description': '-Shopping',
       'prefill': {
         'contact':
@@ -363,7 +277,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           appbarPadding: 0,
           elevation: 1,
           title: TextWiget(
-            title: "SUMMARY",
+            title:  StringRes.summary,
             style: Themes.light.textTheme.displayLarge,
           ),
           leading: InkWell(
@@ -392,120 +306,125 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildProgressStep(1, "Cart", false, true),
+                    _buildProgressStep(1,  StringRes.cart, false, true),
                     _buildProgressLine(true),
-                    _buildProgressStep(2, "Address", false, true),
+                    _buildProgressStep(2,  StringRes.address, false, true),
                     _buildProgressLine(true),
-                    _buildProgressStep(3, "Payment", false, true),
+                    _buildProgressStep(3,  StringRes.payment, false, true),
                     _buildProgressLine(true),
-                    _buildProgressStep(4, "Summary", true, false),
-                  ],
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                color: Colors.white,
-                child: Row(
-                  children: [
-                    Icon(Icons.local_shipping_outlined,
-                        color: Colors.blue.shade700),
-                    const SizedBox(width: 12),
-                    Text(
-                      "Estimated Delivery by Wednesday, 26th Jul",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue.shade700),
-                    ),
+                    _buildProgressStep(4,  StringRes.summary, true, false),
                   ],
                 ),
               ),
             ),
             SliverToBoxAdapter(child: const SizedBox(height: 8)),
             Obx(
-              () => cartController.cartList.isEmpty
+              () =>
+              cartController.isCartLoading.value
                   ? SliverToBoxAdapter(
-                      child: const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text("No items in cart"),
-                        ),
-                      ),
-                    )
-                  : SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          CartDetailModel item = cartController.cartList[index];
-                          return Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 70,
-                                      height: 70,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.grey.shade300),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Image.network(
-                                        "${IMAGE_URL + item.packInfo![0].productdetailImages![0]!}" ??
-                                            'http://surti.idnmserver.com/resources/product_no_image.png',
-                                        fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Image.asset(
-                                              "assets/images/noInternet.jpg");
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            item.productName ?? "Product Name",
-                                            style:
-                                                const TextStyle(fontSize: 14),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: COLOR.appBaseColor,
+                  ),
+                ),
+              )
+
+                  :cartController.cartList.isEmpty
+                      ? SliverToBoxAdapter(
+                          child:  Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text( StringRes.noItemsInCart),
+                            ),
+                          ),
+                        )
+                      : SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              CartDetailModel item =
+                                  cartController.cartList[index];
+                              return Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.grey.shade300),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
                                           ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            "₹${item.productdetailSrp ?? 0}",
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                          child: Image.network(
+                                            "${IMAGE_URL + item.packInfo![0].productdetailImages![0]!}" ??
+                                                'http://surti.idnmserver.com/resources/product_no_image.png',
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Image.asset(
+                                                  "assets/images/noInternet.jpg");
+                                            },
                                           ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            "Only wrong/defect item returns allowed",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey.shade700,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Row(
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Size: ${item.productSize}",
+                                                item.productName ??
+                                                    StringRes.productName,
+                                                style: const TextStyle(
+                                                    fontSize: 14),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                "₹${item.productdetailSrp ?? 0}",
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                StringRes.onlyWrongDefectItemReturnsAllowed,
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.grey.shade700,
                                                 ),
                                               ),
-                                              const SizedBox(width: 12),
+                                              const SizedBox(height: 4),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "${StringRes.size}: ${item.productSize}",
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color:
+                                                          Colors.grey.shade700,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 12),
+                                                  Text(
+                                                    "${StringRes.qty}: ${item.cartQuantity ?? 1}",
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color:
+                                                          Colors.grey.shade700,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                               Text(
-                                                "Qty: ${item.categoryId ?? 1}",
+                                                "${StringRes.color}: ${item.productColor}",
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.grey.shade700,
@@ -513,59 +432,50 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                               ),
                                             ],
                                           ),
-                                          Text(
-                                            "Color: ${item.productColor}",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey.shade700,
-                                            ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Get.off(() => CartScreen());
+                                          },
+                                          child: Icon(
+                                            Icons.chevron_right,
+                                            color: Colors.grey.shade400,
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        Get.off(() => CartScreen());
-                                      },
-                                      child: Icon(
-                                        Icons.chevron_right,
-                                        color: Colors.grey.shade400,
-                                      ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "${StringRes.soldBy} : ${item.productName ?? '${StringRes.seller}'}",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey.shade700,
+                                          ),
+                                        ),
+                                         Text(
+                                          StringRes.freeDelivery,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Sold by : ${item.productName ?? 'Seller'}",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey.shade700,
-                                      ),
-                                    ),
-                                    const Text(
-                                      "Free Delivery",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Divider(),
-                            ],
-                          );
-                        },
-                        childCount: cartController.cartList.length,
-                      ),
-                    ),
+                                  ),
+                                  const Divider(),
+                                ],
+                              );
+                            },
+                            childCount: cartController.cartList.length,
+                          ),
+                        ),
             ),
             SliverToBoxAdapter(child: const SizedBox(height: 8)),
             SliverToBoxAdapter(
@@ -578,8 +488,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Delivery Address",
+                         Text(
+                          StringRes.deleiveryAddress,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
@@ -600,19 +510,19 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               address.addressId.toString() ==
                               addressController.selectedAddressId.value);
                       return selectedAddress == null
-                          ? const Text("No address selected")
+                          ?  Text(StringRes.noAddressSelected)
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  selectedAddress.addressFullName ?? "Name",
+                                  selectedAddress.addressFullName ?? StringRes.name,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   "${selectedAddress.addressColony ?? ''}, ${selectedAddress.cityName ?? ''}, ${selectedAddress.stateName ?? ''}, ${selectedAddress.addressPincode ?? ''}\n"
-                                  "New York ${selectedAddress.addressPincode ?? ''}\n"
+                                  // "New York ${selectedAddress.addressPincode ?? ''}\n"
                                   "${selectedAddress.addressMobileNo ?? ''}",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -622,7 +532,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  "EDIT",
+                                  StringRes.edit,
                                   style: TextStyle(
                                     color: COLOR.appBaseColor,
                                     fontWeight: FontWeight.w500,
@@ -647,8 +557,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Payment Mode",
+                         Text(
+                          StringRes.paymentMode,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
@@ -664,13 +574,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     const SizedBox(height: 12),
                     Obx(() => Text(
                           checkoutController.selectedPaymentMethod.value ==
-                                  "COD"
-                              ? "Cash on Delivery"
+                              StringRes.cashOnDelivery
+                              ? StringRes.cashOnDelivery
                               : checkoutController
                                           .selectedPaymentMethod.value ==
-                                      "RazorPay"
-                                  ? "RazorPay"
-                                  : "PhonePe",
+                              StringRes.razorPay
+                                  ? StringRes.razorPay
+                                  : StringRes.phonePe,
                           style: const TextStyle(fontWeight: FontWeight.w500),
                         )),
                   ],
@@ -694,7 +604,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             ],
           ),
           child: ButtonWidgets(
-            title: "Place Order",
+            title: StringRes.placeOrder,
             style: Themes.light.textTheme.displayLarge!.copyWith(
               color: Colors.white,
             ),
@@ -719,19 +629,18 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     addressController.customerModel!.value.customerId);
                 Get.offAll(() => DashboardScreen(pageIndex: 0));
               }
-              // else if (checkoutController.selectedPaymentMethod.value ==
-              //     "online") {
-               else if (checkoutController.selectedPaymentMethod.value == "RazorPay") {
-                 print("Payment Method ${checkoutController.selectedPaymentMethod.value} ${checkoutController.paymentGateway!.gatewayCredentialsJson!['key_id']}");
-                   openPaymentGateway(
-                      cartController.cartTotal.value!.totalInteger!,checkoutController.paymentGateway!);
-                } else if (checkoutController.selectedPayment.value ==
-                    "PhonePe") {
-                  // checkoutController.selectedPaymentMethod.value = "online";
-                  startPhonePeTransaction(
-                      cartController.cartTotal.value!.totalInteger!);
-                }
-
+              else if (checkoutController.selectedPaymentMethod.value ==
+                  "RazorPay") {
+                print(
+                    "Payment Method ${checkoutController.selectedPaymentMethod.value} ${checkoutController.paymentGateway!.gatewayCredentialsJson!['key_id']}");
+                openPaymentGateway(
+                    cartController.cartTotal.value!.totalInteger!,
+                    checkoutController.paymentGateway!);
+              } else if (checkoutController.selectedPayment.value ==
+                  "PhonePe") {
+                startPhonePeTransaction(
+                    cartController.cartTotal.value!.totalInteger!);
+              }
             },
             color: COLOR.appBaseColor,
           ),
@@ -750,11 +659,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isActive
-                ? Colors.blue
-                : (isCompleted ? Colors.blue : Colors.grey.shade300),
+                ? COLOR.appBaseColor
+                : (isCompleted ? COLOR.appBaseColor : Colors.grey.shade300),
             border: Border.all(
               color:
-                  isActive || isCompleted ? Colors.blue : Colors.grey.shade400,
+                  isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade400,
               width: 1,
             ),
           ),
@@ -775,7 +684,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive || isCompleted ? Colors.blue : Colors.grey.shade600,
+            color: isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade600,
             fontWeight:
                 isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
           ),
@@ -788,7 +697,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
     return Container(
       width: 40,
       height: 1,
-      color: isActive ? Colors.blue : Colors.grey.shade300,
+      color: isActive ? COLOR.appBaseColor : Colors.grey.shade300,
     );
   }
 }

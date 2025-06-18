@@ -31,7 +31,8 @@ import '../search/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final HomeController _controller = Get.put(HomeController()); // ensure registration
+  final HomeController _controller =
+      Get.put(HomeController()); // ensure registration
   final CartController cartController = Get.put(CartController());
   ProductDetailsController productDetailsController = Get.find();
 
@@ -60,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                     snap: false,
                     pinned: true,
                     floating: true,
-                      title: Obx(() => TextWiget(
+                         title: Obx(() => TextWiget(
                           title: _controller.customerModel != null
                               ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
                               : StringRes.hello,
@@ -69,20 +70,27 @@ class HomeScreen extends StatelessWidget {
                     actions: [
                       IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WishlistScreen(),
-                                ));
+                            Get.to(
+                              () => WishlistScreen(),
+                              transition: Transition.rightToLeftWithFade,
+                            );
                           },
                           icon: Icon(Icons.favorite_border)),
                       Stack(
                         children: [
                           IconButtonWidget(
                             voidCallback: () {
-                              Get.to(() => CartScreen(
-                                    removeCart: productRemove,
-                                  ));
+                              cartController.getCartDetails(cartController
+                                  .customerModel!.value.customerId!);
+                              cartController.getCartTotal(cartController
+                                  .customerModel!.value.customerId!);
+
+                              Get.to(
+                                () => CartScreen(
+                                  removeCart: productRemove,
+                                ),
+                                // transition: Transition.rightToLeftWithFade,
+                              );
                             },
                             icons: Icons.shopping_cart_outlined,
                             color: COLOR.black,
@@ -113,7 +121,6 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     )
                                   : SizedBox();
-
                             }),
                           ),
                         ],
@@ -324,7 +331,7 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: Text(
-                          "Trending Products",
+                          StringRes.trendingProducts,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -355,12 +362,20 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
       ),
-      floatingActionButton: FloatingActionButton(elevation: 10,onPressed: () {
-
-        Get.to(FaqScreen());
-
-      },
-        child: Icon(Icons.help,color: COLOR.background,),backgroundColor: COLOR.appBaseColor,),
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        onPressed: () {
+          Get.to(
+            FaqScreen(),
+            transition: Transition.rightToLeftWithFade,
+          );
+        },
+        child: Icon(
+          Icons.help,
+          color: COLOR.background,
+        ),
+        backgroundColor: COLOR.appBaseColor,
+      ),
     );
   }
 
@@ -469,4 +484,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

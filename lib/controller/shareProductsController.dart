@@ -148,6 +148,13 @@ class ShareProductController extends GetxController {
       print("Error in getWishListData: $e");
       throw Exception("Failed to get WishList data: $e");
     }
+    finally {
+      isWishLoading = false;
+
+      // isAddress.value = false;
+      update();
+    }
+
   }
 
 

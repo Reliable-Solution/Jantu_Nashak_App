@@ -41,7 +41,7 @@ class DashboardScreen extends StatelessWidget {
               ),
               _bottomNavigationBarItem(
                 icon: _controller.tabIndex == 1 ? Icons.store_outlined : Icons.store,
-                label: 'Change Store',
+                label:  StringRes.changeStore,
               ),
               // _bottomNavigationBarItem(
               //   icon: _controller.tabIndex == 2 ? Icons.shopping_bag_rounded : Icons.shopping_bag_outlined,

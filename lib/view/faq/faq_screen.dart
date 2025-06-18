@@ -10,12 +10,6 @@ import '../../controller/faq_controller.dart';
 import '../../utils/string_res.dart';
 import '../../widget/appBarWidget.dart';
 import '../../widget/textWidget.dart';
-// import 'package:toggle_list/toggle_list.dart';
-// import '../../../Common/constants.dart';
-// import '../../../a_structure/constant/app_styles.dart';
-// import '../../../a_structure/constant/image_const.dart';
-// import '../../../data/models/faq_model.dart';
-// import 'faq_controller.dart';
 
 class FaqScreen extends StatelessWidget {
   final controller = Get.put(FaqController());
@@ -42,19 +36,12 @@ class FaqScreen extends StatelessWidget {
         height: 90,
         appbarPadding: 0,
         title: TextWiget(
-          title: 'Help Desk',
+          title: StringRes.helpDesk,
           style: Themes.light.textTheme.displayLarge,
         ),
         elevation: 1,
       ),
 
-      // appBar: AppBar(
-      //   backgroundColor: COLOR.appBaseColor,
-      //   title: const Text(
-      //     'Help Desk',
-      //     style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-      //   ),
-      // ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -85,7 +72,7 @@ class FaqScreen extends StatelessWidget {
                         // style: GoogleFonts.lato(color: COLOR.appBaseColor),
                         cursorColor: COLOR.appBaseColor,
                         decoration: InputDecoration(
-                          hintText: 'Search Help',
+                          hintText: StringRes.searchHelp,
                           hintStyle: const TextStyle(fontSize: 13),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
@@ -106,9 +93,9 @@ class FaqScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const Padding(
+             Padding(
               padding: EdgeInsets.only(bottom: 8),
-              child: Text('FAQ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              child: Text(StringRes.faq, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
             const SizedBox(height: 10),
             Expanded(
@@ -146,17 +133,9 @@ class FaqScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item.modulesDescription ?? 'No description available',
+                            Text(item.modulesDescription ?? StringRes.noDescriptionAvailable,
                                 style: const TextStyle(fontSize: 14)),
                             const SizedBox(height: 10),
-                            // Image.network(
-                            //   '$IMAGE_URL${item.modulesImageLink ?? ''}',
-                            //   height: 740,
-                            //   width: double.infinity,
-                            //   fit: BoxFit.cover,
-                            //   errorBuilder: (context, error, stackTrace) =>
-                            //   const Text('Failed to load image'),
-                            // ),
                           ],
                         ),
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../controller/webView/webViewController.dart';
+import '../../utils/string_res.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
@@ -34,12 +35,12 @@ class WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WebView'),
+        title:  Text(StringRes.webView),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: controller.reload,
-            tooltip: 'Reload',
+            tooltip: StringRes.reload,
           ),
         ],
       ),

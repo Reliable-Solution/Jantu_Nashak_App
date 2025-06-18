@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:keep_app/constant/colorConst.dart';
@@ -9,6 +10,7 @@ import 'package:keep_app/view/otp/otp_screen.dart';
 import 'package:keep_app/widget/buttonWidget.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../controller/otpController.dart';
+import '../../utils/sharedPrefs.dart';
 import '../../utils/string_res.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -123,11 +125,20 @@ class RegistrationScreen extends StatelessWidget {
                               CircularProgressIndicator()) // 🟢 Loading Indicator
                       : Center(
                           child: ButtonWidgets(
-                            voidCallback: () {
+                            voidCallback: () async {
+                              SharedHelper helper = SharedHelper();
+
+                              bool? isDeleted =  await helper.getStoredBool(key: SharedHelper.deleteAccountKey);
+                              if(isDeleted ?? false){
+                                Fluttertoast.showToast(msg: StringRes.deleteAccount);
+                                return;
+                              }
                               if (_formKey.currentState!.validate()) {
-                                otpController.onVerifyCode(txtNumber.text,context);
+                                // otpController.verifyPhoneOtp(verifyPhoneOtp,txtNumber.text,);
                                 otpController.startTimer();
-                                controller.getToken();
+                                controller.registerUser(context,"");
+
+                                // controller.getToken();
                               }
                             },
                             title: StringRes.register,

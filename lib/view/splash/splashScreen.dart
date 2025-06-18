@@ -111,6 +111,7 @@ import '../../constant/colorConst.dart';
 import '../../controller/splashController.dart';
 import '../../models/customerModel.dart';
 import '../../utils/sharedPrefs.dart';
+import '../../utils/string_res.dart';
 import '../dashboard/dashboardScreen.dart';
 import '../otp/phone_auth.dart';
 
@@ -292,7 +293,7 @@ class _SplashScreenState extends State<SplashScreen>
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      barrierLabel: "Choose Store",
+      barrierLabel: StringRes.chooseStore,
       transitionDuration: const Duration(milliseconds: 500),
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox(); // Required for pageBuilder, but we use transitionBuilder.
@@ -347,8 +348,8 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Choose Store',
+                     Text(
+                      StringRes.chooseStore,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

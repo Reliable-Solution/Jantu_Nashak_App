@@ -304,16 +304,19 @@
 //   }
 // }
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:keep_app/constant/app_constant.dart';
 import 'package:keep_app/controller/dashboardController.dart';
 
+import '../../constant/imagesConst.dart';
 import '../../controller/homeController.dart';
 import '../../controller/splashController.dart';
 import '../../models/customerModel.dart';
 import '../../utils/sharedPrefs.dart';
+import '../../utils/string_res.dart';
 import '../dashboard/dashboardScreen.dart';
 import '../otp/phone_auth.dart';
 // import 'login_screen.dart';
@@ -323,16 +326,15 @@ class StoreSelectionScreen extends StatefulWidget {
   _StoreSelectionScreenState createState() => _StoreSelectionScreenState();
 }
 
-class _StoreSelectionScreenState extends State<StoreSelectionScreen> with SingleTickerProviderStateMixin {
+class _StoreSelectionScreenState extends State<StoreSelectionScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   final controller = Get.put(SplashController());
-   final HomeController homeController =
-      Get.put(HomeController());
-
+  final HomeController homeController = Get.put(HomeController());
+  bool i = false;
 
   SharedHelper helper = SharedHelper();
-
 
   @override
   void initState() {
@@ -360,26 +362,23 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen> with Single
     super.dispose();
   }
 
-  Future<void> _navigateToLogin(String store,String? firmIdSave) async {
+  Future<void> _navigateToLogin(String store, String? firmIdSave) async {
     print("Store button ${store}");
     CustomerModel? customerModel = await helper.getCustomer();
-     // Get.put(HomeController());  // Sirf yaha ek baar
+    // Get.put(HomeController());  // Sirf yaha ek baar
 
     await helper.storeString("firmIdKey", firmIdSave!);
-     firmId = firmIdSave ?? '';
+    firmId = firmIdSave ?? '';
     print("Saved firm ID: $firmId");
-    DashboardController dashboardController =Get.find();
-    dashboardController.tabIndex =0;
+    DashboardController dashboardController = Get.find();
+    dashboardController.tabIndex = 0;
     dashboardController.update();
     Get.off(
-      customerModel == null
-          ? LoginScreen()
-          : DashboardScreen(pageIndex: 0),
+      customerModel == null ? LoginScreen() : DashboardScreen(pageIndex: 0),
       transition: Transition.fade,
       duration: const Duration(milliseconds: 500),
     );
     homeController.getDashboardData(customerModel!.customerId);
-
 
     // Navigator.of(context).push(
     //   PageRouteBuilder(
@@ -395,74 +394,231 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen> with Single
     // );
   }
 
+  Future<bool> isConnectedToInternet() async {
+    var result = await Connectivity().checkConnectivity();
+    return result != ConnectivityResult.none;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF900C3F),
-      body:
-      controller.firmList.isEmpty
-          ? Center(child: Text('No firms found.',style: TextStyle(color: Colors.white),))
+        backgroundColor: Color(0xFF900C3F),
+        body: GetBuilder<SplashController>(
+          builder: (controller) {
+            if (controller.isLoading.value) {
+              return Center(child: CircularProgressIndicator());
+            }
 
-    :  Center(
-        child: ScaleTransition(
-          scale: _scaleAnimation,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.85,
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 15,
-                  spreadRadius: 5,
+            if (!controller.hasInternet.value ||
+                controller.checkException.value.contains("Network Error")) {
+              return NoNetworkWidget(
+                onRetry: () => controller.getFirm(),
+              );
+            }
+
+            if (controller.firmList.isEmpty) {
+              return Center(
+                child: Text(
+                  StringRes.noFirmFound,
+                  style: TextStyle(color: Colors.white),
                 ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Select a Store',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF900C3F),
-                  ),
-                ),
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildStoreButton(
-                      controller.firmList[0].firmName!,
-                      controller.firmList[0].firmLogo!,
-                      // Icons.shopping_bag,
-                          () => _navigateToLogin('Reeya Saree',controller.firmList[0].firmId),
-                    ),
-                    _buildStoreButton(
-                      controller.firmList[1].firmName!,
-                      controller.firmList[1].firmLogo!,
-                      // Icons.devices,
-                          () => _navigateToLogin('Keep Fashion',controller.firmList[1].firmId),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Choose your preferred shopping experience',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              );
+            }
+
+            return
+                // controller.isLoading.value == true
+                //   ? Center(child: CircularProgressIndicator())
+                //   : controller.checkException.contains("Network Error")
+                //       ? NoNetworkWidget(
+                //           onRetry: () {},
+                //         )
+                //       : controller.firmList.isEmpty
+                //           ? Center(
+                //               child: Text(
+                //               'No firms found.',
+                //               style: TextStyle(color: Colors.white),
+                //             ))
+                //           :
+                controller.settingList[0].settingMaintenanceMode == "No"
+                    ? Center(
+                        child: ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 15,
+                                  spreadRadius: 5,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  StringRes.selectAStore,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF900C3F),
+                                  ),
+                                ),
+                                SizedBox(height: 30),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    _buildStoreButton(
+                                      controller.firmList[0].firmName!,
+                                      controller.firmList[0].firmLogo!,
+                                      // Icons.shopping_bag,
+                                      () => _navigateToLogin('Reeya Saree',
+                                          controller.firmList[0].firmId),
+                                    ),
+                                    _buildStoreButton(
+                                      controller.firmList[1].firmName!,
+                                      controller.firmList[1].firmLogo!,
+                                      // Icons.devices,
+                                      () => _navigateToLogin('Keep Fashion',
+                                          controller.firmList[1].firmId),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  StringRes.chooseYourPreferredShoppingExperience,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 15,
+                                  spreadRadius: 5,
+                                ),
+                              ],
+                              // image: DecorationImage(image: AssetImage(Images.maintainerMode))
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: MediaQuery.sizeOf(context).width,
+                                  // height: MediaQuery.sizeOf(context).height * 0.6,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFF8F8F8),
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 8,
+                                        spreadRadius: 2,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        Images.maintainerMode,
+                                        // "${IMAGE_URL + image}" ??
+                                        //     'http://surti.idnmserver.com/resources/product_no_image.png',
+                                        fit: BoxFit.fill,
+                                        // height: 50,
+                                        // width: 50,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                              "assets/images/noInternet.jpg");
+                                        },
+                                      ),
+                                      // Image.asset(
+                                      //   // icon,
+                                      //   image,
+                                      //   // 'assets/images/p1.png',
+                                      //   height: 50,
+                                      //   width: 50,
+                                      //   // size: 50,
+                                      //   // color: Color(0xFF900C3F),
+                                      // ),
+                                      SizedBox(height: 10),
+                                      // Text(
+                                      //   name,
+                                      //   textAlign: TextAlign.center,
+                                      //   style: TextStyle(
+                                      //     fontSize: 16,
+                                      //     fontWeight: FontWeight.bold,
+                                      //     color: Color(0xFF900C3F),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+                                // Text(
+                                //   'Select a Store',
+                                //   style: TextStyle(
+                                //     fontSize: 24,
+                                //     fontWeight: FontWeight.bold,
+                                //     color: Color(0xFF900C3F),
+                                //   ),
+                                // ),
+                                // SizedBox(height: 30),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //   MainAxisAlignment.spaceEvenly,
+                                //   children: [
+                                //     _buildStoreButton(
+                                //       controller.firmList[0].firmName!,
+                                //       controller.firmList[0].firmLogo!,
+                                //       // Icons.shopping_bag,
+                                //           () => _navigateToLogin('Reeya Saree',
+                                //           controller.firmList[0].firmId),
+                                //     ),
+                                //     _buildStoreButton(
+                                //       controller.firmList[1].firmName!,
+                                //       controller.firmList[1].firmLogo!,
+                                //       // Icons.devices,
+                                //           () => _navigateToLogin('Keep Fashion',
+                                //           controller.firmList[1].firmId),
+                                //     ),
+                                //   ],
+                                // ),
+                                // SizedBox(height: 20),
+                                // Text(
+                                //   'Choose your preferred shopping experience',
+                                //   style: TextStyle(
+                                //     fontSize: 14,
+                                //     color: Colors.grey[600],
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+          },
+        ));
   }
 
   Widget _buildStoreButton(String name, String image, VoidCallback onTap) {
@@ -521,3 +677,64 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen> with Single
   }
 }
 
+// import 'package:flutter/material.dart';
+
+class NoNetworkWidget extends StatelessWidget {
+  final VoidCallback onRetry;
+
+  const NoNetworkWidget({Key? key, required this.onRetry}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.all(24),
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.wifi_off, color: Colors.redAccent, size: 60),
+            SizedBox(height: 16),
+            Text(
+              StringRes.noInternetConnection,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              StringRes.pleaseCheckYourInternetAndTryAgain,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black54),
+            ),
+            SizedBox(height: 16),
+            // ElevatedButton(
+            //   onPressed: onRetry,
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.redAccent,
+            //     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(8),
+            //     ),
+            //   ),
+            //   child: Text('Retry'),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+}

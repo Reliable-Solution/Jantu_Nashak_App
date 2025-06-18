@@ -24,3 +24,33 @@ class COLOR {
   static final Color amber = Colors.amber.shade100;
   static final Color transparent = Colors.transparent;
 }
+
+
+Map<int, Color> appprimarycolors = {
+  50: Color.fromRGBO(238, 193, 76, .1),
+  100: Color.fromRGBO(238, 193, 76, .2),
+  200: Color.fromRGBO(238, 193, 76, .3),
+  300: Color.fromRGBO(238, 193, 76, .4),
+  400: Color.fromRGBO(238, 193, 76, .5),
+  500: Color.fromRGBO(238, 193, 76, .6),
+  600: Color.fromRGBO(238, 193, 76, 0.7),
+  700: Color.fromRGBO(238, 193, 76, .8),
+  800: Color.fromRGBO(238, 193, 76, .9),
+  900: Color.fromRGBO(238, 193, 76, 1)
+};
+
+// MaterialColor(0xFFd98e8e, appprimarycolors)
+MaterialColor appPrimaryMaterialColor2 =
+MaterialColor(0xFFEEC14C, appprimarycolors);
+
+MaterialColor appPrimaryMaterialColorcard =
+MaterialColor(0xFFEEC14C, appprimarycolors);
+
+MaterialColor appPrimaryMaterialColorcardfont =
+MaterialColor(0xFFFFFFFF, appprimarycolors);
+
+MaterialColor appPrimaryMaterialColoreventcard =
+MaterialColor(0xFFEEC14C, appprimarycolors);
+
+MaterialColor appPrimaryMaterialColoreventcardfont =
+MaterialColor(0xFFFFFFFF, appprimarycolors);
