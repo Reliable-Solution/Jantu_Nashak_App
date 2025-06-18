@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                 child: RichText(
                   text: TextSpan(
                     text:
-                    StringRes.agreeTerms,
+                    StringRes.termsAndPrivacy,
                     style: TextStyle(
                       color: COLOR.black,
                       fontSize: 16,
