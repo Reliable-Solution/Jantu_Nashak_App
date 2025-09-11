@@ -38,12 +38,12 @@ class FaqModelData {
 
   FaqModelData(
       {this.modulesId,
-        this.modulesTitle,
-        this.modulesImageLink,
-        this.modulesDescription,
-        this.modulesType,
-        this.modulesStatus,
-        this.modulesCDT});
+      this.modulesTitle,
+      this.modulesImageLink,
+      this.modulesDescription,
+      this.modulesType,
+      this.modulesStatus,
+      this.modulesCDT});
 
   FaqModelData.fromJson(Map<String, dynamic> json) {
     modulesId = json['FaqId'];

@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:keep_app/controller/addressController.dart';
@@ -6,6 +5,7 @@ import 'package:keep_app/controller/cartController.dart';
 import 'package:keep_app/controller/checkoutController.dart';
 import 'package:keep_app/controller/editController.dart';
 import 'package:keep_app/controller/languageController.dart';
+import 'package:keep_app/controller/leadeController.dart';
 import 'package:keep_app/controller/orderController.dart';
 import 'package:keep_app/controller/productDetailController.dart';
 import 'package:keep_app/controller/subCategoreyController.dart';
@@ -24,17 +24,22 @@ class NetworkBinding extends Bindings {
     // Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<DashboardController>(() => DashboardController(), fenix: true);
     Get.lazyPut<AccountController>(() => AccountController(), fenix: true);
-    Get.lazyPut<ShareProductController>(() => ShareProductController(), fenix: true);
+    Get.lazyPut<ShareProductController>(() => ShareProductController(),
+        fenix: true);
     Get.lazyPut<AddressController>(() => AddressController(), fenix: true);
-    Get.lazyPut<ProductDetailsController>(() => ProductDetailsController(), fenix: true);
+    Get.lazyPut<ProductDetailsController>(() => ProductDetailsController(),
+        fenix: true);
     Get.lazyPut<CartController>(() => CartController(), fenix: true);
     Get.lazyPut<LanguageController>(() => LanguageController(), fenix: true);
-    Get.lazyPut<SubCategoryController>(() => SubCategoryController(), fenix: true);
+    Get.lazyPut<SubCategoryController>(() => SubCategoryController(),
+        fenix: true);
     Get.lazyPut<CheckoutController>(() => CheckoutController(), fenix: true);
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
-    Get.lazyPut<EditProfileController>(() => EditProfileController(), fenix: true);
+    Get.lazyPut<EditProfileController>(() => EditProfileController(),
+        fenix: true);
     Get.lazyPut<WebViewController>(() => WebViewController(), fenix: true);
     Get.lazyPut<TicketController>(() => TicketController(), fenix: true);
+    Get.lazyPut<LeaderboardController>(() => LeaderboardController(), fenix: true);
     Get.lazyPut<Dio>(() => Dio(), fenix: true);
   }
 }

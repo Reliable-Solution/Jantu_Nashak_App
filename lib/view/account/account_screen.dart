@@ -56,76 +56,76 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
         backgroundColor: COLOR.greyLight,
         appBar: MyCustomAppBar(
-          leading: SizedBox(),
+          // leading: SizedBox(),
           action: [],
           actionPadding: 10,
           height: 90,
           appbarPadding: 0,
           title: TextWiget(
             title: StringRes.account,
-            style: Themes.light.textTheme.displayLarge,
+            style: Themes.light.textTheme.headlineLarge,
           ),
           elevation: 1,
         ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 4),
-                child: Container(
-                  color: COLOR.background,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(right: 18),
-                        child: CircleAvatar(
-                          maxRadius: 31,
-                          backgroundImage: AssetImage(Images.profileicon),
-                          backgroundColor: COLOR.greyLight,
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Obx(
-                              () => Text(
-                                _controller.customerModel != null
-                                    ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
-                                    : "${StringRes.hello}",
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 5),
-                              child: TextWiget(
-                                  title: StringRes.viewProfile,
-                                  style: Themes.light.textTheme.displaySmall),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: AlignWidget(
-                          alignment: Alignment.centerRight,
-                          child: IconButtonWidget(
-                            voidCallback: () {
-                              Get.to(
-                                () => EditProfileScreen(),
-                                transition: Transition.rightToLeftWithFade,
-                              );
-                            },
-                            icons: Icons.navigate_next_outlined,
-                            size: 35,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: 4),
+              //   child: Container(
+              //     color: COLOR.background,
+              //     padding:
+              //         const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              //     child: Row(
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: <Widget>[
+              //         Padding(
+              //           padding: EdgeInsets.only(right: 18),
+              //           child: CircleAvatar(
+              //             maxRadius: 31,
+              //             backgroundImage: AssetImage(Images.profileicon),
+              //             backgroundColor: COLOR.greyLight,
+              //           ),
+              //         ),
+              //         Expanded(
+              //           child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: <Widget>[
+              //               Obx(
+              //                 () => Text(
+              //                   _controller.customerModel != null
+              //                       ? "${StringRes.hello} ${_controller.customerModel!.value.customerName}"
+              //                       : "${StringRes.hello}",
+              //                 ),
+              //               ),
+              //               Padding(
+              //                 padding: EdgeInsets.only(top: 5),
+              //                 child: TextWiget(
+              //                     title: StringRes.viewProfile,
+              //                     style: Themes.light.textTheme.displaySmall),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //         Expanded(
+              //           child: AlignWidget(
+              //             alignment: Alignment.centerRight,
+              //             child: IconButtonWidget(
+              //               voidCallback: () {
+              //                 Get.to(
+              //                   () => EditProfileScreen(),
+              //                   transition: Transition.rightToLeftWithFade,
+              //                 );
+              //               },
+              //               icons: Icons.navigate_next_outlined,
+              //               size: 35,
+              //             ),
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: AccountList(),
@@ -205,7 +205,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "FAQ",
+                          StringRes.faq,
                           style: Themes.light.textTheme.displayLarge!,
                         ),
                         Icon(Icons.help),
@@ -233,10 +233,11 @@ class _AccountScreenState extends State<AccountScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Raise A Ticket",
+                          StringRes.raiseTicket,
+                          // "Raise A Ticket",
                           style: Themes.light.textTheme.displayLarge!,
                         ),
-                        Icon(Icons.help),
+                        Icon(Icons.question_answer),
                       ],
                     ),
                   ),
@@ -267,30 +268,30 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 04),
-                child: InkWell(
-                  onTap: () {
-                    _showLogoutBottomSheet(context);
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    color: COLOR.background,
-                    // margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          StringRes.logout,
-                          style: Themes.light.textTheme.displayLarge!,
-                        ),
-                        Icon(Icons.logout),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: 04),
+              //   child: InkWell(
+              //     onTap: () {
+              //       _showLogoutBottomSheet(context);
+              //     },
+              //     child: Container(
+              //       height: MediaQuery.of(context).size.height * 0.06,
+              //       color: COLOR.background,
+              //       // margin: EdgeInsets.all(10),
+              //       padding: EdgeInsets.all(10),
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           Text(
+              //             StringRes.logout,
+              //             style: Themes.light.textTheme.displayLarge!,
+              //           ),
+              //           Icon(Icons.logout),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ));
@@ -306,24 +307,11 @@ class _AccountScreenState extends State<AccountScreen> {
           border: Border.all(color: Colors.grey, width: 0.5),
           borderRadius: BorderRadius.circular(12),
         ),
-        // padding: EdgeInsets.all(10),
-        // decoration: BoxDecoration(
-        //   color: Colors.white,
-        //   borderRadius: BorderRadius.circular(10),
-        //   border: Border.all(color: Colors.grey.shade300),
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: Colors.grey.shade200,
-        //       blurRadius: 5,
-        //       spreadRadius: 2,
-        //       offset: Offset(0, 3),
-        //     ),
-        //   ],
-        // ),
+
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.location_on, color: Color(0xff900C3F), size: 30),
+            Icon(Icons.location_on, color: Color(0xff226706), size: 30),
             SizedBox(height: 5),
             Text(
               StringRes.addAddress,
@@ -545,7 +533,9 @@ class _AccountScreenState extends State<AccountScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Are you sure you want to logout?",
+                StringRes.logoutConfirmation,
+
+                // "Are you sure you want to logout?",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 20),

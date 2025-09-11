@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:keep_app/controller/cartController.dart';
 import 'package:keep_app/controller/checkoutController.dart';
 import 'package:keep_app/controller/homeController.dart';
+import 'package:keep_app/utils/sharedPrefs.dart';
 import 'package:keep_app/view/checkout/priceDetailsScreen.dart';
 import 'package:keep_app/view/home/home_screen.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -12,6 +13,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../Theme/nativeTheme.dart';
 import '../../constant/colorConst.dart';
 import '../../controller/addressController.dart';
+import '../../models/customerModel.dart';
 import '../../utils/string_res.dart';
 import '../../widget/appBarWidget.dart';
 import '../../widget/buttonWidget.dart';
@@ -57,8 +59,13 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
     _razorpay!.clear();
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // _placeOrder(transactionId: response.paymentId!);
+  Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    // _placeOrder(transactionId: response.paymentId!);'
+    SharedHelper helper = SharedHelper();
+    CustomerModel? customerModel = await helper.getCustomer();
+    if (customerModel != null) {
+      homeController.customerModel!.value = customerModel;
+    }
     checkoutController.placeOrderCheckout(
       customerId: "${controller.customerModel!.value.customerId}",
       addressId: "${controller.selectedAddressId}",
@@ -116,7 +123,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
           elevation: 1,
           title: TextWiget(
             title: StringRes.checkout,
-            style: Themes.light.textTheme.displayLarge,
+            style: Themes.light.textTheme.headlineLarge,
           ),
         ),
         backgroundColor: COLOR.background.withOpacity(0.96),
@@ -124,57 +131,49 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               SizedBox(height: 05),
 
               Obx(() {
                 var selectedAddress = controller.allAddressList
                     .firstWhereOrNull((address) =>
-                address.addressId.toString() ==
-                    controller.selectedAddressId.value);
+                        address.addressId.toString() ==
+                        controller.selectedAddressId.value);
                 return selectedAddress == null
                     ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(child: Text(StringRes.noAddressSelected)),
-                )
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(child: Text(StringRes.noAddressSelected)),
+                      )
                     : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery
-                          .sizeOf(context)
-                          .width,
-                      // margin: EdgeInsets.all(16.0),
-                      padding: EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        // mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "${selectedAddress.addressFullName}",
-                            style: Themes.light.textTheme.displayMedium!
-                                .copyWith(fontSize: 20),
-                          ),
-                          Text(
-                            // "${selectedAddress.addressFullName}\n"
-                            "${selectedAddress.addressColony}\n${selectedAddress
-                                .cityName},${selectedAddress
-                                .stateName}, ${selectedAddress
-                                .addressPincode}\n"
-                                "${StringRes.landmark} : ${selectedAddress
-                                .addressLandmark}\n+91 ${selectedAddress
-                                .addressMobileNo}",
-                            style: Themes.light.textTheme.bodyMedium!
-                                .copyWith(fontSize: 14),
+                          Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            // margin: EdgeInsets.all(16.0),
+                            padding: EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: Column(
+                              // mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${selectedAddress.addressFullName}",
+                                  style: Themes.light.textTheme.displayMedium!
+                                      .copyWith(fontSize: 20),
+                                ),
+                                Text(
+                                  // "${selectedAddress.addressFullName}\n"
+                                  "${selectedAddress.addressColony}\n${selectedAddress.cityName},${selectedAddress.stateName}, ${selectedAddress.addressPincode}\n"
+                                  "${StringRes.landmark} : ${selectedAddress.addressLandmark}\n+91 ${selectedAddress.addressMobileNo}",
+                                  style: Themes.light.textTheme.bodyMedium!
+                                      .copyWith(fontSize: 14),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
-                      ),
-                    ),
-                  ],
-                );
+                      );
               }),
               SizedBox(height: 05),
               Center(
@@ -200,10 +199,10 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                       // }
                     },
                     color: COLOR.appBaseColor
-                  // widget.products!.packInfo![0].isCart ?? false
-                  //     ? COLOR.grey
-                  //     : COLOR.appBaseColor,
-                ),
+                    // widget.products!.packInfo![0].isCart ?? false
+                    //     ? COLOR.grey
+                    //     : COLOR.appBaseColor,
+                    ),
               ),
               // Center(
               //   child: ElevatedButton(
@@ -223,43 +222,29 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                     Text(
                       StringRes.selectPaymentMethod,
                       style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 12),
 
-                    // Obx(() =>
-                    //     buildPaymentOption(
-                    //       image: "money.png",
-                    //       title: StringRes.cashOnDelivery,
-                    //       price:
-                    //       "₹${cartController.cartTotal.value?.totalInteger
-                    //           .toString() ?? 0}",
-                    //       icon: Icons.money,
-                    //       method: "cod",
-                    //       controller: controller,
-                    //     )),
+
 
                     SizedBox(height: 12),
 
                     // Pay Online
-                    Obx(() =>
-                        buildPaymentOption(
+                    Obx(() => buildPaymentOption(
                           image: "payment-online.png",
 
                           title: StringRes.payOnline,
                           price:
-                          "₹${cartController.cartTotal.value?.totalInteger
-                              .toString() ?? 0}",
+                              "₹${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
                           discount:
-                          "Save ${cartController.cartTotal.value?.save
-                              .toString() ?? 0}",
+                              "Save ${cartController.cartTotal.value?.save.toString() ?? 0}",
                           // extraText: "Extra discount with bank offers",
                           icon: Icons.credit_card,
                           method: "online",
                           controller: controller,
                         )),
-                    Obx(() =>
-                    checkoutController.isOnlineExpanded.value
+                    Obx(() => checkoutController.isOnlineExpanded.value
                         ? buildOnlinePaymentOptions()
                         : SizedBox()),
 
@@ -302,10 +287,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 )
               ],
             ),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,155 +304,152 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                           color: COLOR.appBaseColor),
                     ),
                     Obx(
-                          () =>
-                          Text(
-                            "Rs.${cartController.cartTotal.value?.totalInteger
-                                .toString() ?? 0}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
+                      () => Text(
+                        "Rs.${cartController.cartTotal.value?.totalInteger.toString() ?? 0}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ],
                 ),
                 GetBuilder<CheckoutController>(
-                    builder: (checkoutController) =>
-                        ButtonWidgets(
-                            style: Themes.light.textTheme.displayLarge!
-                                .copyWith(color: Colors.white),
-                            // text: StringRes.addtoCart,
-                            // onPressed: () {
-                            //   if (widget.products!.packInfo![0].isCart ??
-                            //       false) {
-                            //     Fluttertoast.showToast(
-                            //         msg: StringRes.alreadyInCart);
-                            //   } else {
-                            //     controller.addToCart(widget.products!);
-                            //     widget.products!.packInfo![0].isCart = true;
-                            //     Get.find<CartController>().getCartDetails(
-                            //       Get.find<CartController>()
-                            //           .customerModel!
-                            //           .value
-                            //           .customerId!,
-                            //     );
-                            //   }
-                            title: StringRes.continueString,
-                            voidCallback: isButtonEnabled
-                                ? () {
-                              print(
-                                  "check out controller ${checkoutController
-                                      .selectedPaymentMethod.value}");
-                              if (checkoutController
-                                  .selectedPaymentMethod.value ==
-                                  "online") {
-                                openPaymentGateway(cartController
-                                    .cartTotal.value!.totalInteger);
-                              } else if (checkoutController
-                                  .selectedPaymentMethod.value ==
-                                  "cod") {
+                    builder: (checkoutController) => ButtonWidgets(
+                        style: Themes.light.textTheme.displayLarge!
+                            .copyWith(color: Colors.white),
+                        // text: StringRes.addtoCart,
+                        // onPressed: () {
+                        //   if (widget.products!.packInfo![0].isCart ??
+                        //       false) {
+                        //     Fluttertoast.showToast(
+                        //         msg: StringRes.alreadyInCart);
+                        //   } else {
+                        //     controller.addToCart(widget.products!);
+                        //     widget.products!.packInfo![0].isCart = true;
+                        //     Get.find<CartController>().getCartDetails(
+                        //       Get.find<CartController>()
+                        //           .customerModel!
+                        //           .value
+                        //           .customerId!,
+                        //     );
+                        //   }
+                        title: StringRes.continueString,
+                        voidCallback: isButtonEnabled
+                            ? () {
                                 print(
-                                    "======================= Payment method ${checkoutController
-                                        .selectedPaymentMethod}");
-                                checkoutController.placeOrderCheckout(
-                                  customerId:
-                                  "${controller.customerModel!.value
-                                      .customerId}",
-                                  addressId:
-                                  "${controller.selectedAddressId}",
-                                  orderPaymentMethod:
-                                  "${checkoutController.selectedPaymentMethod}",
-                                  orderTransactionNo: "",
-                                );
-                                cartController.cartCount.value =
-                                    cartController.cartList.length;
-                                // cartController.cartList.clear();
-                                print(
-                                    "Cart Count ${cartController.cartCount
-                                        .value}");
-                                homeController.getDashboardData(controller
-                                    .customerModel!.value.customerId);
-                                cartController.cartList.clear();
-                                cartController.update();
-                              } else if (checkoutController
-                                  .selectedPaymentMethod.value ==
-                                  "") {
-                                Fluttertoast.showToast(
-                                    msg: StringRes.pleaseSelectAddressMethod);
+                                    "check out controller ${checkoutController.selectedPaymentMethod.value}");
+                                if (checkoutController
+                                        .selectedPaymentMethod.value ==
+                                    "online") {
+                                  openPaymentGateway(cartController
+                                      .cartTotal.value!.totalInteger);
+                                } else if (checkoutController
+                                        .selectedPaymentMethod.value ==
+                                    "cod") {
+                                  print(
+                                      "======================= Payment method ${checkoutController.selectedPaymentMethod}");
+                                  checkoutController.placeOrderCheckout(
+                                    customerId:
+                                        "${controller.customerModel!.value.customerId}",
+                                    addressId:
+                                        "${controller.selectedAddressId}",
+                                    orderPaymentMethod:
+                                        "${checkoutController.selectedPaymentMethod}",
+                                    orderTransactionNo: "",
+                                  );
+                                  cartController.cartCount.value =
+                                      cartController.cartList.length;
+                                  // cartController.cartList.clear();
+                                  print(
+                                      "Cart Count ${cartController.cartCount.value}");
+                                  homeController.getDashboardData(controller
+                                      .customerModel!.value.customerId);
+                                  cartController.cartList.clear();
+                                  cartController.update();
+                                } else if (checkoutController
+                                        .selectedPaymentMethod.value ==
+                                    "") {
+                                  Fluttertoast.showToast(
+                                      msg: StringRes.pleaseSelectAddressMethod);
+                                }
                               }
-                            }
-                                : () {
-                              // checkoutController.selectedPaymentMethod.value == ""
-                              //     ? Fluttertoast.showToast(
-                              //     msg: "Please Select Payment Method")
-                              //     : null;
-                              controller.selectedAddressId.value.isEmpty
-                                  ? Fluttertoast.showToast(
-                                  msg: StringRes.pleaseSelectAddressMethod)
-                                  : checkoutController.selectedPaymentMethod
-                                  .value == ""
-                                  ? Fluttertoast.showToast(
-                                  msg: StringRes.pleaseSelectPaymentMethod)
-                                  : null;
-                            },
-                            //     () {
-                            //   // if (widget.products!.packInfo![0].isCart ??
-                            //   //     false) {
-                            //   //   Fluttertoast.showToast(
-                            //   //       msg: StringRes.alreadyInCart);
-                            //   // } else {
-                            //   //   controller.addToCart(widget.products!);
-                            //   //   widget.products!.packInfo![0].isCart = true;
-                            //   //   Get.find<CartController>().getCartDetails(
-                            //   //     Get.find<CartController>()
-                            //   //         .customerModel!
-                            //   //         .value
-                            //   //         .customerId!,
-                            //   //   );
-                            //   // }
-                            // },
-                            color: controller.selectedAddressId.value.isEmpty
+                            : () {
+                                // checkoutController.selectedPaymentMethod.value == ""
+                                //     ? Fluttertoast.showToast(
+                                //     msg: "Please Select Payment Method")
+                                //     : null;
+                                controller.selectedAddressId.value.isEmpty
+                                    ? Fluttertoast.showToast(
+                                        msg:
+                                            StringRes.pleaseSelectAddressMethod)
+                                    : checkoutController
+                                                .selectedPaymentMethod.value ==
+                                            ""
+                                        ? Fluttertoast.showToast(
+                                            msg: StringRes
+                                                .pleaseSelectPaymentMethod)
+                                        : null;
+                              },
+                        //     () {
+                        //   // if (widget.products!.packInfo![0].isCart ??
+                        //   //     false) {
+                        //   //   Fluttertoast.showToast(
+                        //   //       msg: StringRes.alreadyInCart);
+                        //   // } else {
+                        //   //   controller.addToCart(widget.products!);
+                        //   //   widget.products!.packInfo![0].isCart = true;
+                        //   //   Get.find<CartController>().getCartDetails(
+                        //   //     Get.find<CartController>()
+                        //   //         .customerModel!
+                        //   //         .value
+                        //   //         .customerId!,
+                        //   //   );
+                        //   // }
+                        // },
+                        color: controller.selectedAddressId.value.isEmpty
+                            ? Colors.grey
+                            : checkoutController.selectedPaymentMethod.value ==
+                                    ""
                                 ? Colors.grey
-                                : checkoutController.selectedPaymentMethod
-                                .value == ""
-                                ? Colors.grey : COLOR.appBaseColor
-                          // widget.products!.packInfo![0].isCart ?? false
-                          //     ? COLOR.grey
-                          //     : COLOR.appBaseColor,
+                                : COLOR.appBaseColor
+                        // widget.products!.packInfo![0].isCart ?? false
+                        //     ? COLOR.grey
+                        //     : COLOR.appBaseColor,
                         )
-                  // ElevatedButton(
-                  // onPressed:
-                  // isButtonEnabled
-                  //     ?
-                  //     () {
-                  //   if(checkoutController.selectedPaymentMethod.value == "online")
-                  //   {
-                  //     openPaymentGateway(cartController.cartTotal.value!.totalInteger);
-                  //   }
-                  //   else if(checkoutController.selectedPaymentMethod.value == "cod") {
-                  //     print(
-                  //         "======================= Payment method ${checkoutController
-                  //             .selectedPaymentMethod}");
-                  //     checkoutController.placeOrderCheckout(
-                  //       customerId: "${controller.customerModel!.value
-                  //           .customerId}",
-                  //       addressId: "${controller.selectedAddressId}",
-                  //       orderPaymentMethod: "${checkoutController
-                  //           .selectedPaymentMethod}",
-                  //       orderTransactionNo: "",
-                  //     );
-                  //      cartController.cartCount.value = cartController.cartList.length;
-                  //     // cartController.cartList.clear();
-                  //     print("Cart Count ${cartController.cartCount.value}");
-                  //     homeController.getDashboardData(controller.customerModel!.value.customerId);
-                  //      cartController.cartList.clear();
-                  //     cartController.update();
-                  //
-                  //   }
-                  //   // Get.to(HomeScreen());
-                  // }
-                  //     : null,
-                  // child: Text("Continue")),
-                )
+                    // ElevatedButton(
+                    // onPressed:
+                    // isButtonEnabled
+                    //     ?
+                    //     () {
+                    //   if(checkoutController.selectedPaymentMethod.value == "online")
+                    //   {
+                    //     openPaymentGateway(cartController.cartTotal.value!.totalInteger);
+                    //   }
+                    //   else if(checkoutController.selectedPaymentMethod.value == "cod") {
+                    //     print(
+                    //         "======================= Payment method ${checkoutController
+                    //             .selectedPaymentMethod}");
+                    //     checkoutController.placeOrderCheckout(
+                    //       customerId: "${controller.customerModel!.value
+                    //           .customerId}",
+                    //       addressId: "${controller.selectedAddressId}",
+                    //       orderPaymentMethod: "${checkoutController
+                    //           .selectedPaymentMethod}",
+                    //       orderTransactionNo: "",
+                    //     );
+                    //      cartController.cartCount.value = cartController.cartList.length;
+                    //     // cartController.cartList.clear();
+                    //     print("Cart Count ${cartController.cartCount.value}");
+                    //     homeController.getDashboardData(controller.customerModel!.value.customerId);
+                    //      cartController.cartList.clear();
+                    //     cartController.update();
+                    //
+                    //   }
+                    //   // Get.to(HomeScreen());
+                    // }
+                    //     : null,
+                    // child: Text("Continue")),
+                    )
               ],
             ),
           );
@@ -483,9 +462,14 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(itemBuilder: (context, index) {
-            return buildPaymentOption2(checkoutController.paymentMethodList[index].gatewayName!, "Offers Available", checkoutController.paymentMethodList[index].gatewayName!);
-          },),
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return buildPaymentOption2(
+                  checkoutController.paymentMethodList[index].gatewayName!,
+                  "Offers Available",
+                  checkoutController.paymentMethodList[index].gatewayName!);
+            },
+          ),
         )
         // buildPaymentOption2("PhonePe", "Offers Available", 'PhonePe'),
         // buildPaymentOption2("Razorpay", "Offers Available", 'Razorpay'),
@@ -615,7 +599,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   SizedBox(height: 4),
                   Text(title,
                       style:
-                      TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   if (extraText != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 4),

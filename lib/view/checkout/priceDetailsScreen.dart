@@ -14,7 +14,7 @@ class PriceDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding:  EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,14 +31,14 @@ class PriceDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text(
+              Text(
                 StringRes.itemTotal,
                 style: TextStyle(fontSize: 14),
               ),
               Obx(() => Text(
-                "₹${cartController.cartTotal.value?.totalInteger ?? 0}",
-                style: const TextStyle(fontSize: 14),
-              )),
+                    "₹${cartController.cartTotal.value?.totalInteger ?? 0}",
+                    style: const TextStyle(fontSize: 14),
+                  )),
             ],
           ),
           const SizedBox(height: 8),
@@ -47,11 +47,11 @@ class PriceDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text(
+              Text(
                 StringRes.deliveryFee,
                 style: TextStyle(fontSize: 14),
               ),
-               Text(
+              Text(
                 StringRes.free,
                 style: TextStyle(
                   fontSize: 14,
@@ -67,18 +67,18 @@ class PriceDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text(
+              Text(
                 StringRes.discount,
                 style: TextStyle(fontSize: 14),
               ),
               Obx(() => Text(
-                "-₹${cartController.cartTotal.value?.save ?? 0}",
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.green,
-                  fontWeight: FontWeight.w500,
-                ),
-              )),
+                    "-₹${cartController.cartTotal.value?.save ?? 0}",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.green,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )),
             ],
           ),
           const SizedBox(height: 16),
@@ -98,12 +98,12 @@ class PriceDetailsWidget extends StatelessWidget {
                 ),
               ),
               Obx(() => Text(
-                "₹${cartController.cartTotal.value?.totalInteger ?? 0}",
-                style: Themes.light.textTheme.displayMedium!.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              )),
+                    "₹${cartController.cartTotal.value?.totalInteger ?? 0}",
+                    style: Themes.light.textTheme.displayMedium!.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )),
             ],
           ),
           const SizedBox(height: 16),
@@ -117,12 +117,12 @@ class PriceDetailsWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
             ),
             child: Obx(() => Text(
-              "${ StringRes.youWillSave} ₹${cartController.cartTotal.value?.save ?? 0} on this order",
-              style: const TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.w500,
-              ),
-            )),
+                  "${StringRes.youWillSave} ₹${cartController.cartTotal.value?.save ?? 0} on this order",
+                  style: const TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )),
           ),
         ],
       ),

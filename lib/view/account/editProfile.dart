@@ -34,7 +34,7 @@ import 'editProfileSetting.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({Key? key}) : super(key: key);
-   final EditProfileController _controller = Get.find<EditProfileController>();
+  final EditProfileController _controller = Get.find<EditProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +48,7 @@ class EditProfileScreen extends StatelessWidget {
           titleSpacing: 0.0,
           title: TextWiget(
             title: StringRes.profileInformation,
-            style: Themes.light.textTheme.displayLarge,
-          ),
-          leading: InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: COLOR.greyback,
-              size: 20,
-            ),
+            style: Themes.light.textTheme.headlineLarge,
           ),
         ),
         backgroundColor: COLOR.greyLight,
@@ -75,11 +65,11 @@ class EditProfileScreen extends StatelessWidget {
                     child: TabBar(
                       isScrollable: true,
                       indicatorSize: TabBarIndicatorSize.label,
-                       controller: _controller.tabController,
-                      indicatorColor: COLOR.pink,
+                      controller: _controller.tabController,
+                      indicatorColor: COLOR.appBaseColor,
                       unselectedLabelColor: COLOR.black,
-                      labelColor: COLOR.pink,
-                       tabs: _controller.editprofileTabs,
+                      labelColor: COLOR.appBaseColor,
+                      tabs: _controller.editprofileTabs,
                     ),
                   ),
                   DividerWidget(thickness: 1, height: 0.0),
@@ -88,7 +78,7 @@ class EditProfileScreen extends StatelessWidget {
             ),
             Expanded(
               child: TabbarViewWidget(
-                 controller: _controller.tabController,
+                controller: _controller.tabController,
                 children: [
                   SingleChildScrollView(child: PrimaryScreen()),
                   // EditProfileSettingScreen(),
