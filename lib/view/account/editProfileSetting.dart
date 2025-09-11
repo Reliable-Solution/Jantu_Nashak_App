@@ -33,7 +33,8 @@ class EditProfileSettingScreen extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             child: TextWiget(
               title: StringRes.socialProfile,
-              style: Themes.light.textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w500),
+              style: Themes.light.textTheme.displaySmall!
+                  .copyWith(fontWeight: FontWeight.w500),
             ),
           ),
         ],

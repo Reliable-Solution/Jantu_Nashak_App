@@ -9,58 +9,71 @@ import 'package:keep_app/constant/colorConst.dart';
 class Themes {
   static final light = ThemeData(
     // backgroundColor: Colors.white,
-    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: COLOR.appBaseColor),
+    colorScheme:
+        ColorScheme.fromSwatch().copyWith(secondary: COLOR.appBaseColor),
     textTheme: TextTheme(
       bodyLarge: TextStyle(
         fontSize: 14,
-        color: Colors.black87,
+        color: Colors.white,
       ),
+      headlineLarge: GoogleFonts.roboto(
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+
       bodyMedium: GoogleFonts.poppins(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
         color: Colors.black87,
       ),
 
-    // TextStyle(
-    //     fontSize: 12,
-    //     color: Colors.black87,
-    //   ),
+      // TextStyle(
+      //     fontSize: 12,
+      //     color: Colors.black87,
+      //   ),
       displayLarge: GoogleFonts.roboto(
-      fontSize: 15,
-      fontWeight: FontWeight.bold,
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
         color: Colors.black87,
+      ),
+      labelLarge: GoogleFonts.roboto(
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+      // displayLargeAppBar: GoogleFonts.roboto(
+      // fontSize: 15,
+      // fontWeight: FontWeight.bold,
+      //   color: Colors.black87,
+      //
+      //
+      // ),
 
-
+      // TextStyle(
+      //     color: Colors.black87,
+      //     fontFamily: 'assets/fonts/GentiumPlus-Bold.ttf',
+      //     fontSize: 15,
+      //   ),
+      displaySmall: GoogleFonts.poppins(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Colors.black45,
       ),
 
-
-    // TextStyle(
-    //     color: Colors.black87,
-    //     fontFamily: 'assets/fonts/GentiumPlus-Bold.ttf',
-    //     fontSize: 15,
-    //   ),
-      displaySmall: GoogleFonts.poppins(
-
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: Colors.black45,
-    ),
-
-    // TextStyle(
-    //     // fontSize: Get.width > 360 ? 16 : 14,
-    //     fontFamily: 'assets/fontsGentiumPlus-Regular.ttf',
-    //     color: Colors.black87,
-    //   ),
-    //   displayMedium: TextStyle(
-    //     color: Colors.black,
-    //     fontSize: 11,
-    //   ),
+      // TextStyle(
+      //     // fontSize: Get.width > 360 ? 16 : 14,
+      //     fontFamily: 'assets/fontsGentiumPlus-Regular.ttf',
+      //     color: Colors.black87,
+      //   ),
+      //   displayMedium: TextStyle(
+      //     color: Colors.black,
+      //     fontSize: 11,
+      //   ),
       displayMedium: GoogleFonts.poppins(
         fontSize: 11,
         // fontWeight: FontWeight.w600,
-        color: Colors.black,
-
-
+        color: Colors.white,
       ),
 
       headlineMedium: TextStyle(
@@ -68,20 +81,19 @@ class Themes {
         fontSize: 10,
       ),
       headlineSmall: GoogleFonts.robotoSerif(
-
-      fontSize: 21,
-      fontWeight: FontWeight.w700,
-      color: Colors.black45,
+        fontSize: 21,
+        fontWeight: FontWeight.w700,
+        color: Colors.black45,
         // color: COLOR.black,
         //     fontSize: 21,
         //     fontWeight: FontWeight.w700,
-    ),
+      ),
 
-    // TextStyle(
-    //     color: COLOR.black,
-    //     fontSize: 21,
-    //     fontWeight: FontWeight.w700,
-    //   ),
+      // TextStyle(
+      //     color: COLOR.black,
+      //     fontSize: 21,
+      //     fontWeight: FontWeight.w700,
+      //   ),
       titleLarge: TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.w700,
@@ -109,8 +121,6 @@ class Themes {
         fontSize: 12,
         fontWeight: FontWeight.w600,
         color: Colors.black,
-
-
       ),
 
       // displayMedium: TextStyle(

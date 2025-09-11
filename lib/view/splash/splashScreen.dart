@@ -104,6 +104,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:keep_app/controller/editController.dart';
+import 'package:keep_app/controller/homeController.dart';
 import 'package:keep_app/view/splash/stroreDetection_screen.dart';
 // import 'package:flutter_splash/controllers/splash_controller.dart';
 
@@ -126,6 +128,8 @@ class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   // Initialize the GetX controller
   final SplashController controller = Get.put(SplashController());
+  final HomeController homeController = Get.put(HomeController());
+  final EditProfileController editProfileController = Get.put(EditProfileController());
 
   late AnimationController _rotationController;
   late AnimationController _transitionController;
@@ -200,23 +204,34 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     Future.delayed(const Duration(seconds: 2), () {
-      _transitionController.forward().then((_) {
+      _transitionController.forward().then((_) async {
+        CustomerModel? customerModel = await helper.getCustomer();
+
         Future.delayed(const Duration(milliseconds: 500), () async {
-          Navigator.of(context).pushReplacement(
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => StoreSelectionScreen(),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              transitionDuration: Duration(milliseconds: 800),
-            ),
+          Get.off(
+            customerModel == null
+                ? LoginScreen()
+                : DashboardScreen(pageIndex: 0),
+            transition: Transition.fade,
+            duration: const Duration(milliseconds: 500),
           );
 
+          // Navigator.of(context).pushReplacement(
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation, secondaryAnimation) => DashboardScreen(pageIndex: 0),
+          //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          //       return FadeTransition(opacity: animation, child: child);
+          //     },
+          //     transitionDuration: Duration(milliseconds: 800),
+          //   ),
+          // );
+          editProfileController.GetProfile(customerId: homeController.customerModel!.value.customerId!);
+          homeController
+              .getDashboardData(homeController.customerModel!.value.customerId);
         });
       });
     });
   }
-
 
   @override
   void dispose() {
@@ -239,10 +254,10 @@ class _SplashScreenState extends State<SplashScreen>
               alignment: Alignment.center,
               children: [
                 // Rotating products
-                Opacity(
-                  opacity: _productOpacityAnimation.value,
-                  child: _buildRotatingProducts(),
-                ),
+                // Opacity(
+                //   opacity: _productOpacityAnimation.value,
+                //   child: _buildRotatingProducts(),
+                // ),
 
                 // Brand logo
                 Transform.translate(
@@ -287,7 +302,6 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
-
 
   void _showStoreDialog(BuildContext context) {
     showGeneralDialog(
@@ -348,7 +362,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                     const SizedBox(height: 20),
-                     Text(
+                    Text(
                       StringRes.chooseStore,
                       style: TextStyle(
                         fontSize: 20,

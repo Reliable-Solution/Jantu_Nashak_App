@@ -19,7 +19,16 @@ class DropDownWidget extends StatelessWidget {
   final Function()? onTap;
   final Function(String?)? onChanged;
   final FocusNode? focusNode;
-  DropDownWidget({Key? key, this.dropdownInitialValue, this.hint, @required this.focusNode, this.label, this.items, this.onChanged, this.onTap}) : super(key: key);
+  DropDownWidget(
+      {Key? key,
+      this.dropdownInitialValue,
+      this.hint,
+      @required this.focusNode,
+      this.label,
+      this.items,
+      this.onChanged,
+      this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,9 @@ class DropDownWidget extends StatelessWidget {
           labelText: label,
           labelStyle: Themes.light.textTheme.displayLarge!.copyWith(
             fontWeight: FontWeight.w500,
-            color: (focusNode != null && focusNode!.hasFocus) ? COLOR.pink : COLOR.grey,
+            color: (focusNode != null && focusNode!.hasFocus)
+                ? COLOR.pink
+                : COLOR.grey,
           ),
         ),
         hint: hint,

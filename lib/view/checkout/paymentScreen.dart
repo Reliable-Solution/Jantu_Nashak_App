@@ -48,7 +48,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           elevation: 1,
           title: TextWiget(
             title: StringRes.paymentMethod,
-            style: Themes.light.textTheme.displayLarge,
+            style: Themes.light.textTheme.headlineLarge,
           ),
           leading: InkWell(
             onTap: () {
@@ -88,7 +88,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
             Container(
               color: Colors.white,
-              width:  MediaQuery.sizeOf(context).width * 0.99,
+              width: MediaQuery.sizeOf(context).width * 0.99,
               padding: EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,35 +100,46 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   SizedBox(height: 12),
                   Obx(() {
                     if (checkoutController.isLoading.value) {
-                      return Center(child: CircularProgressIndicator(color: COLOR.appBaseColor,));
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: COLOR.appBaseColor,
+                      ));
                     } else if (checkoutController.paymentMethodList.isEmpty) {
-                      return  Center(child: Text(StringRes.noPaymentMethodsFound,
+                      return Center(
+                          child: Text(
+                        StringRes.noPaymentMethodsFound,
                       ));
                     } else {
                       return ListView.builder(
                         shrinkWrap: true,
                         itemCount: checkoutController.paymentMethodList.length,
                         itemBuilder: (context, index) {
-                          final gateway = checkoutController.paymentMethodList[index];
+                          final gateway =
+                              checkoutController.paymentMethodList[index];
                           return GestureDetector(
                             onTap: () {
-                              checkoutController.selectPaymentMethod(gateway.gatewayName ?? '');
+                              checkoutController.selectPaymentMethod(
+                                  gateway.gatewayName ?? '');
                               checkoutController.selectPaymentGateWay(gateway);
                             },
                             child: ListTile(
                               trailing: Obx(() => Radio<String>(
-                                value: gateway.gatewayName ?? '',
-                                groupValue: checkoutController.selectedPaymentMethod.value,
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    checkoutController.selectPaymentMethod(value);
-                                    checkoutController.selectPaymentGateWay(gateway);
-                                  }
-                                },
-                                activeColor: COLOR.appBaseColor,
-                              )),
+                                    value: gateway.gatewayName ?? '',
+                                    groupValue: checkoutController
+                                        .selectedPaymentMethod.value,
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        checkoutController
+                                            .selectPaymentMethod(value);
+                                        checkoutController
+                                            .selectPaymentGateWay(gateway);
+                                      }
+                                    },
+                                    activeColor: COLOR.appBaseColor,
+                                  )),
                               leading: gateway.gatewayLogo != null
-                                  ? Image.network('$IMAGE_URL${gateway.gatewayLogo}')
+                                  ? Image.network(
+                                      '$IMAGE_URL${gateway.gatewayLogo}')
                                   : const Icon(Icons.image_not_supported),
                               title: Text(gateway.gatewayName ?? 'Unknown'),
                             ),
@@ -137,7 +148,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       );
                     }
                   }),
-
                   SizedBox(height: 30),
                 ],
               ),
@@ -153,8 +163,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Price Details",
+                   Text(
+                    StringRes.priceDetails,
+                    // "Price Details",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -164,44 +175,95 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                       Text(
-                    StringRes.totalProductPrice,
+                      Text(
+                        StringRes.totalProductPrice,
                         style: TextStyle(
                           fontSize: 14,
                         ),
                       ),
-                      Obx(() => Text(
-                            "+ ₹${cartController.cartTotal.value?.totalInteger ?? 0}",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )),
+                      Obx(() {
+                        final totalInteger = cartController.cartTotal.value.totalInteger ?? 0;
+                        final save = cartController.cartTotal.value.reedemPoints?.toString() ?? '0';
+                        final adjustedSave = int.tryParse(save) ?? 0;
+                        return Text(
+                          "+ ₹${totalInteger + adjustedSave}",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        );
+                      }),
+                      // Obx(() =>
+                      //     Text(
+                      //       "+ ₹${cartController.cartTotal.value?.totalInteger ?? 0}",
+                      //       style: const TextStyle(
+                      //         fontSize: 14,
+                      //         fontWeight: FontWeight.w500,
+                      //       ),
+                      //     )),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                       Text(
-                    StringRes.totalDiscounts,
+                      Text(
+                        StringRes.totalRedeemPoints,
+                        // StringRes.totalDiscounts,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.green,
                         ),
                       ),
-                      Text(
-                        "- ₹${cartController.cartTotal.value?.save ?? 0}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.green,
-                        ),
-                      ),
+                      Obx(() {
+                        final save = cartController.cartTotal.value.reedemPoints?.toString() ?? '0';
+                        final adjustedSave = int.tryParse(save) ?? 0;
+                        return Text(
+                          "- ₹$adjustedSave",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.green,
+                          ),
+                        );
+                      }),
+                      // Text(
+                      //   "- ₹${cartController.cartTotal.value?.save ?? 0}",
+                      //   style: const TextStyle(
+                      //     fontSize: 14,
+                      //     fontWeight: FontWeight.w500,
+                      //     color: Colors.green,
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   const Divider(),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        StringRes.total,
+                        // StringRes.total,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Obx(() {
+                        final total = cartController.cartTotal.value.total?.replaceAll('Rs: ', '') ?? '0';
+                        final adjustedTotal = int.tryParse(total) ?? 0;
+                        return Text(
+                          "₹$adjustedTotal",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -222,13 +284,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
           child: Obx(
             () => ButtonWidgets(
-              title: "Continue",
+              title: StringRes.continueButton,
               style: Themes.light.textTheme.displayLarge!.copyWith(
                 color: Colors.white,
               ),
               voidCallback: () {
                 if (checkoutController.selectedPaymentMethod.value.isNotEmpty) {
-                  cartController.getCartDetails(cartController.customerModel!.value.customerId!);
+                  cartController.getCartDetails(
+                      cartController.customerModel!.value.customerId!);
                   Get.to(() => const SummaryScreen());
                 }
                 if (checkoutController.selectedPaymentMethod.value.isEmpty) {
@@ -268,8 +331,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ],
     );
   }
-
-
 
   Widget buildPaymentOption2(String title, String subText, String value) {
     return Obx(() => Column(
@@ -311,8 +372,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ? COLOR.appBaseColor
                 : (isCompleted ? COLOR.appBaseColor : Colors.grey.shade300),
             border: Border.all(
-              color:
-                  isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade400,
+              color: isActive || isCompleted
+                  ? COLOR.appBaseColor
+                  : Colors.grey.shade400,
               width: 1,
             ),
           ),
@@ -333,7 +395,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive || isCompleted ? COLOR.appBaseColor: Colors.grey.shade600,
+            color: isActive || isCompleted
+                ? COLOR.appBaseColor
+                : Colors.grey.shade600,
             fontWeight:
                 isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
           ),

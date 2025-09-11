@@ -1,10 +1,11 @@
 // import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+
 void showSnackBar(
     {required BuildContext context,
-      required String msg,
-      bool isError = false}) {
+    required String msg,
+    bool isError = false}) {
   Flushbar? flushbar;
   flushbar = Flushbar(
     titleColor: Colors.white,
@@ -29,7 +30,7 @@ void showSnackBar(
             height: 25,
             width: 25,
             decoration:
-            BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                BoxDecoration(color: Colors.white, shape: BoxShape.circle),
             child: Icon(
               Icons.close_outlined,
               size: 20,
@@ -37,10 +38,9 @@ void showSnackBar(
             ),
           ),
         )),
-    messageText:Padding(
+    messageText: Padding(
       padding: EdgeInsets.symmetric(vertical: 2),
-      child:  Text(
-          msg, style: TextStyle(color: Colors.white,fontSize: 16)),
+      child: Text(msg, style: TextStyle(color: Colors.white, fontSize: 16)),
     ),
   );
   flushbar.dismiss();

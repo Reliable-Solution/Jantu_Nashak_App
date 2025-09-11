@@ -14,17 +14,17 @@ class SubCategory {
 
   SubCategory(
       {this.subcategoryId,
-        this.categoryId,
-        this.subcategoryName,
-        this.subcategoryImage,
-        this.subcategoryDesc,
-        this.subcategoryStatus,
-        this.subcategoryCDT,
-        this.categoryName,
-        this.categoryHindiName,
-        this.categoryImage,
-        this.categoryStatus,
-        this.categoryCDT});
+      this.categoryId,
+      this.subcategoryName,
+      this.subcategoryImage,
+      this.subcategoryDesc,
+      this.subcategoryStatus,
+      this.subcategoryCDT,
+      this.categoryName,
+      this.categoryHindiName,
+      this.categoryImage,
+      this.categoryStatus,
+      this.categoryCDT});
 
   SubCategory.fromJson(Map<String, dynamic> json) {
     subcategoryId = json['SubcategoryId'];

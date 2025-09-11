@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -6,7 +5,6 @@ import 'app_common_text.dart';
 import 'app_style.dart';
 // import 'package:suratjugaad/a_structure/constant/app_common_text.dart';
 // import 'package:suratjugaad/a_structure/constant/app_styles.dart';
-
 
 class AppUtils {
   AppUtils._();
@@ -25,12 +23,11 @@ class AppUtils {
 
   static noRecordMsg({String? message}) {
     return Center(
-        child: textSemiBold(text: message ?? "No Record Found", fontSize: 16)
-    );
+        child: textSemiBold(text: message ?? "No Record Found", fontSize: 16));
   }
 
   static circularLoaderData() {
-    return  Center(
+    return Center(
       child: SizedBox(
         height: 23,
         width: 23,
@@ -41,6 +38,4 @@ class AppUtils {
       ),
     );
   }
-
 }
-

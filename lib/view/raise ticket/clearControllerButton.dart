@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,7 +6,10 @@ import '../../constant/colorConst.dart';
 
 class ClearControllerButtonWidget extends StatelessWidget {
   final VoidCallback? onPressed;
-  const ClearControllerButtonWidget({super.key,this.onPressed,});
+  const ClearControllerButtonWidget({
+    super.key,
+    this.onPressed,
+  });
 
   Future<void> _handleButtonClick() async {
     // Call multiple functions here
@@ -24,9 +26,8 @@ class ClearControllerButtonWidget extends StatelessWidget {
         width: 20,
         decoration: BoxDecoration(
             color: COLOR.appBaseColor.withOpacity(0.15),
-            shape: BoxShape.circle
-        ),
-        child:  Icon(
+            shape: BoxShape.circle),
+        child: Icon(
           Icons.close,
           color: COLOR.appBaseColor,
           size: 14,

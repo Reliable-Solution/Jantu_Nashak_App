@@ -14,39 +14,48 @@ class CategoryComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed width for horizontal list items
+    const double itemWidth = 80.0;
+    // Dynamic height based on screen size
     double imageHeight = Get.width > 360
-        ? MediaQuery.of(context).size.height * 0.15
-        : MediaQuery.of(context).size.height * 0.17;
+        ? MediaQuery.of(context).size.height * 0.10
+        : MediaQuery.of(context).size.height * 0.12;
 
     return InkWell(
       onTap: () {
-        Get.to(
-          SubCategoryScreen(category: categoryModel!.categoryId),
-          transition: Transition.zoom,
-        );
-        // Navigate to product details if needed
+        if (categoryModel?.categoryId != null) {
+          print("=========> CateGory id ${categoryModel!.categoryId}");
+          Get.to(
+            SubCategoryScreen(category: categoryModel!.categoryId),
+            transition: Transition.zoom,
+          );
+        }
       },
       child: Container(
+        width: itemWidth, // Fixed width for horizontal list
         color: COLOR.background,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CachedNetworkImage(
-              imageUrl: '$IMAGE_URL${categoryModel?.categoryImage ?? ""}',
-              height: imageHeight,
-              width: double.infinity,
-              fit: BoxFit.fitHeight,
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Container(
-                  height: imageHeight,
-                  width: double.infinity,
-                  color: Colors.white,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0), // Rounded corners
+              child: CachedNetworkImage(
+                imageUrl: '$IMAGE_URL${categoryModel?.categoryImage ?? ""}',
+                height: imageHeight,
+                width: itemWidth,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    height: imageHeight,
+                    width: itemWidth,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              errorWidget: (context, url, error) => Center(
-                child: Icon(Icons.broken_image, color: Colors.red, size: 50),
+                errorWidget: (context, url, error) => Center(
+                  child: Icon(Icons.broken_image, color: Colors.red, size: 50),
+                ),
               ),
             ),
           ],

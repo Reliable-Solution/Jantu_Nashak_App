@@ -19,6 +19,7 @@ class RegistrationScreen extends StatelessWidget {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtNumber = TextEditingController();
+  TextEditingController txtRefer = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -60,39 +61,39 @@ class RegistrationScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
 
-                // Email Field
-                TextFormField(
-                  controller: txtEmail,
-                  onChanged: (value) {
-                    controller.setEmail(txtEmail.text);
-                    controller.update();
-                  },
-                  autofillHints: [AutofillHints.email],
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: StringRes.email,
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return StringRes.addressRequired; // 🛑 Empty email error
-                    }
-                    String emailPattern =
-                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                    RegExp regex = RegExp(emailPattern);
-                    print("Email Validation: ${regex.hasMatch(value)}");
-
-                    if (!regex.hasMatch(value)) {
-                      return StringRes.validEmail; // 🛑 Invalid email format
-                    }
-
-                    return null; // ✅ Valid email
-                    // if (value!.isEmpty) return StringRes.addressRequired;
-                    // if (value.length < 5) return StringRes.validEmail;
-                    // return null;
-                  },
-                ),
-                SizedBox(height: 20),
+                // // Email Field
+                // TextFormField(
+                //   controller: txtEmail,
+                //   onChanged: (value) {
+                //     controller.setEmail(txtEmail.text);
+                //     controller.update();
+                //   },
+                //   autofillHints: [AutofillHints.email],
+                //   keyboardType: TextInputType.emailAddress,
+                //   decoration: InputDecoration(
+                //     labelText: StringRes.email,
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   validator: (value) {
+                //     if (value == null || value.isEmpty) {
+                //       return StringRes.addressRequired; // 🛑 Empty email error
+                //     }
+                //     String emailPattern =
+                //         r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                //     RegExp regex = RegExp(emailPattern);
+                //     print("Email Validation: ${regex.hasMatch(value)}");
+                //
+                //     if (!regex.hasMatch(value)) {
+                //       return StringRes.validEmail; // 🛑 Invalid email format
+                //     }
+                //
+                //     return null; // ✅ Valid email
+                //     // if (value!.isEmpty) return StringRes.addressRequired;
+                //     // if (value.length < 5) return StringRes.validEmail;
+                //     // return null;
+                //   },
+                // ),
+                // SizedBox(height: 20),
 
                 // Phone Number Field
                 GetBuilder<RegistrationController>(
@@ -115,6 +116,28 @@ class RegistrationScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                SizedBox(height: 20),
+                GetBuilder<RegistrationController>(
+                  builder: (controller) => TextFormField(
+                    decoration: InputDecoration(
+                      labelText: "Referral Code",
+                      border: OutlineInputBorder(),
+                    ),
+                    controller: txtRefer,
+                    onChanged: controller.setRefer,
+                    // onChanged: (value) {
+                    //   controller.setPhoneNumber(txtRefer.text);
+                    //   controller.update();
+                    // },
+                    // validator: (value) {
+                    //   if (value!.isEmpty) return StringRes.mobileInvalid;
+                    //   // if (!RegExp(r'^[6-9]\d{9}$').hasMatch(value)) {
+                    //   //   return StringRes.mobileRequired;
+                    //   // }
+                    //   return null;
+                    // },
+                  ),
+                ),
 
                 SizedBox(height: 20),
 
@@ -128,15 +151,17 @@ class RegistrationScreen extends StatelessWidget {
                             voidCallback: () async {
                               SharedHelper helper = SharedHelper();
 
-                              bool? isDeleted =  await helper.getStoredBool(key: SharedHelper.deleteAccountKey);
-                              if(isDeleted ?? false){
-                                Fluttertoast.showToast(msg: StringRes.deleteAccount);
+                              bool? isDeleted = await helper.getStoredBool(
+                                  key: SharedHelper.deleteAccountKey);
+                              if (isDeleted ?? false) {
+                                Fluttertoast.showToast(
+                                    msg: StringRes.deleteAccount);
                                 return;
                               }
                               if (_formKey.currentState!.validate()) {
                                 // otpController.verifyPhoneOtp(verifyPhoneOtp,txtNumber.text,);
                                 otpController.startTimer();
-                                controller.registerUser(context,"");
+                                controller.registerUser(context, "");
 
                                 // controller.getToken();
                               }
