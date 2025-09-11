@@ -42,7 +42,7 @@ class AddressController extends GetxController {
   void setType(String? value) {
     selectedType.value = value ?? '';
     showError.value = false;
-    update();// Hide error on selection
+    update(); // Hide error on selection
   }
 
   bool validate() {
@@ -52,8 +52,6 @@ class AddressController extends GetxController {
     }
     return true;
   }
-
-
 
   @override
   Future<void> onInit() async {
@@ -82,8 +80,12 @@ class AddressController extends GetxController {
       } else {
         filteredList.assignAll(
           allAddressList.where((item) =>
-          item.addressFullName!.toLowerCase().contains(query.toLowerCase()) ||
-              item.addressMobileNo!.toLowerCase().contains(query.toLowerCase()) ||
+              item.addressFullName!
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) ||
+              item.addressMobileNo!
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) ||
               item.addressColony!.toLowerCase().contains(query.toLowerCase())),
         );
       }
@@ -91,21 +93,6 @@ class AddressController extends GetxController {
     });
   }
 
-  // void searchCategory(String query) {
-  //   if (query.isEmpty) {
-  //     filteredList.assignAll(allAddressList);
-  //   } else {
-  //     filteredList.assignAll(
-  //         allAddressList.where((item) =>
-  //         item.addressFullName!.toLowerCase().contains(query.toLowerCase()) ||
-  //             item.addressMobileNo!.toLowerCase().contains(query.toLowerCase()) ||
-  //             item.addressColony!.toLowerCase().contains(query.toLowerCase())
-  //         ));
-  //     //   addressList.where((item) =>
-  //     //       item.addressColony!.toLowerCase().contains(query.toLowerCase())),
-  //     // );
-  //   }
-  // }
   addAddressData({AddressModel? addressModel}) async {
     try {
       final Map<String, dynamic> body = {
@@ -116,7 +103,7 @@ class AddressController extends GetxController {
         "Address": addressModel.addressColony,
         "AddressLandmark": addressModel.addressLandmark,
         "AddressType": addressModel.addressType,
-        'FirmId':firmId
+        'FirmId': firmId
       };
 
       var response = await ApiService.post(endpoint: addAddress, body: body);
@@ -145,14 +132,13 @@ class AddressController extends GetxController {
       allAddressList.clear();
       filteredList.clear();
 
-
       if (allAddressList.isNotEmpty && selectedAddressId.isEmpty) {
         selectedAddressId.value = allAddressList.last.addressId.toString();
       }
       // allAddressList.clear();
       final Map<String, dynamic> body = {
         "CustomerId": customerModel!.value.customerId,
-        'FirmId':firmId
+        'FirmId': firmId
       };
 
       var response = await ApiService.post(endpoint: getAddress, body: body);
@@ -178,12 +164,10 @@ class AddressController extends GetxController {
     } catch (e) {
       print("Error in Fetch Address Data: $e");
       throw Exception("Failed to fetch address data");
-    }
-    finally {
+    } finally {
       isAddress.value = false;
       update();
     }
-
   }
 
   deleteAddressData({String? customerId, String? addressId}) async {
@@ -191,12 +175,14 @@ class AddressController extends GetxController {
       final Map<String, dynamic> body = {
         "CustomerId": customerId,
         "AddressId": addressId,
-        'FirmId':firmId
+        'FirmId': firmId
       };
 
-      var response = await ApiService.post(endpoint: deleteAddressApi, body: body);
+      var response =
+          await ApiService.post(endpoint: deleteAddressApi, body: body);
       if (response.data['IsSuccess'] == true) {
-        int index =  allAddressList.indexWhere((item) => item.addressId == addressId);
+        int index =
+            allAddressList.indexWhere((item) => item.addressId == addressId);
         allAddressList.removeAt(index);
         update();
       } else {
@@ -207,7 +193,8 @@ class AddressController extends GetxController {
       throw Exception("Failed to fetch delete Address Data");
     }
   }
-  updateAddressData({AddressModel? addressModel,String? addressId}) async {
+
+  updateAddressData({AddressModel? addressModel, String? addressId}) async {
     try {
       print(addressModel);
       print("Address Id ${addressId}");
@@ -220,15 +207,17 @@ class AddressController extends GetxController {
         "AddressLandmark": addressModel.addressLandmark,
         "AddressType": addressModel.addressType,
         "AddressId": addressId,
-        'FirmId':firmId
-
+        'FirmId': firmId
       };
       var response = await ApiService.post(endpoint: updateAddress, body: body);
       print(" Add Update Address data ${response.data}");
       if (response.data['IsSuccess'] == true) {
-        int index = allAddressList.indexWhere((element) => element.addressId == addressId,);
+        int index = allAddressList.indexWhere(
+          (element) => element.addressId == addressId,
+        );
         // allAddressList[index] = addressModel;
-        print("All Address IDs: ${allAddressList.map((e) => e.addressId).toList()}");
+        print(
+            "All Address IDs: ${allAddressList.map((e) => e.addressId).toList()}");
 
         print("Update Address Data ${allAddressList.length}");
         if (index != -1) {
@@ -267,12 +256,12 @@ class AddressController extends GetxController {
   }
 
   // Address Delete Karne Ka Function
-  void deleteSelectAddressData({required int customerId, required int addressId}) {
+  void deleteSelectAddressData(
+      {required int customerId, required int addressId}) {
     allAddressList.removeWhere((address) => address.addressId == addressId);
     if (selectedAddressId.value == addressId.toString()) {
-      selectedAddressId.value = ''; // Selected Address Delete Hua to Clear Karna
+      selectedAddressId.value =
+          ''; // Selected Address Delete Hua to Clear Karna
     }
   }
-
-
 }

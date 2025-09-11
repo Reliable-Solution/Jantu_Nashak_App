@@ -43,12 +43,12 @@ class _TicketMainScreenState extends State<TicketMainScreen>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppStyles.primaryColor,
-        leading: InkWell(
-          onTap: () {
-            Get.back(); // Use GetX navigation
-          },
-          child: Icon(Icons.arrow_back),
-        ),
+        // leading: InkWell(
+        //   onTap: () {
+        //     Get.back(); // Use GetX navigation
+        //   },
+        //   child: Icon(Icons.arrow_back),
+        // ),
         title: Text(
           StringRes.ticket,
           style: TextStyle(fontSize: 16, color: Colors.white),

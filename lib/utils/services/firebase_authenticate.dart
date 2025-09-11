@@ -16,7 +16,7 @@ class FirebaseAuthenticate {
       }
       print("====== phone number $number");
       authenticates.verifyPhoneNumber(
-        timeout:  Duration(seconds: 60),
+        timeout: Duration(seconds: 60),
         phoneNumber: "+91${number}",
         verificationCompleted: (phoneAuthCredential) async {
           await authenticates.signInWithCredential(phoneAuthCredential);
@@ -24,8 +24,7 @@ class FirebaseAuthenticate {
         },
         verificationFailed: (error) async {
           print('Verification failed: ${error.message}');
-          Fluttertoast.showToast(
-              msg: "Verification failed: ${error.message}");
+          Fluttertoast.showToast(msg: "Verification failed: ${error.message}");
         },
         codeSent: (verificationId, forceResendingToken) async {
           print("$number");
@@ -67,8 +66,8 @@ class FirebaseAuthenticate {
       Get.snackbar("Error", e.toString());
     }
   }
+
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
-
 }

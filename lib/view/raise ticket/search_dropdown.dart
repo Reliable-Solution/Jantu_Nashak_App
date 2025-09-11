@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../constant/imagesConst.dart';
@@ -18,12 +17,12 @@ class SearchDropUiWidget extends StatelessWidget {
 
   const SearchDropUiWidget(
       {super.key,
-        required this.label,
-        required this.title,
-        required this.onTap,
-        this.isDropDownDisable = false,
-        this.isValueSelected = false,
-        required this.suffixIcons});
+      required this.label,
+      required this.title,
+      required this.onTap,
+      this.isDropDownDisable = false,
+      this.isValueSelected = false,
+      required this.suffixIcons});
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +64,9 @@ class SearchDropUiWidget extends StatelessWidget {
                       isValueSelected == true
                           ? suffixIcons
                           : Image.asset(
-                        Images.arrowDownPNG,
-                        height: 18,
-                      )
+                              Images.arrowDownPNG,
+                              height: 18,
+                            )
                     ],
                   ),
                 ),
@@ -75,14 +74,17 @@ class SearchDropUiWidget extends StatelessWidget {
             ),
           ],
         ),
-        if (isDropDownDisable == true) Container(
-          height: 43,
-          width: size.width,
-          decoration: BoxDecoration(
-            color: AppStyles.black.withOpacity(0.05),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ) else const SizedBox()
+        if (isDropDownDisable == true)
+          Container(
+            height: 43,
+            width: size.width,
+            decoration: BoxDecoration(
+              color: AppStyles.black.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          )
+        else
+          const SizedBox()
       ],
     );
   }

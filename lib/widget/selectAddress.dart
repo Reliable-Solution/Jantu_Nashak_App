@@ -39,8 +39,7 @@ void showAddressBottomSheet(BuildContext context) {
                       controller.getAllAddress();
                     });
                   },
-                )
-                ,
+                ),
               ],
             );
           } else {
@@ -63,7 +62,6 @@ void showAddressBottomSheet(BuildContext context) {
                                       address.addressId.toString()
                                   ? Color(0xffe7eeff)
                                   : Colors.white,
-
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +76,6 @@ void showAddressBottomSheet(BuildContext context) {
                                       style: Themes
                                           .light.textTheme.displayMedium!
                                           .copyWith(fontSize: 20),
-
                                     ),
                                     Spacer(),
                                     Obx(() => Radio<String>(

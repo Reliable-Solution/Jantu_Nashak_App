@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-GetTicketAreaProblemModel getTicketAreaProblemModelFromJson(String str) => GetTicketAreaProblemModel.fromJson(json.decode(str));
+GetTicketAreaProblemModel getTicketAreaProblemModelFromJson(String str) =>
+    GetTicketAreaProblemModel.fromJson(json.decode(str));
 
-String getTicketAreaProblemModelToJson(GetTicketAreaProblemModel data) => json.encode(data.toJson());
+String getTicketAreaProblemModelToJson(GetTicketAreaProblemModel data) =>
+    json.encode(data.toJson());
 
 class GetTicketAreaProblemModel {
   List<GetTicketAreaProblemData>? data;
@@ -19,17 +21,23 @@ class GetTicketAreaProblemModel {
     this.message,
   });
 
-  factory GetTicketAreaProblemModel.fromJson(Map<String, dynamic> json) => GetTicketAreaProblemModel(
-    data: json["Data"] == null ? [] : List<GetTicketAreaProblemData>.from(json["Data"]!.map((x) => GetTicketAreaProblemData.fromJson(x))),
-    isSuccess: json["IsSuccess"],
-    message: json["Message"],
-  );
+  factory GetTicketAreaProblemModel.fromJson(Map<String, dynamic> json) =>
+      GetTicketAreaProblemModel(
+        data: json["Data"] == null
+            ? []
+            : List<GetTicketAreaProblemData>.from(
+                json["Data"]!.map((x) => GetTicketAreaProblemData.fromJson(x))),
+        isSuccess: json["IsSuccess"],
+        message: json["Message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "Data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "IsSuccess": isSuccess,
-    "Message": message,
-  };
+        "Data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "IsSuccess": isSuccess,
+        "Message": message,
+      };
 }
 
 class GetTicketAreaProblemData {
@@ -45,17 +53,20 @@ class GetTicketAreaProblemData {
     this.problemCdt,
   });
 
-  factory GetTicketAreaProblemData.fromJson(Map<String, dynamic> json) => GetTicketAreaProblemData(
-    problemId: json["ProblemId"],
-    problemName: json["ProblemName"],
-    problemStatus: json["ProblemStatus"],
-    problemCdt: json["ProblemCDT"] == null ? null : DateTime.parse(json["ProblemCDT"]),
-  );
+  factory GetTicketAreaProblemData.fromJson(Map<String, dynamic> json) =>
+      GetTicketAreaProblemData(
+        problemId: json["ProblemId"],
+        problemName: json["ProblemName"],
+        problemStatus: json["ProblemStatus"],
+        problemCdt: json["ProblemCDT"] == null
+            ? null
+            : DateTime.parse(json["ProblemCDT"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "ProblemId": problemId,
-    "ProblemName": problemName,
-    "ProblemStatus": problemStatus,
-    "ProblemCDT": problemCdt?.toIso8601String(),
-  };
+        "ProblemId": problemId,
+        "ProblemName": problemName,
+        "ProblemStatus": problemStatus,
+        "ProblemCDT": problemCdt?.toIso8601String(),
+      };
 }
