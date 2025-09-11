@@ -1,3 +1,8 @@
+// import 'dart:math';
+
+
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:keep_app/models/productModel.dart';
 
@@ -12,15 +17,14 @@ import 'networkController.dart';
 class SubCategoryController extends GetxController {
   NetworkController networkController = Get.put(NetworkController());
   List<SubCategory> subCategoryList = [];
-  List<ProductModel> categoryProductList = [];
+  // RxList<ProductModel> categoryProductList = <ProductModel>[].obs;
   List<ProductModel> subCategoryProductList = [];
   SharedHelper helper = SharedHelper();
   RxBool isLoading = false.obs;
-  RxBool isCategoryProduct = false.obs;
+  // RxBool isCategoryProduct = false.obs;
   RxBool isSubCategoryProduct = false.obs;
   Rx<CustomerModel>? customerModel = CustomerModel().obs;
   CustomerModel? m1 = CustomerModel();
-
 
   @override
   void onInit() async {
@@ -33,92 +37,156 @@ class SubCategoryController extends GetxController {
       customerModel!.value = customer;
       print("Phone  Number ${customerModel!.value.customerName}");
 
-        customerModel!.value = customer;
-        print("Phone  Number ${customerModel!.value.customerName}");
-        getProductCategoryData(categoryId, customerModel!.value.customerId!);
-        // getSubCategoryProduct(categoryId, customerModel!.value.customerId!);
-
-
+      customerModel!.value = customer;
+      print("Phone  Number ${customerModel!.value.customerName}");
+      getProductCategoryData(categoryId, customerModel!.value.customerId!);
+      // getSubCategoryProduct(categoryId, customerModel!.value.customerId!);
     }
     update();
   }
 
+  // Future<void> getSubCategoryData(String? categoryId) async {
+  //   subCategoryList.clear();
+  //   isLoading.value = true;
+  //
+  //   try {
+  //     final Map<String, dynamic> body = {
+  //       'CategoryId': categoryId,
+  //       'FirmId': firmId,
+  //       "LanguageName":"english"
+  //     };
+  //
+  //     // Make the API call
+  //     var response = await ApiService.post(
+  //       endpoint: getSubcategorybyCategoryId,
+  //       body: body,
+  //     );
+  //
+  //     if (response.data['IsSuccess'] == true) {
+  //       print("API Response: ${response.data}");
+  //
+  //       var data = response.data['Data']; // Assuming Data[0] exists
+  //
+  //       if (data != null) {
+  //         subCategoryList = (response.data['Data'] as List)
+  //             .map((subCategoryJson) => SubCategory.fromJson(subCategoryJson))
+  //             .toList();
+  //       }
+  //
+  //       isLoading.value = false;
+  //       update();
+  //     } else {
+  //       throw Exception("Error from API: ${response.data['Message']}");
+  //     }
+  //   } catch (e) {
+  //     print("Error in subCategoryData: $e");
+  //     throw Exception("Failed to get Sub Category  data: $e");
+  //   }
+  // }
 
-  Future<void> getSubCategoryData(String? categoryId) async {
-    subCategoryList.clear();
-    isLoading.value = true;
+  // Future<void> getProductCategoryData(
+  //     String? categoryId, String customerId)
+  // async {
+  //   categoryProductList.clear();
+  //   isCategoryProduct.value = true;
+  //   // String? languageName = await helper.getStoredString("languageName");
+  //
+  //   try {
+  //     final Map<String, dynamic> body = {
+  //       // 'CustomerId': customerId,
+  //       'CategoryId': categoryId,
+  //       'FirmId': firmId,
+  //       "LanguageName":"English"
+  //     };
+  //
+  //     var response = await ApiService.post(
+  //       endpoint: getProductByCategoryId,
+  //       body: body,
+  //     );
+  //
+  //     // if (response.data['IsSuccess'] == true) {
+  //     //   print("API Response: ${response.data}");
+  //     //   log("=======> API Response SubCategory Data : ${response.data}");
+  //     //
+  //     //   var data = response.data['Data']; // Assuming Data[0] exists
+  //     //   print("Type of Data: ${data.runtimeType}");
+  //     //   print("======> Category Data ${data}");
+  //     //   if (data != null ) {
+  //     //     categoryProductList = (data as List)
+  //     //         .map((productJson) => ProductModel.fromJson(productJson))
+  //     //         .toList();
+  //     //
+  //     //   } else {
+  //     //     print("⚠️ Data is null or not a List");
+  //     //     categoryProductList = [];
+  //     //   }
+  //     //
+  //     //   isCategoryProduct.value = false;
+  //     //   update();
+  //     // } else {
+  //     //   throw Exception("Error from API: ${response.data['Message']}");
+  //     // }
+  //     var data = response.data['Data'];
+  //     print("API raw response: ${response.data}");
+  //     print("Extracted Data: $data");
+  //
+  //     if (data != null && data is List && data.isNotEmpty) {
+  //       categoryProductList.value = data
+  //           .map<ProductModel>((e) => ProductModel.fromJson(e))
+  //           .toList();
+  //       print("✅ Parsed products: ${categoryProductList.length}");
+  //       isCategoryProduct.value = false;
+  //
+  //     } else {
+  //       print("⚠️ Data is null or empty list");
+  //       categoryProductList.value = [];
+  //       isCategoryProduct.value = false;
+  //     }
+  //   } catch (e) {
+  //     print("Error in categoryProductData: $e");
+  //     throw Exception("Failed to get category Product data: $e");
+  //   }
+  //   // finally{
+  //   //   isCategoryProduct.value = false;
+  //   //   // update();
+  //   //   throw Exception("Failed to get category Product data");
+  //   //   update();
+  //   //
+  //   // }
+  // }
 
+  var isCategoryProduct = true.obs;
+  var categoryProductList = <ProductModel>[].obs;
+
+  Future<void> getProductCategoryData(
+      String? categoryId, String customerId) async {
     try {
+      isCategoryProduct.value = true;
+      categoryProductList.clear();
+
       final Map<String, dynamic> body = {
         'CategoryId': categoryId,
-        'FirmId':firmId
-
+        'FirmId': firmId,
+        "LanguageName": "English"
       };
 
-      // Make the API call
-      var response = await ApiService.post(
-        endpoint: getSubcategorybyCategoryId,
-        body: body,
-      );
-
-      if (response.data['IsSuccess'] == true) {
-        print("API Response: ${response.data}");
-
-        var data = response.data['Data']; // Assuming Data[0] exists
-
-        if (data != null) {
-          subCategoryList = (response.data['Data'] as List)
-              .map((subCategoryJson) => SubCategory.fromJson(subCategoryJson))
-              .toList();
-        }
-
-        isLoading.value = false;
-        update();
-      } else {
-        throw Exception("Error from API: ${response.data['Message']}");
-      }
-    } catch (e) {
-      print("Error in subCategoryData: $e");
-      throw Exception("Failed to get Sub Category  data: $e");
-    }
-  }
-
-  Future<void> getProductCategoryData(String? categoryId,String customerId) async {
-    categoryProductList.clear();
-    isCategoryProduct.value = true;
-
-    try {
-      final Map<String, dynamic> body = {
-        'CustomerId': customerId,
-        'CategoryId': categoryId,
-        'FirmId':firmId
-      };
-
-      // Make the API call
       var response = await ApiService.post(
         endpoint: getProductByCategoryId,
         body: body,
       );
 
-      if (response.data['IsSuccess'] == true) {
-        print("API Response: ${response.data}");
-
-        var data = response.data['Data']; // Assuming Data[0] exists
-
-        if (data != null) {
-          categoryProductList = (response.data['Data'] as List)
-              .map((productJson) => ProductModel.fromJson(productJson))
-              .toList();
-        }
-
-        isCategoryProduct.value = false;
-        update();
+      var data = response.data['Data'];
+      if (data != null && data is List && data.isNotEmpty) {
+        categoryProductList.value =
+            data.map<ProductModel>((e) => ProductModel.fromJson(e)).toList();
       } else {
-        throw Exception("Error from API: ${response.data['Message']}");
+        categoryProductList.clear();
       }
     } catch (e) {
       print("Error in categoryProductData: $e");
-      throw Exception("Failed to get category Product data: $e");
+      categoryProductList.clear();
+    } finally {
+      isCategoryProduct.value = false;
     }
   }
 
@@ -131,7 +199,7 @@ class SubCategoryController extends GetxController {
       final Map<String, dynamic> body = {
         'CustomerId': customerModel!.value.customerId,
         'SubcategoryId': subCategoryId,
-        'FirmId':firmId
+        'FirmId': firmId
       };
 
       // Make the API call

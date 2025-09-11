@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:keep_app/view/otp/phone_auth.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../constant/colorConst.dart';
 import '../../controller/authController.dart';
@@ -10,11 +11,11 @@ import '../../controller/registrationController.dart';
 import '../../utils/services/firebase_authenticate.dart';
 import '../../utils/string_res.dart';
 
-
 class OTPVerificationScreen extends StatefulWidget {
   String? phoneNumber;
   String? registerPhoneNumber;
-  OTPVerificationScreen({super.key,this.phoneNumber,this.registerPhoneNumber});
+  OTPVerificationScreen(
+      {super.key, this.phoneNumber, this.registerPhoneNumber});
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
@@ -23,10 +24,11 @@ class OTPVerificationScreen extends StatefulWidget {
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   final OTPController otpController = Get.put(OTPController());
   final AuthController authController = Get.put(AuthController());
-  final RegistrationController registerController = Get.put(RegistrationController());
+  final RegistrationController registerController =
+      Get.put(RegistrationController());
   FirebaseAuthenticate authenticate = FirebaseAuthenticate();
   final List<TextEditingController> otpFields =
-  List.generate(6, (index) => TextEditingController());
+      List.generate(6, (index) => TextEditingController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
       appBar: AppBar(
         title: Text(
           StringRes.enterVerificationCode,
-          style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         backgroundColor: COLOR.appBaseColor,
       ),
@@ -54,7 +56,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                    StringRes.enterVerificationCode,
+                  StringRes.enterVerificationCode,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
@@ -64,52 +66,70 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
                 SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(
-                    6,
-                        (index) => SizedBox(
-                      width: 45,
-                      height: 50,
-                      child: TextField(
-                        controller: otpFields[index],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18),
-                        keyboardType: TextInputType.number,
-                        maxLength: 1,
-                        decoration: InputDecoration(
-                          counterText: "",
-                          border: OutlineInputBorder(),
-                        ),
-                        onChanged: (value) {
-                          if (value.isNotEmpty && index < 5) {
-                            FocusScope.of(context).nextFocus();
-                          } else if (value.isEmpty && index > 0) {
-                            FocusScope.of(context).previousFocus();
-                          }
-                          print("======== otp $value");
-                        },
-                      ),
-                    ),
-                  ),
+                PinCodeTextField(
+                  keyboardType: TextInputType.number,
+                  appContext: context,
+                  length: 6,
+                  controller: TextEditingController(),
+                  onChanged: (value) {
+                    if (value.length == 6) {
+                      for (int i = 0; i < value.length && i < 6; i++) {
+                        otpFields[i].text = value[i];
+                      }
+                      // otpController.verifyPhoneOtp(context, value, widget.phoneNumber ?? widget.registerPhoneNumber!);
+                    }
+                  },
+                  pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 50,
+                      fieldWidth: 45,
+                      activeFillColor: Colors.white,
+                      selectedFillColor: Colors.blue.shade50,
+                      selectedColor: COLOR.appBaseColor.withOpacity(0.8),
+                      inactiveFillColor: Colors.grey.shade200,
+                      inactiveColor: Colors.black26,
+                      activeColor: COLOR.appBaseColor.withOpacity(0.8)),
                 ),
+
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(StringRes.didntGetOtp),
-                    GetBuilder<OTPController>(builder: (otpController) =>  TextButton(
-                      onPressed: () {
+                    SizedBox(width: 10),
 
-                        otpController.isResendEnabled.value
-                            ? otpController.resendOTP(context,widget.phoneNumber!)
-                            : false;
-                      },
-                      // otpController.isResendEnabled.value
-                      //     ? otpController.resendOTP(context)
-                      //     : null,
-                      child: Text(StringRes.sendAgain),
-                    )),
+                    Obx(() {
+                      return otpController.isResendEnabled.value
+                          ? TextButton(
+                              onPressed: () {
+                                otpController.resendOTP(
+                                    context, widget.phoneNumber!);
+                              },
+                              child: Text(StringRes.sendAgain),
+                            )
+                          : Opacity(
+                              child: Text(StringRes.sendAgain),
+                              opacity: 0.4,
+                            );
+                    }),
+
+                    //       : SizedBox();
+                    // }),
+                    // GetBuilder<OTPController>(builder: (otpController) { return otpController.isResendEnabled.value ? TextButton(
+                    //   onPressed: () {
+                    //
+                    //     // otpController.isResendEnabled.value
+                    //     //     ?
+                    //     otpController.resendOTP(context,widget.phoneNumber!);
+                    //         // : false;
+                    //   },
+                    //   // otpController.isResendEnabled.value
+                    //   //     ? otpController.resendOTP(context)
+                    //   //     : null,
+                    //   child: Text(StringRes.sendAgain),
+                    // )
+                    // : Opacity(child: Text(StringRes.sendAgain),opacity: 0.4,);}),
                     Spacer(),
                     Obx(() {
                       return Text(
@@ -117,20 +137,23 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       );
                     })
-
                   ],
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
                     try {
-                      String otp = otpFields.map((field) => field.text.trim()).join();
+                      String otp =
+                          otpFields.map((field) => field.text.trim()).join();
                       if (widget.phoneNumber != null) {
-                        otpController.verifyPhoneOtp(context, otp, widget.phoneNumber!);
+                        otpController.verifyPhoneOtp(
+                            context, otp, widget.phoneNumber!);
                       } else if (widget.registerPhoneNumber != null) {
-                        otpController.verifyPhoneOtp(context, otp, widget.registerPhoneNumber!);
+                        otpController.verifyPhoneOtp(
+                            context, otp, widget.registerPhoneNumber!);
                       } else {
-                        Get.snackbar(StringRes.error, StringRes.phoneNumberMissing);
+                        Get.snackbar(
+                            StringRes.error, StringRes.phoneNumberMissing);
                       }
                     } catch (e) {
                       Get.snackbar(StringRes.error, e.toString());
@@ -158,4 +181,3 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 }
-

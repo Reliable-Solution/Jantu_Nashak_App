@@ -14,7 +14,8 @@ class StoreselectionScreen extends StatefulWidget {
   State<StoreselectionScreen> createState() => _StoreselectionScreenState();
 }
 
-class _StoreselectionScreenState extends State<StoreselectionScreen>  with TickerProviderStateMixin{
+class _StoreselectionScreenState extends State<StoreselectionScreen>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -89,12 +90,10 @@ class _StoreselectionScreenState extends State<StoreselectionScreen>  with Ticke
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: COLOR.appBaseColor,
-      body:
-      Center(
+      body: Center(
         child: ScaleTransition(
           scale: _scaleAnimation,
-          child:
-          Container(
+          child: Container(
             padding: EdgeInsets.all(20),
             margin: EdgeInsets.symmetric(horizontal: 30),
             decoration: BoxDecoration(
@@ -105,12 +104,12 @@ class _StoreselectionScreenState extends State<StoreselectionScreen>  with Ticke
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                 Text(
+                Text(
                   StringRes.switchStore,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                 Text(
+                Text(
                   StringRes.confirmSwitchStore,
                   textAlign: TextAlign.center,
                 ),
@@ -122,23 +121,22 @@ class _StoreselectionScreenState extends State<StoreselectionScreen>  with Ticke
                       style: ElevatedButton.styleFrom(
                         backgroundColor: COLOR.appBaseColor,
                       ),
-                      onPressed: (){
+                      onPressed: () {
                         Get.offAll(() => SplashScreen());
                       },
-                      child:  Text(StringRes.yes, style: TextStyle(color: Colors.white)),
+                      child: Text(StringRes.yes,
+                          style: TextStyle(color: Colors.white)),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[200],
                       ),
                       onPressed: () => Get.back(),
-                      child:  Text(StringRes.no, style: TextStyle(color: Colors.black)),
+                      child: Text(StringRes.no,
+                          style: TextStyle(color: Colors.black)),
                     ),
                   ],
                 ),
-
-
-
               ],
             ),
           ),

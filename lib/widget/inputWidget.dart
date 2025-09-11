@@ -63,55 +63,57 @@ class InputFiledArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        maxLength: maxlength,
-        onSaved: onSaved,
-        onChanged: onChanged,
-        onTap: onTap,
-        enabled: enabled,
-        readOnly: false,
-        focusNode: focusNode,
-        style: style ?? Themes.light.textTheme.displayLarge,
-        initialValue: initialValue,
-        inputFormatters: [
-          if(maxlength != null) LengthLimitingTextInputFormatter(maxlength)
-        ],
-        decoration: InputDecoration(
-          isDense: true,
-          labelText: labelText,
-          labelStyle: TextStyle(
-            color: (focusNode != null && focusNode!.hasFocus) ? COLOR.appBaseColor : COLOR.grey,
-          ),
-          prefixIcon: prefixIcon,
-          suffixText: suffixText,
-          suffixIcon: suffixIcon,
-          contentPadding: contentPadding ?? null,
-          counterText: counterText,
-          helperText: helperText,
-          suffixStyle: Get.theme.textTheme.titleMedium,
-          hintText: hintText,
-          hintStyle: TextStyle(color: COLOR.grey),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xffDEDEDE)),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xffDEDEDE)),
-          ),
-          enabledBorder: (border == 1)
-              ? OutlineInputBorder(
-            borderSide: BorderSide(color: COLOR.grey),
-          )
-              : UnderlineInputBorder(borderSide: BorderSide(color: COLOR.grey)),
-          focusedBorder: (border == 1)
-              ? OutlineInputBorder(
-            borderSide: BorderSide(color: COLOR.appBaseColor),
-          )
-              : UnderlineInputBorder(
-            borderSide: BorderSide(color: COLOR.appBaseColor),
-          ),
+      controller: controller,
+      keyboardType: keyboardType,
+      maxLength: maxlength,
+      onSaved: onSaved,
+      onChanged: onChanged,
+      onTap: onTap,
+      enabled: enabled,
+      readOnly: false,
+      focusNode: focusNode,
+      style: style ?? Themes.light.textTheme.labelLarge,
+      initialValue: initialValue,
+      inputFormatters: [
+        if (maxlength != null) LengthLimitingTextInputFormatter(maxlength)
+      ],
+      decoration: InputDecoration(
+        isDense: true,
+        labelText: labelText,
+        labelStyle: TextStyle(
+          color: (focusNode != null && focusNode!.hasFocus)
+              ? COLOR.appBaseColor
+              : COLOR.black,
         ),
-        validator: validator,
-      );
+        prefixIcon: prefixIcon,
+        suffixText: suffixText,
+        suffixIcon: suffixIcon,
+        contentPadding: contentPadding ?? null,
+        counterText: counterText,
+        helperText: helperText,
+        suffixStyle: Get.theme.textTheme.titleMedium,
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.black),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color(0xffDEDEDE)),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color(0xffDEDEDE)),
+        ),
+        enabledBorder: (border == 1)
+            ? OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+              )
+            : UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+        focusedBorder: (border == 1)
+            ? OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),
+              )
+            : UnderlineInputBorder(
+                borderSide: BorderSide(color: COLOR.appBaseColor),
+              ),
+      ),
+      validator: validator,
+    );
   }
 }

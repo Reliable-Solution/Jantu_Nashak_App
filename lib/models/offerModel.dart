@@ -8,11 +8,11 @@ class OfferModel {
 
   OfferModel(
       {this.offerId,
-        this.offerCode,
-        this.offerPriority,
-        this.offerImage,
-        this.offerStatus,
-        this.offerCDT});
+      this.offerCode,
+      this.offerPriority,
+      this.offerImage,
+      this.offerStatus,
+      this.offerCDT});
 
   OfferModel.fromJson(Map<String, dynamic> json) {
     offerId = json['OfferId'];

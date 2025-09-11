@@ -200,7 +200,8 @@ class TicketViewScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppStyles.backgroundColor,
-        body: Obx(() => controller.isFirstLoading.value || controller.isTicketListLoading.value
+        body: Obx(() => controller.isFirstLoading.value ||
+                controller.isTicketListLoading.value
             ? AppUtils.circularLoaderData()
             : _detailsViewSection(controller, size)),
       ),
@@ -211,33 +212,36 @@ class TicketViewScreen extends StatelessWidget {
     return controller.getTicketListModel.value?.data?.isEmpty ?? true
         ? AppUtils.noRecordMsg()
         : ListView.builder(
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemCount: controller.getTicketListModel.value!.data!.length,
-      padding: const EdgeInsets.only(top: 12),
-      itemBuilder: (context, index) {
-        final ticket = controller.getTicketListModel.value!.data![index];
-        return Padding(
-          padding: const EdgeInsets.only(left: 12.0, top: 8.0, right: 12.0),
-          child: Container(
-            width: size.width,
-            decoration: BoxDecoration(
-                color: AppStyles.white, borderRadius: BorderRadius.circular(8)),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 8, bottom: 8, right: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _nameNoteSection(ticket, index),
-                  _descriptionDetailSection(ticket),
-                  _callDetailsSection(ticket),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemCount: controller.getTicketListModel.value!.data!.length,
+            padding: const EdgeInsets.only(top: 12),
+            itemBuilder: (context, index) {
+              final ticket = controller.getTicketListModel.value!.data![index];
+              return Padding(
+                padding:
+                    const EdgeInsets.only(left: 12.0, top: 8.0, right: 12.0),
+                child: Container(
+                  width: size.width,
+                  decoration: BoxDecoration(
+                      color: AppStyles.white,
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10.0, top: 8, bottom: 8, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _nameNoteSection(ticket, index),
+                        _descriptionDetailSection(ticket),
+                        _callDetailsSection(ticket),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
   }
 
   Widget _nameNoteSection(GetTicketListData ticket, int index) {
@@ -249,7 +253,8 @@ class TicketViewScreen extends StatelessWidget {
           children: [
             textSemiBold(text: ticket.ticketsUserName ?? "", fontSize: 14),
             textRegular(
-                text: "${DateFormat("dd MMM, yyyy").format(ticket.ticketsCdt ?? DateTime.now())}",
+                text:
+                    "${DateFormat("dd MMM, yyyy").format(ticket.ticketsCdt ?? DateTime.now())}",
                 fontSize: 12),
           ],
         ),

@@ -23,22 +23,20 @@ class CategoryDetailShimmer extends StatelessWidget {
             CommonSkeleton(height: 23, width: 138, radius: 12)
           ]),
           const VSpace(25),
-          const CommonSkeleton(
-            height: 48,
-            radius: 20
-          ),
+          const CommonSkeleton(height: 48, radius: 20),
           const VSpace(25),
-          const CommonSkeleton(height: 16, width: 96).alignment(Alignment.centerLeft),
+          const CommonSkeleton(height: 16, width: 96)
+              .alignment(Alignment.centerLeft),
           const VSpace(20),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children:  List.generate(8, (index) {
+              children: List.generate(8, (index) {
                 return const Column(children: [
                   CommonSkeleton(height: 60, width: 60, radius: 10),
                   VSpace(11),
                   CommonSkeleton(height: 13, width: 60, radius: 10)
-                ]).padding( bottom: 22,left:  0,right: 15);
+                ]).padding(bottom: 22, left: 0, right: 15);
               }),
             ),
           ),
