@@ -1,487 +1,509 @@
-  import 'package:flutter/material.dart';
-  import 'package:get/get.dart';
-  import 'package:get/get_core/src/get_main.dart';
-  import 'package:keep_app/models/orderDetailModel.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:keep_app/models/orderDetailModel.dart';
 import 'package:keep_app/view/dashboard/dashboardScreen.dart';
 
-  import '../../constant/app_constant.dart';
-  import '../../constant/colorConst.dart';
+import '../../constant/app_constant.dart';
+import '../../constant/colorConst.dart';
 import '../../controller/orderController.dart';
 import '../../utils/string_res.dart';
 
-  class Orderdetailscreen extends StatefulWidget {
-    const Orderdetailscreen({super.key});
+class Orderdetailscreen extends StatefulWidget {
+  const Orderdetailscreen({super.key});
 
-    @override
-    State<Orderdetailscreen> createState() => _OrderdetailscreenState();
+  @override
+  State<Orderdetailscreen> createState() => _OrderdetailscreenState();
+}
+
+class _OrderdetailscreenState extends State<Orderdetailscreen> {
+  @override
+  OrderController orderController = Get.find();
+
+  Widget build(BuildContext context) {
+    return orderDetailsScreen(context);
   }
+}
 
-  class _OrderdetailscreenState extends State<Orderdetailscreen> {
-    @override
-    OrderController orderController = Get.find();
+Widget orderDetailsScreen(BuildContext context) {
+  OrderController orderController = Get.find();
 
-    Widget build(BuildContext context) {
-      return orderDetailsScreen(context);
-    }
-  }
+  return Scaffold(
+    backgroundColor: Colors.grey.shade200,
+    appBar: AppBar(
+      title: Text(StringRes.orderDetails),
+    ),
+    body: SingleChildScrollView(
+      child: Obx(() {
+        if (orderController.isDetailLoading.value) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
 
-  Widget orderDetailsScreen(BuildContext context) {
-    OrderController orderController = Get.find();
+        if (orderController.orderDetailList.isEmpty == null) {
+          return Center(child: Text(StringRes.noOrderFound));
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Order Summary
+            OrderSummary(ordersDetailsList: orderController.orderDetailList),
 
-    return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        title: Text(StringRes.orderDetails),
-        ),
-      body: SingleChildScrollView(
-        child: Obx(() {
-          if (orderController.isDetailLoading.value) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(child: CircularProgressIndicator()),
-            );
-          }
+            SizedBox(height: 20),
+            // Cancel Order Button
+            cancelOrderButton(context),
 
+            SizedBox(height: 20),
+            // Delivery Address
+            deliveryAddress(context),
 
-          if (orderController.orderDetailList.isEmpty == null) {
-            return Center(child: Text(StringRes.noOrderFound));
-          }
-          return Column(
+            SizedBox(height: 20),
+
+            // Payment Details
+            paymentDetails(context),
+            SizedBox(height: 20),
+          ],
+        );
+      }),
+    ),
+  );
+}
+
+Widget orderTracking(BuildContext context) {
+  OrderController orderController = Get.find();
+
+  return orderController.orderDetailList[0].otherDetail![0].orderStage ==
+          "PlaceOrder"
+      ? Container(
+          width: MediaQuery.sizeOf(context).width,
+          color: Colors.white,
+          padding: EdgeInsets.all(10),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Order Summary
-              OrderSummary(ordersDetailsList: orderController.orderDetailList),
-
-              SizedBox(height: 20),
-              // Cancel Order Button
-              cancelOrderButton(context),
-
-              SizedBox(height: 20),
-              // Delivery Address
-              deliveryAddress(context),
-
-              SizedBox(height: 20),
-
-              // Payment Details
-              paymentDetails(context),
-              SizedBox(height: 20),
-            ],
-          );
-        }),
-      ),
-    );
-  }
-
-  Widget orderTracking(BuildContext context) {
-    OrderController orderController = Get.find();
-
-    return orderController.orderDetailList[0].otherDetail![0].orderStage == "PlaceOrder"?Container(
-      width: MediaQuery.sizeOf(context).width,
-      color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(StringRes.orderPlaced, style: TextStyle(fontWeight: FontWeight.bold)),
-          Text("${StringRes.deliveryBy} ${orderController.orderDetailList[0].otherDetail![0].orderDate}", style: TextStyle(color: Colors.grey)),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              trackingStep(StringRes.ordered, "${orderController.orderDetailList[0].otherDetail![0].orderDate}", true),
-              trackingStep(StringRes.shipped, "", false),
-              trackingStep(StringRes.outForDelivery, "", false),
-              trackingStep(StringRes.delivery, "${orderController.orderDetailList[0].otherDetail![0].orderDeliveryDate}", false),
-            ],
-          ),
-        ],
-      ),
-    )
-    :SizedBox();
-  }
-
-  // ✅ Tracking Step Widget
-  Widget trackingStep(String title, String date, bool completed) {
-    OrderController orderController = Get.find();
-
-    return  orderController.orderDetailList[0].otherDetail![0].orderStage == "PlaceOrder"?Column(
-      children: [
-        Icon(
-          completed ? Icons.check_circle : Icons.radio_button_unchecked,
-          color: completed ? Colors.green : Colors.grey,
-        ),
-        Text(title, style: TextStyle(fontSize: 12)),
-        Text(date, style: TextStyle(fontSize: 12, color: Colors.grey)),
-      ],
-    )
-    :SizedBox();
-  }
-
-  // ✅ Cancel Order Button
-  Widget cancelOrderButton(BuildContext context) {
-    OrderController orderController = Get.find();
-
-    return
-      orderController.orderDetailList[0].otherDetail![0].orderStage == "PlaceOrder"
-          ? GetBuilder<OrderController>(
-          builder: (orderController) =>  Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  color: Colors.white,
-                  padding: EdgeInsets.all( 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-            Expanded(child: Text(StringRes.cancellationAvailableTillShipping,)),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: COLOR.appBaseColor,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              ),
-              onPressed: () {
-                orderController.cancelOrder(
-                    orderController.customerModel!.value.customerId,
-                    orderController.orderDetailList[0].otherDetail![0].orderId);
-                orderController.getOrder(orderController
-                    .customerModel!.value.customerId);
-                orderController.getOrderDetail( orderController.orderDetailList[0].otherDetail![0].orderId);
-                orderController.update();
-              },
-              child: Text(StringRes.cancelOrder, style: TextStyle(color: Colors.white)),
-            ),
-                    ],
-                  ),
-                ),
-          )
-          : cancelOrder(context);
-  }
-
-  // ✅ Delivery Address Widget
-  Widget deliveryAddress(BuildContext context) {
-    OrderController orderController = Get.find();
-
-    return Container(
-      width: MediaQuery.sizeOf(context).width,
-      color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(StringRes.deleiveryAddress,
+              Text(StringRes.orderPlaced,
                   style: TextStyle(fontWeight: FontWeight.bold)),
-            ],
-          ),
-          Text("${orderController.orderDetailList[0].shippingDetail![0].addressFullName}", style: TextStyle(fontWeight: FontWeight.bold)),
-          Text("${orderController.orderDetailList[0].shippingDetail![0].addressColony},\n${orderController.orderDetailList[0].shippingDetail![0].city} ${orderController.orderDetailList[0].shippingDetail![0].state}, ${orderController.orderDetailList[0].shippingDetail![0].pincode}"),
-        ],
-      ),
-    );
-  }
-
-  // ✅ Recently Viewed Items
-  Widget recentlyViewed() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(StringRes.recentlyViewed, style: TextStyle(fontWeight: FontWeight.bold)),
-        SizedBox(height: 10),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(3, (index) => recentlyViewedItem()),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ✅ Recently Viewed Item
-  Widget recentlyViewedItem() {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      width: 100,
-      child: Column(
-        children: [
-          Image.network('https://via.placeholder.com/100',
-              width: 100, height: 100),
-          Text(StringRes.shirt, style: TextStyle(fontSize: 12)),
-        ],
-      ),
-    );
-  }
-
-  // ✅ Payment Details
-  Widget paymentDetails(BuildContext context) {
-    OrderController orderController = Get.find();
-
-    return Container(
-      width: MediaQuery.sizeOf(context).width,
-      color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("${StringRes.totalProductPrice} ₹${orderController.orderDetailList[0].otherDetail![0].total}",
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          // Text("You saved ₹30", style: TextStyle(color: Colors.green)),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+              Text(
+                  "${StringRes.deliveryBy} ${orderController.orderDetailList[0].otherDetail![0].orderDate}",
+                  style: TextStyle(color: Colors.grey)),
+              SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.credit_card, color: Colors.grey),
-                  SizedBox(width: 5),
-                  Text("${orderController.orderDetailList[0].otherDetail![0].orderPaymentMethod}"),
+                  trackingStep(
+                      StringRes.ordered,
+                      "${orderController.orderDetailList[0].otherDetail![0].orderDate}",
+                      true),
+                  trackingStep(StringRes.shipped, "", false),
+                  trackingStep(StringRes.outForDelivery, "", false),
+                  trackingStep(
+                      StringRes.delivery,
+                      "${orderController.orderDetailList[0].otherDetail![0].orderDeliveryDate}",
+                      false),
                 ],
               ),
-              Text("₹${orderController.orderDetailList[0].otherDetail![0].total}", style: TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
-        ],
+        )
+      : SizedBox();
+}
+
+// ✅ Tracking Step Widget
+Widget trackingStep(String title, String date, bool completed) {
+  OrderController orderController = Get.find();
+
+  return orderController.orderDetailList[0].otherDetail![0].orderStage ==
+          "PlaceOrder"
+      ? Column(
+          children: [
+            Icon(
+              completed ? Icons.check_circle : Icons.radio_button_unchecked,
+              color: completed ? Colors.green : Colors.grey,
+            ),
+            Text(title, style: TextStyle(fontSize: 12)),
+            Text(date, style: TextStyle(fontSize: 12, color: Colors.grey)),
+          ],
+        )
+      : SizedBox();
+}
+
+// ✅ Cancel Order Button
+Widget cancelOrderButton(BuildContext context) {
+  OrderController orderController = Get.find();
+
+  return orderController.orderDetailList[0].otherDetail![0].orderStage ==
+          "PlaceOrder"
+      ? GetBuilder<OrderController>(
+          builder: (orderController) => Container(
+            width: MediaQuery.sizeOf(context).width,
+            color: Colors.white,
+            padding: EdgeInsets.all(5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                    child: Text(
+                  StringRes.cancellationAvailableTillShipping,
+                )),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: COLOR.appBaseColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onPressed: () {
+                    orderController.cancelOrder(
+                        orderController.customerModel!.value.customerId,
+                        orderController
+                            .orderDetailList[0].otherDetail![0].orderId);
+                    orderController.getOrder(
+                        orderController.customerModel!.value.customerId);
+                    orderController.getOrderDetail(orderController
+                        .orderDetailList[0].otherDetail![0].orderId);
+                    orderController.update();
+                  },
+                  child: Text(StringRes.cancelOrder,
+                      style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
+          ),
+        )
+      : cancelOrder(context);
+}
+
+// ✅ Delivery Address Widget
+Widget deliveryAddress(BuildContext context) {
+  OrderController orderController = Get.find();
+
+  return Container(
+    width: MediaQuery.sizeOf(context).width,
+    color: Colors.white,
+    padding: EdgeInsets.all(10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(StringRes.deleiveryAddress,
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
+        Text(
+            "${orderController.orderDetailList[0].shippingDetail![0].addressFullName}",
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(
+            "${orderController.orderDetailList[0].shippingDetail![0].addressColony},\n${orderController.orderDetailList[0].shippingDetail![0].city} ${orderController.orderDetailList[0].shippingDetail![0].state}, ${orderController.orderDetailList[0].shippingDetail![0].pincode}"),
+      ],
+    ),
+  );
+}
+
+// ✅ Recently Viewed Items
+Widget recentlyViewed() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(StringRes.recentlyViewed,
+          style: TextStyle(fontWeight: FontWeight.bold)),
+      SizedBox(height: 10),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(3, (index) => recentlyViewedItem()),
+        ),
+      ),
+    ],
+  );
+}
+
+// ✅ Recently Viewed Item
+Widget recentlyViewedItem() {
+  return Container(
+    margin: EdgeInsets.only(right: 10),
+    width: 100,
+    child: Column(
+      children: [
+        Image.network('https://via.placeholder.com/100',
+            width: 100, height: 100),
+        Text(StringRes.shirt, style: TextStyle(fontSize: 12)),
+      ],
+    ),
+  );
+}
+
+// ✅ Payment Details
+Widget paymentDetails(BuildContext context) {
+  OrderController orderController = Get.find();
+
+  return Container(
+    width: MediaQuery.sizeOf(context).width,
+    color: Colors.white,
+    padding: EdgeInsets.all(10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+            "${StringRes.totalProductPrice} ₹${orderController.orderDetailList[0].otherDetail![0].total}",
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        // Text("You saved ₹30", style: TextStyle(color: Colors.green)),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.credit_card, color: Colors.grey),
+                SizedBox(width: 5),
+                Text(
+                    "${orderController.orderDetailList[0].otherDetail![0].orderPaymentMethod}"),
+              ],
+            ),
+            Text("₹${orderController.orderDetailList[0].otherDetail![0].total}",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+// ✅ Order Summary Component
+class OrderSummary extends StatelessWidget {
+  final List<OrderDetailData> ordersDetailsList;
+
+  const OrderSummary({Key? key, required this.ordersDetailsList})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      width: MediaQuery.sizeOf(context).width,
+      margin: EdgeInsets.all(01),
+      // padding: EdgeInsets.all(10),
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: ordersDetailsList.length,
+        itemBuilder: (context, index) {
+          var orderDetail = ordersDetailsList[index].orders;
+          if (orderDetail != null && orderDetail.isNotEmpty) {
+            return OrderCard(order: orderDetail);
+          } else {
+            return Center(child: Text(StringRes.noOrderDetailsAvailable));
+          }
+          // return OrderCard(order: orders[0].orderDetailData![0].orders![index]);
+        },
       ),
     );
   }
+}
 
-  // ✅ Order Summary Component
-  class OrderSummary extends StatelessWidget {
-    final List<OrderDetailData> ordersDetailsList;
+class OrderCard extends StatelessWidget {
+  final List<Orders> order;
 
-    const OrderSummary({Key? key, required this.ordersDetailsList}) : super(key: key);
+  const OrderCard({Key? key, required this.order}) : super(key: key);
 
-    @override
-    Widget build(BuildContext context) {
-      return Container(
-          color: Colors.white,
-         width: MediaQuery.sizeOf(context).width,
-         margin: EdgeInsets.all(01),
-        // padding: EdgeInsets.all(10),
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: ordersDetailsList.length,
-          itemBuilder: (context, index) {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: order.length,
+        itemBuilder: (context, index) {
+          print("order dat detailsw ${order[index].productName}");
+          return Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.grey.shade200),
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Product image
+                      Container(
+                        width: 70,
+                        height: 70,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Image.network(
+                          "${IMAGE_URL + order[index].productdetailImages!}" ??
+                              'http://surti.idnmserver.com/resources/product_no_image.png',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset("assets/images/noInternet.jpg");
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
 
-            var orderDetail = ordersDetailsList[index].orders;
-            if (orderDetail != null && orderDetail.isNotEmpty) {
-              return OrderCard(order: orderDetail);
-            } else {
-              return Center(child: Text(StringRes.noOrderDetailsAvailable));
-            }
-            // return OrderCard(order: orders[0].orderDetailData![0].orders![index]);
-          },
-        ),
-      );
-    }
-  }
-  class OrderCard extends StatelessWidget {
-    final List<Orders> order;
-
-    const OrderCard({Key? key, required this.order}) : super(key: key);
-
-    @override
-    Widget build(BuildContext context) {
-      return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: order.length,
-          itemBuilder: (context, index) {
-            print("order dat detailsw ${order[index].productName}");
-            return
-               Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Colors.grey.shade200),
-                  ),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Product image
-                          Container(
-                            width: 70,
-                            height: 70,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(4),
+                      // Product details
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              // item.productName
+                              order[index].productName ?? StringRes.productName,
+                              style: const TextStyle(fontSize: 14),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            child: Image.network(
-                              "${IMAGE_URL + order[index].productdetailImages!}" ??
-                                  'http://surti.idnmserver.com/resources/product_no_image.png',
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset("assets/images/noInternet.jpg");
-                              },
+                            const SizedBox(height: 4),
+                            Text(
+                              "₹${order[index].productdetailSrp ?? 0}",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-
-                          // Product details
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            const SizedBox(height: 4),
+                            Text(
+                              // item.isEasyReturn == 1
+                              //     ? "All issue easy returns allowed"
+                              //     :
+                              StringRes.onlyWrongDefectItemReturnsAllowed,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade700,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
                               children: [
                                 Text(
-                                  // item.productName
-                                  order[index].productName
-                                      ?? StringRes.productName,
-                                  style: const TextStyle(fontSize: 14),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  "₹${order[index].productdetailSrp ?? 0}",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  // item.isEasyReturn == 1
-                                  //     ? "All issue easy returns allowed"
-                                  //     :
-                                  StringRes.onlyWrongDefectItemReturnsAllowed,
+                                  "Quantity : ${order[index].productQty}",
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey.shade700,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "${StringRes.size}: '${StringRes.freeSize}'",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey.shade700,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
+                                const SizedBox(width: 12),
                               ],
                             ),
-                          ),
-
-                        ],
+                            const SizedBox(height: 8),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${StringRes.soldBy} : ${order[index].productName ?? '${StringRes.seller}'}",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey.shade700,
-                            ),
-                          ),
-                           Text(
-                            StringRes.freeDelivery,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              );
-            }
-
-      );
-
-    }
-  }
-  Widget cancelOrder(BuildContext context) {
-    return Container(
-      width: MediaQuery.sizeOf(context).width,
-      // margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 8,
-            spreadRadius: 2,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: Colors.red,
-                child: Icon(Icons.close, color: Colors.white),
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                   Text(
-                    StringRes.cancelled,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${StringRes.soldBy} : ${order[index].productName ?? '${StringRes.seller}'}",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      Text(
+                        StringRes.freeDelivery,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'As per your request on Tue, 18 Mar',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              side: const BorderSide(color: Colors.purple),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              minimumSize: const Size(double.infinity, 48),
+                ),
+              ],
             ),
-            onPressed: () {
-              Get.offAll(DashboardScreen(pageIndex: 0));
-              // Navigate to Dashboard
-              // Navigator.pushNamed(context, '/dashboard');
-            },
-            child:  Text(
-              StringRes.goToDashboard,
-              style: TextStyle(
-                color: Colors.purple,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
+}
+
+Widget cancelOrder(BuildContext context) {
+  return Container(
+    width: MediaQuery.sizeOf(context).width,
+    // margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.1),
+          blurRadius: 8,
+          spreadRadius: 2,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const CircleAvatar(
+              backgroundColor: Colors.red,
+              child: Icon(Icons.close, color: Colors.white),
+            ),
+            const SizedBox(width: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  StringRes.cancelled,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  'As per your request on Tue, 18 Mar',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            side: const BorderSide(color: Colors.purple),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            minimumSize: const Size(double.infinity, 48),
+          ),
+          onPressed: () {
+            Get.offAll(DashboardScreen(pageIndex: 0));
+            // Navigate to Dashboard
+            // Navigator.pushNamed(context, '/dashboard');
+          },
+          child: Text(
+            StringRes.goToDashboard,
+            style: TextStyle(
+              color: Colors.purple,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}

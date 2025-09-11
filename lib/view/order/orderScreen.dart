@@ -36,7 +36,7 @@ class _OrderscreenState extends State<Orderscreen> {
         elevation: 1,
         title: TextWiget(
           title: StringRes.orders,
-          style: Themes.light.textTheme.displayLarge,
+          style: Themes.light.textTheme.headlineLarge,
         ),
       ),
       // backgroundColor: COLOR.background.withOpacity(),
@@ -53,31 +53,32 @@ class _OrderscreenState extends State<Orderscreen> {
               if (orderController.isLoading.value) {
                 return Center(child: CircularProgressIndicator());
               } else if (orderController.orderList.isEmpty) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 250,
-                      child: Image.asset(Images.orderScreen),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextWiget(
-                        title: StringRes.yourOrdersAreEmpty,
-                        style: Themes.light.textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
+                return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 250,
+                        child: Image.asset(Images.orderScreen),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextWiget(
+                          title: StringRes.yourOrdersAreEmpty,
+                          style: Themes.light.textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    TextButtonWidget(
-                        text: StringRes.viewProducts,
-                        onPressed: () {
-                          Get.to(() => DashboardScreen(pageIndex: 0));
-                        }),
-                  ],
+                      TextButtonWidget(
+                          text: StringRes.viewProducts,
+                          onPressed: () {
+                            Get.to(() => DashboardScreen(pageIndex: 0));
+                          }),
+                    ],
+                  ),
                 );
-
               } else {
                 return ListView.builder(
                   padding: EdgeInsets.all(10),
@@ -105,7 +106,6 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var orderData = order; // Safely access first item
     print("Orders data ${orderData}");
 
@@ -164,7 +164,6 @@ class OrderCard extends StatelessWidget {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -183,7 +182,8 @@ class OrderCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset(
-                        height: 20, width: 20,
+                        height: 20,
+                        width: 20,
                         Images.tag,
                       ),
                       SizedBox(
@@ -196,9 +196,8 @@ class OrderCard extends StatelessWidget {
                           children: [
                             Text(
                               StringRes.orders,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey),
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
                             ),
                             Text(
                               "${order.orderId ?? "N/A"}",
@@ -253,24 +252,26 @@ class OrderCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10,),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 order.orderStageDropDown == "PlaceOrder"
                     ? Align(
                         alignment: Alignment.topLeft,
-                        child:
-                        ElevatedButton(
+                        child: ElevatedButton(
                           // onPressed: () {},
                           onPressed: () {
                             orderController.cancelOrder(
                                 orderController.customerModel!.value.customerId,
                                 order.orderId);
-                            orderController.getOrder(
-                                orderController.customerModel!.value.customerId);
+                            orderController.getOrder(orderController
+                                .customerModel!.value.customerId);
                           },
-                          style: ElevatedButton.styleFrom(elevation: 0,
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0,
                               shape: ContinuousRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(20),
@@ -285,28 +286,30 @@ class OrderCard extends StatelessWidget {
                         ),
                       )
                     : SizedBox.shrink(),
+                order.ordertrackingLink != null
+                    ? ElevatedButton(
+                        // onPressed: () {},
+                        onPressed: () {
+                          Get.to(
+                              WebViewScreen(url: "${order.ordertrackingLink}"));
 
-                order.ordertrackingLink != null ? ElevatedButton(
-                  // onPressed: () {},
-                  onPressed: () {
-                       Get.to(WebViewScreen(url: "${order.ordertrackingLink}"));
-
-                       print("Order Tracking ${order.ordertrackingLink}");
-                  },
-                  style: ElevatedButton.styleFrom(elevation: 0,
-                      shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                          bottom: Radius.circular(20),
+                          print("Order Tracking ${order.ordertrackingLink}");
+                        },
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: ContinuousRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
+                                bottom: Radius.circular(20),
+                              ),
+                            ),
+                            backgroundColor: Colors.blue.shade400),
+                        child: Text(
+                          StringRes.trackOrder,
+                          style: TextStyle(color: Colors.white),
                         ),
-                      ),
-                      backgroundColor: Colors.blue.shade400),
-                  child: Text(
-                    StringRes.trackOrder,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ):SizedBox.shrink(),
-
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ],

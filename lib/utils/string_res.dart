@@ -1,9 +1,10 @@
- import 'package:get/get.dart';
+import 'package:get/get.dart';
 
- class StringRes {
+class StringRes {
   /// home screen
   static String get account => "account".tr;
-  static String get addDeliveryLocationToGetExtraDiscount => "addDeliveryLocationToGetExtraDiscount".tr;
+  static String get addDeliveryLocationToGetExtraDiscount =>
+      "addDeliveryLocationToGetExtraDiscount".tr;
   static String get trendingProducts => "trendingProducts".tr;
   static String get addDeliveryLocation => "addDeliveryLocation".tr;
   static String get deliveryPincode => "deliveryPincode".tr;
@@ -48,8 +49,10 @@
   static String get notificationSettings => "Notification Settings".tr;
   static String get rateApp => "Rate".tr;
   static String get legalAndPolicies => "Legal and Policies".tr;
-  static String get rateUsQuestion => "Would you like to rate us on Play Store?".tr;
-  static String get feedbackText => "Your feedback helps us make your experience better".tr;
+  static String get rateUsQuestion =>
+      "Would you like to rate us on Play Store?".tr;
+  static String get feedbackText =>
+      "Your feedback helps us make your experience better".tr;
   static String get worst => "WORST".tr;
   static String get best => "BEST".tr;
   static String get store => "Store?".tr;
@@ -200,7 +203,6 @@
   static String get bottomwearFabric => "bottomwearFabric".tr;
   static String get ornamentation => "ornamentation".tr;
 
-
   static String get orders => "orders".tr;
   static String get faq => "faq".tr;
   static String get deleteAccount => "deleteAccount".tr;
@@ -210,23 +212,31 @@
   static String get deleteAccountConfirmation => "deleteAccountConfirmation".tr;
   static String get cancel => "cancel".tr;
 
-  static String get profileInformation => "profileInformation".tr; // Added for EditProfileScreen
+  static String get profileInformation =>
+      "profileInformation".tr; // Added for EditProfileScreen
   static String get editProfileTitle => 'editProfileTitle'.tr;
-  static String get socialProfile => 'ChooseTheInformationYouWantToShow on your social profile.'.tr;
+  static String get socialProfile =>
+      'ChooseTheInformationYouWantToShow on your social profile.'.tr;
 
-  static String get addressTypeHint => "addressTypeHint".tr; // For 'Address Type'
-  static String get selectAddressType => "selectAddressType".tr; // For 'Please select address type'
-  static String get pinCodeSixDigits => "pinCodeSixDigits".tr; // For 'Only 6 Digit allowed'
+  static String get addressTypeHint =>
+      "addressTypeHint".tr; // For 'Address Type'
+  static String get selectAddressType =>
+      "selectAddressType".tr; // For 'Please select address type'
+  static String get pinCodeSixDigits =>
+      "pinCodeSixDigits".tr; // For 'Only 6 Digit allowed'
   static String get addressMaxLength => "addressMaxLength".tr; //
 
-  static String get continueNoDeduction => "continueNoDeduction".tr; // For "Clicking on 'Continue' will not deduct any money"
-  static String get viewPriceDetails => "viewPriceDetails".tr; // For "VIEW PRICE DETAILS"
+  static String get continueNoDeduction => "continueNoDeduction"
+      .tr; // For "Clicking on 'Continue' will not deduct any money"
+  static String get viewPriceDetails =>
+      "viewPriceDetails".tr; // For "VIEW PRICE DETAILS"
   static String get continueButton => "continueButton".tr; // For "Continue"
   static String get cartStep => "cartStep".tr; // For "Cart"
   static String get addressStep => "addressStep".tr; // For "Address"
   static String get paymentStep => "paymentStep".tr; // For "Payment"
   static String get summaryStep => "summaryStep".tr; // For "Summary"
-  static String get returnsPolicy => "returnsPolicy".tr; // For "Only wrong/defect item returns allowed"
+  static String get returnsPolicy =>
+      "returnsPolicy".tr; // For "Only wrong/defect item returns allowed"
   static String get sizeFree => "sizeFree".tr; // For "Size: 'Free Size'}"
   static String get removeItem => "removeItem".tr;
 
@@ -267,8 +277,8 @@
   static String get problemSubArea => "problemSubArea".tr;
   static String get ticketPriority => "ticketPriority".tr;
   static String get pleaseSelectProblemArea => "pleaseSelectProblemArea".tr;
-  static String get raiseTicket => "RaiseTicket".tr;
-  static String get viewTicket => "ViewTicket".tr;
+  static String get raiseTicket => "raiseTicket".tr;
+  static String get viewTicket => "viewTicket".tr;
 
   /// PaymentScreen strings
   static String get paymentMethod => "paymentMethod".tr;
@@ -290,9 +300,11 @@
   static String get paymentMode => "paymentMode".tr;
   static String get razorPay => "razorPay".tr;
   static String get placeOrder => "placeOrder".tr;
-  static String get soldBy => "soldBy".tr; // For "Sold by : ${item.productName}"
+  static String get soldBy =>
+      "soldBy".tr; // For "Sold by : ${item.productName}"
   static String get productName => "productName".tr;
-  static String get onlyWrongDefectItemReturnsAllowed => "onlyWrongDefectItemReturnsAllowed".tr;
+  static String get onlyWrongDefectItemReturnsAllowed =>
+      "onlyWrongDefectItemReturnsAllowed".tr;
   static String get deleiveryAddress => "deleiveryAddress".tr;
   static String get seller => "seller".tr;
   static String get qty => "qty".tr; // For "Qty: ${item.cartQuantity}"
@@ -322,7 +334,8 @@
   static String get shipped => "shipped".tr;
   static String get outForDelivery => "outForDelivery".tr;
   static String get delivery => "delivery".tr;
-  static String get cancellationAvailableTillShipping => "cancellationAvailableTillShipping".tr;
+  static String get cancellationAvailableTillShipping =>
+      "cancellationAvailableTillShipping".tr;
   static String get recentlyViewed => "recentlyViewed".tr;
   static String get shirt => "shirt".tr;
   static String get sizeFreeSize => "sizeFreeSize".tr;
@@ -330,7 +343,6 @@
   static String get cancellationRequest => "cancellationRequest".tr;
   static String get goToDashboard => "goToDashboard".tr;
   static String get noOrderDetailsAvailable => "noOrderDetailsAvailable".tr;
-
 
   static String get error => "error".tr;
   static String get phoneNumberMissing => "phoneNumberMissing".tr;
@@ -350,10 +362,12 @@
   static String get noFirmFound => "noFirmFound".tr;
 
   static String get selectAStore => "selectAStore".tr;
-  static String get chooseYourPreferredShoppingExperience => "chooseYourPreferredShoppingExperience".tr;
+  static String get chooseYourPreferredShoppingExperience =>
+      "chooseYourPreferredShoppingExperience".tr;
   static String get noFirmsFound => "noFirmsFound".tr;
   static String get noInternetConnection => "noInternetConnection".tr;
-  static String get pleaseCheckYourInternetAndTryAgain => "pleaseCheckYourInternetAndTryAgain".tr;
+  static String get pleaseCheckYourInternetAndTryAgain =>
+      "pleaseCheckYourInternetAndTryAgain".tr;
   static String get retry => "retry".tr;
 
   static String get switchStore => "switchStore".tr;
@@ -366,14 +380,76 @@
 
   static String get quantity => "quantity".tr;
 
-
   static String get productImages => "productImages".tr;
   static String get selectColor => "selectColor".tr;
   static String get failedToLoadImage => "failedToLoadImage".tr;
   static String get inr => "inr".tr;
+  static String get enterYourName => "enterYourName".tr;
+  // static String get viewProfile => "View Profile".tr;
+  static String get referEarn => "referEarn".tr;
+  static String get krushiBook => "krushiBook".tr;
+  static String get leaderShipRewards => "leaderShipRewards".tr;
+  static String get share => "share".tr;
+  static String get language => "language".tr;
+  static String get terms => "terms".tr;
+  // static String get privacyPolicy => "Privacy Policy".tr;
 
+  static String get refundPolicy => "refundPolicy".tr;
+  static String get shippingPolicy => "shippingPolicy".tr;
+  static String get profile => "profile".tr;
+  static String get editProfile => "editProfile".tr;
+  static String get asPerYourRequestOnTue => "asPerYourRequestOnTue".tr;
+  static String get addPicture => "addPicture".tr;
+  // static String get home => "home".tr;
+  static String get office => "office".tr;
+  static String get other => "other".tr;
 
- }
+  static String get productDescription => "productDescription".tr;
+  static String get editPhoto => "editPhoto".tr;
+  static String get contactUs => "contactUs".tr;
+  static String get aboutUs => "aboutUs".tr;
+  static String get total => "total".tr;
+  static String get primary => "primary".tr;
+  static String get trackYourOrder => "trackYourOrder".tr;
+  static String get notrackingDataAvailable => "noTrackingDataAvailable".tr;
+  static String get pointValue => "pointValue".tr;
+  static String get leadership => "leadership".tr;
+  static String get rewards => "rewards".tr;
+  static String get leadershipRewards => "leadershipRewards".tr;
+  static String get codeCopied => "codeCopied!".tr;
+  static String get referNowAnd => "referNowAnd".tr;
+  static String get earnUpTo500 => "earnUpTo500".tr;
+  static String get inviteyourfriendstotheappandget250offtheirfirstorderplusearn200cashbackforyourself => "inviteyourfriendstotheappandget250offtheirfirstorderplusearn200cashbackforyourself".tr;
+  static String get yourReferralCode => "yourReferralCode".tr;
+  static String get copied => "copied".tr;
+  static String get copyCode => "copyCode".tr;
+  static String get howItWorks => "howItWorks".tr;
+  static String get inviteAFriend => "inviteAFriend".tr;
+  static String get inviteYourFriendToRegisterOnShopees => "inviteYourFriendToRegisterOnShopees".tr;
+  static String get earnRewardPoints => "earnRewardPoints".tr;
+  static String get useOnOrders => "useOnOrders".tr;
 
+  static String get rewardPointsUsedOnOrder => "rewardPointsUsedOnOrder".tr;
+  static String get readTermsConditions => "readTermsConditions".tr;
+  static String get login => "login".tr;
+  static String get book => "book".tr;
+  static String get enterPointsHere => "enterPointsHere".tr;
+  static String get apply => "apply".tr;
+  static String get clickingOnContinueWillNotDeductAnyMoney => "clickingOnContinueWillNotDeductAnyMoney".tr;
+  // static String get earnRewardPoints => "earnRewardPoints".tr;
+  // static String get useOnOrders => "useOnOrders".tr;
+  // static String get inviteAFriend => "inviteAFriend".tr;
+  static String get whenYourFriendRegisters => "whenYourFriendRegisters".tr;
+  static String get totalRedeemPoints => "totalRedeemPoint".tr;
+  static String get enterYourPoint => "enterYourPoint".tr;
+  // static String get rewardPointsUsedOnOrder => "rewardPointsUsedOnOrder".tr;
 
-
+  // static String get searchProduct => 'searchProduct'.tr;
+  static String get searchBrand => 'searchBrand'.tr;
+  static String get searchInsecticide => 'searchInsecticide'.tr;
+  static String get searchSuperKiller => 'searchSuperKiller'.tr;
+  static String get searchCoragen => 'searchCoragen'.tr;
+  static String get selectQuantity => 'selectQuantity'.tr;
+  static String get videos => 'videos'.tr;
+  static String get suggestedProduct => 'suggestedProduct'.tr;
+}

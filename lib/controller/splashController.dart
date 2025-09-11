@@ -73,8 +73,6 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
   RxString checkException = "".obs;
   RxBool hasInternet = true.obs;
 
-
-
   RxDouble size = 50.0.obs;
 
   @override
@@ -118,10 +116,8 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
   /// Get Firm all data
   Future<void> getFirm() async {
     try {
-
       isLoading.value = false;
       update();
-
 
       final connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult == ConnectivityResult.none) {
@@ -131,15 +127,14 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
       } else {
         hasInternet.value = true;
       }
+      print("Api for get_firm ${ApiService.baseUrl + get_firms}");
       var response = await ApiService.get(get_firms);
 
-
-
+      print("Api Data getFirms Data ${response.data}");
       if (response.data['IsSuccess'] == true) {
         print("API Response: ${response.data}");
 
         FirmModel firmModel = FirmModel.fromJson(response.data);
-
 
         if (firmModel.data != null && firmModel.data!.isNotEmpty) {
           firmList = firmModel.data!;
@@ -149,8 +144,8 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
           // print("Saved firm ID: $firmId");
         }
 
-          isLoading.value = false;
-          update();
+        isLoading.value = false;
+        update();
       } else {
         throw Exception("Error from API: ${response.data['Message']}");
       }
@@ -169,10 +164,10 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
       } else {
         checkException.value = errorMessage;
         update();
-
       }
 
-      Get.snackbar("Error", checkException.value, backgroundColor: COLOR.background);
+      Get.snackbar("Error", checkException.value,
+          backgroundColor: COLOR.background);
       print("Error in getFirmData: $errorMessage");
 
       throw Exception("Failed to get firm data: $errorMessage");
@@ -184,77 +179,7 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-
   /// Get Setting all data
-  // Future<void> getSettingData() async {
-  //   try {
-  //
-  //     isLoading.value = false;
-  //     update();
-  //
-  //
-  //     final connectivityResult = await Connectivity().checkConnectivity();
-  //     if (connectivityResult == ConnectivityResult.none) {
-  //       hasInternet.value = false;
-  //       checkException.value = "No Internet Connection";
-  //       return;
-  //     } else {
-  //       hasInternet.value = true;
-  //     }
-  //     var response = await ApiService.get(getSetting);
-  //
-  //
-  //
-  //     if (response.data['IsSuccess'] == true) {
-  //
-  //       print("API Response: ${response.data}");
-  //
-  //       SettingModel settingModel = SettingModel.fromJson(response.data);
-  //
-  //
-  //       if (settingModel.data != null && settingModel.data!.isNotEmpty) {
-  //
-  //         settingList = SettingModel.data!;
-  //
-  //         // String firmId = firmList[0].firmId ?? '';
-  //         // await helper.storeString("firmIdKey", firmId);
-  //         // print("Saved firm ID: $firmId");
-  //       }
-  //
-  //         isLoading.value = false;
-  //         update();
-  //     } else {
-  //       throw Exception("Error from API: ${response.data['Message']}");
-  //     }
-  //   } catch (e) {
-  //     String errorMessage = e.toString();
-  //     print("error $errorMessage");
-  //
-  //     if (errorMessage.contains("receiveTimeout") ||
-  //         errorMessage.contains("SocketException") ||
-  //         errorMessage.contains("Network Error") ||
-  //         errorMessage.contains("Connection failed") ||
-  //         errorMessage.contains("aborted") ||
-  //         errorMessage.contains("Failed host lookup")) {
-  //       checkException.value = "Network Error";
-  //       update();
-  //     } else {
-  //       checkException.value = errorMessage;
-  //       update();
-  //
-  //     }
-  //
-  //     Get.snackbar("Error", checkException.value, backgroundColor: COLOR.background);
-  //     print("Error in getFirmData: $errorMessage");
-  //
-  //     throw Exception("Failed to get firm data: $errorMessage");
-  //     // Get.snackbar("Error", e.toString(),backgroundColor: COLOR.background);
-  //     // checkException.value = e..toString();
-  //     // print("Error in getFirmData: $e");
-  //     //
-  //     // throw Exception("Failed to get firm data: $e");
-  //   }
-  // }
   Future<void> getSettingData() async {
     try {
       isLoading.value = true;
@@ -264,7 +189,8 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
       if (connectivityResult == ConnectivityResult.none) {
         hasInternet.value = false;
         checkException.value = "No Internet Connection";
-        Get.snackbar("Error", checkException.value, backgroundColor: Colors.red);
+        Get.snackbar("Error", checkException.value,
+            backgroundColor: Colors.red);
         return;
       } else {
         hasInternet.value = true;
@@ -291,12 +217,13 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
         } else {
           log("No data in SettingModel: ${settingModel.message}");
           checkException.value = "No settings data available";
-          Get.snackbar("Warning", checkException.value, backgroundColor: Colors.orange);
+          Get.snackbar("Warning", checkException.value,
+              backgroundColor: Colors.orange);
         }
-      }
-      else {
+      } else {
         checkException.value = response.data['Message'] ?? "Unknown error";
-        Get.snackbar("Error", checkException.value, backgroundColor: Colors.red);
+        Get.snackbar("Error", checkException.value,
+            backgroundColor: Colors.red);
         throw Exception("Error from API: ${checkException.value}");
       }
     } catch (e, stackTrace) {

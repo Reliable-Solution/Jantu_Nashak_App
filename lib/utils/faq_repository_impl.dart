@@ -41,9 +41,11 @@ import 'api_utils.dart';
 class FaqRepositoryImpl {
   final Dio _dio = Dio();
 
-  Future<ApiResponse<FaqModel>> getFaqList(Map<String, dynamic> bodyData) async {
+  Future<ApiResponse<FaqModel>> getFaqList(
+      Map<String, dynamic> bodyData) async {
     try {
-      final response = await _dio.post('${ApiService.baseUrl}get_FAQ', data: FormData.fromMap(bodyData));
+      final response = await _dio.post('${ApiService.baseUrl}get_FAQ',
+          data: FormData.fromMap(bodyData));
 
       log("FAQ API Response: ${response.data}");
 

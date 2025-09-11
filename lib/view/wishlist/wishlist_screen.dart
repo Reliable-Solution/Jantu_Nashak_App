@@ -50,18 +50,18 @@ class _WishlistScreenState extends State<WishlistScreen> {
         elevation: 1,
         title: TextWiget(
           title: StringRes.title,
-          style: Themes.light.textTheme.displayLarge,
+          style: Themes.light.textTheme.headlineLarge,
         ),
-        leading: InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: COLOR.greyback,
-            size: 20,
-          ),
-        ),
+        // leading: InkWell(
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: Icon(
+        //     Icons.arrow_back_ios,
+        //     color: COLOR.greyback,
+        //     size: 20,
+        //   ),
+        // ),
       ),
       // backgroundColor: COLOR.greyLight,
       body: Container(
@@ -102,7 +102,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 1/1.4,
+                        childAspectRatio: 1 / 1.4,
                         // childAspectRatio: Get.width >= 480 ? 1.15 / 2 : 1 / 2.1,
                         crossAxisSpacing: 2,
                         mainAxisSpacing: 2,
@@ -117,10 +117,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
                           categoryId: controller.wishList[index].categoryId,
                           isFav: controller.wishList[index].isFav,
                           productDescription:
-                          controller.wishList[index].productDescription,
+                              controller.wishList[index].productDescription,
                           productCDT: controller.wishList[index].productCDT,
                           productStatus:
-                          controller.wishList[index].productStatus,
+                              controller.wishList[index].productStatus,
                         );
                         return ProductComponent(products: productModel);
                       }));

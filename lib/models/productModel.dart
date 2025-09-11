@@ -2,8 +2,9 @@ class ProductModel {
   String? productId;
   bool? isFav;
   List<PackInfo>? packInfo;
-  List<String>? size;
-  List<String>? color;
+  // List<String>? size;
+  // List<String>? color;
+  List<String>? qty;
   String? categoryId;
   String? subcategoryId;
   String? productName;
@@ -27,30 +28,31 @@ class ProductModel {
 
   ProductModel(
       {this.productId,
-        this.isFav,
-        this.packInfo,
-        this.size,
-        this.color,
-        this.categoryId,
-        this.subcategoryId,
-        this.productName,
-        this.brandId,
-        this.hsnId,
-        this.productSKU,
-        this.productDescription,
-        this.productKeyFeatures,
-        this.productFeaturedYesNoRadio,
-        this.productOrderByPrescriptionYesNoRadio,
-        this.productType,
-        this.productGst,
-        this.productOfferCode,
-        this.productStatus,
-        this.productCDT,
-        this.subcategoryName,
-        this.subcategoryImage,
-        this.subcategoryDesc,
-        this.subcategoryStatus,
-        this.subcategoryCDT});
+      this.isFav,
+      this.packInfo,
+      // this.size,
+      // this.color,
+      this.qty,
+      this.categoryId,
+      this.subcategoryId,
+      this.productName,
+      this.brandId,
+      this.hsnId,
+      this.productSKU,
+      this.productDescription,
+      this.productKeyFeatures,
+      this.productFeaturedYesNoRadio,
+      this.productOrderByPrescriptionYesNoRadio,
+      this.productType,
+      this.productGst,
+      this.productOfferCode,
+      this.productStatus,
+      this.productCDT,
+      this.subcategoryName,
+      this.subcategoryImage,
+      this.subcategoryDesc,
+      this.subcategoryStatus,
+      this.subcategoryCDT});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     productId = json['ProductId'];
@@ -63,8 +65,9 @@ class ProductModel {
     }
     categoryId = json['CategoryId'];
     subcategoryId = json['SubcategoryId'];
-    size = json['Size'].cast<String>();
-    color = json['Color'].cast<String>();
+    // size = json['Size'].cast<String>();
+    // color = json['Color'].cast<String>();
+    qty = json['QTY'].cast<String>();
     productName = json['ProductName'];
     brandId = json['BrandId'];
     hsnId = json['HsnId'];
@@ -73,7 +76,7 @@ class ProductModel {
     productKeyFeatures = json['ProductKeyFeatures'];
     productFeaturedYesNoRadio = json['ProductFeaturedYesNoRadio'];
     productOrderByPrescriptionYesNoRadio =
-    json['ProductOrderByPrescriptionYesNoRadio'];
+        json['ProductOrderByPrescriptionYesNoRadio'];
     productType = json['ProductType'];
     productGst = json['ProductGst'];
     productOfferCode = json['ProductOfferCode'];
@@ -95,8 +98,9 @@ class ProductModel {
     }
     data['CategoryId'] = this.categoryId;
     data['SubcategoryId'] = this.subcategoryId;
-    data['Size'] = this.size;
-    data['Color'] = this.color;
+    // data['Size'] = this.size;
+    // data['Color'] = this.color;
+    data['QTY'] = this.qty;
     data['ProductName'] = this.productName;
     data['BrandId'] = this.brandId;
     data['HsnId'] = this.hsnId;
@@ -120,8 +124,7 @@ class ProductModel {
   }
 }
 
-class
-PackInfo {
+class PackInfo {
   String? productdetailId;
   bool? isCart;
   String? cartqty;
@@ -129,8 +132,9 @@ PackInfo {
   List<String>? productdetailImages;
   String? productdetailMrp;
   String? productdetailSrp;
-  String? productColor;
-  String? productSize;
+  // String? productColor;
+  // String? productSize;
+  String? productQty;
   String? productdetailQty;
   String? productdetailUnit;
   String? productdetailStatus;
@@ -138,18 +142,19 @@ PackInfo {
 
   PackInfo(
       {this.productdetailId,
-        this.isCart,
-        this.cartqty,
-        this.productIdReference,
-        this.productdetailImages,
-        this.productdetailMrp,
-        this.productdetailSrp,
-        this.productColor,
-        this.productSize,
-        this.productdetailQty,
-        this.productdetailUnit,
-        this.productdetailStatus,
-        this.productdetailCDT});
+      this.isCart,
+      this.cartqty,
+      this.productIdReference,
+      this.productdetailImages,
+      this.productdetailMrp,
+      this.productdetailSrp,
+      // this.productColor,
+      // this.productSize,
+      this.productQty,
+      this.productdetailQty,
+      this.productdetailUnit,
+      this.productdetailStatus,
+      this.productdetailCDT});
 
   PackInfo.fromJson(Map<String, dynamic> json) {
     productdetailId = json['ProductdetailId'];
@@ -159,8 +164,9 @@ PackInfo {
     productdetailImages = json['ProductdetailImages'].cast<String>();
     productdetailMrp = json['ProductdetailMrp'];
     productdetailSrp = json['ProductdetailSrp'];
-    productColor = json['ProductColor'];
-    productSize = json['ProductSize'];
+    // productColor = json['ProductColor'];
+    // productSize = json['ProductSize'];
+    productQty = json['ProductQTY'];
     productdetailQty = json['ProductdetailQty'];
     productdetailUnit = json['ProductdetailUnit'];
     productdetailStatus = json['ProductdetailStatus'];
@@ -176,8 +182,9 @@ PackInfo {
     data['ProductdetailImages'] = this.productdetailImages;
     data['ProductdetailMrp'] = this.productdetailMrp;
     data['ProductdetailSrp'] = this.productdetailSrp;
-    data['ProductColor'] = this.productColor;
-    data['ProductSize'] = this.productSize;
+    // data['ProductColor'] = this.productColor;
+    // data['ProductSize'] = this.productSize;
+    data['ProductQTY'] = this.productQty;
     data['ProductdetailQty'] = this.productdetailQty;
     data['ProductdetailUnit'] = this.productdetailUnit;
     data['ProductdetailStatus'] = this.productdetailStatus;

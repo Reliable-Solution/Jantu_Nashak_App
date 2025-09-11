@@ -38,9 +38,10 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: EdgeInsets.only(top: appbarPadding!, bottom: appbarPadding!),
           child: AppBar(
+            iconTheme: IconThemeData(color: Colors.white),
             actionsPadding: EdgeInsets.all(actionPadding ?? 0),
             leading: leading,
-            backgroundColor: Color(0xffffedfe),
+            backgroundColor: Color(0xff226706),
             elevation: elevation,
             titleSpacing: titleSpacing,
             centerTitle: false,

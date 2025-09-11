@@ -23,7 +23,6 @@ class AuthController extends GetxController {
   TextEditingController numberController = TextEditingController();
   final HomeController homeController = Get.find<HomeController>();
 
-
   final verificationId = ''.obs;
   final otp = ''.obs;
   final isOtpValid = false.obs;
@@ -41,7 +40,7 @@ class AuthController extends GetxController {
     isOtpValid.value = value.length == 6; // Validate OTP length
   }
 
-  Future<void> sendOTP(BuildContext context,String phoneNumber) async {
+  Future<void> sendOTP(BuildContext context, String phoneNumber) async {
     try {
       isLoading.value = true; // Loader start
 
@@ -60,8 +59,10 @@ class AuthController extends GetxController {
       // Dio POST call
       var response = await ApiService.post(endpoint: SendOtp, body: body);
       if (response.data['IsSuccess'] == true) {
-        Get.snackbar('Success', 'OTP sent to your mobile.');
+        Get.snackbar('Success', 'OTP sent to your mobile.',backgroundColor: Colors.white);
         Get.to(() => OTPVerificationScreen(phoneNumber: phoneNumber));
+        OTPController otpController = Get.put(OTPController());
+        otpController.startTimer();
         isLoading.value = false;
         update();
       } else {
@@ -81,6 +82,7 @@ class AuthController extends GetxController {
 
         final Map<String, dynamic> body = {
           'CustomerPhoneNo': phoneNumber.value.toString(),
+          "CustomerFCMToken": tokenGet,
         };
         print('Request Body: $body');
 
@@ -91,14 +93,7 @@ class AuthController extends GetxController {
           var data = response.data["Data"];
 
           if (data is List && data.isNotEmpty) {
-             sendOTP(context,phoneNumber.value.toString());
-             // CustomerModel customerModel = CustomerModel.fromJson(data[0]);
-             // helper.setCustomer(customerModel);
-             // Get.snackbar('Success', 'Login Successfully');
-             // Get.offAll(() => DashboardScreen(pageIndex: 0));
-             // homeController.getPrefs();
-             // homeController.getDashboardData(customerModel.customerId);
-
+            sendOTP(context, phoneNumber.value.toString());
           } else if (data is List && data.isEmpty) {
             Get.snackbar('Info', 'No account found. Please register.');
             Get.offAll(() => RegistrationScreen());
@@ -140,6 +135,8 @@ class AuthController extends GetxController {
           print('User granted permission');
           String? token = await messaging.getToken();
           if (token != null) {
+            tokenGet.value = token;
+            helper.getCustomer();
             // await submitPhoneNumber(token, context);
             print('FCM Token: $token');
           } else {
@@ -194,9 +191,4 @@ snackBarMessengers(context, {message, color, isDuration = false}) {
           behavior: SnackBarBehavior.floating,
           elevation: 0,
           padding: EdgeInsets.zero));
-  /* ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(seconds: 3),
-      content: Text(message.toString(),
-          style: appCss.dmDenseMedium16.textColor(appColor(context).whiteBg)),
-      backgroundColor: color ?? Colors.red.withOpacity(0.8)));*/
 }

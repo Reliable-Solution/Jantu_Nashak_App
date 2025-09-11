@@ -1,21 +1,28 @@
-const String newAddCustomer = "NewAddCustomer";
+// const String newAddCustomer = "NewAddCustomer";
+const String newAddCustomer = "NewAddCustomer_V4";
 const String login = "login";
-const String getCategory = "getCategory";
-const String getSubcategorybyCategoryId = "getSubcategorybyCategoryId";
+// const String getCategory = "getCategory";
+const String getCategory = "getCategory_V2";
+// const String getSubcategorybyCategoryId = "getSubcategorybyCategoryId";
+const String getSubcategorybyCategoryId = "getSubcategorybyCategoryId_V2";
 const String addAddress = "addAddress";
-const String getDashboardDataTestByUser = "getDashboardDataTestByUser";
+// const String getDashboardDataTestByUser = "getDashboardDataTestByUser";
+const String getDashboardDataTestByUser = "getDashboardDataTestbyUser_V2";
 const String getAddress = "getAddress";
 const String deleteAddressApi = "deleteAddress";
 const String addToCartApi = "addToCart";
 const String getCartDetailApi = "getCartDetail";
 const String updateCartQtyApi = "updateCartQty";
 const String removeCartApi = "removeCart";
-const String getCartTotalWithDeliveryChargeV2Api = "getCartTotalWithDeliveryChargeV2";
+const String getCartTotalWithDeliveryChargeV2Api =
+    "getCartTotalWithDeliveryChargeV2";
 const String updateAddress = "updateAddress";
-const String searchByUser = "searchByUser";
+// const String searchByUser = "searchByUser";
+const String searchByUser = "searchByUser_V2";
 const String addRemoveWishlist = "addRemoveWishlist";
 const String getWishlistByCustomerId = "getWishlistByCustomerId";
-const String getProductByCategoryId = "getProductByCategoryId";
+// const String getProductByCategoryId = "getProductByCategoryId";
+const String getProductByCategoryId = "getProductByCategoryId_V2";
 const String getProductbySubcategoryId = "getProductbySubcategoryId";
 const String placeOrder = "placeOrder";
 const String orderHistory = "orderHistory";
@@ -27,11 +34,13 @@ const String VerifyOtp = "VerifyOtp";
 const String SendOtp = "SendOtp";
 
 const String ticketAreaProblem = 'getTicketAreaOfProblem';
- const String ticketSubAreaProblem = 'getTicketSubAreaOfProblem';
- const String ticketPriority = 'getTicketPriority';
- const String addTicketApi = 'addTicket';
- const String getTicket = 'Get_ticket';
- const String getSetting = 'getsettingdata';
-
-
-
+const String ticketSubAreaProblem = 'getTicketSubAreaOfProblem';
+const String ticketPriority = 'getTicketPriority';
+const String addTicketApi = 'addTicket';
+const String getTicket = 'Get_ticket';
+const String getSetting = 'getsettingdata';
+const String getEducationalData = 'getEducationalData';
+const String searchByBlog = 'SearchByBlog';
+const String getProductbyID = 'getProductbyID';
+const String getPrizeData = 'getPrizeData';
+const String getMonthlyData = 'getMonthlyData';
