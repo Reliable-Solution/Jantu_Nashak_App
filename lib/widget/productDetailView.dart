@@ -491,7 +491,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
 
                                     // final webLink = 'https://jantunashak.com/product/$productId';
-                                    final webLink = '${ApiService.baseUrl}check-product/$productId';
+                                    final webLink = '${ApiService.baseUrl}check_product/$productId';
 
                                     final playStoreLink =
                                         'https://play.google.com/store/apps/details?id=com.reliable.jantunashak';
@@ -505,7 +505,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     // Share.share(
                                     //   'Check out this product: $deepLink\nInstall app: $playStoreLink',
                                     // );
-await Share.share(text);
+// await Share.share(text);
                                     await Share.shareXFiles(
                                         files,
                                         text: text,

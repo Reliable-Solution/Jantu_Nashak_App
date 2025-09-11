@@ -335,7 +335,7 @@ class _ProductComponentState extends State<ProductComponent> {
                                   widget.products?.productId ?? '123';
                               // final deepLink =
                               //     'jantunashak://product/$productId';
-                              final webLink = '${ApiService.baseUrl}check-product/$productId';
+                              final webLink = '${ApiService.baseUrl}check_product/$productId';
 
                               // Uri newLink =  Uri.parse(deepLink);
                               final playStoreLink =
