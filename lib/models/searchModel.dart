@@ -39,42 +39,42 @@ class SearchModel {
 
   SearchModel(
       {this.productId,
-        this.isFav,
-        this.packInfo,
-        this.categoryId,
-        this.subcategoryId,
-        this.productName,
-        this.brandId,
-        this.hsnId,
-        this.productSKU,
-        this.productDescription,
-        this.productKeyFeatures,
-        this.productFeaturedYesNoRadio,
-        this.productOrderByPrescriptionYesNoRadio,
-        this.productType,
-        this.productGst,
-        this.productOfferCode,
-        this.productStatus,
-        this.productCDT,
-        this.categoryName,
-        this.categoryHindiName,
-        this.categoryImage,
-        this.categoryStatus,
-        this.categoryCDT,
-        this.subcategoryName,
-        this.subcategoryImage,
-        this.subcategoryDesc,
-        this.subcategoryStatus,
-        this.subcategoryCDT,
-        this.brandName,
-        this.brandDescription,
-        this.brandImage,
-        this.brandStatus,
-        this.brandCDT,
-        this.hsnName,
-        this.hsnTax,
-        this.hsnStatus,
-        this.hsnCDT});
+      this.isFav,
+      this.packInfo,
+      this.categoryId,
+      this.subcategoryId,
+      this.productName,
+      this.brandId,
+      this.hsnId,
+      this.productSKU,
+      this.productDescription,
+      this.productKeyFeatures,
+      this.productFeaturedYesNoRadio,
+      this.productOrderByPrescriptionYesNoRadio,
+      this.productType,
+      this.productGst,
+      this.productOfferCode,
+      this.productStatus,
+      this.productCDT,
+      this.categoryName,
+      this.categoryHindiName,
+      this.categoryImage,
+      this.categoryStatus,
+      this.categoryCDT,
+      this.subcategoryName,
+      this.subcategoryImage,
+      this.subcategoryDesc,
+      this.subcategoryStatus,
+      this.subcategoryCDT,
+      this.brandName,
+      this.brandDescription,
+      this.brandImage,
+      this.brandStatus,
+      this.brandCDT,
+      this.hsnName,
+      this.hsnTax,
+      this.hsnStatus,
+      this.hsnCDT});
 
   SearchModel.fromJson(Map<String, dynamic> json) {
     productId = json['ProductId'];
@@ -95,7 +95,7 @@ class SearchModel {
     productKeyFeatures = json['ProductKeyFeatures'];
     productFeaturedYesNoRadio = json['ProductFeaturedYesNoRadio'];
     productOrderByPrescriptionYesNoRadio =
-    json['ProductOrderByPrescriptionYesNoRadio'];
+        json['ProductOrderByPrescriptionYesNoRadio'];
     productType = json['ProductType'];
     productGst = json['ProductGst'];
     productOfferCode = json['ProductOfferCode'];
@@ -183,16 +183,16 @@ class PackInfo {
 
   PackInfo(
       {this.productdetailId,
-        this.isCart,
-        this.cartqty,
-        this.productIdReference,
-        this.productdetailImages,
-        this.productdetailMrp,
-        this.productdetailSrp,
-        this.productdetailQty,
-        this.productdetailUnit,
-        this.productdetailStatus,
-        this.productdetailCDT});
+      this.isCart,
+      this.cartqty,
+      this.productIdReference,
+      this.productdetailImages,
+      this.productdetailMrp,
+      this.productdetailSrp,
+      this.productdetailQty,
+      this.productdetailUnit,
+      this.productdetailStatus,
+      this.productdetailCDT});
 
   PackInfo.fromJson(Map<String, dynamic> json) {
     productdetailId = json['ProductdetailId'];

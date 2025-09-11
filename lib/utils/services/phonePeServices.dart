@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 
-
 class PhonePeService {
   final Dio _dio = Dio();
   final String baseUrl = 'https://api-preprod.phonepe.com/apis/hermes';
@@ -17,9 +16,7 @@ class PhonePeService {
         "transactionId": transactionId,
         "amount": (amount * 100).toInt(),
         "callbackUrl": "https://your-website.com/callback",
-        "paymentInstrument": {
-          "type": "UPI_INTENT"
-        }
+        "paymentInstrument": {"type": "UPI_INTENT"}
       };
 
       // Generate SHA256 Checksum
@@ -40,7 +37,8 @@ class PhonePeService {
       );
 
       if (response.statusCode == 200) {
-        String paymentUrl = response.data['data']['instrumentResponse']['redirectInfo']['url'];
+        String paymentUrl =
+            response.data['data']['instrumentResponse']['redirectInfo']['url'];
         print('Payment URL: $paymentUrl');
         // await launch(paymentUrl);
       } else {
@@ -53,6 +51,7 @@ class PhonePeService {
 
   String generateChecksum(String payload) {
     var input = '$payload/saltKey';
-    return base64Encode(utf8.encode(input)); // Replace with actual SHA256 generation
+    return base64Encode(
+        utf8.encode(input)); // Replace with actual SHA256 generation
   }
 }

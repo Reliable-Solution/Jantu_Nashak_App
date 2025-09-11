@@ -47,7 +47,7 @@ class PickupAddressScreen extends StatelessWidget {
           elevation: 1,
           title: TextWiget(
             title: StringRes.addAddress,
-            style: Themes.light.textTheme.displayLarge,
+            style: Themes.light.textTheme.headlineLarge,
           ),
         ),
         body: SingleChildScrollView(
@@ -119,7 +119,8 @@ class PickupAddressScreen extends StatelessWidget {
                       validator: (value) {
                         if (value!.isEmpty) return StringRes.addressRequired;
                         if (value.length < 5) return StringRes.addressInvalid;
-                        if (value.length >= 100) return "This can't be more than 100 characters";
+                        if (value.length >= 100)
+                          return "This can't be more than 100 characters";
                         return null;
                       },
                       border: 1,
@@ -131,8 +132,7 @@ class PickupAddressScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width:
-                              (MediaQuery.of(context).size.width * 42) / 100,
+                          width: (MediaQuery.of(context).size.width * 42) / 100,
                           child: InputFiledArea(
                             controller: _controller.txtPincode,
                             keyboardType: TextInputType.number,
@@ -154,8 +154,7 @@ class PickupAddressScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width:
-                              (MediaQuery.of(context).size.width * 42) / 100,
+                          width: (MediaQuery.of(context).size.width * 42) / 100,
                           child: InputFiledArea(
                             controller: _controller.txtLandmark,
                             keyboardType: TextInputType.text,
@@ -246,7 +245,8 @@ class PickupAddressScreen extends StatelessWidget {
                   _controller.addAddressData(addressModel: addressModel);
                   _controller.getAllAddress();
                 } else {
-                  print("========== Address Screen ${_controller.txtType.text}");
+                  print(
+                      "========== Address Screen ${_controller.txtType.text}");
                   print("========== Address Screen Id ${address!.addressId}");
                   // ✅ Update Existing Address
                   addressModel = AddressModel(
@@ -257,7 +257,8 @@ class PickupAddressScreen extends StatelessWidget {
                       addressColony: _controller.txtAddress.text,
                       addressLandmark: _controller.txtLandmark.text,
                       addressType: _controller.selectedType.value);
-                  print("========== Address Screen Id  in App ${address!.addressId}");
+                  print(
+                      "========== Address Screen Id  in App ${address!.addressId}");
 
                   _controller.updateAddressData(
                       addressId: address!.addressId,
@@ -266,7 +267,6 @@ class PickupAddressScreen extends StatelessWidget {
                     "${_controller.customerModel!.value.customerId}\n${_controller.txtFullname.text}\n${_controller.txtMobileno.text}\n${_controller.txtLandmark.text}\n\n${_controller.txtPincode.text}\n${_controller.txtType.text}\n",
                   );
                   _controller.getAllAddress();
-
                 }
               }
             },

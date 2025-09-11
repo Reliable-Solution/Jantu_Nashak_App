@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -7,8 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../constant/app_constant.dart';
-
-
 
 Dio dio = Dio();
 
@@ -57,7 +54,7 @@ class Services {
       }
       if (response.statusCode == 200) {
         SaveDataClass saveData =
-        SaveDataClass(Message: 'No Data', IsSuccess: false, Data: null);
+            SaveDataClass(Message: 'No Data', IsSuccess: false, Data: null);
         log("$apiName Response: ${response.data}");
         var responseData = response.data;
         saveData.Message = responseData["Message"];
@@ -74,6 +71,7 @@ class Services {
       throw Exception(e.toString());
     }
   }
+
   Future<bool> askPhotosPermission({String? title, String? description}) async {
     if (Platform.isAndroid) {
       return askAndroidPhotoPermission();
@@ -82,9 +80,8 @@ class Services {
     }
   }
 
-
-
-  Future<bool> askIOSPhotoPermission({String? title, String? description}) async {
+  Future<bool> askIOSPhotoPermission(
+      {String? title, String? description}) async {
     bool permissionGranted = false;
     PermissionStatus permissionStatus = await Permission.photos.status;
 
@@ -100,25 +97,23 @@ class Services {
     return permissionGranted;
   }
 
-
   Future<bool> askAndroidCameraPermission(
       {String? title, String? description}) async {
     bool permissionGranted = false;
     bool shouldShowRationalBefore =
-    await Permission.camera.shouldShowRequestRationale;
+        await Permission.camera.shouldShowRequestRationale;
     PermissionStatus permissionStatus = await Permission.camera.request();
     if (permissionStatus == PermissionStatus.granted) {
       permissionGranted = true;
     } else {
       bool shouldShowRationalAfter =
-      await Permission.camera.shouldShowRequestRationale;
+          await Permission.camera.shouldShowRequestRationale;
       if (shouldShowRationalBefore == shouldShowRationalAfter) {
         await openAppSettings();
       }
     }
     return permissionGranted;
   }
-
 
   Future<bool> askAndroidPhotoPermission(
       {String? title, String? description}) async {
@@ -146,6 +141,7 @@ class Services {
       return askIOSCameraPermission();
     }
   }
+
   Future<bool> askIOSCameraPermission(
       {String? title, String? description}) async {
     bool permissionGranted = false;
@@ -162,7 +158,6 @@ class Services {
 
     return permissionGranted;
   }
-
 
   // Future<bool> askAndroidCameraPermission(
   //     {String? title, String? description}) async {
@@ -182,10 +177,7 @@ class Services {
   //   return permissionGranted;
   // }
   //
-
-
 }
-
 
 class SaveDataClass {
   String? Message;
