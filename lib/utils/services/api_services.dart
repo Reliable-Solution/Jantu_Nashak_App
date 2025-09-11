@@ -74,17 +74,11 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static String baseUrl =
-      // "https://kffashionnew.reliablesolution.in/Admin/Ajax/";
-      // "https://keep.reliablesolution.in/Admin/Ajax/";
-      // "http://192.168.1.112:8000/Admin/Ajax/";
       "https://staging-jantunashak.reliablesolution.in/Admin/Ajax/";
 
   static final Dio _dio = Dio(
     BaseOptions(
-      // baseUrl: "https://kffashionnew.reliablesolution.in/Admin/Ajax/",
       baseUrl: "https://staging-jantunashak.reliablesolution.in/Admin/Ajax/",
-      // baseUrl: "https://keep.reliablesolution.in/Admin/Ajax/",
-      // baseUrl: "http://192.168.1.112:8000/Admin/Ajax/",
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
