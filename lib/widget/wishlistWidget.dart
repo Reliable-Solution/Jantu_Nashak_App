@@ -36,7 +36,8 @@ class _MyWishComponetState extends State<MyWishComponet> {
     setState(() {
       Qty++;
     });
-    shareProductController.removeWishList(productId:widget.wishdata.productId!);
+    shareProductController.removeWishList(
+        productId: widget.wishdata.productId!);
   }
 
   void remove() {
@@ -44,7 +45,8 @@ class _MyWishComponetState extends State<MyWishComponet> {
       setState(() {
         Qty--;
       });
-      shareProductController.removeWishList(productId: widget.wishdata.productId!);
+      shareProductController.removeWishList(
+          productId: widget.wishdata.productId!);
     }
   }
 
@@ -75,12 +77,15 @@ class _MyWishComponetState extends State<MyWishComponet> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4.0, bottom: 4),
                       child: Image.network(
-                        IMAGE_URL + (widget.wishdata.packInfo![0].productdetailImages![0]),
+                        IMAGE_URL +
+                            (widget
+                                .wishdata.packInfo![0].productdetailImages![0]),
                         width: 100,
                         height: 120,
                         errorBuilder: (context, exception, stackTrace) {
                           return Image.asset("assets/no-image.png",
-                              height: 120, width: 100);},
+                              height: 120, width: 100);
+                        },
                       ),
                     )),
                 Expanded(
@@ -94,14 +99,13 @@ class _MyWishComponetState extends State<MyWishComponet> {
                             style: const TextStyle(fontSize: 15)),
                         RichText(
                           text: TextSpan(
-
                               text: StringRes.mrpLabel,
                               style: const TextStyle(
                                   color: Colors.grey, fontSize: 14),
                               children: <TextSpan>[
                                 TextSpan(
                                   text:
-                                  "${StringRes.inr} ${widget.wishdata.packInfo![0].productdetailMrp}",
+                                      "${StringRes.inr} ${widget.wishdata.packInfo![0].productdetailMrp}",
                                   style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 14,
@@ -113,7 +117,8 @@ class _MyWishComponetState extends State<MyWishComponet> {
                           children: [
                             Expanded(
                               child: Text(
-                                  " ${StringRes.inr} " "${widget.wishdata.packInfo![0].productdetailSrp}",
+                                  " ${StringRes.inr} "
+                                  "${widget.wishdata.packInfo![0].productdetailSrp}",
                                   style: const TextStyle(
                                       fontSize: 17,
                                       color: Colors.black,
@@ -125,100 +130,102 @@ class _MyWishComponetState extends State<MyWishComponet> {
                                 children: [
                                   Qty == 1
                                       ? GestureDetector(
-                                    onTap: () {
-                                      shareProductController.removeWishList(
-                                        productId: widget.wishdata.productId!,
-                                      );
-                                      widget.onRemove!();
-                                    },
-                                    child: isCartRemoveLoading == true
-                                        ? Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          color: COLOR.appBaseColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                              Colors.grey[300]!,
-                                              blurRadius: 2.0,
-                                            ),
-                                          ],
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                              4.0),
-                                          border: Border.all(
-                                              width: 1,
-                                              color: COLOR
-                                                  .appBaseColor)),
-                                      child: Center(
-                                        child: SizedBox(
-                                          height:
-                                          MediaQuery.of(context)
-                                              .size
-                                              .height,
-                                          child: const Center(
-                                              child: SpinKitRipple(
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                      ),
-                                    )
-                                        : Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          color: COLOR.appBaseColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                              Colors.grey[300]!,
-                                              blurRadius: 2.0,
-                                            ),
-                                          ],
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                              4.0),
-                                          border: Border.all(
-                                              width: 1,
-                                              color: COLOR
-                                                  .appBaseColor)),
-                                      child: const Center(
-                                        child: Icon(
-                                            Icons
-                                                .delete_outline_sharp,
-                                            color: Colors.white,
-                                            size: 20),
-                                      ),
-                                    ),
-                                  )
+                                          onTap: () {
+                                            shareProductController
+                                                .removeWishList(
+                                              productId:
+                                                  widget.wishdata.productId!,
+                                            );
+                                            widget.onRemove!();
+                                          },
+                                          child: isCartRemoveLoading == true
+                                              ? Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: COLOR.appBaseColor,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color:
+                                                              Colors.grey[300]!,
+                                                          blurRadius: 2.0,
+                                                        ),
+                                                      ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4.0),
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: COLOR
+                                                              .appBaseColor)),
+                                                  child: Center(
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .height,
+                                                      child: const Center(
+                                                          child: SpinKitRipple(
+                                                        color: Colors.white,
+                                                      )),
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: COLOR.appBaseColor,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color:
+                                                              Colors.grey[300]!,
+                                                          blurRadius: 2.0,
+                                                        ),
+                                                      ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4.0),
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: COLOR
+                                                              .appBaseColor)),
+                                                  child: const Center(
+                                                    child: Icon(
+                                                        Icons
+                                                            .delete_outline_sharp,
+                                                        color: Colors.white,
+                                                        size: 20),
+                                                  ),
+                                                ),
+                                        )
                                       : InkWell(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: COLOR.appBaseColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey[300]!,
-                                              blurRadius: 2.0,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: COLOR.appBaseColor,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey[300]!,
+                                                    blurRadius: 2.0,
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0),
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: COLOR.appBaseColor)),
+                                            width: 30,
+                                            height: 30,
+                                            child: const Center(
+                                              child: Icon(Icons.remove,
+                                                  color: Colors.white,
+                                                  size: 20),
                                             ),
-                                          ],
-                                          borderRadius:
-                                          BorderRadius.circular(4.0),
-                                          border: Border.all(
-                                              width: 1,
-                                              color: COLOR.appBaseColor)),
-                                      width: 30,
-                                      height: 30,
-                                      child: const Center(
-                                        child: Icon(Icons.remove,
-                                            color: Colors.white,
-                                            size: 20),
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      remove();
-                                    },
-                                  ),
+                                          ),
+                                          onTap: () {
+                                            remove();
+                                          },
+                                        ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         left: 10.0, right: 10.0),
@@ -231,82 +238,82 @@ class _MyWishComponetState extends State<MyWishComponet> {
                                         ),
                                         isUpdateLoading == true
                                             ? Center(
-                                          child:
-                                          CircularProgressIndicator(
-                                            strokeWidth: 1.5,
-                                            valueColor:
-                                            AlwaysStoppedAnimation<
-                                                Color>(
-                                                COLOR.appBaseColor),
-                                          ),
-                                        )
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 1.5,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                              Color>(
+                                                          COLOR.appBaseColor),
+                                                ),
+                                              )
                                             : Container(),
                                       ],
                                     ),
                                   ),
                                   Qty.toDouble() <
-                                      double.parse(
-                                          "${widget.wishdata.packInfo![0].productdetailQty}")
+                                          double.parse(
+                                              "${widget.wishdata.packInfo![0].productdetailQty}")
                                       ? InkWell(
-                                    onTap: () {
-                                      add();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: COLOR.appBaseColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey[300]!,
-                                              blurRadius: 2.0,
+                                          onTap: () {
+                                            add();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: COLOR.appBaseColor,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey[300]!,
+                                                    blurRadius: 2.0,
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0),
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: COLOR.appBaseColor)),
+                                            width: 30,
+                                            height: 30,
+                                            child: const Center(
+                                              child: Icon(Icons.add,
+                                                  color: Colors.white,
+                                                  size: 20),
                                             ),
-                                          ],
-                                          borderRadius:
-                                          BorderRadius.circular(4.0),
-                                          border: Border.all(
-                                              width: 1,
-                                              color: COLOR.appBaseColor)),
-                                      width: 30,
-                                      height: 30,
-                                      child: const Center(
-                                        child: Icon(Icons.add,
-                                            color: Colors.white,
-                                            size: 20),
-                                      ),
-                                    ),
-                                  )
+                                          ),
+                                        )
                                       : InkWell(
-                                    onTap: () {
-                                      Fluttertoast.showToast(
-                                        msg:
-                                        "${StringRes.only} ${productQty!.toStringAsFixed(0)}${StringRes.availableStock}",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.SNACKBAR,
-                                        timeInSecForIosWeb: 1,
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: COLOR.appBaseColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey[300]!,
-                                              blurRadius: 2.0,
+                                          onTap: () {
+                                            Fluttertoast.showToast(
+                                              msg:
+                                                  "${StringRes.only} ${productQty!.toStringAsFixed(0)}${StringRes.availableStock}",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: COLOR.appBaseColor,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey[300]!,
+                                                    blurRadius: 2.0,
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0),
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: COLOR.appBaseColor)),
+                                            width: 30,
+                                            height: 30,
+                                            child: const Center(
+                                              child: Icon(Icons.add,
+                                                  color: Colors.white,
+                                                  size: 20),
                                             ),
-                                          ],
-                                          borderRadius:
-                                          BorderRadius.circular(4.0),
-                                          border: Border.all(
-                                              width: 1,
-                                              color: COLOR.appBaseColor)),
-                                      width: 30,
-                                      height: 30,
-                                      child: const Center(
-                                        child: Icon(Icons.add,
-                                            color: Colors.white,
-                                            size: 20),
-                                      ),
-                                    ),
-                                  )
+                                          ),
+                                        )
                                 ],
                               ),
                             )

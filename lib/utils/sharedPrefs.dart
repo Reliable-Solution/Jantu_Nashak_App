@@ -21,13 +21,13 @@ class SharedHelper {
   Future<CustomerModel?> getCustomer() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? customerJson = prefs.getString(customerModelKey);
-    if(customerJson != null){
-    Map<String, dynamic> customerMap = jsonDecode(customerJson!);
-    CustomerModel? customerModel = CustomerModel.fromJson(customerMap);
-    print("============ get customer details ${customerJson}");
+    if (customerJson != null) {
+      Map<String, dynamic> customerMap = jsonDecode(customerJson!);
+      CustomerModel? customerModel = CustomerModel.fromJson(customerMap);
+      print("============ get customer details ${customerJson}");
 
-    return customerModel;
-    }else{
+      return customerModel;
+    } else {
       return null;
     }
   }
@@ -41,7 +41,8 @@ class SharedHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
-  Future<void> storeBool({required String key,required bool value}) async {
+
+  Future<void> storeBool({required String key, required bool value}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(key, value);
   }

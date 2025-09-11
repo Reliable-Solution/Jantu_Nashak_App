@@ -331,7 +331,7 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen>
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   final controller = Get.put(SplashController());
-  final HomeController homeController = Get.put(HomeController());
+  final HomeController homeController = Get.find();
   bool i = false;
 
   SharedHelper helper = SharedHelper();
@@ -365,7 +365,7 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen>
   Future<void> _navigateToLogin(String store, String? firmIdSave) async {
     print("Store button ${store}");
     CustomerModel? customerModel = await helper.getCustomer();
-    // Get.put(HomeController());  // Sirf yaha ek baar
+    // Get.put(HomeController());
 
     await helper.storeString("firmIdKey", firmIdSave!);
     firmId = firmIdSave ?? '';
@@ -402,7 +402,7 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFF900C3F),
+        backgroundColor: Color(0xFF226706),
         body: GetBuilder<SplashController>(
           builder: (controller) {
             if (controller.isLoading.value) {
@@ -439,184 +439,184 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen>
                 //               style: TextStyle(color: Colors.white),
                 //             ))
                 //           :
-                controller.settingList[0].settingMaintenanceMode == "No"
-                    ? Center(
-                        child: ScaleTransition(
-                          scale: _scaleAnimation,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            padding: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 15,
-                                  spreadRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  StringRes.selectAStore,
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF900C3F),
-                                  ),
-                                ),
-                                SizedBox(height: 30),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    _buildStoreButton(
-                                      controller.firmList[0].firmName!,
-                                      controller.firmList[0].firmLogo!,
-                                      // Icons.shopping_bag,
-                                      () => _navigateToLogin('Reeya Saree',
-                                          controller.firmList[0].firmId),
-                                    ),
-                                    _buildStoreButton(
-                                      controller.firmList[1].firmName!,
-                                      controller.firmList[1].firmLogo!,
-                                      // Icons.devices,
-                                      () => _navigateToLogin('Keep Fashion',
-                                          controller.firmList[1].firmId),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                                Text(
-                                  StringRes.chooseYourPreferredShoppingExperience,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                // controller.settingList[0].settingMaintenanceMode == "No"
+                //     ?
+                Center(
+              child: ScaleTransition(
+                scale: _scaleAnimation,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 15,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        StringRes.selectAStore,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF226706),
                         ),
-                      )
-                    : Center(
-                        child: ScaleTransition(
-                          scale: _scaleAnimation,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            padding: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 15,
-                                  spreadRadius: 5,
-                                ),
-                              ],
-                              // image: DecorationImage(image: AssetImage(Images.maintainerMode))
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  width: MediaQuery.sizeOf(context).width,
-                                  // height: MediaQuery.sizeOf(context).height * 0.6,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFF8F8F8),
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        blurRadius: 8,
-                                        spreadRadius: 2,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        Images.maintainerMode,
-                                        // "${IMAGE_URL + image}" ??
-                                        //     'http://surti.idnmserver.com/resources/product_no_image.png',
-                                        fit: BoxFit.fill,
-                                        // height: 50,
-                                        // width: 50,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Image.asset(
-                                              "assets/images/noInternet.jpg");
-                                        },
-                                      ),
-                                      // Image.asset(
-                                      //   // icon,
-                                      //   image,
-                                      //   // 'assets/images/p1.png',
-                                      //   height: 50,
-                                      //   width: 50,
-                                      //   // size: 50,
-                                      //   // color: Color(0xFF900C3F),
-                                      // ),
-                                      SizedBox(height: 10),
-                                      // Text(
-                                      //   name,
-                                      //   textAlign: TextAlign.center,
-                                      //   style: TextStyle(
-                                      //     fontSize: 16,
-                                      //     fontWeight: FontWeight.bold,
-                                      //     color: Color(0xFF900C3F),
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                ),
-                                // Text(
-                                //   'Select a Store',
-                                //   style: TextStyle(
-                                //     fontSize: 24,
-                                //     fontWeight: FontWeight.bold,
-                                //     color: Color(0xFF900C3F),
-                                //   ),
-                                // ),
-                                // SizedBox(height: 30),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //   MainAxisAlignment.spaceEvenly,
-                                //   children: [
-                                //     _buildStoreButton(
-                                //       controller.firmList[0].firmName!,
-                                //       controller.firmList[0].firmLogo!,
-                                //       // Icons.shopping_bag,
-                                //           () => _navigateToLogin('Reeya Saree',
-                                //           controller.firmList[0].firmId),
-                                //     ),
-                                //     _buildStoreButton(
-                                //       controller.firmList[1].firmName!,
-                                //       controller.firmList[1].firmLogo!,
-                                //       // Icons.devices,
-                                //           () => _navigateToLogin('Keep Fashion',
-                                //           controller.firmList[1].firmId),
-                                //     ),
-                                //   ],
-                                // ),
-                                // SizedBox(height: 20),
-                                // Text(
-                                //   'Choose your preferred shopping experience',
-                                //   style: TextStyle(
-                                //     fontSize: 14,
-                                //     color: Colors.grey[600],
-                                //   ),
-                                // ),
-                              ],
-                            ),
+                      ),
+                      SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildStoreButton(
+                            controller.firmList[0].firmName!,
+                            controller.firmList[0].firmLogo!,
+                            // Icons.shopping_bag,
+                            () => _navigateToLogin(
+                                'Reeya Saree', controller.firmList[0].firmId),
                           ),
+                          _buildStoreButton(
+                            controller.firmList[1].firmName!,
+                            controller.firmList[1].firmLogo!,
+                            // Icons.devices,
+                            () => _navigateToLogin(
+                                'Keep Fashion', controller.firmList[1].firmId),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        StringRes.chooseYourPreferredShoppingExperience,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
                         ),
-                      );
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+            // : Center(
+            //     child: ScaleTransition(
+            //       scale: _scaleAnimation,
+            //       child: Container(
+            //         width: MediaQuery.of(context).size.width * 0.85,
+            //         padding: EdgeInsets.all(20),
+            //         decoration: BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.circular(20),
+            //           boxShadow: [
+            //             BoxShadow(
+            //               color: Colors.black26,
+            //               blurRadius: 15,
+            //               spreadRadius: 5,
+            //             ),
+            //           ],
+            //           // image: DecorationImage(image: AssetImage(Images.maintainerMode))
+            //         ),
+            //         child: Column(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: [
+            //             Container(
+            //               width: MediaQuery.sizeOf(context).width,
+            //               // height: MediaQuery.sizeOf(context).height * 0.6,
+            //               decoration: BoxDecoration(
+            //                 color: Color(0xFFF8F8F8),
+            //                 borderRadius: BorderRadius.circular(15),
+            //                 boxShadow: [
+            //                   BoxShadow(
+            //                     color: Colors.black12,
+            //                     blurRadius: 8,
+            //                     spreadRadius: 2,
+            //                   ),
+            //                 ],
+            //               ),
+            //               child: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Image.asset(
+            //                     Images.maintainerMode,
+            //                     // "${IMAGE_URL + image}" ??
+            //                     //     'http://surti.idnmserver.com/resources/product_no_image.png',
+            //                     fit: BoxFit.fill,
+            //                     // height: 50,
+            //                     // width: 50,
+            //                     errorBuilder:
+            //                         (context, error, stackTrace) {
+            //                       return Image.asset(
+            //                           "assets/images/noInternet.jpg");
+            //                     },
+            //                   ),
+            //                   // Image.asset(
+            //                   //   // icon,
+            //                   //   image,
+            //                   //   // 'assets/images/p1.png',
+            //                   //   height: 50,
+            //                   //   width: 50,
+            //                   //   // size: 50,
+            //                   //   // color: Color(0xFF900C3F),
+            //                   // ),
+            //                   SizedBox(height: 10),
+            //                   // Text(
+            //                   //   name,
+            //                   //   textAlign: TextAlign.center,
+            //                   //   style: TextStyle(
+            //                   //     fontSize: 16,
+            //                   //     fontWeight: FontWeight.bold,
+            //                   //     color: Color(0xFF900C3F),
+            //                   //   ),
+            //                   // ),
+            //                 ],
+            //               ),
+            //             ),
+            //             // Text(
+            //             //   'Select a Store',
+            //             //   style: TextStyle(
+            //             //     fontSize: 24,
+            //             //     fontWeight: FontWeight.bold,
+            //             //     color: Color(0xFF900C3F),
+            //             //   ),
+            //             // ),
+            //             // SizedBox(height: 30),
+            //             // Row(
+            //             //   mainAxisAlignment:
+            //             //   MainAxisAlignment.spaceEvenly,
+            //             //   children: [
+            //             //     _buildStoreButton(
+            //             //       controller.firmList[0].firmName!,
+            //             //       controller.firmList[0].firmLogo!,
+            //             //       // Icons.shopping_bag,
+            //             //           () => _navigateToLogin('Reeya Saree',
+            //             //           controller.firmList[0].firmId),
+            //             //     ),
+            //             //     _buildStoreButton(
+            //             //       controller.firmList[1].firmName!,
+            //             //       controller.firmList[1].firmLogo!,
+            //             //       // Icons.devices,
+            //             //           () => _navigateToLogin('Keep Fashion',
+            //             //           controller.firmList[1].firmId),
+            //             //     ),
+            //             //   ],
+            //             // ),
+            //             // SizedBox(height: 20),
+            //             // Text(
+            //             //   'Choose your preferred shopping experience',
+            //             //   style: TextStyle(
+            //             //     fontSize: 14,
+            //             //     color: Colors.grey[600],
+            //             //   ),
+            //             // ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   );
           },
         ));
   }
@@ -667,7 +667,7 @@ class _StoreSelectionScreenState extends State<StoreSelectionScreen>
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF900C3F),
+                color: Color(0xFF226706),
               ),
             ),
           ],

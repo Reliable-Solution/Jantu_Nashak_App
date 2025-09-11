@@ -35,7 +35,7 @@ class LocalizationService extends Translations {
   /// ✅ **Language Change Function**
   static void changeLocale(String langCode) {
     Locale locale = locales.firstWhere(
-          (element) => element.languageCode == langCode,
+      (element) => element.languageCode == langCode,
       orElse: () => fallbackLocale,
     );
     print(" local data ${locale.languageCode}");
