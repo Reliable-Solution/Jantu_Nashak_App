@@ -8,11 +8,11 @@ class BrandModel {
 
   BrandModel(
       {this.brandId,
-        this.brandName,
-        this.brandDescription,
-        this.brandImage,
-        this.brandStatus,
-        this.brandCDT});
+      this.brandName,
+      this.brandDescription,
+      this.brandImage,
+      this.brandStatus,
+      this.brandCDT});
 
   BrandModel.fromJson(Map<String, dynamic> json) {
     brandId = json['BrandId'];

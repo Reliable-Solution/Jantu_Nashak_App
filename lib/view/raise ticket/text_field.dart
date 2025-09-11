@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +15,16 @@ class TextFormFieldConst extends StatelessWidget {
   final TextInputType? keyboardType;
   final double? height;
   final int? maxLine;
-  const TextFormFieldConst({Key? key,this.controller,this.height,this.maxLine,this.hintText,this.prefixIcon,this.onChanged,this.keyboardType}) : super(key: key);
+  const TextFormFieldConst(
+      {Key? key,
+      this.controller,
+      this.height,
+      this.maxLine,
+      this.hintText,
+      this.prefixIcon,
+      this.onChanged,
+      this.keyboardType})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class TextFormFieldConst extends StatelessWidget {
     return Container(
         height: height ?? size.height * 0.07,
         decoration: BoxDecoration(
-          // color: Colors.white,
+            // color: Colors.white,
             borderRadius: BorderRadius.circular(10)),
         child: Padding(
           padding: const EdgeInsets.only(
@@ -34,7 +41,6 @@ class TextFormFieldConst extends StatelessWidget {
             maxLines: maxLine ?? 1,
             textAlign: TextAlign.start,
             controller: controller,
-
             keyboardType: keyboardType,
             style: GoogleFonts.lato(
               color: COLOR.appBaseColor,
@@ -44,7 +50,8 @@ class TextFormFieldConst extends StatelessWidget {
             cursorColor: appPrimaryMaterialColor2,
             autofocus: false,
             decoration: new InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 1,vertical: 15),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 1, vertical: 15),
               hintText: hintText,
               hintStyle: TextStyle(fontSize: 13),
               prefixIcon: prefixIcon,
@@ -60,43 +67,55 @@ class TextFormFieldConst extends StatelessWidget {
   }
 }
 
-
 class TextFormFieldConstWithLabel extends StatelessWidget {
   final TextEditingController? controller;
-  final String? hintText,label;
+  final String? hintText, label;
   final Widget? prefixIcon;
   final Function(String)? onChanged;
   final TextInputType? keyboardType;
   final Border? border;
-  const TextFormFieldConstWithLabel({Key? key,this.label,this.border,this.controller,this.hintText,this.prefixIcon,this.onChanged,this.keyboardType}) : super(key: key);
+  const TextFormFieldConstWithLabel(
+      {Key? key,
+      this.label,
+      this.border,
+      this.controller,
+      this.hintText,
+      this.prefixIcon,
+      this.onChanged,
+      this.keyboardType})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding:  const EdgeInsets.only(left: 12,right: 12),
+      padding: const EdgeInsets.only(left: 12, right: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 5,top: 12,bottom: 8),
+            padding: const EdgeInsets.only(left: 5, top: 12, bottom: 8),
             child: Text(
               label!,
-              style: TextStyle(fontSize: 14,fontWeight: FontWeight.w700,color:COLOR.appBaseColor),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: COLOR.appBaseColor),
             ),
           ),
           Container(
               height: size.height * 0.06,
               decoration: BoxDecoration(
-                // color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),border: border),
+                  // color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: border),
               child: Padding(
                 padding: const EdgeInsets.only(
-                    top:2, left: 0.0, right: 0.0, bottom: 3.0),
+                    top: 2, left: 0.0, right: 0.0, bottom: 3.0),
                 child: TextFormField(
                   textAlign: TextAlign.start,
                   controller: controller,
-                  keyboardType:  keyboardType ?? TextInputType.text,
+                  keyboardType: keyboardType ?? TextInputType.text,
                   style: GoogleFonts.lato(
                     color: COLOR.appBaseColor,
                   ),
@@ -105,7 +124,7 @@ class TextFormFieldConstWithLabel extends StatelessWidget {
                   cursorColor: appPrimaryMaterialColor2,
                   autofocus: false,
                   decoration: new InputDecoration(
-                    contentPadding:  EdgeInsets.only(left: 12),
+                    contentPadding: EdgeInsets.only(left: 12),
                     hintText: hintText,
                     hintStyle: TextStyle(fontSize: 13),
                     prefixIcon: prefixIcon,
@@ -115,7 +134,9 @@ class TextFormFieldConstWithLabel extends StatelessWidget {
                         borderSide: BorderSide.none),
                     filled: true,
 
-                    fillColor: border != null ? Colors.white : Colors.grey.withOpacity(0.25),
+                    fillColor: border != null
+                        ? Colors.white
+                        : Colors.grey.withOpacity(0.25),
                   ),
                 ),
               ))

@@ -15,18 +15,18 @@ class CartTotal {
 
   CartTotal(
       {this.razorpayTotal,
-        this.totalInteger,
-        this.razorpaySubTotal,
-        this.subtotal,
-        this.save,
-        this.deliveryCharge,
-        this.total,
-        this.description,
-        this.getPointsDescription,
-        this.reedemPoints,
-        this.deliveryMsg,
-        this.minCartValueToReedemPointDesc,
-        this.minCartValueToReedemPoint});
+      this.totalInteger,
+      this.razorpaySubTotal,
+      this.subtotal,
+      this.save,
+      this.deliveryCharge,
+      this.total,
+      this.description,
+      this.getPointsDescription,
+      this.reedemPoints,
+      this.deliveryMsg,
+      this.minCartValueToReedemPointDesc,
+      this.minCartValueToReedemPoint});
 
   CartTotal.fromJson(Map<String, dynamic> json) {
     razorpayTotal = json['RazorpayTotal'];

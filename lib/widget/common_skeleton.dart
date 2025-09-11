@@ -32,8 +32,8 @@ class CommonSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: baseColor ??(Colors.grey.withOpacity(0.4)),
-      highlightColor: highlightColor ??(  Colors.grey.withOpacity(.2)),
+      baseColor: baseColor ?? (Colors.grey.withOpacity(0.4)),
+      highlightColor: highlightColor ?? (Colors.grey.withOpacity(.2)),
       enabled: true,
       direction: ShimmerDirection.ltr,
       period: const Duration(seconds: 1),
@@ -46,7 +46,7 @@ class CommonSkeleton extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.transparent),
                     color: backgroundColor ??
-                       (const Color(0xFFF6F7F9).withOpacity(.3)))
+                        (const Color(0xFFF6F7F9).withOpacity(.3)))
                 : ShapeDecoration(
                     color: backgroundColor ??
                         (const Color(0xFFF6F7F9).withOpacity(.3)),
@@ -76,10 +76,15 @@ class CommonSkeleton extends StatelessWidget {
 
 class CommonWhiteShimmer extends StatelessWidget {
   final double? height, width, radius;
-  final bool isCircle,isSmoothRadius;
+  final bool isCircle, isSmoothRadius;
 
   const CommonWhiteShimmer(
-      {super.key, this.height, this.width, this.radius, this.isCircle = false,this.isSmoothRadius =false});
+      {super.key,
+      this.height,
+      this.width,
+      this.radius,
+      this.isCircle = false,
+      this.isSmoothRadius = false});
 
   @override
   Widget build(BuildContext context) {
@@ -87,14 +92,15 @@ class CommonWhiteShimmer extends StatelessWidget {
         height: height ?? 20,
         width: width,
         decoration: isCircle
-            ? BoxDecoration(
-                color: Colors.white, shape: BoxShape.circle)
-            : isSmoothRadius?ShapeDecoration(
-            color: Colors.white,
-            shape: SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius(
-                    cornerRadius: radius ?? 8, cornerSmoothing: 1)))  : BoxDecoration(
-                color:  Colors.white,
-                borderRadius: BorderRadius.circular(radius ?? 50)));
+            ? BoxDecoration(color: Colors.white, shape: BoxShape.circle)
+            : isSmoothRadius
+                ? ShapeDecoration(
+                    color: Colors.white,
+                    shape: SmoothRectangleBorder(
+                        borderRadius: SmoothBorderRadius(
+                            cornerRadius: radius ?? 8, cornerSmoothing: 1)))
+                : BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(radius ?? 50)));
   }
 }

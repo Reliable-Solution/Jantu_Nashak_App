@@ -148,7 +148,9 @@ class HomeProductHeader extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
-                      padding: Get.width > 360 ? EdgeInsets.symmetric(horizontal: 20, vertical: 10) : EdgeInsets.symmetric(horizontal: 20),
+                      padding: Get.width > 360
+                          ? EdgeInsets.symmetric(horizontal: 20, vertical: 10)
+                          : EdgeInsets.symmetric(horizontal: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -191,7 +193,9 @@ class HomeProductHeader extends StatelessWidget {
                   ),
                   title: TextWiget(
                     title: StringRes.relevance,
-                    style: _controller.sortValue.value == 1 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
+                    style: _controller.sortValue.value == 1
+                        ? Themes.light.textTheme.displayLarge
+                        : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
                   controlAffinity: ListTileControlAffinity.trailing,
@@ -214,7 +218,9 @@ class HomeProductHeader extends StatelessWidget {
                   ),
                   title: TextWiget(
                     title: StringRes.newArrivals,
-                    style: _controller.sortValue.value == 2 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
+                    style: _controller.sortValue.value == 2
+                        ? Themes.light.textTheme.displayLarge
+                        : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
                   controlAffinity: ListTileControlAffinity.trailing,
@@ -237,7 +243,9 @@ class HomeProductHeader extends StatelessWidget {
                   ),
                   title: TextWiget(
                     title: StringRes.price,
-                    style: _controller.sortValue.value == 3 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
+                    style: _controller.sortValue.value == 3
+                        ? Themes.light.textTheme.displayLarge
+                        : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
                   controlAffinity: ListTileControlAffinity.trailing,
@@ -260,7 +268,9 @@ class HomeProductHeader extends StatelessWidget {
                   ),
                   title: TextWiget(
                     title: StringRes.price,
-                    style: _controller.sortValue.value == 4 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
+                    style: _controller.sortValue.value == 4
+                        ? Themes.light.textTheme.displayLarge
+                        : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
                   controlAffinity: ListTileControlAffinity.trailing,
@@ -283,7 +293,9 @@ class HomeProductHeader extends StatelessWidget {
                   ),
                   title: TextWiget(
                     title: StringRes.rating,
-                    style: _controller.sortValue.value == 5 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
+                    style: _controller.sortValue.value == 5
+                        ? Themes.light.textTheme.displayLarge
+                        : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
                   controlAffinity: ListTileControlAffinity.trailing,
@@ -306,7 +318,9 @@ class HomeProductHeader extends StatelessWidget {
                   activeColor: COLOR.appBaseColor,
                   title: TextWiget(
                     title: StringRes.discount,
-                    style: _controller.sortValue.value == 6 ? Themes.light.textTheme.displayLarge : Themes.light.textTheme.displaySmall,
+                    style: _controller.sortValue.value == 6
+                        ? Themes.light.textTheme.displayLarge
+                        : Themes.light.textTheme.displaySmall,
                   ),
                   toggleable: true,
                   controlAffinity: ListTileControlAffinity.trailing,
@@ -373,7 +387,8 @@ class HomeProductHeader extends StatelessWidget {
               children: [
                 DividerWidget(thickness: 2),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -463,7 +478,8 @@ class HomeProductHeader extends StatelessWidget {
                         CircleAvatar(
                           maxRadius: 30,
                           backgroundColor: COLOR.background,
-                          backgroundImage: NetworkImage('https://s.wsj.net/public/resources/images/WW-AA663A_SANDB_M_20150928140602.jpg'),
+                          backgroundImage: NetworkImage(
+                              'https://s.wsj.net/public/resources/images/WW-AA663A_SANDB_M_20150928140602.jpg'),
                         ),
                         TextWiget(
                           title: StringRes.women,
@@ -476,7 +492,8 @@ class HomeProductHeader extends StatelessWidget {
                         CircleAvatar(
                           maxRadius: 30,
                           backgroundColor: COLOR.background,
-                          backgroundImage: NetworkImage('https://www.bollywoodhungama.com/wp-content/uploads/2022/01/Hrithik-Roshan-adopts-a-puppy-names-him-Mowgli-on-his-birthday-eve-Varun-Dhawan-says-%E2%80%98best-decision%E2%80%99.jpeg'),
+                          backgroundImage: NetworkImage(
+                              'https://www.bollywoodhungama.com/wp-content/uploads/2022/01/Hrithik-Roshan-adopts-a-puppy-names-him-Mowgli-on-his-birthday-eve-Varun-Dhawan-says-%E2%80%98best-decision%E2%80%99.jpeg'),
                         ),
                         TextWiget(
                           title: StringRes.men,
@@ -486,7 +503,11 @@ class HomeProductHeader extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        CircleAvatar(maxRadius: 30, backgroundColor: COLOR.background, backgroundImage: NetworkImage('https://image.shutterstock.com/image-photo/pretty-curly-little-girl-standing-260nw-572774149.jpg')),
+                        CircleAvatar(
+                            maxRadius: 30,
+                            backgroundColor: COLOR.background,
+                            backgroundImage: NetworkImage(
+                                'https://image.shutterstock.com/image-photo/pretty-curly-little-girl-standing-260nw-572774149.jpg')),
                         TextWiget(
                           title: StringRes.girls,
                           style: Themes.light.textTheme.displayLarge,
@@ -495,7 +516,11 @@ class HomeProductHeader extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        CircleAvatar(maxRadius: 30, backgroundColor: COLOR.background, backgroundImage: NetworkImage('https://media.istockphoto.com/photos/boy-having-fun-on-studio-white-background-picture-id1069693268?k=20&m=1069693268&s=612x612&w=0&h=Mp8Jy6jOjqdeIRoCFRc6cvwbZDL89LZuHRZWfyMcRwA=')),
+                        CircleAvatar(
+                            maxRadius: 30,
+                            backgroundColor: COLOR.background,
+                            backgroundImage: NetworkImage(
+                                'https://media.istockphoto.com/photos/boy-having-fun-on-studio-white-background-picture-id1069693268?k=20&m=1069693268&s=612x612&w=0&h=Mp8Jy6jOjqdeIRoCFRc6cvwbZDL89LZuHRZWfyMcRwA=')),
                         TextWiget(
                           title: StringRes.boys,
                           style: Themes.light.textTheme.displayLarge,
@@ -511,7 +536,8 @@ class HomeProductHeader extends StatelessWidget {
               children: [
                 DividerWidget(thickness: 1),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -614,7 +640,11 @@ class HomeProductHeader extends StatelessWidget {
                                 return RotatedBox(
                                   quarterTurns: -1,
                                   child: Container(
-                                    color: _controller.selectedFilterIndex.value == ind ? COLOR.background : COLOR.greyLight,
+                                    color:
+                                        _controller.selectedFilterIndex.value ==
+                                                ind
+                                            ? COLOR.background
+                                            : COLOR.greyLight,
                                     height: 50,
                                     child: Row(
                                       children: [
@@ -625,17 +655,33 @@ class HomeProductHeader extends StatelessWidget {
                                               topRight: Radius.circular(5),
                                               bottomRight: Radius.circular(5),
                                             ),
-                                            color: _controller.selectedFilterIndex.value == ind ? COLOR.appBaseColor : COLOR.transparent,
+                                            color: _controller
+                                                        .selectedFilterIndex
+                                                        .value ==
+                                                    ind
+                                                ? COLOR.appBaseColor
+                                                : COLOR.transparent,
                                           ),
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context).size.width * 0.25,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
                                           alignment: Alignment.centerLeft,
-                                          padding: EdgeInsets.symmetric(horizontal: 8),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
                                           child: TextWiget(
                                             title: _controller.filters[ind],
-                                            style: Themes.dark.textTheme.displayLarge!.copyWith(
-                                              color: _controller.selectedFilterIndex.value == ind ? COLOR.appBaseColor : COLOR.grey,
+                                            style: Themes
+                                                .dark.textTheme.displayLarge!
+                                                .copyWith(
+                                              color: _controller
+                                                          .selectedFilterIndex
+                                                          .value ==
+                                                      ind
+                                                  ? COLOR.appBaseColor
+                                                  : COLOR.grey,
                                             ),
                                           ),
                                         ),
@@ -658,7 +704,8 @@ class HomeProductHeader extends StatelessWidget {
               children: [
                 DividerWidget(thickness: 2),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -812,7 +859,6 @@ class HomeProductHeader extends StatelessWidget {
       ),
     );
   }
-
 
   RotatedBox filterRating(HomeController _controller) {
     return RotatedBox(

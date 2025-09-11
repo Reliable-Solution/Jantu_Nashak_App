@@ -450,34 +450,35 @@ class CreateComplainScreen extends StatelessWidget {
         body: Obx(() => controller.isGetTicketAreaProblemLoading.value
             ? AppUtils.circularLoaderData()
             : SingleChildScrollView(
-          child: Column(
-            children: [
-              _imagePicketSection(controller, context),
-              _titleDetailsSection(controller),
-
-              // if (controller.userNameController.text.isEmpty) ...[_titleDetailsSection(controller)],
-              _facingSection(controller),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
                   children: [
-                    // _titleDetailsSection(controller)
-                    // _ticketAreaProblemWidget(controller, context),
-                    // _ticketSubAreaProblemWidget(controller, context),
-                    // _ticketPriorityWidget(controller, context),
+                    _imagePicketSection(controller, context),
+                    _titleDetailsSection(controller),
+
+                    // if (controller.userNameController.text.isEmpty) ...[_titleDetailsSection(controller)],
+                    _facingSection(controller),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        children: [
+                          // _titleDetailsSection(controller)
+                          // _ticketAreaProblemWidget(controller, context),
+                          // _ticketSubAreaProblemWidget(controller, context),
+                          // _ticketPriorityWidget(controller, context),
+                        ],
+                      ),
+                    ),
+                    _descriptionDetailsSection(controller, size),
+                    _submitButton(controller, size, context),
                   ],
                 ),
-              ),
-              _descriptionDetailsSection(controller, size),
-              _submitButton(controller, size, context),
-            ],
-          ),
-        )),
+              )),
       ),
     );
   }
 
-  Widget _imagePicketSection(TicketController controller, BuildContext context) {
+  Widget _imagePicketSection(
+      TicketController controller, BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 20),
@@ -496,10 +497,13 @@ class CreateComplainScreen extends StatelessWidget {
                     size: 40,
                   ),
                   SizedBox(width: 10),
-                  Text('Camera'),
+                  Text(StringRes.camera
+                      // 'Camera'
+                  ),
                 ],
               ),
               onTap: () async {
+                print("Camera Permission called");
                 bool permission = await Services().askCameraPermission();
                 if (permission) {
                   controller.getImage(ImageSource.camera);
@@ -531,10 +535,10 @@ class CreateComplainScreen extends StatelessWidget {
         ),
         controller.inProcess.value
             ? Container(
-          color: Colors.white,
-          height: MediaQuery.of(context).size.height,
-          child: Center(child: CircularProgressIndicator()),
-        )
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height,
+                child: Center(child: CircularProgressIndicator()),
+              )
             : Center(),
       ],
     );
@@ -543,21 +547,21 @@ class CreateComplainScreen extends StatelessWidget {
   Widget _getImageWidget(TicketController controller) {
     return controller.selectedFile.value != null
         ? ClipOval(
-      child: Image.file(
-        controller.selectedFile.value!,
-        width: 120,
-        height: 120,
-        fit: BoxFit.contain,
-      ),
-    )
+            child: Image.file(
+              controller.selectedFile.value!,
+              width: 120,
+              height: 120,
+              fit: BoxFit.contain,
+            ),
+          )
         : ClipOval(
-      child: Image.asset(
-        'assets/complaint.png',
-        width: 120,
-        height: 120,
-        fit: BoxFit.fill,
-      ),
-    );
+            child: Image.asset(
+              'assets/complaint.png',
+              width: 120,
+              height: 120,
+              fit: BoxFit.fill,
+            ),
+          );
   }
 
   Widget _titleDetailsSection(TicketController controller) {
@@ -567,14 +571,15 @@ class CreateComplainScreen extends StatelessWidget {
         SizedBox(height: 20),
         Padding(
           padding: EdgeInsets.only(left: 10, bottom: 0),
-          child: textSemiBold(text:StringRes.ticketUserName, fontSize: 16),
+          child: textSemiBold(text: StringRes.ticketUserName, fontSize: 16),
         ),
         TextFormFieldConst(
           controller: controller.userNameController,
           hintText: StringRes.enterTicketUserName,
           keyboardType: TextInputType.text,
           maxLine: 1,
-          prefixIcon: Icon(Icons.ad_units, color: AppStyles.primaryColor, size: 20),
+          prefixIcon:
+              Icon(Icons.ad_units, color: AppStyles.primaryColor, size: 20),
         ),
       ],
     );
@@ -614,7 +619,8 @@ class CreateComplainScreen extends StatelessWidget {
             },
           ).then((pickedDate) {
             if (pickedDate != null) {
-              controller.facingDate.value = DateFormat("dd MMM, yyyy").format(pickedDate);
+              controller.facingDate.value =
+                  DateFormat("dd MMM, yyyy").format(pickedDate);
             }
           });
         },
@@ -629,7 +635,7 @@ class CreateComplainScreen extends StatelessWidget {
         SizedBox(height: 20),
         Padding(
           padding: EdgeInsets.only(left: 10, bottom: 0),
-          child: textSemiBold(text:StringRes.description, fontSize: 16),
+          child: textSemiBold(text: StringRes.description, fontSize: 16),
         ),
         TextFormFieldConst(
           height: size.height * 0.20,
@@ -637,7 +643,8 @@ class CreateComplainScreen extends StatelessWidget {
           hintText: StringRes.enterDescription,
           keyboardType: TextInputType.text,
           maxLine: 5,
-          prefixIcon: Icon(Icons.description, color: AppStyles.primaryColor, size: 20),
+          prefixIcon:
+              Icon(Icons.description, color: AppStyles.primaryColor, size: 20),
         ),
       ],
     );
@@ -682,12 +689,14 @@ class CreateComplainScreen extends StatelessWidget {
   //   );
   // }
 
-  Widget _ticketSubAreaProblemWidget(TicketController controller, BuildContext context) {
+  Widget _ticketSubAreaProblemWidget(
+      TicketController controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: SearchDropUiWidget(
         label: StringRes.problemSubArea,
-        title: controller.selectedTicketSubAreaProblem.value ?? StringRes.problemSubArea,
+        title: controller.selectedTicketSubAreaProblem.value ??
+            StringRes.problemSubArea,
         suffixIcons: ClearControllerButtonWidget(
           onPressed: () {
             HapticFeedback.mediumImpact();
@@ -698,33 +707,39 @@ class CreateComplainScreen extends StatelessWidget {
         isValueSelected: controller.selectedTicketSubAreaProblem.value != null,
         onTap: controller.getTicketSubAreaProblemList.isEmpty
             ? () {
-          showSnackBar(
-              context: context, msg: StringRes.pleaseSelectProblemArea, isError: true);
-        }
+                showSnackBar(
+                    context: context,
+                    msg: StringRes.pleaseSelectProblemArea,
+                    isError: true);
+              }
             : () async {
-          await showDialog(
-            context: context,
-            useRootNavigator: false,
-            builder: (context) => SearchableDropDownWidget(
-              headingTitle: StringRes.problemSubArea,
-              listData: controller.searchTicketSubAreaProblemList,
-              onDataChanged: (value) {
-                controller.selectedTicketSubAreaProblem.value = value.title;
-                controller.selectedTicketSubAreaProblemID.value = value.id;
+                await showDialog(
+                  context: context,
+                  useRootNavigator: false,
+                  builder: (context) => SearchableDropDownWidget(
+                    headingTitle: StringRes.problemSubArea,
+                    listData: controller.searchTicketSubAreaProblemList,
+                    onDataChanged: (value) {
+                      controller.selectedTicketSubAreaProblem.value =
+                          value.title;
+                      controller.selectedTicketSubAreaProblemID.value =
+                          value.id;
+                    },
+                  ),
+                );
               },
-            ),
-          );
-        },
       ),
     );
   }
 
-  Widget _ticketPriorityWidget(TicketController controller, BuildContext context) {
+  Widget _ticketPriorityWidget(
+      TicketController controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: SearchDropUiWidget(
         label: StringRes.ticketPriority,
-        title: controller.selectedTicketPriority.value ?? StringRes.ticketPriority,
+        title:
+            controller.selectedTicketPriority.value ?? StringRes.ticketPriority,
         suffixIcons: ClearControllerButtonWidget(
           onPressed: () {
             HapticFeedback.mediumImpact();
@@ -751,28 +766,31 @@ class CreateComplainScreen extends StatelessWidget {
     );
   }
 
-  Widget _submitButton(TicketController controller, Size size, BuildContext context) {
+  Widget _submitButton(
+      TicketController controller, Size size, BuildContext context) {
     return controller.isAddTicketLoading.value
         ? Padding(
-      padding: EdgeInsets.only(bottom: size.height * 0.02),
-      child: AppUtils.circularLoaderData(),
-    )
+            padding: EdgeInsets.only(bottom: size.height * 0.02),
+            child: AppUtils.circularLoaderData(),
+          )
         : ContainerConst(
-      onTap: () {
-        controller.validateDetails(context);
-      },
-      height: 50,
-      width: size.width,
-      color: appPrimaryMaterialColorcard,
-      topPadding: size.height * 0.01,
-      bottomPadding: size.height * 0.02,
-      child: Center(
-        child: Text(
-          StringRes.createTicket,
-          style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
-        ),
-      ),
-    );
+            onTap: () {
+              controller.validateDetails(context);
+            },
+            height: 50,
+            width: size.width,
+            color: appPrimaryMaterialColorcard,
+            topPadding: size.height * 0.01,
+            bottomPadding: size.height * 0.02,
+            child: Center(
+              child: Text(
+                StringRes.createTicket,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+          );
   }
 }

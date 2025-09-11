@@ -32,7 +32,7 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
           elevation: 1,
           title: TextWiget(
             title: StringRes.allAddress,
-            style: Themes.light.textTheme.displayLarge,
+            style: Themes.light.textTheme.headlineLarge,
           ),
         ),
         floatingActionButton: FloatingActionButton(
@@ -46,23 +46,32 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
             controller.txtType.clear();
             Get.to(() => PickupAddressScreen());
           },
-          child: Icon(Icons.add,color: COLOR.background,),
+          child: Icon(
+            Icons.add,
+            color: COLOR.background,
+          ),
         ),
         body: RefreshIndicator(
           onRefresh: () {
-           return controller.getAllAddress();
+            return controller.getAllAddress();
           },
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
                 child: Container(
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
-                    boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 6,
+                          offset: Offset(0, 2))
+                    ],
                   ),
                   child: Row(
                     children: [
@@ -70,7 +79,7 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
                         child: TextFormField(
                           controller: controller.searchController,
                           textInputAction: TextInputAction.search,
-                           style: GoogleFonts.lato(color: COLOR.appBaseColor),
+                          style: GoogleFonts.lato(color: COLOR.appBaseColor),
                           cursorColor: COLOR.appBaseColor,
                           decoration: InputDecoration(
                             hintText: 'Search Help',
@@ -86,23 +95,22 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => controller.searchCategory(controller.searchController.text),
+                        onTap: () => controller
+                            .searchCategory(controller.searchController.text),
                         child: const Icon(Icons.search, color: Colors.black87),
                       ),
                     ],
                   ),
                 ),
               ),
-
               Expanded(
                 child: Obx(() {
-                  if (controller.isSearching.value || controller.isAddress.value == true) {
+                  if (controller.isSearching.value ||
+                      controller.isAddress.value == true) {
                     return Center(child: CircularProgressIndicator());
-                  }
-                  else if (controller.filteredList.isEmpty){
+                  } else if (controller.filteredList.isEmpty) {
                     return Center(child: Text(StringRes.noDataFound));
-                  }
-                  else if (controller.filteredList.isNotEmpty) {
+                  } else if (controller.filteredList.isNotEmpty) {
                     return ListView.builder(
                       itemCount: controller.filteredList.length,
                       itemBuilder: (context, index) {
@@ -124,26 +132,32 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
                                   ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           SizedBox(width: 10.0),
                                           Text(
                                             "${address.addressFullName}",
-                                            style: Themes.light.textTheme.displayMedium!.copyWith(fontSize: 20),
+                                            style: Themes
+                                                .light.textTheme.displayMedium!
+                                                .copyWith(fontSize: 20),
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 6.0),
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(width: 10.0),
                                           Expanded(
                                             child: Text(
                                               '${address.addressColony} ${address.addressPincode} ${address.addressLandmark} \n ${address.addressType}',
-                                              style: Themes.light.textTheme.bodyMedium!.copyWith(fontSize: 14),
+                                              style: Themes
+                                                  .light.textTheme.bodyMedium!
+                                                  .copyWith(fontSize: 14),
                                             ),
                                           ),
                                         ],
@@ -154,25 +168,35 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
                                           SizedBox(width: 10.0),
                                           Text(
                                             "+91 ${address.addressMobileNo}",
-                                            style: TextStyle(fontSize: 16.0, color: Colors.black54),
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.black54),
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 10.0),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           ElevatedButton.icon(
                                             onPressed: () {
-                                              print("Address Id ${address.addressId}");
-                                              Get.to(PickupAddressScreen(address: address));
+                                              print(
+                                                  "Address Id ${address.addressId}");
+                                              Get.to(PickupAddressScreen(
+                                                  address: address));
                                             },
-                                            icon: Icon(Icons.edit, color: COLOR.background),
-                                            label: Text(StringRes.edit, style: TextStyle(color: COLOR.background)),
+                                            icon: Icon(Icons.edit,
+                                                color: COLOR.background),
+                                            label: Text(StringRes.edit,
+                                                style: TextStyle(
+                                                    color: COLOR.background)),
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: COLOR.appBaseColor,
+                                              backgroundColor:
+                                                  COLOR.appBaseColor,
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10.0),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
                                               ),
                                             ),
                                           ),
@@ -184,12 +208,17 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
                                               );
                                               controller.getAllAddress();
                                             },
-                                            icon: Icon(Icons.delete, color: Colors.red),
-                                            label: Text(StringRes.delete, style: TextStyle(color: Colors.red)),
+                                            icon: Icon(Icons.delete,
+                                                color: Colors.red),
+                                            label: Text(StringRes.delete,
+                                                style: TextStyle(
+                                                    color: Colors.red)),
                                             style: OutlinedButton.styleFrom(
-                                              side: BorderSide(color: Colors.red),
+                                              side:
+                                                  BorderSide(color: Colors.red),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10.0),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
                                               ),
                                             ),
                                           ),
@@ -202,23 +231,15 @@ class _AllAddressScreenState extends State<AllAddressScreen> {
                             ],
                           ),
                         );
-
                       },
                     );
                   }
 
-                  // else if (controller.isAddress.value) {
-                  //   return Center(child: CircularProgressIndicator());
-                  // }
-                  // else if (controller.allAddressList.isEmpty){
-                  //  return Center(child: Text(StringRes.noDataFound));
-                  // }
                   else {
                     return Center(child: Text(StringRes.noDataFound));
                   }
                 }),
               ),
-
             ],
           ),
         ));
