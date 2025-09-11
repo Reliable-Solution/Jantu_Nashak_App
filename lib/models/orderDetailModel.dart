@@ -105,6 +105,7 @@ class Orders {
   String? productdetailImages;
   String? productdetailMrp;
   String? productdetailSrp;
+  String? productQty;
   String? productdetailQty;
   String? productdetailUnit;
   String? productdetailStatus;
@@ -112,42 +113,43 @@ class Orders {
 
   Orders(
       {this.orderdetailId,
-        this.orderIdReference,
-        this.productId,
-        this.productdetailId,
-        this.orderdetailProductSrp,
-        this.orderdetailProductMrp,
-        this.orderdetailQty,
-        this.orderdetailUnit,
-        this.orderdetailGst,
-        this.orderdetailBatch,
-        this.orderdetailExpDate,
-        this.orderdetailReturnStatus,
-        this.orderdetailStatus,
-        this.orderdetailCDT,
-        this.categoryId,
-        this.subcategoryId,
-        this.productName,
-        this.brandId,
-        this.hsnId,
-        this.productSKU,
-        this.productDescription,
-        this.productKeyFeatures,
-        this.productFeaturedYesNoRadio,
-        this.productOrderByPrescriptionYesNoRadio,
-        this.productType,
-        this.productGst,
-        this.productOfferCode,
-        this.productStatus,
-        this.productCDT,
-        this.productIdReference,
-        this.productdetailImages,
-        this.productdetailMrp,
-        this.productdetailSrp,
-        this.productdetailQty,
-        this.productdetailUnit,
-        this.productdetailStatus,
-        this.productdetailCDT});
+      this.orderIdReference,
+      this.productId,
+      this.productdetailId,
+      this.orderdetailProductSrp,
+      this.orderdetailProductMrp,
+      this.productQty,
+      this.orderdetailQty,
+      this.orderdetailUnit,
+      this.orderdetailGst,
+      this.orderdetailBatch,
+      this.orderdetailExpDate,
+      this.orderdetailReturnStatus,
+      this.orderdetailStatus,
+      this.orderdetailCDT,
+      this.categoryId,
+      this.subcategoryId,
+      this.productName,
+      this.brandId,
+      this.hsnId,
+      this.productSKU,
+      this.productDescription,
+      this.productKeyFeatures,
+      this.productFeaturedYesNoRadio,
+      this.productOrderByPrescriptionYesNoRadio,
+      this.productType,
+      this.productGst,
+      this.productOfferCode,
+      this.productStatus,
+      this.productCDT,
+      this.productIdReference,
+      this.productdetailImages,
+      this.productdetailMrp,
+      this.productdetailSrp,
+      this.productdetailQty,
+      this.productdetailUnit,
+      this.productdetailStatus,
+      this.productdetailCDT});
 
   Orders.fromJson(Map<String, dynamic> json) {
     orderdetailId = json['OrderdetailId'];
@@ -174,7 +176,7 @@ class Orders {
     productKeyFeatures = json['ProductKeyFeatures'];
     productFeaturedYesNoRadio = json['ProductFeaturedYesNoRadio'];
     productOrderByPrescriptionYesNoRadio =
-    json['ProductOrderByPrescriptionYesNoRadio'];
+        json['ProductOrderByPrescriptionYesNoRadio'];
     productType = json['ProductType'];
     productGst = json['ProductGst'];
     productOfferCode = json['ProductOfferCode'];
@@ -184,6 +186,7 @@ class Orders {
     productdetailImages = json['ProductdetailImages'];
     productdetailMrp = json['ProductdetailMrp'];
     productdetailSrp = json['ProductdetailSrp'];
+    productQty = json['ProductQTY'];
     productdetailQty = json['ProductdetailQty'];
     productdetailUnit = json['ProductdetailUnit'];
     productdetailStatus = json['ProductdetailStatus'];
@@ -226,6 +229,7 @@ class Orders {
     data['ProductdetailImages'] = this.productdetailImages;
     data['ProductdetailMrp'] = this.productdetailMrp;
     data['ProductdetailSrp'] = this.productdetailSrp;
+    data['ProductQTY'] = this.productQty;
     data['ProductdetailQty'] = this.productdetailQty;
     data['ProductdetailUnit'] = this.productdetailUnit;
     data['ProductdetailStatus'] = this.productdetailStatus;
@@ -247,14 +251,14 @@ class OtherDetail {
 
   OtherDetail(
       {this.orderId,
-        this.subTotal,
-        this.orderStage,
-        this.orderDate,
-        this.orderDeliveryDate,
-        this.deliveryCharge,
-        this.earnedPoints,
-        this.total,
-        this.orderPaymentMethod});
+      this.subTotal,
+      this.orderStage,
+      this.orderDate,
+      this.orderDeliveryDate,
+      this.deliveryCharge,
+      this.earnedPoints,
+      this.total,
+      this.orderPaymentMethod});
 
   OtherDetail.fromJson(Map<String, dynamic> json) {
     orderId = json['OrderId'];
@@ -294,11 +298,11 @@ class ShippingDetail {
 
   ShippingDetail(
       {this.addressFullName,
-        this.addressColony,
-        this.addressLandmark,
-        this.city,
-        this.state,
-        this.pincode});
+      this.addressColony,
+      this.addressLandmark,
+      this.city,
+      this.state,
+      this.pincode});
 
   ShippingDetail.fromJson(Map<String, dynamic> json) {
     addressFullName = json['AddressFullName'];

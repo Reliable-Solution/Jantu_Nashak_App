@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 //controllers
 import 'package:keep_app/controller/networkController.dart';
 
-class AccountController extends GetxController with GetSingleTickerProviderStateMixin {
+class AccountController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   // getxcontroller instance
   NetworkController networkController = Get.put(NetworkController());
 
@@ -28,7 +29,8 @@ class AccountController extends GetxController with GetSingleTickerProviderState
 
   @override
   void onInit() async {
-    paymentTabController = TabController(vsync: this, length: paymentTabs.length);
+    paymentTabController =
+        TabController(vsync: this, length: paymentTabs.length);
     super.onInit();
   }
 

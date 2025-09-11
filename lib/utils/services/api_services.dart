@@ -74,14 +74,16 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static String baseUrl =
-        "https://kffashionnew.reliablesolution.in/Admin/Ajax/";
-       // "https://keep.reliablesolution.in/Admin/Ajax/";
+      // "https://kffashionnew.reliablesolution.in/Admin/Ajax/";
+      // "https://keep.reliablesolution.in/Admin/Ajax/";
       // "http://192.168.1.112:8000/Admin/Ajax/";
+      "https://staging-jantunashak.reliablesolution.in/Admin/Ajax/";
 
   static final Dio _dio = Dio(
     BaseOptions(
-       baseUrl: "https://kffashionnew.reliablesolution.in/Admin/Ajax/",
-       // baseUrl: "https://keep.reliablesolution.in/Admin/Ajax/",
+      // baseUrl: "https://kffashionnew.reliablesolution.in/Admin/Ajax/",
+      baseUrl: "https://staging-jantunashak.reliablesolution.in/Admin/Ajax/",
+      // baseUrl: "https://keep.reliablesolution.in/Admin/Ajax/",
       // baseUrl: "http://192.168.1.112:8000/Admin/Ajax/",
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
@@ -93,23 +95,42 @@ class ApiService {
       final response = await _dio.get(endpoint);
       print("Response $response");
 
+      final fullUrl = "$baseUrl$endpoint";
+
+      // Build cURL string
+      final curl = StringBuffer();
+      curl.write("curl -X POST '$fullUrl' \\\n");
+
+      // Headers (add content-type for FormData)
+      curl.write("  -H 'Content-Type: multipart/form-data' \\\n");
+
+      // // Body
+      // if (body != null && body.isNotEmpty) {
+      //   for (var entry in body.entries) {
+      //     curl.write("  -F '${entry.key}=${entry.value}' \\\n");
+      //   }
+      // }
+
+      // Print the cURL command
+      print("======== cURL Command ========");
+      print(curl.toString());
+      print("==============================");
       if (response.statusCode == 200) {
         print("Response  code ${response.statusCode}");
         return response;
       } else {
         throw Exception("Failed to fetch data: ${response.statusCode}");
       }
-    }
-    on DioException catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         throw Exception(
             "Error: ${e.response!.statusCode}, Message: ${e.response!.data}");
       } else {
         throw Exception("Network Error: ${e.message}");
       }
-    // catch (e) {
-    //   throw Exception("Unexpected Error: ${e.toString()}");
-    }catch (e) {
+      // catch (e) {
+      //   throw Exception("Unexpected Error: ${e.toString()}");
+    } catch (e) {
       throw Exception("Error: $e");
     }
   }
@@ -146,11 +167,11 @@ class ApiService {
       print("======== cURL Command ========");
       print(curl.toString());
       print("==============================");
-      final response = await _dio.post(endpoint, data: formData, options: Options(
-        headers: {
-          "Cookie" : 'ci_session=a4546d65e592cda9a7a377fddf8145473b17410b'
-        }
-      ));
+      final response = await _dio.post(endpoint,
+          data: formData,
+          options: Options(headers: {
+            "Cookie": 'ci_session=a4546d65e592cda9a7a377fddf8145473b17410b'
+          }));
       if (response.statusCode == 200) {
         return response;
       } else {

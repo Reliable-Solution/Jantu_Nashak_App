@@ -45,8 +45,7 @@ class OrderController extends GetxController {
     try {
       final Map<String, dynamic> body = {
         'CustomerId': customerId,
-        'FirmId':firmId
-
+        'FirmId': firmId
       };
 
       // Make the API call
@@ -61,7 +60,7 @@ class OrderController extends GetxController {
 
         var data = response.data['Data']; // Assuming Data[0] exists
 
-        if (data  != null) {
+        if (data != null) {
           orderList.value = (data as List)
               .map((orderJson) => OrderDataModel.fromJson(orderJson))
               .toList();
@@ -80,15 +79,13 @@ class OrderController extends GetxController {
       throw Exception("Failed to get Sub Category  data: $e");
     }
   }
+
   Future<void> getOrderDetail(String? orderId) async {
     orderDetailList.clear();
     isDetailLoading.value = true;
 
     try {
-      final Map<String, dynamic> body = {
-        'OrderId': orderId,
-        'FirmId':firmId
-      };
+      final Map<String, dynamic> body = {'OrderId': orderId, 'FirmId': firmId};
 
       // Make the API call
       var response = await ApiService.post(
@@ -100,13 +97,13 @@ class OrderController extends GetxController {
         print("API Response: ${response.data}");
         log("API Response: ${response.data}");
 
-
         var data = response.data['Data']; // Assuming Data[0] exists
 
         print("Order detail data ${data}");
         if (data != null) {
           orderDetailList.value = (data as List)
-              .map((orderDetailJson) => OrderDetailData.fromJson(orderDetailJson))
+              .map((orderDetailJson) =>
+                  OrderDetailData.fromJson(orderDetailJson))
               .toList();
           // orderList.value = (response.data['Data'] as List)
           //     .map((orderJson) => OrderModel.fromJson(orderJson))
@@ -129,8 +126,7 @@ class OrderController extends GetxController {
       final Map<String, dynamic> body = {
         'CustomerId': customerId,
         "OrderId": orderId,
-        'FirmId':firmId
-
+        'FirmId': firmId
       };
 
       // Make the API call
@@ -158,5 +154,4 @@ class OrderController extends GetxController {
       throw Exception("Failed to get Sub Category  data: $e");
     }
   }
-
 }

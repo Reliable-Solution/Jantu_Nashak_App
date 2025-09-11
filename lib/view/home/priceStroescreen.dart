@@ -53,6 +53,7 @@ class SubCategoryScreen extends StatefulWidget {
 
 class _SubCategoryScreenState extends State<SubCategoryScreen> {
   final SubCategoryController _controller = Get.find<SubCategoryController>();
+  final HomeController _homeController = Get.find<HomeController>();
   final CartController cartController = Get.find<CartController>();
   final ProductDetailsController productDetailsController =
       Get.find<ProductDetailsController>();
@@ -60,9 +61,12 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    _controller.getProductCategoryData(widget.category, _homeController.customerModel!.value.customerId!);
+
     super.initState();
-    _controller.getSubCategoryData(widget.category);
-    _controller.getPrefs(widget.category);
+    // _controller.getSubCategoryData(widget.category);
+    // _controller.getPrefs(widget.category);
+    // _controller.getProductCategoryData(widget.category, _homeController.customerModel!.value.customerId!);
   }
 
   @override
@@ -72,6 +76,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
   }
 
   Widget build(BuildContext context) {
+    print("=========> Product SubCategory Length ${_controller.subCategoryList.length}");
     return Scaffold(
       backgroundColor: COLOR.greyLight,
       body: CustomScrollView(
@@ -93,7 +98,6 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
               ),
             ),
             actions: [
-
               IconButtonWidget(
                 voidCallback: () {
                   Navigator.push(
@@ -109,8 +113,10 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                 children: [
                   IconButtonWidget(
                     voidCallback: () {
-                      cartController.getCartDetails(cartController.customerModel!.value.customerId!);
-                      cartController.getCartTotal(cartController.customerModel!.value.customerId!);
+                      cartController.getCartDetails(
+                          cartController.customerModel!.value.customerId!);
+                      cartController.getCartTotal(
+                          cartController.customerModel!.value.customerId!);
 
                       Get.to(() => CartScreen(
                             removeCart: productRemove,
@@ -148,114 +154,144 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                   ),
                 ],
               ),
-
             ],
             elevation: 0,
           ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     width: MediaQuery.sizeOf(context).width,
+          //     color: COLOR.background,
+          //     margin: EdgeInsets.symmetric(vertical: 5),
+          //     child: Center(
+          //       child: Padding(
+          //         padding:
+          //             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          //         child: Text(
+          //           StringRes.subCategories,
+          //           style: TextStyle(
+          //             fontSize: 24,
+          //             fontWeight: FontWeight.bold,
+          //             color: Color(0xff900C3F), // Primary Color
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // SliverList(
+          //   delegate: SliverChildListDelegate(
+          //     [
+          //       Container(
+          //         color: COLOR.background,
+          //         padding: EdgeInsets.all(6),
+          //         width: MediaQuery.of(context).size.width,
+          //         child:
+          //             GetBuilder<SubCategoryController>(builder: (controller) {
+          //           return controller.isLoading.value
+          //               ? SizedBox(
+          //                   height: MediaQuery.of(context).size.height,
+          //                   child: Center(child: CircularProgressIndicator()))
+          //               : Column(
+          //                   children: [
+          //                     ///  Sub category
+          //                     GridView.builder(
+          //                       shrinkWrap: true,
+          //                       physics: NeverScrollableScrollPhysics(),
+          //                       gridDelegate:
+          //                           SliverGridDelegateWithFixedCrossAxisCount(
+          //                         crossAxisCount: 3,
+          //                         childAspectRatio: 1.6 / 2,
+          //                       ),
+          //                       itemCount: controller.subCategoryList.length,
+          //                       itemBuilder: (context, index) {
+          //                         return SubCategoryComponet(
+          //                             categoryModel:
+          //                                 controller.subCategoryList[index]);
+          //                       },
+          //                     ),
+          //                   ],
+          //                 );
+          //         }),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           SliverToBoxAdapter(
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              color: COLOR.background,
-              margin: EdgeInsets.symmetric(vertical: 5),
-              child: Center(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Text(
-                    StringRes.subCategories,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff900C3F), // Primary Color
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Container(
-                  color: COLOR.background,
-                  padding: EdgeInsets.all(6),
-                  width: MediaQuery.of(context).size.width,
-                  child:
-                      GetBuilder<SubCategoryController>(builder: (controller) {
-                    return controller.isLoading.value
-                        ? SizedBox(
-                            height: MediaQuery.of(context).size.height,
-                            child: Center(child: CircularProgressIndicator()))
-                        : Column(
-                            children: [
-                              ///  Sub category
-                              GridView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 1.6 / 2,
-                                ),
-                                itemCount: controller.subCategoryList.length,
-                                itemBuilder: (context, index) {
-                                  return SubCategoryComponet(
-                                      categoryModel:
-                                          controller.subCategoryList[index]);
-                                },
-                              ),
-                            ],
-                          );
-                  }),
-                ),
-              ],
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              color: COLOR.background,
-              margin: EdgeInsets.symmetric(vertical: 5),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Text(
-                  StringRes.allProducts,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    // color: Color(0xff900C3F), // Primary Color
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-
-          GetBuilder<SubCategoryController>(builder: (controller) {
-            return controller.categoryProductList.isEmpty
+                   child: Container(
+                     width: MediaQuery.sizeOf(context).width,
+                     color: COLOR.background,
+                     margin: EdgeInsets.symmetric(vertical: 5),
+                     child: Padding(
+                       padding:
+                           const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                       child: Text(
+                         StringRes.allProducts,
+                         style: TextStyle(
+                           fontSize: 20,
+                           fontWeight: FontWeight.bold,
+                           // color: Color(0xff900C3F), // Primary Color
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
+          Obx(() {
+            return _controller.isCategoryProduct.value
                 ? SliverToBoxAdapter(
-                    child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Center(child: Text(StringRes.dataNotFound)),
-                  ))
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: MediaQuery.sizeOf(context).height * 0.4,),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ))
                 : SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final products = controller.categoryProductList[index];
-                        return ProductComponent(products: products);
-                      },
-                      childCount: controller.categoryProductList.length,
-                    ),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      // childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
-                      childAspectRatio: 1 / 1.4,
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
-                    ),
-                  );
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                  final products = _controller.categoryProductList[index];
+                  return ProductComponent(products: products);
+                },
+                childCount: _controller.categoryProductList.length,
+              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1 / 1.4,
+                crossAxisSpacing: 2,
+                mainAxisSpacing: 2,
+              ),
+            );
           })
+
+          // GetBuilder<SubCategoryController>(builder: (_controller) {
+          //   return _controller.isCategoryProduct.value
+          //     // controller.categoryProductList.isEmpty
+          //       ? SliverToBoxAdapter(
+          //           child: Padding(
+          //           padding: const EdgeInsets.all(20),
+          //           child: Center(child: CircularProgressIndicator()),
+          //         ))
+          //       :
+          //   SliverGrid(
+          //           delegate: SliverChildBuilderDelegate(
+          //             (context, index) {
+          //               print("============> Category Product ${_controller.categoryProductList[index].productName}");
+          //               final products = _controller.categoryProductList[index];
+          //               return ProductComponent(products: products);
+          //             },
+          //             childCount: _controller.categoryProductList.length,
+          //           ),
+          //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //             crossAxisCount: 2,
+          //             // childAspectRatio: Get.width >= 300 ? 1.15 / 2 : 1 / 2.1,
+          //             childAspectRatio: 1 / 1.4,
+          //             crossAxisSpacing: 2,
+          //             mainAxisSpacing: 2,
+          //           ),
+          //         );
+          // })
         ],
       ),
     );

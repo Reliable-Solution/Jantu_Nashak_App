@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -21,7 +20,6 @@ class WebViewScreenState extends State<WebViewScreen> {
   void initState() {
     super.initState();
     controller = Get.put(WebViewControllerX(widget.url));
-
   }
 
   Future<void> _onRefresh() async {
@@ -30,12 +28,11 @@ class WebViewScreenState extends State<WebViewScreen> {
     await Future.delayed(const Duration(milliseconds: 500));
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(StringRes.webView),
+        title: Text(StringRes.webView),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -45,7 +42,7 @@ class WebViewScreenState extends State<WebViewScreen> {
         ],
       ),
       body: RefreshIndicator(
-    onRefresh: controller.reload,
+        onRefresh: controller.reload,
         child: Stack(
           children: [
             WebViewWidget(controller: controller.webViewController),

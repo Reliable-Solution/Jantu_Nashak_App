@@ -6,7 +6,8 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   SliverAppBarDelegate({this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child!;
   }
 

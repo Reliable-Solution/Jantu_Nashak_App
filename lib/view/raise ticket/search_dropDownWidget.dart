@@ -126,58 +126,60 @@ class _SearchableDropDownWidgetState extends State<SearchableDropDownWidget> {
                     onChanged: (val) {
                       // _filterData = widget.listData
                       //     .where((element) => element?.title!.toLowerCase().contains(val.toLowerCase())).toList();
-                      setState(() {
-
-                      });
+                      setState(() {});
                     },
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: _filterData.isEmpty ?  AppUtils.noRecordMsg(): ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _filterData.length,
-                    itemBuilder: (ctx, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 2.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            widget.onDataChanged(_filterData[index]);
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                            width: size.width,
-                            color: AppStyles.transparent,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 10),
-                              child: textMedium(
-                                  text: _filterData[index].title ?? "", fontSize: 14),
+                child: _filterData.isEmpty
+                    ? AppUtils.noRecordMsg()
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _filterData.length,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 2.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                widget.onDataChanged(_filterData[index]);
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                width: size.width,
+                                color: AppStyles.transparent,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 10),
+                                  child: textMedium(
+                                      text: _filterData[index].title ?? "",
+                                      fontSize: 14),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }
+                          );
+                        }
 
-                  // Column(
-                  //   children: <Widget>[
-                  //
-                  //     ListTile(
-                  //       contentPadding: widget.listTileContentPadding ??
-                  //           const EdgeInsets.only(
-                  //               left: 12, right: 12, top: 0, bottom: 0),
-                  //       title: textMedium(
-                  //           text: _filterData[index].title ?? "", fontSize: 14),
-                  //       onTap: () {
-                  //         widget.onDataChanged(_filterData[index]);
-                  //         Navigator.of(context).pop();
-                  //       },
-                  //     ),
-                  //     /*widget.style?.listTileDivider ??
-                  //         const Divider(thickness: 1),*/
-                  //   ],
-                  // ),
-                ),
+                        // Column(
+                        //   children: <Widget>[
+                        //
+                        //     ListTile(
+                        //       contentPadding: widget.listTileContentPadding ??
+                        //           const EdgeInsets.only(
+                        //               left: 12, right: 12, top: 0, bottom: 0),
+                        //       title: textMedium(
+                        //           text: _filterData[index].title ?? "", fontSize: 14),
+                        //       onTap: () {
+                        //         widget.onDataChanged(_filterData[index]);
+                        //         Navigator.of(context).pop();
+                        //       },
+                        //     ),
+                        //     /*widget.style?.listTileDivider ??
+                        //         const Divider(thickness: 1),*/
+                        //   ],
+                        // ),
+                        ),
               ),
             ],
           ),
