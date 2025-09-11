@@ -6,9 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/faqModel.dart';
 import '../utils/api_status.dart';
 import '../utils/faq_repository_impl.dart';
-// import '../../../Common/constants.dart';
-// import '../../../data/models/faq_model.dart';
-// import '../../../a_structure/repository/faq_repo/faq_repo.dart';
 
 class FaqController extends GetxController {
   // final FaqRepository _faqRepository = Get.find<FaqRepository>();
@@ -58,25 +55,6 @@ class FaqController extends GetxController {
     }
   }
 
-  // void fetchFaqData() async {
-  //   try {
-  //     isLoading.value = true;
-  //     errorMsg.value = '';
-  //     final response = await _faqRepository.getFaqList({});
-  //     if (response.status == ApiStatus.success) {
-  //       timeLineData.value = response.data?.faqModelData ?? [];
-  //     } else {
-  //       errorMsg.value = response.errorMsg ?? "Failed to fetch FAQ";
-  //       Get.snackbar("Error", errorMsg.value);
-  //     }
-  //   } catch (e) {
-  //     log("FAQ error: $e");
-  //     errorMsg.value = "Exception occurred";
-  //     Get.snackbar("Error", errorMsg.value);
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
 
   void searchCategory(String searchText) {
     if (searchText.isEmpty) {

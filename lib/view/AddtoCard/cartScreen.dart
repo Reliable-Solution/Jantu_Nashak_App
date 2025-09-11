@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -118,8 +119,6 @@ class CartScreen extends StatefulWidget {
 //
   CartScreen({this.removeCart, super.key});
 
-//   const CartScreen({Key? key}) : super(key: key);
-
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
@@ -133,6 +132,8 @@ class _CartScreenState extends State<CartScreen> {
   // final CartController cartController = Get.find();
 
   final HomeController homeController = Get.find<HomeController>();
+
+  // final TextEditingController redeemPointsController = TextEditingController();
 
   // HomeController homeController = Get.find();
 
@@ -168,6 +169,7 @@ class _CartScreenState extends State<CartScreen> {
       // Simulate a delay for loading cart data
       Future.delayed(Duration(seconds: 2), () {
         setState(() {
+          cartController.redeemPointsController.clear();
           isInitialLoading = false; // Stop showing loader after delay
           if (cartController.cartList.isNotEmpty &&
               cartController.cartList[0].packInfo != null &&
@@ -179,22 +181,9 @@ class _CartScreenState extends State<CartScreen> {
             productQty = 0;
             Qty = 1;
           }
+          // cartController.redeemPointsController.clear();
         });
       });
-      // Ensure the list is not empty before accessing index 0
-      // if (cartController.cartList.isNotEmpty &&
-      //     cartController.cartList[0].packInfo != null &&
-      //     cartController.cartList[0].packInfo!.isNotEmpty) {
-      //   setState(() {
-      //     productQty = double.parse(
-      //         "${cartController.cartList[0].packInfo![0].productdetailQty}");
-      //     Qty = int.parse("${cartController.cartList[0].cartQuantity}");
-      //   });
-      // } else {
-      //   // Optional: set default values or show an error/snackbar
-      //   productQty = 0;
-      //   Qty = 1;
-      // }
     });
   }
 
@@ -215,7 +204,7 @@ class _CartScreenState extends State<CartScreen> {
           elevation: 1,
           title: TextWiget(
             title: StringRes.cart,
-            style: Themes.light.textTheme.displayLarge,
+            style: Themes.light.textTheme.headlineLarge,
           ),
         ),
         body: isInitialLoading
@@ -226,31 +215,37 @@ class _CartScreenState extends State<CartScreen> {
               )
             : Obx(
                 () {
+                  final availablePoints = int.tryParse(
+                        homeController.customerModel?.value?.points ?? "0",
+                      ) ??
+                      0;
                   return cartController.cartList.isEmpty
-                      ? Column(
-                          // crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 250,
-                              child: Image.asset(Images.cart),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextWiget(
-                                title: StringRes.emptyCartMessage,
-                                style:
-                                    Themes.light.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.w600,
+                      ? Center(
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 250,
+                                child: Image.asset(Images.cart),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextWiget(
+                                  title: StringRes.emptyCartMessage,
+                                  style: Themes.light.textTheme.bodyLarge!
+                                      .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                            ),
-                            TextButtonWidget(
-                                text: StringRes.viewProducts,
-                                onPressed: () {
-                                  Get.to(() => DashboardScreen(pageIndex: 0));
-                                }),
-                          ],
+                              TextButtonWidget(
+                                  text: StringRes.viewProducts,
+                                  onPressed: () {
+                                    Get.to(() => DashboardScreen(pageIndex: 0));
+                                  }),
+                            ],
+                          ),
                         )
                       : Column(
                           children: [
@@ -317,6 +312,120 @@ class _CartScreenState extends State<CartScreen> {
                                     : Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          0.65,
+                                                  child: TextField(
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .digitsOnly,
+                                                      // 👇 Custom formatter to block > availablePoints
+                                                      TextInputFormatter
+                                                          .withFunction(
+                                                              (oldValue,
+                                                                  newValue) {
+                                                        final entered =
+                                                            int.tryParse(newValue
+                                                                    .text) ??
+                                                                0;
+                                                        if (entered <=
+                                                            availablePoints) {
+                                                          return newValue;
+                                                        }
+                                                        return oldValue; // reject new value
+                                                      }),
+                                                    ],
+                                                    controller: cartController
+                                                        .redeemPointsController,
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          StringRes.enterYourPoint,
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      contentPadding:
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal: 16,
+                                                              vertical: 12),
+                                                    ),
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    if (cartController
+                                                        .redeemPointsController
+                                                        .text
+                                                        .isEmpty) {
+                                                      cartController
+                                                          .redeemPointsController
+                                                          .text = "0";
+                                                      cartController
+                                                          .getCartTotal(
+                                                              homeController.customerModel!.value
+                                                                  ?.customerId);
+                                                    }
+                                                    final entered = int.tryParse(
+                                                            cartController
+                                                                .redeemPointsController
+                                                                .text) ??
+                                                        0;
+                                                    if (
+                                                    // entered <= 0 ||
+                                                        entered > availablePoints) {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              'Enter valid points (Max: $availablePoints)');
+                                                      cartController
+                                                          .redeemPointsController
+                                                          .text = "0";
+                                                      // cartController.getCartTotal(homeController.m1?.customerId);
+                                                      return;
+                                                    }
+                                                    cartController.getCartTotal(
+                                                        homeController
+                                                            .customerModel!.value.customerId);
+                                                    // if (cartController.isCartCheck.value == false) {
+                                                    //   Fluttertoast.showToast(
+                                                    //       msg: 'Applied $entered points!');
+                                                    // }
+                                                    // String points =
+                                                    //     redeemPointsController
+                                                    //         .text;
+                                                    // if (points.isNotEmpty) {
+                                                    //   Fluttertoast.showToast(
+                                                    //       msg:
+                                                    //           'Applied $points points!');
+                                                    // }
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        COLOR.appBaseColor,
+                                                  ),
+                                                  child:  Text(
+                                                    StringRes.apply,
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                           Expanded(
                                             child: ListView.builder(
                                               itemCount: cartController
@@ -328,17 +437,12 @@ class _CartScreenState extends State<CartScreen> {
                                                 return InkWell(
                                                   onTap: () {
                                                     // Get.to(() => ProductDetailScreen(products: cartController.cartList[index],isExpanded: true,));
-
                                                   },
                                                   child: MyCartComponent(
                                                     cartData: item,
                                                     onRemove: () {
                                                       cartController.cartList
                                                           .removeAt(index);
-                                                      // homeController.getDashboardData(homeController.customerModel!.value.customerId);
-                                                      // cartController.getCartTotal(cartController.customerModel!.value.customerId!);
-                                                      // homeController.getDashboardData(homeController.customerModel!.value.customerId);
-                                                      // _controller.update();
                                                       cartController.update();
                                                       if (widget.removeCart !=
                                                           null) {
@@ -364,12 +468,10 @@ class _CartScreenState extends State<CartScreen> {
                         );
                 },
               ),
-        bottomSheet: isInitialLoading  && cartController
-            .cartList.isEmpty
+        bottomSheet: isInitialLoading && cartController.cartList.isEmpty
             ? SizedBox()
             : GetBuilder<CartController>(
-                builder: (cartController) => cartController
-                            .cartList.isEmpty &&
+                builder: (cartController) => cartController.cartList.isEmpty &&
                         cartController.isCartLoading.value == false
                     ? SizedBox()
                     : Container(
@@ -389,7 +491,7 @@ class _CartScreenState extends State<CartScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              "Clicking on 'Continue' will not deduct any money",
+                              StringRes.clickingOnContinueWillNotDeductAnyMoney,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey.shade700,
@@ -424,19 +526,28 @@ class _CartScreenState extends State<CartScreen> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
-                                  width: 150,
-                                  child: ButtonWidgets(
-                                    title: StringRes.continueString,
-                                    style: Themes.light.textTheme.displayLarge!
-                                        .copyWith(
-                                      color: Colors.white,
+                                GetBuilder<CartController>(
+                                  builder: (cartController) => // child:
+                                      SizedBox(
+                                    width: 150,
+                                    child: ButtonWidgets(
+                                      title: StringRes.continueString,
+                                      style: Themes
+                                          .light.textTheme.displayLarge!
+                                          .copyWith(
+                                        color: Colors.white,
+                                      ),
+                                      voidCallback: () async {
+                                       await cartController.getCartTotal(
+                                            homeController.customerModel!.value.customerId);
+                                        addressController.getAllAddress();
+                                        if (cartController.isCartCheck.value ==
+                                            true) {
+                                          Get.to(() => const AddressScreen());
+                                        }
+                                      },
+                                      color: COLOR.appBaseColor,
                                     ),
-                                    voidCallback: () {
-                                      addressController.getAllAddress();
-                                      Get.to(() => const AddressScreen());
-                                    },
-                                    color: COLOR.appBaseColor,
                                   ),
                                 ),
                               ],
@@ -459,10 +570,13 @@ class _CartScreenState extends State<CartScreen> {
           height: 30,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade300,
+            color: isActive || isCompleted
+                ? COLOR.appBaseColor
+                : Colors.grey.shade300,
             border: Border.all(
-              color:
-                  isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade400,
+              color: isActive || isCompleted
+                  ? COLOR.appBaseColor
+                  : Colors.grey.shade400,
               width: 1,
             ),
           ),
@@ -483,7 +597,9 @@ class _CartScreenState extends State<CartScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive || isCompleted ?COLOR.appBaseColor : Colors.grey.shade600,
+            color: isActive || isCompleted
+                ? COLOR.appBaseColor
+                : Colors.grey.shade600,
             fontWeight:
                 isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
           ),

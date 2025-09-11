@@ -1,4 +1,4 @@
-package com.reliable.keep_app
+package com.reliable.jantunashak
 
 import io.flutter.embedding.android.FlutterActivity
 

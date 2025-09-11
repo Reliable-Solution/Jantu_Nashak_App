@@ -31,6 +31,7 @@ class SettingInfo {
   String? settingId;
   String? settingBaseURL;
   String? settingPhoneNumber;
+  String? settingImage;
   String? settingCallingNumber;
   String? settingWhatsAppNumber;
   String? settingWhatsAppMessage;
@@ -58,37 +59,39 @@ class SettingInfo {
 
   SettingInfo(
       {this.settingId,
-        this.settingBaseURL,
-        this.settingPhoneNumber,
-        this.settingCallingNumber,
-        this.settingWhatsAppNumber,
-        this.settingWhatsAppMessage,
-        this.settingTermsConditionURL,
-        this.settingPrivacyPolicyURL,
-        this.settingFaqURL,
-        this.settingHelpAndSupportURL,
-        this.settingContactUsURL,
-        this.settingsLowstock,
-        this.settingRedeemPoints,
-        this.settingEarnPointsPercentage,
-        this.settingRedeemPointsMessage,
-        this.settingCartRedeemPointsPercentage,
-        this.settingAndroidAppLink,
-        this.settingIosAppLink,
-        this.settingReferSender,
-        this.settingReferReciever,
-        this.settingReferMessage,
-        this.settingSignupBonus,
-        this.settingMaintenanceMode,
-        this.instantAPIToken,
-        this.instantAPIURL,
-        this.settingStatus,
-        this.settingCDT});
+      this.settingBaseURL,
+      this.settingPhoneNumber,
+      this.settingImage,
+      this.settingCallingNumber,
+      this.settingWhatsAppNumber,
+      this.settingWhatsAppMessage,
+      this.settingTermsConditionURL,
+      this.settingPrivacyPolicyURL,
+      this.settingFaqURL,
+      this.settingHelpAndSupportURL,
+      this.settingContactUsURL,
+      this.settingsLowstock,
+      this.settingRedeemPoints,
+      this.settingEarnPointsPercentage,
+      this.settingRedeemPointsMessage,
+      this.settingCartRedeemPointsPercentage,
+      this.settingAndroidAppLink,
+      this.settingIosAppLink,
+      this.settingReferSender,
+      this.settingReferReciever,
+      this.settingReferMessage,
+      this.settingSignupBonus,
+      this.settingMaintenanceMode,
+      this.instantAPIToken,
+      this.instantAPIURL,
+      this.settingStatus,
+      this.settingCDT});
 
   SettingInfo.fromJson(Map<String, dynamic> json) {
     settingId = json['SettingId'];
     settingBaseURL = json['SettingBaseURL'];
     settingPhoneNumber = json['SettingPhoneNumber'];
+    settingImage = json['SettingImage'];
     settingCallingNumber = json['SettingCallingNumber'];
     settingWhatsAppNumber = json['SettingWhatsAppNumber'];
     settingWhatsAppMessage = json['SettingWhatsAppMessage'];
@@ -102,7 +105,7 @@ class SettingInfo {
     settingEarnPointsPercentage = json['SettingEarnPointsPercentage'];
     settingRedeemPointsMessage = json['SettingRedeemPointsMessage'];
     settingCartRedeemPointsPercentage =
-    json['SettingCartRedeemPointsPercentage'];
+        json['SettingCartRedeemPointsPercentage'];
     settingAndroidAppLink = json['SettingAndroidAppLink'];
     settingIosAppLink = json['SettingIosAppLink'];
     settingReferSender = json['SettingReferSender'];
@@ -121,6 +124,7 @@ class SettingInfo {
     data['SettingId'] = this.settingId;
     data['SettingBaseURL'] = this.settingBaseURL;
     data['SettingPhoneNumber'] = this.settingPhoneNumber;
+    data['SettingImage'] = this.settingImage;
     data['SettingCallingNumber'] = this.settingCallingNumber;
     data['SettingWhatsAppNumber'] = this.settingWhatsAppNumber;
     data['SettingWhatsAppMessage'] = this.settingWhatsAppMessage;

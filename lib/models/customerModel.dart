@@ -10,19 +10,21 @@ class CustomerModel {
   String? customerReferCode;
   String? customerStatus;
   String? customerCDT;
+  String? points;
 
   CustomerModel(
       {this.customerId,
-        this.customerName,
-        this.customerImage,
-        this.customerEmailId,
-        this.customerGender,
-        this.customerFCMToken,
-        this.customerPhoneNo,
-        this.customerCode,
-        this.customerReferCode,
-        this.customerStatus,
-        this.customerCDT});
+      this.customerName,
+      this.customerImage,
+      this.customerEmailId,
+      this.customerGender,
+      this.customerFCMToken,
+      this.customerPhoneNo,
+      this.customerCode,
+      this.customerReferCode,
+      this.customerStatus,
+      this.points,
+      this.customerCDT});
 
   CustomerModel.fromJson(Map<String, dynamic> json) {
     customerId = json['CustomerId'];
@@ -35,6 +37,7 @@ class CustomerModel {
     customerCode = json['CustomerCode'];
     customerReferCode = json['CustomerReferCode'];
     customerStatus = json['CustomerStatus'];
+    points = json['Points'];
     customerCDT = json['CustomerCDT'];
   }
 
@@ -50,6 +53,7 @@ class CustomerModel {
     data['CustomerCode'] = this.customerCode;
     data['CustomerReferCode'] = this.customerReferCode;
     data['CustomerStatus'] = this.customerStatus;
+    data['Points'] = this.points;
     data['CustomerCDT'] = this.customerCDT;
     return data;
   }

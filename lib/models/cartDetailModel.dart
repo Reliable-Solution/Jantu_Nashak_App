@@ -3,8 +3,9 @@ class CartDetailModel {
   String? customerId;
   bool? isFav;
   String? productdetailId;
-  String? productSize;
-  String? productColor;
+  // String? productSize;
+  // String? productColor;
+  String? productQty;
   List<PackInfo>? packInfo;
   String? cartQuantity;
   String? cartReturnStatus;
@@ -48,59 +49,61 @@ class CartDetailModel {
 
   CartDetailModel(
       {this.cartId,
-        this.customerId,
-        this.isFav,
-        this.productdetailId,
-        this.productSize,
-        this.productColor,
-        this.packInfo,
-        this.cartQuantity,
-        this.cartReturnStatus,
-        this.cartOrder,
-        this.cartOrderdetail,
-        this.cartStatus,
-        this.cartCDT,
-        this.customerName,
-        this.customerImage,
-        this.customerEmailId,
-        this.customerGender,
-        this.customerFCMToken,
-        this.customerPhoneNo,
-        this.customerCode,
-        this.customerReferCode,
-        this.customerStatus,
-        this.customerCDT,
-        this.categoryId,
-        this.subcategoryId,
-        this.productName,
-        this.brandId,
-        this.hsnId,
-        this.productSKU,
-        this.productDescription,
-        this.productKeyFeatures,
-        this.productFeaturedYesNoRadio,
-        this.productOrderByPrescriptionYesNoRadio,
-        this.productType,
-        this.productGst,
-        this.productOfferCode,
-        this.productStatus,
-        this.productCDT,
-        this.productIdReference,
-        this.productdetailImages,
-        this.productdetailMrp,
-        this.productdetailSrp,
-        this.productdetailQty,
-        this.productdetailUnit,
-        this.productdetailStatus,
-        this.productdetailCDT});
+      this.customerId,
+      this.isFav,
+      this.productdetailId,
+      // this.productSize,
+      // this.productColor,
+      this.productQty,
+      this.packInfo,
+      this.cartQuantity,
+      this.cartReturnStatus,
+      this.cartOrder,
+      this.cartOrderdetail,
+      this.cartStatus,
+      this.cartCDT,
+      this.customerName,
+      this.customerImage,
+      this.customerEmailId,
+      this.customerGender,
+      this.customerFCMToken,
+      this.customerPhoneNo,
+      this.customerCode,
+      this.customerReferCode,
+      this.customerStatus,
+      this.customerCDT,
+      this.categoryId,
+      this.subcategoryId,
+      this.productName,
+      this.brandId,
+      this.hsnId,
+      this.productSKU,
+      this.productDescription,
+      this.productKeyFeatures,
+      this.productFeaturedYesNoRadio,
+      this.productOrderByPrescriptionYesNoRadio,
+      this.productType,
+      this.productGst,
+      this.productOfferCode,
+      this.productStatus,
+      this.productCDT,
+      this.productIdReference,
+      this.productdetailImages,
+      this.productdetailMrp,
+      this.productdetailSrp,
+      this.productdetailQty,
+      this.productdetailUnit,
+      this.productdetailStatus,
+      this.productdetailCDT});
 
   CartDetailModel.fromJson(Map<String, dynamic> json) {
     cartId = json['CartId'];
     customerId = json['CustomerId'];
     isFav = json['isFav'];
     productdetailId = json['ProductdetailId'];
-    productSize = json['ProductSize'];
-    productColor = json['ProductColor'];
+    // productSize = json['ProductSize'];
+    // productColor = json['ProductColor'];
+    productQty = json['ProductQTY'];
     if (json['PackInfo'] != null) {
       packInfo = <PackInfo>[];
       json['PackInfo'].forEach((v) {
@@ -133,7 +136,7 @@ class CartDetailModel {
     productKeyFeatures = json['ProductKeyFeatures'];
     productFeaturedYesNoRadio = json['ProductFeaturedYesNoRadio'];
     productOrderByPrescriptionYesNoRadio =
-    json['ProductOrderByPrescriptionYesNoRadio'];
+        json['ProductOrderByPrescriptionYesNoRadio'];
     productType = json['ProductType'];
     productGst = json['ProductGst'];
     productOfferCode = json['ProductOfferCode'];
@@ -155,8 +158,9 @@ class CartDetailModel {
     data['CustomerId'] = this.customerId;
     data['isFav'] = this.isFav;
     data['ProductdetailId'] = this.productdetailId;
-    data['ProductSize'] = this.productSize;
-    data['ProductColor'] = this.productColor;
+    // data['ProductSize'] = this.productSize;
+    // data['ProductColor'] = this.productColor;
+    data['ProductQTY'] = this.productQty;
     if (this.packInfo != null) {
       data['PackInfo'] = this.packInfo!.map((v) => v.toJson()).toList();
     }
@@ -221,27 +225,28 @@ class PackInfo {
 
   PackInfo(
       {this.productdetailId,
-        this.productIdReference,
-        this.productdetailImages,
-        this.color,
-        this.size,
-        this.productSize,
-        this.productColor,
-        this.productdetailMrp,
-        this.productdetailSrp,
-        this.productdetailQty,
-        this.productdetailUnit,
-        this.productdetailStatus,
-        this.productdetailCDT});
+      this.productIdReference,
+      this.productdetailImages,
+      this.color,
+      this.size,
+      this.productSize,
+      this.productColor,
+      this.productdetailMrp,
+      this.productdetailSrp,
+      this.productdetailQty,
+      this.productdetailUnit,
+      this.productdetailStatus,
+      this.productdetailCDT});
 
   PackInfo.fromJson(Map<String, dynamic> json) {
     productdetailId = json['ProductdetailId'];
     productIdReference = json['ProductIdReference'];
     // productdetailImages = json['ProductdetailImages'];
-    productdetailImages = (json['ProductdetailImages'] as List?)?.map((e) => e.toString()).toList();
+    productdetailImages = (json['ProductdetailImages'] as List?)
+        ?.map((e) => e.toString())
+        .toList();
     color = (json['Color'] as List?)?.map((e) => e.toString()).toList();
     size = (json['Size'] as List?)?.map((e) => e.toString()).toList();
-
 
     // color = json['Color'];
     // size = json['Size'];

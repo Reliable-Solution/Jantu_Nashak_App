@@ -100,7 +100,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
     });
   }
 
-
   String generateBase64Body(int amount) {
     Map<String, dynamic> payload = {
       "merchantId": merchantId,
@@ -277,8 +276,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
           appbarPadding: 0,
           elevation: 1,
           title: TextWiget(
-            title:  StringRes.summary,
-            style: Themes.light.textTheme.displayLarge,
+            title: StringRes.summary,
+            style: Themes.light.textTheme.headlineLarge,
           ),
           leading: InkWell(
             onTap: () {
@@ -306,35 +305,33 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildProgressStep(1,  StringRes.cart, false, true),
+                    _buildProgressStep(1, StringRes.cart, false, true),
                     _buildProgressLine(true),
-                    _buildProgressStep(2,  StringRes.address, false, true),
+                    _buildProgressStep(2, StringRes.address, false, true),
                     _buildProgressLine(true),
-                    _buildProgressStep(3,  StringRes.payment, false, true),
+                    _buildProgressStep(3, StringRes.payment, false, true),
                     _buildProgressLine(true),
-                    _buildProgressStep(4,  StringRes.summary, true, false),
+                    _buildProgressStep(4, StringRes.summary, true, false),
                   ],
                 ),
               ),
             ),
             SliverToBoxAdapter(child: const SizedBox(height: 8)),
             Obx(
-              () =>
-              cartController.isCartLoading.value
+              () => cartController.isCartLoading.value
                   ? SliverToBoxAdapter(
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: COLOR.appBaseColor,
-                  ),
-                ),
-              )
-
-                  :cartController.cartList.isEmpty
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: COLOR.appBaseColor,
+                        ),
+                      ),
+                    )
+                  : cartController.cartList.isEmpty
                       ? SliverToBoxAdapter(
-                          child:  Center(
+                          child: Center(
                             child: Padding(
                               padding: EdgeInsets.all(16.0),
-                              child: Text( StringRes.noItemsInCart),
+                              child: Text(StringRes.noItemsInCart),
                             ),
                           ),
                         )
@@ -395,7 +392,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                               ),
                                               const SizedBox(height: 4),
                                               Text(
-                                                StringRes.onlyWrongDefectItemReturnsAllowed,
+                                                StringRes
+                                                    .onlyWrongDefectItemReturnsAllowed,
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.grey.shade700,
@@ -405,7 +403,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                               Row(
                                                 children: [
                                                   Text(
-                                                    "${StringRes.size}: ${item.productSize}",
+                                                    "Quantity: ${item.productQty}",
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       color:
@@ -423,13 +421,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                                   ),
                                                 ],
                                               ),
-                                              Text(
-                                                "${StringRes.color}: ${item.productColor}",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey.shade700,
-                                                ),
-                                              ),
+                                              // Text(
+                                              //   "${StringRes.color}: ${item.productColor}",
+                                              //   style: TextStyle(
+                                              //     fontSize: 12,
+                                              //     color: Colors.grey.shade700,
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -459,7 +457,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                             color: Colors.grey.shade700,
                                           ),
                                         ),
-                                         Text(
+                                        Text(
                                           StringRes.freeDelivery,
                                           style: TextStyle(
                                             fontSize: 12,
@@ -488,7 +486,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text(
+                        Text(
                           StringRes.deleiveryAddress,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
@@ -510,12 +508,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               address.addressId.toString() ==
                               addressController.selectedAddressId.value);
                       return selectedAddress == null
-                          ?  Text(StringRes.noAddressSelected)
+                          ? Text(StringRes.noAddressSelected)
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  selectedAddress.addressFullName ?? StringRes.name,
+                                  selectedAddress.addressFullName ??
+                                      StringRes.name,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -557,7 +556,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text(
+                        Text(
                           StringRes.paymentMode,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
@@ -574,11 +573,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     const SizedBox(height: 12),
                     Obx(() => Text(
                           checkoutController.selectedPaymentMethod.value ==
-                              StringRes.cashOnDelivery
+                                  StringRes.cashOnDelivery
                               ? StringRes.cashOnDelivery
                               : checkoutController
                                           .selectedPaymentMethod.value ==
-                              StringRes.razorPay
+                                      StringRes.razorPay
                                   ? StringRes.razorPay
                                   : StringRes.phonePe,
                           style: const TextStyle(fontWeight: FontWeight.w500),
@@ -628,9 +627,12 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 homeController.getDashboardData(
                     addressController.customerModel!.value.customerId);
                 Get.offAll(() => DashboardScreen(pageIndex: 0));
-              }
-              else if (checkoutController.selectedPaymentMethod.value ==
+              } else if (checkoutController.selectedPaymentMethod.value ==
                   "RazorPay") {
+                print(
+                    "Summary Screen RazorPay ${cartController.cartTotal.value!.totalInteger}");
+                print(
+                    "Summary Screen RazorPay ${checkoutController!.paymentGateway!.gatewayCredentialsJson!['key_id']}");
                 print(
                     "Payment Method ${checkoutController.selectedPaymentMethod.value} ${checkoutController.paymentGateway!.gatewayCredentialsJson!['key_id']}");
                 openPaymentGateway(
@@ -662,8 +664,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 ? COLOR.appBaseColor
                 : (isCompleted ? COLOR.appBaseColor : Colors.grey.shade300),
             border: Border.all(
-              color:
-                  isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade400,
+              color: isActive || isCompleted
+                  ? COLOR.appBaseColor
+                  : Colors.grey.shade400,
               width: 1,
             ),
           ),
@@ -684,7 +687,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade600,
+            color: isActive || isCompleted
+                ? COLOR.appBaseColor
+                : Colors.grey.shade600,
             fontWeight:
                 isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
           ),
