@@ -1,4 +1,3 @@
-
 import 'package:keep_app/models/productModel.dart';
 
 class WishlistModel {
@@ -38,38 +37,38 @@ class WishlistModel {
 
   WishlistModel(
       {this.wishlistId,
-        this.wishlistName,
-        this.customerId,
-        this.productId,
-        this.isFav,
-        required this.packInfo,
-        this.wishlistStatus,
-        this.wishlistCDT,
-        this.customerName,
-        this.customerImage,
-        this.customerEmailId,
-        this.customerGender,
-        this.customerFCMToken,
-        this.customerPhoneNo,
-        this.customerCode,
-        this.customerReferCode,
-        this.customerStatus,
-        this.customerCDT,
-        this.categoryId,
-        this.subcategoryId,
-        this.productName,
-        this.brandId,
-        this.hsnId,
-        this.productSKU,
-        this.productDescription,
-        this.productKeyFeatures,
-        this.productFeaturedYesNoRadio,
-        this.productOrderByPrescriptionYesNoRadio,
-        this.productType,
-        this.productGst,
-        this.productOfferCode,
-        this.productStatus,
-        this.productCDT});
+      this.wishlistName,
+      this.customerId,
+      this.productId,
+      this.isFav,
+      required this.packInfo,
+      this.wishlistStatus,
+      this.wishlistCDT,
+      this.customerName,
+      this.customerImage,
+      this.customerEmailId,
+      this.customerGender,
+      this.customerFCMToken,
+      this.customerPhoneNo,
+      this.customerCode,
+      this.customerReferCode,
+      this.customerStatus,
+      this.customerCDT,
+      this.categoryId,
+      this.subcategoryId,
+      this.productName,
+      this.brandId,
+      this.hsnId,
+      this.productSKU,
+      this.productDescription,
+      this.productKeyFeatures,
+      this.productFeaturedYesNoRadio,
+      this.productOrderByPrescriptionYesNoRadio,
+      this.productType,
+      this.productGst,
+      this.productOfferCode,
+      this.productStatus,
+      this.productCDT});
 
   WishlistModel.fromJson(Map<String, dynamic> json) {
     wishlistId = json['WishlistId'];
@@ -105,7 +104,7 @@ class WishlistModel {
     productKeyFeatures = json['ProductKeyFeatures'];
     productFeaturedYesNoRadio = json['ProductFeaturedYesNoRadio'];
     productOrderByPrescriptionYesNoRadio =
-    json['ProductOrderByPrescriptionYesNoRadio'];
+        json['ProductOrderByPrescriptionYesNoRadio'];
     productType = json['ProductType'];
     productGst = json['ProductGst'];
     productOfferCode = json['ProductOfferCode'];
@@ -154,4 +153,3 @@ class WishlistModel {
     return data;
   }
 }
-

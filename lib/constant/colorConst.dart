@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class COLOR {
   static final Color background = Colors.white;
-  static final Color appBaseColor = Color(0xff900C3F);
+  static final Color appBaseColor = Color(0xff226706);
   static final Color pink = Color(0xff9e2089);
 
   static final Color pinkLight = Colors.red.shade50;
@@ -25,7 +25,6 @@ class COLOR {
   static final Color transparent = Colors.transparent;
 }
 
-
 Map<int, Color> appprimarycolors = {
   50: Color.fromRGBO(238, 193, 76, .1),
   100: Color.fromRGBO(238, 193, 76, .2),
@@ -41,16 +40,16 @@ Map<int, Color> appprimarycolors = {
 
 // MaterialColor(0xFFd98e8e, appprimarycolors)
 MaterialColor appPrimaryMaterialColor2 =
-MaterialColor(0xFFEEC14C, appprimarycolors);
+    MaterialColor(0xFFEEC14C, appprimarycolors);
 
 MaterialColor appPrimaryMaterialColorcard =
-MaterialColor(0xFFEEC14C, appprimarycolors);
+    MaterialColor(0xFFEEC14C, appprimarycolors);
 
 MaterialColor appPrimaryMaterialColorcardfont =
-MaterialColor(0xFFFFFFFF, appprimarycolors);
+    MaterialColor(0xFFFFFFFF, appprimarycolors);
 
 MaterialColor appPrimaryMaterialColoreventcard =
-MaterialColor(0xFFEEC14C, appprimarycolors);
+    MaterialColor(0xFFEEC14C, appprimarycolors);
 
 MaterialColor appPrimaryMaterialColoreventcardfont =
-MaterialColor(0xFFFFFFFF, appprimarycolors);
+    MaterialColor(0xFFFFFFFF, appprimarycolors);

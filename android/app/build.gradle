@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.reliable.keep_app"
+    namespace = "com.reliable.jantunashak"
     compileSdk = flutter.compileSdkVersion
 
 
@@ -18,6 +18,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -28,13 +29,13 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.reliable.keep_app"
+        applicationId = "com.reliable.jantunashak"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 23
         targetSdk = flutter.targetSdkVersion
-        versionCode = 4
-        versionName = "1.0.4"
+        versionCode = 1
+        versionName = "1.0.1"
     }
 
     signingConfigs {
@@ -50,7 +51,7 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
 //            signingConfig signingConfigs.debug
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
 
             minifyEnabled false
 //            useProguard true
@@ -72,6 +73,9 @@ dependencies {
 
     // Image Picker Support
     implementation 'androidx.activity:activity-ktx:1.8.2'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 }
 
 // Firebase Plugin ko support karne ke liye

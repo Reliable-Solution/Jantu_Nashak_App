@@ -59,7 +59,6 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
 
   final CartController cartController = Get.put(CartController());
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -110,8 +109,10 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
                 children: [
                   IconButtonWidget(
                     voidCallback: () {
-                      cartController.getCartDetails(cartController.customerModel!.value.customerId!);
-                      cartController.getCartTotal(cartController.customerModel!.value.customerId!);
+                      cartController.getCartDetails(
+                          cartController.customerModel!.value.customerId!);
+                      cartController.getCartTotal(
+                          cartController.customerModel!.value.customerId!);
 
                       Get.to(() => CartScreen(
                           // removeCart: productRemove,
@@ -153,11 +154,9 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              [
-              ],
+              [],
             ),
           ),
-
           GetBuilder<SubCategoryController>(builder: (controller) {
             if (controller.subCategoryProductList.isEmpty) {
               return SliverToBoxAdapter(
@@ -278,5 +277,4 @@ class _SubCategoryProductScreenState extends State<SubCategoryProductScreen> {
       ),
     );
   }
-
 }

@@ -542,7 +542,7 @@ class _AddressScreenState extends State<AddressScreen> {
           elevation: 1,
           title: TextWiget(
             title: StringRes.selectDeliveryAddress,
-            style: Themes.light.textTheme.displayLarge,
+            style: Themes.light.textTheme.headlineLarge,
           ),
           leading: InkWell(
             onTap: () {
@@ -556,7 +556,7 @@ class _AddressScreenState extends State<AddressScreen> {
           ),
         ),
         body: GetBuilder<AddressController>(
-          builder: (controller) =>  Column(
+          builder: (controller) => Column(
             children: [
               // Checkout progress indicator
               Container(
@@ -584,7 +584,8 @@ class _AddressScreenState extends State<AddressScreen> {
               // Add new address button
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 color: Colors.white,
                 child: GestureDetector(
                   onTap: () {
@@ -609,26 +610,28 @@ class _AddressScreenState extends State<AddressScreen> {
               Expanded(
                 child: Obx(() {
                   if (controller.allAddressList.isEmpty) {
-                    return  Center(child: Text(StringRes.noAddressesFound));
+                    return Center(child: Text(StringRes.noAddressesFound));
                   }
                   return ListView.builder(
                     itemCount: controller.allAddressList.length,
                     itemBuilder: (context, index) {
                       final address = controller.allAddressList[index];
-                      final isSelected =
-                          controller.selectedAddressId.value == address.addressId.toString();
+                      final isSelected = controller.selectedAddressId.value ==
+                          address.addressId.toString();
 
                       return Container(
-                        margin: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+                        margin:
+                            const EdgeInsets.only(bottom: 8, left: 8, right: 8),
                         decoration: BoxDecoration(
-                          color: isSelected ?  Color(0xffe8eeff) : Colors.white,
+                          color: isSelected ? Color(0xffe8eeff) : Colors.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ListTile(
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
                               title: Text(
                                 address.addressFullName ?? StringRes.name,
                                 style: TextStyle(
@@ -641,8 +644,8 @@ class _AddressScreenState extends State<AddressScreen> {
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Text(
                                   "${address.addressColony ?? ''}, ${address.cityName ?? ''}, ${address.stateName ?? ''}, ${address.addressPincode ?? ''}\n"
-                                      // "New York ${address.addressPincode ?? ''}\n"
-                                      "${address.addressMobileNo ?? ''}",
+                                  // "New York ${address.addressPincode ?? ''}\n"
+                                  "${address.addressMobileNo ?? ''}",
                                   style: TextStyle(
                                     fontSize: 14,
                                     height: 1.4,
@@ -653,27 +656,35 @@ class _AddressScreenState extends State<AddressScreen> {
                               trailing: Radio<bool>(
                                 value: true,
                                 groupValue: isSelected,
-                                activeColor:  COLOR.appBaseColor,
-                                fillColor: MaterialStateProperty.resolveWith<Color>(
-                                      (Set<MaterialState> states) {
+                                activeColor: COLOR.appBaseColor,
+                                fillColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
                                     // if (isSelected) return Colors.white;
                                     return COLOR.appBaseColor;
                                   },
                                 ),
                                 onChanged: (value) {
-                                  print("Selected Address ID: ${address.addressId}");
-                                  controller.selectedAddressId.value = address.addressId.toString();
-                                  print("Updated selectedAddressId: ${controller.selectedAddressId.value}");
-                                  controller.update(); // Force GetX to update UI
+                                  print(
+                                      "Selected Address ID: ${address.addressId}");
+                                  controller.selectedAddressId.value =
+                                      address.addressId.toString();
+                                  print(
+                                      "Updated selectedAddressId: ${controller.selectedAddressId.value}");
+                                  controller
+                                      .update(); // Force GetX to update UI
                                 },
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 16, bottom: 8),
+                              padding:
+                                  const EdgeInsets.only(left: 16, bottom: 8),
                               child: GestureDetector(
                                 onTap: () {
                                   // Navigate to edit address screen with pre-filled data
-                                  Get.to(() => PickupAddressScreen(address: address))?.then((_) {
+                                  Get.to(() =>
+                                          PickupAddressScreen(address: address))
+                                      ?.then((_) {
                                     controller.getAllAddress();
                                   });
                                 },
@@ -689,12 +700,14 @@ class _AddressScreenState extends State<AddressScreen> {
                             ),
                             if (isSelected)
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: ButtonWidgets(
                                     title: StringRes.deliverToThisAddress,
-                                    style: Themes.light.textTheme.displayLarge!.copyWith(
+                                    style: Themes.light.textTheme.displayLarge!
+                                        .copyWith(
                                       color: Colors.white,
                                     ),
                                     voidCallback: () {
@@ -702,7 +715,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                           address.addressId.toString();
                                       Get.to(() => const PaymentScreen());
                                     },
-                                    color:  COLOR.appBaseColor,
+                                    color: COLOR.appBaseColor,
                                   ),
                                 ),
                               ),
@@ -720,7 +733,8 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 
-  Widget _buildProgressStep(int step, String label, bool isActive, bool isCompleted) {
+  Widget _buildProgressStep(
+      int step, String label, bool isActive, bool isCompleted) {
     return Column(
       children: [
         Container(
@@ -728,9 +742,13 @@ class _AddressScreenState extends State<AddressScreen> {
           height: 30,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? COLOR.appBaseColor : (isCompleted ? COLOR.appBaseColor : Colors.grey.shade300),
+            color: isActive
+                ? COLOR.appBaseColor
+                : (isCompleted ? COLOR.appBaseColor : Colors.grey.shade300),
             border: Border.all(
-              color: isActive || isCompleted ? COLOR.appBaseColor : Colors.grey.shade400,
+              color: isActive || isCompleted
+                  ? COLOR.appBaseColor
+                  : Colors.grey.shade400,
               width: 1,
             ),
           ),
@@ -738,12 +756,12 @@ class _AddressScreenState extends State<AddressScreen> {
             child: isCompleted
                 ? const Icon(Icons.check, color: Colors.white, size: 16)
                 : Text(
-              step.toString(),
-              style: TextStyle(
-                color: isActive ? Colors.white : Colors.grey.shade600,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+                    step.toString(),
+                    style: TextStyle(
+                      color: isActive ? Colors.white : Colors.grey.shade600,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
           ),
         ),
         const SizedBox(height: 4),
@@ -751,8 +769,11 @@ class _AddressScreenState extends State<AddressScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive || isCompleted ?COLOR.appBaseColor : Colors.grey.shade600,
-            fontWeight: isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
+            color: isActive || isCompleted
+                ? COLOR.appBaseColor
+                : Colors.grey.shade600,
+            fontWeight:
+                isActive || isCompleted ? FontWeight.bold : FontWeight.normal,
           ),
         ),
       ],

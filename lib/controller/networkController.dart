@@ -15,7 +15,7 @@ class NetworkController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-   // initConnectivity();
+    // initConnectivity();
     //_connectivitySubscription = _connectivity.onConnectivityChanged.listen(updateConnectivity);
   }
 
